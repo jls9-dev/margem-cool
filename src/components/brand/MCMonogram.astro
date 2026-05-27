@@ -1,0 +1,72 @@
+---
+/**
+ * MCMonogram — the MC mark for compact contexts (favicon, profile pictures,
+ * footer flourishes). Two variants:
+ *   - 'open'      — M and C as serif letterforms with the wave rolling out
+ *                   from the base. Freestanding.
+ *   - 'contained' — M and C in cream within a teal circle, wave at the base.
+ *                   Used for favicons and the smallest contexts.
+ *
+ * Props:
+ *   variant — 'open' | 'contained'. Default 'open'.
+ *   size    — rendered width and height in px. Default 64.
+ */
+interface Props {
+  variant?: 'open' | 'contained';
+  size?: number;
+  ariaLabel?: string;
+}
+const { variant = 'open', size = 64, ariaLabel = 'Margem Cool' } = Astro.props;
+
+const contained = variant === 'contained';
+const VB = 100;
+
+const letterColor = contained ? 'var(--mc-cream, #F5F1E8)' : 'var(--mc-charcoal, #1F2328)';
+const accentColor = contained ? 'var(--mc-cream, #F5F1E8)' : 'var(--mc-rust, #B85C38)';
+const fillColor = contained ? 'var(--mc-teal, #0F5C5D)' : 'transparent';
+---
+
+<svg
+  class="mc-monogram"
+  width={size}
+  height={size}
+  viewBox={`0 0 ${VB} ${VB}`}
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label={ariaLabel}
+>
+  {contained && (
+    <circle cx="50" cy="50" r="48" fill={fillColor} />
+  )}
+
+  <!-- MC letterforms in Source Serif 4 -->
+  <text
+    x="50"
+    y="62"
+    class="mc-monogram__text"
+    style={`fill: ${letterColor};`}
+    text-anchor="middle"
+  >MC</text>
+
+  <!-- River wave at the base, smaller than the wordmark's -->
+  <path
+    d="M 22 78 C 32 72, 42 82, 52 78 C 62 74, 72 80, 78 78"
+    fill="none"
+    stroke={accentColor}
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+</svg>
+
+<style>
+  .mc-monogram {
+    display: block;
+  }
+  .mc-monogram__text {
+    font-family: var(--font-body, 'Source Serif 4', Georgia, serif);
+    font-weight: 600;
+    font-size: 48px;
+    letter-spacing: -0.04em;
+    dominant-baseline: alphabetic;
+  }
+</style>

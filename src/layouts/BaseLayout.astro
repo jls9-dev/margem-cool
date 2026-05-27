@@ -1,0 +1,214 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+import MastheadLockup from '../components/brand/MastheadLockup.astro';
+import MCMonogram from '../components/brand/MCMonogram.astro';
+import { PRIMARY_NAV, htmlLang, SITE_URL, type Lang } from '../utils/i18n';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  /** Path of the equivalent page in the other language, e.g. '/en/' or '/'. */
+  alternateUrl?: string;
+  /** Canonical path of this page, relative to the site root. */
+  canonicalPath?: string;
+  /** Optional Schema.org JSON-LD object to inject as a single script tag. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  lang,
+  title,
+  description,
+  alternateUrl,
+  canonicalPath = Astro.url.pathname,
+  jsonLd,
+} = Astro.props;
+
+const nav = PRIMARY_NAV[lang];
+const otherLang: Lang = lang === 'pt' ? 'en' : 'pt';
+const canonical = new URL(canonicalPath, SITE_URL).toString();
+const alternate = alternateUrl
+  ? new URL(alternateUrl, SITE_URL).toString()
+  : undefined;
+
+const secondaryTagline = lang === 'pt' ? 'O outro lado' : 'The other side';
+const copyrightLabel = lang === 'pt'
+  ? `© ${new Date().getFullYear()} Margem Cool`
+  : `© ${new Date().getFullYear()} Margem Cool`;
+---
+
+<!doctype html>
+<html lang={htmlLang(lang)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+
+    <link rel="canonical" href={canonical} />
+    {alternate && (
+      <>
+        <link rel="alternate" hreflang={htmlLang(otherLang)} href={alternate} />
+        <link rel="alternate" hreflang={htmlLang(lang)} href={canonical} />
+        <link rel="alternate" hreflang="x-default" href={lang === 'pt' ? canonical : alternate} />
+      </>
+    )}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={htmlLang(lang).replace('-', '_')} />
+    {alternate && (
+      <meta property="og:locale:alternate" content={htmlLang(otherLang).replace('-', '_')} />
+    )}
+
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{lang === 'pt' ? 'Saltar para o conteúdo' : 'Skip to content'}</a>
+
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="site-header__brand" href={lang === 'pt' ? '/' : '/en/'} aria-label="Margem Cool">
+          <MastheadLockup compact size={180} />
+        </a>
+        <nav class="site-nav" aria-label={lang === 'pt' ? 'Navegação principal' : 'Primary navigation'}>
+          <ul>
+            {nav.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        {alternate && (
+          <a class="lang-switch smallcaps" href={alternate} hreflang={htmlLang(otherLang)}>
+            {otherLang === 'pt' ? 'PT' : 'EN'}
+          </a>
+        )}
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <div class="site-footer__brand">
+          <MCMonogram variant="open" size={56} />
+          <p class="site-footer__tagline smallcaps">{secondaryTagline} · Margem Cool</p>
+        </div>
+        <p class="site-footer__meta">{copyrightLabel}</p>
+      </div>
+    </footer>
+
+    <style>
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--color-text);
+        color: var(--color-background);
+        padding: var(--space-xs) var(--space-sm);
+        z-index: 100;
+        border-bottom: 0;
+      }
+      .skip-link:focus { left: var(--space-sm); top: var(--space-sm); }
+
+      .site-header {
+        padding: var(--space-lg) 0;
+        border-bottom: 1px solid var(--color-rule);
+      }
+      .site-header__inner {
+        display: flex;
+        align-items: center;
+        gap: var(--space-xl);
+        flex-wrap: wrap;
+      }
+      .site-header__brand {
+        border-bottom: 0;
+        text-decoration: none;
+      }
+
+      .site-nav {
+        flex: 1;
+      }
+      .site-nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .site-nav a {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: var(--type-small);
+        letter-spacing: var(--tracking-smallcaps);
+        text-transform: uppercase;
+        border-bottom: 0;
+        color: var(--color-text);
+      }
+      .site-nav a[aria-current="page"] { color: var(--color-accent); }
+      .site-nav a:hover { color: var(--color-accent); }
+
+      .lang-switch {
+        border: 1px solid var(--color-rule);
+        padding: 6px 10px;
+        font-size: var(--type-caption);
+      }
+      .lang-switch:hover { border-color: var(--color-accent); }
+
+      .site-footer {
+        margin-top: var(--space-3xl);
+        padding: var(--space-2xl) 0;
+        border-top: 1px solid var(--color-rule);
+      }
+      .site-footer__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+      }
+      .site-footer__brand {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+      }
+      .site-footer__tagline {
+        margin: 0;
+        font-size: var(--type-masthead-meta);
+        letter-spacing: var(--tracking-masthead);
+        color: var(--color-text-secondary);
+      }
+      .site-footer__meta {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: var(--type-caption);
+        color: var(--color-text-secondary);
+      }
+    </style>
+  </body>
+</html>

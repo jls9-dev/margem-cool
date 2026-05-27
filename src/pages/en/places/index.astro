@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { concelhos } from '../../../utils/place-hierarchy';
+import { validateAllReferences } from '../../../utils/validate-refs';
+
+await validateAllReferences();
+
+const allPlaces = await getCollection('places');
+const concelhoList = concelhos(allPlaces);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Places — the Margem Sul',
+  inLanguage: 'en',
+  url: 'https://margemcool.pt/en/places/',
+  hasPart: concelhoList.map((c) => ({
+    '@type': 'AdministrativeArea',
+    name: c.data.name_pt,
+    url: `https://margemcool.pt/en/places/${c.slug}/`,
+  })),
+};
+---
+
+<BaseLayout
+  lang="en"
+  title="Places · Margem Cool"
+  description="The nine concelhos of the Margem Sul: Almada, Seixal, Sesimbra, Setúbal, Palmela, Barreiro, Moita, Montijo, Alcochete."
+  alternateUrl="/lugares/"
+  canonicalPath="/en/places/"
+  jsonLd={jsonLd}
+>
+  <section class="places-index">
+    <div class="container">
+      <header class="places-index__head">
+        <p class="places-index__kicker smallcaps">The Margem Sul</p>
+        <h1 class="places-index__title">Places</h1>
+        <p class="places-index__dek">
+          Nine concelhos, thirty-nine freguesias. The geographic spine of the publication.
+        </p>
+      </header>
+
+      <ul class="concelho-list" role="list">
+        {concelhoList.map((c) => (
+          <li class="concelho-list__item">
+            <a href={`/en/places/${c.slug}/`}>
+              <h2 class="concelho-list__name">{c.data.name_pt}</h2>
+              <p class="concelho-list__short">{c.data.en.short_description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .places-index { padding: var(--space-2xl) 0; }
+  .places-index__head {
+    max-width: var(--content-column);
+    margin: 0 auto var(--space-2xl);
+  }
+  .places-index__kicker {
+    margin: 0 0 var(--space-md);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .places-index__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    margin: 0 0 var(--space-md);
+    line-height: var(--leading-headline);
+  }
+  @media (max-width: 720px) {
+    .places-index__title { font-size: var(--type-h1-mobile); }
+  }
+  .places-index__dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  .concelho-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: var(--wide-section);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-lg);
+  }
+  .concelho-list__item a {
+    display: block;
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--color-rule);
+    text-decoration: none;
+    border-bottom: 0;
+    transition: opacity 120ms ease;
+  }
+  .concelho-list__item a:hover { opacity: 0.7; }
+  .concelho-list__name {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h3);
+    margin: 0 0 var(--space-xs);
+    color: var(--color-text);
+  }
+  .concelho-list__short {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--type-small);
+    font-family: var(--font-body);
+  }
+</style>

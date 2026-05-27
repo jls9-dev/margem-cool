@@ -1,0 +1,195 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { ancestorChain, childrenOf, indexBySlug } from '../../../utils/place-hierarchy';
+import { validateAllReferences } from '../../../utils/validate-refs';
+
+export const getStaticPaths = (async () => {
+  await validateAllReferences();
+  const places = await getCollection('places');
+  return places.map((place) => ({
+    params: { slug: place.slug },
+    props: { place },
+  }));
+}) satisfies GetStaticPaths;
+
+const { place } = Astro.props;
+const allPlaces = await getCollection('places');
+const byId = indexBySlug(allPlaces);
+const ancestors = ancestorChain(place, byId);
+const children = childrenOf(place.slug, allPlaces).sort(
+  (a, b) => a.data.name_pt.localeCompare(b.data.name_pt, 'pt'),
+);
+
+const canonicalPath = `/en/places/${place.slug}/`;
+const alternatePath = `/lugares/${place.slug}/`;
+const displayName = place.data.name_en ?? place.data.name_pt;
+
+const breadcrumbItems = [
+  { name: 'Places', url: 'https://margemcool.pt/en/places/' },
+  ...ancestors.map((p) => ({
+    name: p.data.name_en ?? p.data.name_pt,
+    url: `https://margemcool.pt/en/places/${p.slug}/`,
+  })),
+  { name: displayName, url: `https://margemcool.pt${canonicalPath}` },
+];
+
+const schemaType = place.data.level === 'concelho' || place.data.level === 'freguesia'
+  ? 'AdministrativeArea'
+  : 'Place';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': schemaType,
+    name: displayName,
+    inLanguage: 'en',
+    url: `https://margemcool.pt${canonicalPath}`,
+    description: place.data.en.short_description,
+    ...(ancestors.length > 0 && {
+      containedInPlace: {
+        '@type': 'AdministrativeArea',
+        name: ancestors[ancestors.length - 1].data.name_en ?? ancestors[ancestors.length - 1].data.name_pt,
+      },
+    }),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbItems.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: b.name,
+      item: b.url,
+    })),
+  },
+];
+
+const levelLabel = {
+  concelho: 'Concelho',
+  freguesia: 'Freguesia',
+  bairro: 'Bairro',
+  lugar: 'Lugar',
+}[place.data.level];
+---
+
+<BaseLayout
+  lang="en"
+  title={`${displayName} · Margem Cool`}
+  description={place.data.en.short_description}
+  alternateUrl={alternatePath}
+  canonicalPath={canonicalPath}
+  jsonLd={jsonLd}
+>
+  <article class="place">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/en/places/">Places</a></li>
+          {ancestors.map((a) => (
+            <li>
+              <a href={`/en/places/${a.slug}/`}>{a.data.name_en ?? a.data.name_pt}</a>
+            </li>
+          ))}
+          <li aria-current="page">{displayName}</li>
+        </ol>
+      </nav>
+
+      <header class="place__head">
+        <p class="place__kicker smallcaps">{levelLabel}</p>
+        <h1 class="place__title">{displayName}</h1>
+        <p class="place__dek">{place.data.en.short_description}</p>
+        {place.data.en.page_status === 'placeholder' && (
+          <p class="place__status smallcaps">Page under construction</p>
+        )}
+      </header>
+
+      {children.length > 0 && (
+        <section class="place__children">
+          <h2 class="place__children-title smallcaps">
+            {place.data.level === 'concelho' ? 'Freguesias' : 'Areas'}
+          </h2>
+          <ul role="list" class="children-list">
+            {children.map((c) => {
+              const childName = c.data.name_en ?? c.data.name_pt;
+              return (
+                <li>
+                  <a href={`/en/places/${c.slug}/`}>
+                    <span class="children-list__name">{childName}</span>
+                    <span class="children-list__short">{c.data.en.short_description}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .place { padding: var(--space-xl) 0 var(--space-3xl); }
+
+  .breadcrumb { font-family: var(--font-display); font-size: var(--type-caption); color: var(--color-text-secondary); margin: 0 0 var(--space-xl); }
+  .breadcrumb ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+  .breadcrumb li::after { content: '·'; margin-left: var(--space-xs); color: var(--color-rule); }
+  .breadcrumb li:last-child::after { content: ''; }
+  .breadcrumb a { border-bottom: 0; }
+  .breadcrumb [aria-current="page"] { color: var(--color-text); }
+
+  .place__head { max-width: var(--content-column); margin: 0 auto var(--space-2xl); }
+  .place__kicker { margin: 0 0 var(--space-md); font-size: var(--type-caption); color: var(--color-accent); }
+  .place__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    margin: 0 0 var(--space-md);
+    line-height: var(--leading-headline);
+  }
+  @media (max-width: 720px) { .place__title { font-size: var(--type-h1-mobile); } }
+  .place__dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-md);
+  }
+  .place__status { margin: 0; font-size: var(--type-caption); color: var(--color-text-secondary); }
+
+  .place__children { max-width: var(--wide-section); margin: 0 auto; }
+  .place__children-title { font-size: var(--type-caption); color: var(--color-text-secondary); margin: 0 0 var(--space-md); }
+
+  .children-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+  .children-list a {
+    display: block;
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--color-rule);
+    border-bottom: 0;
+    text-decoration: none;
+    transition: opacity 120ms ease;
+  }
+  .children-list a:hover { opacity: 0.7; }
+  .children-list__name {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h3);
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+  .children-list__short {
+    display: block;
+    font-family: var(--font-body);
+    color: var(--color-text-secondary);
+    font-size: var(--type-small);
+  }
+</style>

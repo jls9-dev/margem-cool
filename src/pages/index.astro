@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MastheadLockup from '../components/brand/MastheadLockup.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Margem Cool',
+  alternateName: 'Margem Cool — A Margem Sul, sem filtros',
+  url: 'https://margemcool.pt/',
+  inLanguage: ['pt-PT', 'en'],
+  description: 'Margem Cool é uma publicação da Margem Sul, escrita de onde vivemos, em português e inglês, para as pessoas da região e para quem a quer conhecer melhor.',
+};
+---
+
+<BaseLayout
+  lang="pt"
+  title="Margem Cool · A Margem Sul, sem filtros"
+  description="Margem Cool é uma publicação da Margem Sul, escrita de onde vivemos, em português e inglês."
+  alternateUrl="/en/"
+  canonicalPath="/"
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <div class="container">
+      <div class="hero__inner">
+        <MastheadLockup size={420} />
+        <p class="hero__lede">
+          Uma publicação da Margem Sul, escrita de onde vivemos, em português e inglês, para as pessoas da região e para quem a quer conhecer melhor.
+        </p>
+        <p class="hero__status smallcaps">Em construção · Volta em breve</p>
+        <p class="hero__links">
+          <a href="/lugares/">Lugares</a>
+          <span aria-hidden="true">·</span>
+          <a href="/sobre/">Sobre</a>
+          <span aria-hidden="true">·</span>
+          <a href="/en/" hreflang="en">English</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--space-3xl) 0 var(--space-2xl);
+  }
+  .hero__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xl);
+  }
+  .hero__lede {
+    font-family: var(--font-body);
+    font-size: var(--type-lead);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 60ch;
+  }
+  .hero__status {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--type-small);
+  }
+  .hero__links {
+    font-family: var(--font-display);
+    font-size: var(--type-small);
+    color: var(--color-text-secondary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+  .hero__links span { color: var(--color-rule); }
+</style>

@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  lang="pt"
+  title="Página não encontrada · Margem Cool"
+  description="A página que procura não existe."
+  canonicalPath="/404/"
+>
+  <section class="notfound">
+    <div class="container">
+      <div class="notfound__inner">
+        <p class="notfound__kicker smallcaps">404</p>
+        <h1 class="notfound__title">Página não encontrada</h1>
+        <p>A página que procura não existe — ou ainda não foi escrita.</p>
+        <p><a href="/">Voltar ao início</a></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound { padding: var(--space-3xl) 0; }
+  .notfound__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .notfound__kicker {
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+    margin: 0 0 var(--space-md);
+  }
+  .notfound__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    margin: 0 0 var(--space-md);
+  }
+</style>

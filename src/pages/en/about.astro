@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About · Margem Cool',
+  inLanguage: 'en',
+  url: 'https://margemcool.pt/en/about/',
+};
+---
+
+<BaseLayout
+  lang="en"
+  title="About · Margem Cool"
+  description="Margem Cool is a publication of the Margem Sul, written from where we live, in Portuguese and English."
+  alternateUrl="/sobre/"
+  canonicalPath="/en/about/"
+  jsonLd={jsonLd}
+>
+  <article class="about">
+    <div class="container">
+      <div class="about__inner">
+        <p class="about__kicker smallcaps">Attentive analysis</p>
+        <h1 class="about__title">About</h1>
+        <p class="about__lede">
+          Margem Cool is a publication of the Margem Sul, written from where we live, in Portuguese and English, for the people of the region and the people who want to know it better.
+        </p>
+        <p>
+          This page will be developed soon. For now, the publication is under construction: the infrastructure is in place, the concelhos and freguesias are mapped, editorial content is on its way.
+        </p>
+        <p class="about__tagline smallcaps">The other side</p>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about { padding: var(--space-2xl) 0 var(--space-3xl); }
+  .about__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .about__kicker {
+    margin: 0 0 var(--space-md);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .about__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-lg);
+  }
+  @media (max-width: 720px) {
+    .about__title { font-size: var(--type-h1-mobile); }
+  }
+  .about__lede {
+    font-family: var(--font-body);
+    font-size: var(--type-lead);
+    margin: 0 0 var(--space-lg);
+    line-height: 1.5;
+  }
+  .about__tagline {
+    margin-top: var(--space-2xl);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+</style>

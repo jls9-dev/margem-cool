@@ -1,0 +1,85 @@
+/*
+ * Margem Cool — design tokens
+ * Palette "Industrial Coast", type stack Outfit Variable + Source Serif 4.
+ * All vertical rhythm is multiples of 8.
+ */
+
+:root {
+  /* Palette — Industrial Coast */
+  --mc-teal: #0F5C5D;
+  --mc-rust: #B85C38;
+  --mc-cream: #F5F1E8;
+  --mc-charcoal: #1F2328;
+  --mc-cool-grey: #8A949E;
+
+  /* Dark-mode variants */
+  --mc-teal-dark: #1F7A7C;
+  --mc-rust-dark: #D17347;
+  --mc-cool-grey-dark: #7A8390;
+
+  /* Semantic colour roles */
+  --color-background: var(--mc-cream);
+  --color-text: var(--mc-charcoal);
+  --color-text-secondary: var(--mc-cool-grey);
+  --color-brand: var(--mc-teal);
+  --color-accent: var(--mc-rust);
+  --color-rule: rgba(31, 35, 40, 0.12);
+
+  /* Typography */
+  --font-display: 'Outfit Variable', system-ui, -apple-system, sans-serif;
+  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+  /* Type scale — desktop */
+  --type-wordmark: 92px;
+  --type-hero: 56px;
+  --type-h1: 44px;
+  --type-h2: 28px;
+  --type-h3: 22px;
+  --type-lead: 20px;
+  --type-body: 18px;
+  --type-small: 14px;
+  --type-caption: 13px;
+  --type-masthead-meta: 12px;
+
+  /* Type scale — mobile */
+  --type-hero-mobile: 36px;
+  --type-h1-mobile: 32px;
+  --type-h2-mobile: 24px;
+  --type-h3-mobile: 20px;
+  --type-body-mobile: 17px;
+
+  /* Vertical rhythm */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 80px;
+
+  /* Layout */
+  --max-page-width: 1200px;
+  --content-column: 720px;
+  --wide-section: 1080px;
+  --page-margin-mobile: 20px;
+
+  /* Line-heights */
+  --leading-body: 1.6;
+  --leading-display: 0.95;
+  --leading-headline: 1.15;
+
+  /* Letter-spacing */
+  --tracking-smallcaps: 0.12em;
+  --tracking-masthead: 0.14em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--mc-charcoal);
+    --color-text: var(--mc-cream);
+    --color-text-secondary: var(--mc-cool-grey-dark);
+    --color-brand: var(--mc-teal-dark);
+    --color-accent: var(--mc-rust-dark);
+    --color-rule: rgba(245, 241, 232, 0.18);
+  }
+}

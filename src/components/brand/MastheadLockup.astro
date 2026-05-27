@@ -1,0 +1,77 @@
+---
+/**
+ * MastheadLockup — wordmark + Análise atenta descriptor + tagline.
+ *
+ * Props:
+ *   compact     — single-line variant; descriptor and tagline render to the
+ *                 right of the wordmark instead of beneath. Default false.
+ *   size        — wordmark size in px. Default 280 (or 200 when compact).
+ *   showTagline — whether to render the rust tagline. Default true.
+ *   monochrome  — passed through to the wordmark.
+ */
+import Wordmark from './Wordmark.astro';
+
+interface Props {
+  compact?: boolean;
+  size?: number;
+  showTagline?: boolean;
+  monochrome?: boolean;
+}
+const {
+  compact = false,
+  size = compact ? 200 : 280,
+  showTagline = true,
+  monochrome = false,
+} = Astro.props;
+---
+
+<div class:list={['mc-masthead', compact && 'mc-masthead--compact']}>
+  <div class="mc-masthead__mark">
+    <Wordmark size={size} monochrome={monochrome} />
+  </div>
+  <div class="mc-masthead__meta">
+    <p class="mc-masthead__descriptor smallcaps">Análise atenta</p>
+    {showTagline && (
+      <p class="mc-masthead__tagline smallcaps">A Margem Sul, sem filtros</p>
+    )}
+  </div>
+</div>
+
+<style>
+  .mc-masthead {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .mc-masthead--compact {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .mc-masthead__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .mc-masthead__descriptor,
+  .mc-masthead__tagline {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--type-masthead-meta);
+    letter-spacing: var(--tracking-masthead);
+    line-height: 1;
+  }
+
+  .mc-masthead__descriptor {
+    color: var(--color-text);
+  }
+
+  .mc-masthead__tagline {
+    color: var(--color-accent);
+  }
+</style>

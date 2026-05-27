@@ -1,0 +1,67 @@
+---
+/**
+ * PillarStub — placeholder content for pillar landing pages during Phase 0.
+ * Phase 1 replaces these with real pillar landing pages featuring articles.
+ */
+interface Props {
+  lang: 'pt' | 'en';
+  title: string;
+  dek?: string;
+}
+const { lang, title, dek } = Astro.props;
+
+const comingSoon = lang === 'pt' ? 'Em construção' : 'Under construction';
+const homeLabel = lang === 'pt' ? 'Voltar ao início' : 'Back to the home page';
+const homeHref = lang === 'pt' ? '/' : '/en/';
+---
+
+<section class="pillar-stub">
+  <div class="container">
+    <div class="pillar-stub__inner">
+      <p class="pillar-stub__kicker smallcaps">{comingSoon}</p>
+      <h1 class="pillar-stub__title">{title}</h1>
+      {dek && <p class="pillar-stub__dek">{dek}</p>}
+      <p class="pillar-stub__home">
+        <a href={homeHref}>{homeLabel}</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pillar-stub {
+    padding: var(--space-3xl) 0;
+  }
+  .pillar-stub__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .pillar-stub__kicker {
+    margin: 0 0 var(--space-md);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .pillar-stub__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-md);
+  }
+  @media (max-width: 720px) {
+    .pillar-stub__title { font-size: var(--type-h1-mobile); }
+  }
+  .pillar-stub__dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-xl);
+    max-width: 60ch;
+  }
+  .pillar-stub__home {
+    font-family: var(--font-display);
+    font-size: var(--type-small);
+    margin: 0;
+  }
+</style>

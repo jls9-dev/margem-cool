@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'Sobre · Margem Cool',
+  inLanguage: 'pt-PT',
+  url: 'https://margemcool.pt/sobre/',
+};
+---
+
+<BaseLayout
+  lang="pt"
+  title="Sobre · Margem Cool"
+  description="Margem Cool é uma publicação da Margem Sul, escrita de onde vivemos, em português e inglês."
+  alternateUrl="/en/about/"
+  canonicalPath="/sobre/"
+  jsonLd={jsonLd}
+>
+  <article class="about">
+    <div class="container">
+      <div class="about__inner">
+        <p class="about__kicker smallcaps">Análise atenta</p>
+        <h1 class="about__title">Sobre</h1>
+        <p class="about__lede">
+          Margem Cool é uma publicação da Margem Sul, escrita de onde vivemos, em português e inglês, para as pessoas da região e para quem a quer conhecer melhor.
+        </p>
+        <p>
+          Esta página será desenvolvida em breve. Por agora, a publicação está em construção: a infraestrutura está pronta, os concelhos e freguesias estão mapeados, o conteúdo editorial está a chegar.
+        </p>
+        <p class="about__tagline smallcaps">O outro lado</p>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about { padding: var(--space-2xl) 0 var(--space-3xl); }
+  .about__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .about__kicker {
+    margin: 0 0 var(--space-md);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .about__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-lg);
+  }
+  @media (max-width: 720px) {
+    .about__title { font-size: var(--type-h1-mobile); }
+  }
+  .about__lede {
+    font-family: var(--font-body);
+    font-size: var(--type-lead);
+    margin: 0 0 var(--space-lg);
+    line-height: 1.5;
+  }
+  .about__tagline {
+    margin-top: var(--space-2xl);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+</style>
