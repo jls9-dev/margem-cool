@@ -21,7 +21,7 @@ Load-bearing. Every architectural and content decision should be checked against
 1. **Near-total automation.** Weekly automated content drops with minimal James input. Engineer the routine, not the exception. Don't rely on human review as the safety net — self-review against these principles is the safety net.
 2. **Simple, robust, fast, efficient systems.** Every system in this repo — schemas, generators, scrapers, build pipelines, scheduled routines — should be simple to understand, robust to changes, fast at runtime, efficient in resources. Weigh options on all four.
 3. **Genuinely useful for residents.** The test for any page or feature: would James (or any Margem Sul resident) actually want this? Not "is this impressive editorial". Just: is it useful?
-4. **Clear and simple for users.** Plain language. Answer questions quickly. Make actionable parts easy to find. No preciousness.
+4. **Clear and simple UX.** The interface and design — pages look like the answer to the user's question, actionable parts surface first, layout is consistent across page types, no decorative chrome that doesn't earn its place, mobile-readable. (Writing voice is governed by `brand.md` §4, not by this principle.)
 
 ## Framing
 
