@@ -1,0 +1,70 @@
+---
+/**
+ * WordmarkCompact — the horizontal single-line variant of the wordmark.
+ *
+ * Per brand.md §5.2 — "for very tight spaces, margem cool can appear on a
+ * single line with a shorter river-line beneath it." Used in the site
+ * header where the stacked form would dominate.
+ *
+ * Props:
+ *   size       — rendered height in px. Default 24.
+ *   monochrome — when true, the wordmark and river both render in the
+ *                current text colour.
+ */
+interface Props {
+  size?: number;
+  monochrome?: boolean;
+  ariaLabel?: string;
+}
+const { size = 24, monochrome = false, ariaLabel = 'margem cool' } = Astro.props;
+
+const VBW = 360;
+const VBH = 72;
+const aspect = VBW / VBH;
+const width = Math.round(size * aspect);
+
+const inkColor = monochrome ? 'currentColor' : 'var(--mc-charcoal, #1F2328)';
+const accentColor = monochrome ? 'currentColor' : 'var(--mc-rust, #B85C38)';
+---
+
+<svg
+  class="mc-wordmark-compact"
+  width={width}
+  height={size}
+  viewBox={`0 0 ${VBW} ${VBH}`}
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label={ariaLabel}
+>
+  <text
+    x="0"
+    y="42"
+    class="mc-wordmark-compact__text"
+    style={`fill: ${inkColor};`}
+  >margem coo</text>
+  <path
+    d="
+      M 218 4
+      L 218 48
+      C 218 56, 226 60, 236 56
+      C 252 50, 270 44, 296 46
+      C 320 48, 340 50, 358 50
+    "
+    fill="none"
+    stroke={accentColor}
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
+
+<style>
+  .mc-wordmark-compact { display: block; overflow: visible; }
+  .mc-wordmark-compact__text {
+    font-family: var(--font-display, 'Outfit Variable', system-ui, sans-serif);
+    font-weight: 600;
+    font-size: 52px;
+    letter-spacing: -0.02em;
+    dominant-baseline: alphabetic;
+  }
+</style>

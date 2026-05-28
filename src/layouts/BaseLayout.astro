@@ -2,7 +2,7 @@
 import '../styles/tokens.css';
 import '../styles/base.css';
 
-import MastheadLockup from '../components/brand/MastheadLockup.astro';
+import WordmarkCompact from '../components/brand/WordmarkCompact.astro';
 import MCMonogram from '../components/brand/MCMonogram.astro';
 import { PRIMARY_NAV, htmlLang, SITE_URL, type Lang } from '../utils/i18n';
 
@@ -83,7 +83,7 @@ const copyrightLabel = lang === 'pt'
     <header class="site-header">
       <div class="container site-header__inner">
         <a class="site-header__brand" href={lang === 'pt' ? '/' : '/en/'} aria-label="Margem Cool">
-          <MastheadLockup compact size={180} />
+          <WordmarkCompact size={22} />
         </a>
         <nav class="site-nav" aria-label={lang === 'pt' ? 'Navegação principal' : 'Primary navigation'}>
           <ul>
@@ -135,22 +135,32 @@ const copyrightLabel = lang === 'pt'
       .skip-link:focus { left: var(--space-sm); top: var(--space-sm); }
 
       .site-header {
-        padding: var(--space-lg) 0;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        padding: 12px 0;
+        background: color-mix(in srgb, var(--color-background) 92%, transparent);
+        backdrop-filter: saturate(140%) blur(8px);
+        -webkit-backdrop-filter: saturate(140%) blur(8px);
         border-bottom: 1px solid var(--color-rule);
       }
       .site-header__inner {
         display: flex;
         align-items: center;
-        gap: var(--space-xl);
-        flex-wrap: wrap;
+        gap: var(--space-md);
+        min-height: 32px;
       }
       .site-header__brand {
         border-bottom: 0;
         text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
       }
 
       .site-nav {
         flex: 1;
+        min-width: 0;
       }
       .site-nav ul {
         list-style: none;
@@ -164,21 +174,29 @@ const copyrightLabel = lang === 'pt'
       .site-nav a {
         font-family: var(--font-display);
         font-weight: 500;
-        font-size: var(--type-small);
+        font-size: 12px;
         letter-spacing: var(--tracking-smallcaps);
         text-transform: uppercase;
         border-bottom: 0;
         color: var(--color-text);
+        white-space: nowrap;
       }
       .site-nav a[aria-current="page"] { color: var(--color-accent); }
       .site-nav a:hover { color: var(--color-accent); }
 
       .lang-switch {
+        flex-shrink: 0;
         border: 1px solid var(--color-rule);
-        padding: 6px 10px;
-        font-size: var(--type-caption);
+        padding: 4px 8px;
+        font-size: 11px;
       }
       .lang-switch:hover { border-color: var(--color-accent); }
+
+      @media (max-width: 720px) {
+        .site-header { padding: 10px 0; }
+        .site-nav ul { gap: 12px; }
+        .site-nav a { font-size: 11px; }
+      }
 
       .site-footer {
         margin-top: var(--space-3xl);
