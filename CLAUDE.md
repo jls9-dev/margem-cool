@@ -14,6 +14,14 @@ When in doubt about a brand/editorial decision, defer to `brand.md`. When in dou
 
 A bilingual editorial publication of the Margem Sul, written from where we live, in Portuguese and English. Run by James (and Lucia, native Portuguese speaker). Not a property site. Not a tourism guide. Not content marketing. A real publication aspiring to become a regional institution.
 
+## Operating principles for this project
+
+These are load-bearing. Every architectural and editorial decision should be checked against them.
+
+1. **Near-total automation.** The publication is being engineered to run weekly automated content drops with minimal James input. If a feature requires manual upkeep to be useful, redesign so the upkeep is automated. See `project_margem_cool_automation_principle.md` for the tiered model (Tier 1 fully auto, Tier 2 light review, Tier 3 protected manual editorial).
+2. **Content is largely AI-drafted, human-reviewed.** Claude writes the substantive copy. James edits English. Lucia reviews Portuguese. First-person experiential claims still need a real source.
+3. **Of-the-place, not about-the-place.** Even with automation, the voice and editorial principles in `brand.md` (peer-to-peer, attentive, *tu* register, no banned vocabulary) apply. Automation is the *how*; brand is the *what*. Never trade brand voice for volume.
+
 ## Operating posture for this repo
 
 - **Push and deploy without reserve through ~2026-06-25.** No real visitors yet — every change goes straight to `main` and Cloudflare auto-deploys. Don't ask "shall I push?". See `project_margem_cool_free_deploy.md` in the global memory for the time-bound version.
