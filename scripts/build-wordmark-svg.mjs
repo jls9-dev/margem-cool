@@ -119,10 +119,14 @@ function measureText(text) {
     `Q ${(lX + lStemWidth / 2).toFixed(2)} ${(lStemTop - lStemWidth * 0.3).toFixed(2)} ` +
     `${(lX).toFixed(2)} ${lStemTop.toFixed(2)} Z`;
 
+  // Bottom must clear the deepest bezier control point plus the stroke
+  // half-width plus breathing room — the curve approaches each control point
+  // but never reaches it; we pad generously so it never clips.
+  const deepest = Math.max(c1y, c2y, c3y, c4y, riverStartY);
   const vbX = -2;
-  const vbY = baselineY - FONT_SIZE * 0.85;
-  const vbW = riverEndX + 4;
-  const vbH = (riverStartY + FONT_SIZE * 0.25) - vbY + 4;
+  const vbY = baselineY - FONT_SIZE * 0.85 - 4;
+  const vbW = riverEndX + 6;
+  const vbH = (deepest + lStemWidth + 8) - vbY;
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vbX.toFixed(2)} ${vbY.toFixed(2)} ${vbW.toFixed(2)} ${vbH.toFixed(2)}" role="img" aria-label="margem cool">
   ${STYLE_BLOCK}
@@ -180,10 +184,11 @@ function measureText(text) {
     `Q ${(lX + lStemWidth / 2).toFixed(2)} ${(lStemTop - lStemWidth * 0.3).toFixed(2)} ` +
     `${(lX).toFixed(2)} ${lStemTop.toFixed(2)} Z`;
 
+  const deepest = Math.max(c1y, c2y, c3y, c4y, riverStartY);
   const vbX = -2;
-  const vbY = topBaseY - fontSize * 0.85;
-  const vbW = riverEndX + 4;
-  const vbH = (riverStartY + fontSize * 0.25) - vbY + 4;
+  const vbY = topBaseY - fontSize * 0.85 - 4;
+  const vbW = riverEndX + 6;
+  const vbH = (deepest + lStemWidth + 8) - vbY;
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vbX.toFixed(2)} ${vbY.toFixed(2)} ${vbW.toFixed(2)} ${vbH.toFixed(2)}" role="img" aria-label="margem cool">
   ${STYLE_BLOCK}

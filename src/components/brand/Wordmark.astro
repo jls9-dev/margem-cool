@@ -10,8 +10,8 @@ interface Props {
 }
 const { size = 360, ariaLabel = 'margem cool' } = Astro.props;
 
-// SVG intrinsic viewBox is 500 × 240 — width 500 sets the scale
-const aspectH = 240 / 500;
+// SVG intrinsic viewBox is 502 × 235 — width matches and height scales.
+const aspectH = 235 / 502;
 const height = Math.round(size * aspectH);
 ---
 
