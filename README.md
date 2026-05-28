@@ -47,11 +47,10 @@ After reading these, you should understand:
 
 - Not a property-business marketing site (despite South Bank Real Estate being a sister company at arm's length)
 - Not a tourism guide
-- Not a content-marketing operation
 - Not a single-author blog
 - Not an expat-Portugal lifestyle publication
 
-It is a regional publication aspiring to become a local institution. All decisions should be checked against that ambition.
+It is a useful local information site for the Margem Sul, built to grow into much more over time. The ambition over the long term is to become a real reference for the region; the operating posture today is to be genuinely useful first and trust growth to follow.
 
 ## Repository structure
 

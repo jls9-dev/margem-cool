@@ -16,11 +16,16 @@ A bilingual editorial publication of the Margem Sul, written from where we live,
 
 ## Operating principles for this project
 
-These are load-bearing. Every architectural and editorial decision should be checked against them.
+Load-bearing. Every architectural and content decision should be checked against them. The full canonical version lives in `project_margem_cool_principles.md` in the global memory.
 
-1. **Near-total automation.** The publication is being engineered to run weekly automated content drops with minimal James input. If a feature requires manual upkeep to be useful, redesign so the upkeep is automated. See `project_margem_cool_automation_principle.md` for the tiered model (Tier 1 fully auto, Tier 2 light review, Tier 3 protected manual editorial).
-2. **Content is largely AI-drafted, human-reviewed.** Claude writes the substantive copy. James edits English. Lucia reviews Portuguese. First-person experiential claims still need a real source.
-3. **Of-the-place, not about-the-place.** Even with automation, the voice and editorial principles in `brand.md` (peer-to-peer, attentive, *tu* register, no banned vocabulary) apply. Automation is the *how*; brand is the *what*. Never trade brand voice for volume.
+1. **Near-total automation.** Weekly automated content drops with minimal James input. Engineer the routine, not the exception. Don't rely on human review as the safety net — self-review against these principles is the safety net.
+2. **Simple, robust, fast, efficient systems.** Every system in this repo — schemas, generators, scrapers, build pipelines, scheduled routines — should be simple to understand, robust to changes, fast at runtime, efficient in resources. Weigh options on all four.
+3. **Genuinely useful for residents.** The test for any page or feature: would James (or any Margem Sul resident) actually want this? Not "is this impressive editorial". Just: is it useful?
+4. **Clear and simple for users.** Plain language. Answer questions quickly. Make actionable parts easy to find. No preciousness.
+
+## Framing
+
+Margem Cool is a **useful content site about the Margem Sul**. That's the honest framing. The earlier "editorial publication aspiring to become a regional institution" framing in `brand.md` has been relaxed — content sites can be useful, this one will be, and it may grow into more over time. The brand voice (peer-to-peer, *tu* register, no banned vocabulary) still applies because it produces clear useful content. The "publication" scaffolding doesn't.
 
 ## Operating posture for this repo
 

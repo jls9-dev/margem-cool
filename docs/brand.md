@@ -56,7 +56,7 @@ The publication leans into bias of attention (its specialism) and is ruthless ab
 
 ### 2.4 The publication is *of* the place, not *about* it
 
-A subtle but load-bearing distinction. The publication does not stand outside the Margem Sul and report on it. The publication is part of the Margem Sul, written from inside, by people who live there. This framing rules out tourism-content modes and content-marketing modes that necessarily position the publication as external to its subject.
+A subtle but load-bearing distinction. The site does not stand outside the Margem Sul and report on it. It is part of the Margem Sul, written from inside, by people who live there. This rules out tourism-guide framings that position the writer as external to the subject. (Margem Cool is a content site in the practical sense — useful, well-organised information about the region — and that's fine. What it isn't is *outside* the region looking in.)
 
 ### 2.5 Portuguese-first, English-alongside
 
@@ -195,7 +195,7 @@ Portuguese marketing-vocabulary similarly avoided:
 - **No exclamation marks.** Almost never. They're a marker of the wrong voices.
 - **No trailing ellipses** for trailing-off effect.
 - **Quotation marks**: curly double quotes "" in both English and Portuguese.
-- **No listicle structures** like "5 reasons to..." or "The 10 best...". Lists fine as format when the subject genuinely organises into a list; listicle-as-content-marketing-format isn't.
+- **Lists are fine when the subject genuinely organises into a list** (the 9 concelhos, the freguesias of Almada, the *festas* of a given town). Avoid the hollow "5 reasons to..." / "10 best..." structure where the count is doing the work instead of the substance.
 - **Don't address readers as if new to Portugal.** No "Portugal, the country in southwestern Europe known for...". Assume basic context.
 
 ### 4.11 Portuguese spelling: Acordo Ortográfico de 1990
