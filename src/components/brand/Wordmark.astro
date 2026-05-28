@@ -1,29 +1,24 @@
 ---
 /**
- * Wordmark — the full stacked "margem cool" mark with the l descending into
- * the river. Loaded from /public/wordmark-stacked.svg so the letterforms
- * render identically everywhere with no webfont dependency.
+ * Wordmark — stacked "margem cool" mark with l descending into the river.
+ *
+ * Inlines the SVG file at build time via the `?raw` import suffix so the
+ * embedded style block is treated as a normal stylesheet by the browser.
+ * When SVGs are loaded via <img>, browsers run them in a restricted mode
+ * that can skip class-based fills, which is why we don't load it as an
+ * external image.
  */
+import svgSource from '../../../public/wordmark-stacked.svg?raw';
+
 interface Props {
   size?: number;
   ariaLabel?: string;
 }
 const { size = 360, ariaLabel = 'margem cool' } = Astro.props;
 
-// SVG intrinsic viewBox is 482 × 235 — width matches and height scales.
-const aspectH = 235 / 482;
-const height = Math.round(size * aspectH);
+const sized = svgSource
+  .replace('<svg ', `<svg width="${size}" `)
+  .replace('aria-label="margem cool"', `aria-label="${ariaLabel}"`);
 ---
 
-<img
-  class="mc-wordmark"
-  src="/wordmark-stacked.svg"
-  width={size}
-  height={height}
-  alt={ariaLabel}
-  decoding="async"
-/>
-
-<style>
-  .mc-wordmark { display: block; }
-</style>
+<Fragment set:html={sized} />

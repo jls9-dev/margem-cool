@@ -1,42 +1,37 @@
 ---
 /**
- * WordmarkCompact — horizontal wordmark for the slim sticky header.
+ * WordmarkCompact — horizontal "margem cool" wordmark for the slim header.
  *
- * The /wordmark.svg file carries the full mark including the river curve
- * with proper padding so it never clips. In the header we only want the
- * letters: the river at 36px would be too small to read anyway, so the
- * wrapper crops it off via overflow:hidden. We let the img render at the
- * natural aspect needed for the LETTERS to be `height` tall, and the
- * wrapper hides everything below that.
+ * Inlines the SVG file at build time. Wraps in a span that crops the river
+ * curve off — at 36px tall the river would be illegible anyway, and the
+ * letters fill the bar properly when the river is hidden.
  *
- * Within the SVG viewBox (869 × 156) the letter region runs vY=-4 to ~95
- * (baseline + descender), i.e. ~99 of 156 → letters are 63.5% of total.
+ * The SVG file's viewBox is 849 × 128; the letter region occupies ~99 of
+ * those 128 (≈77%). We render the SVG at an internal height that puts the
+ * letters at `height` pixels, and the wrapper crops the bottom.
  */
+import svgSource from '../../../public/wordmark.svg?raw';
+
 interface Props {
   height?: number;
   ariaLabel?: string;
 }
 const { height = 36, ariaLabel = 'margem cool' } = Astro.props;
 
-// SVG viewBox is 849 × 128; letters occupy ~99 of 128 vertical → ~77%.
 const LETTER_FRACTION = 99 / 128;
-const fullImgHeight = Math.round(height / LETTER_FRACTION);
-const fullImgWidth = Math.round(fullImgHeight * (849 / 128));
+const fullHeight = Math.round(height / LETTER_FRACTION);
+const fullWidth = Math.round(fullHeight * (849 / 128));
+
+const sized = svgSource
+  .replace('<svg ', `<svg width="${fullWidth}" height="${fullHeight}" `)
+  .replace('aria-label="margem cool"', `aria-label="${ariaLabel}"`);
 ---
 
 <span
   class="mc-wordmark-compact"
-  role="img"
-  aria-label={ariaLabel}
-  style={`height: ${height}px; width: ${fullImgWidth}px;`}
+  style={`height: ${height}px; width: ${fullWidth}px;`}
 >
-  <img
-    src="/wordmark.svg"
-    height={fullImgHeight}
-    width={fullImgWidth}
-    alt=""
-    decoding="async"
-  />
+  <Fragment set:html={sized} />
 </span>
 
 <style>
@@ -46,8 +41,7 @@ const fullImgWidth = Math.round(fullImgHeight * (849 / 128));
     vertical-align: middle;
     line-height: 0;
   }
-  .mc-wordmark-compact img {
+  .mc-wordmark-compact :global(svg) {
     display: block;
-    border: 0;
   }
 </style>
