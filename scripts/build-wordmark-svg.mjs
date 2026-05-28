@@ -21,8 +21,23 @@ const ROOT = join(__dirname, '..');
 const FONT_PATH = '/tmp/outfit-600.woff';  // static SemiBold from fontsource
 const OUT_DIR = join(ROOT, 'public');
 
-const INK = '#1F2328';   // charcoal
-const RUST = '#B85C38';  // rust
+// Colour tokens. The SVG carries a <style> block so it adapts in dark mode
+// when loaded via <img>, matching the page tokens.
+const INK_LIGHT = '#1F2328';      // charcoal — letters on cream
+const INK_DARK = '#F5F1E8';       // cream — letters on charcoal
+const RUST_LIGHT = '#B85C38';
+const RUST_DARK = '#D17347';
+
+const STYLE_BLOCK = `<style>
+    .mc-ink { fill: ${INK_LIGHT}; }
+    .mc-rust-fill { fill: ${RUST_LIGHT}; }
+    .mc-rust-stroke { stroke: ${RUST_LIGHT}; }
+    @media (prefers-color-scheme: dark) {
+      .mc-ink { fill: ${INK_DARK}; }
+      .mc-rust-fill { fill: ${RUST_DARK}; }
+      .mc-rust-stroke { stroke: ${RUST_DARK}; }
+    }
+  </style>`;
 
 if (!existsSync(FONT_PATH)) {
   throw new Error(`Font file not found at ${FONT_PATH}. Re-download Outfit 600.`);
@@ -110,9 +125,10 @@ function measureText(text) {
   const vbH = (riverStartY + FONT_SIZE * 0.25) - vbY + 4;
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vbX.toFixed(2)} ${vbY.toFixed(2)} ${vbW.toFixed(2)} ${vbH.toFixed(2)}" role="img" aria-label="margem cool">
-  <g fill="${INK}">${cooGlyphs}</g>
-  <path d="${lStemPath}" fill="${RUST}"/>
-  <path d="${riverPath}" fill="none" stroke="${RUST}" stroke-width="${(lStemWidth).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round"/>
+  ${STYLE_BLOCK}
+  <g class="mc-ink">${cooGlyphs}</g>
+  <path class="mc-rust-fill" d="${lStemPath}"/>
+  <path class="mc-rust-stroke" d="${riverPath}" fill="none" stroke-width="${(lStemWidth).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
   await mkdir(OUT_DIR, { recursive: true });
@@ -170,9 +186,10 @@ function measureText(text) {
   const vbH = (riverStartY + fontSize * 0.25) - vbY + 4;
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vbX.toFixed(2)} ${vbY.toFixed(2)} ${vbW.toFixed(2)} ${vbH.toFixed(2)}" role="img" aria-label="margem cool">
-  <g fill="${INK}">${margemGlyphs}${cooGlyphs}</g>
-  <path d="${lStemPath}" fill="${RUST}"/>
-  <path d="${riverPath}" fill="none" stroke="${RUST}" stroke-width="${(lStemWidth).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round"/>
+  ${STYLE_BLOCK}
+  <g class="mc-ink">${margemGlyphs}${cooGlyphs}</g>
+  <path class="mc-rust-fill" d="${lStemPath}"/>
+  <path class="mc-rust-stroke" d="${riverPath}" fill="none" stroke-width="${(lStemWidth).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
   await writeFile(join(OUT_DIR, 'wordmark-stacked.svg'), svg);
