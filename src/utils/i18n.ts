@@ -61,6 +61,51 @@ export const PRIMARY_NAV = {
   ],
 } as const;
 
+export const FOOTER_NAV = {
+  pt: {
+    pillars: {
+      heading: 'Pilares',
+      links: [
+        { href: '/comer-e-beber/', label: 'Comer & Beber' },
+        { href: '/praia-e-natureza/', label: 'Praia & Natureza' },
+        { href: '/lugares-e-bairros/', label: 'Lugares & Bairros' },
+        { href: '/cultura-e-agenda/', label: 'Cultura & Agenda' },
+        { href: '/viver-aqui/', label: 'Viver Aqui' },
+        { href: '/dormir/', label: 'Dormir' },
+      ],
+    },
+    publication: {
+      heading: 'A publicação',
+      links: [
+        { href: '/sobre/', label: 'Sobre' },
+        { href: '/contacto/', label: 'Contacto' },
+        { href: '/parcerias/', label: 'Parcerias' },
+      ],
+    },
+  },
+  en: {
+    pillars: {
+      heading: 'Pillars',
+      links: [
+        { href: '/en/eat-and-drink/', label: 'Eat & Drink' },
+        { href: '/en/beach-and-outdoors/', label: 'Beach & Outdoors' },
+        { href: '/en/places-and-neighbourhoods/', label: 'Places & Neighbourhoods' },
+        { href: '/en/culture-and-whats-on/', label: 'Culture & What’s On' },
+        { href: '/en/living-here/', label: 'Living Here' },
+        { href: '/en/where-to-stay/', label: 'Where to Stay' },
+      ],
+    },
+    publication: {
+      heading: 'The publication',
+      links: [
+        { href: '/en/about/', label: 'About' },
+        { href: '/en/contact/', label: 'Contact' },
+        { href: '/en/partnerships/', label: 'Partnerships' },
+      ],
+    },
+  },
+} as const;
+
 export function htmlLang(lang: Lang): string {
   return lang === 'pt' ? 'pt-PT' : 'en';
 }

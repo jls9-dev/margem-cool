@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contacto · Margem Cool',
+  inLanguage: 'pt-PT',
+  url: 'https://margemcool.pt/contacto/',
+};
+---
+
+<BaseLayout
+  lang="pt"
+  title="Contacto · Margem Cool"
+  description="Como contactar a redacção da Margem Cool."
+  alternateUrl="/en/contact/"
+  canonicalPath="/contacto/"
+  jsonLd={jsonLd}
+>
+  <article class="page">
+    <div class="container">
+      <div class="page__inner">
+        <p class="page__kicker smallcaps">Margem Cool</p>
+        <h1 class="page__title">Contacto</h1>
+        <p class="page__lede">
+          Para falar com a redacção, escreve para <a href="mailto:hello@margemcool.pt">hello@margemcool.pt</a>.
+        </p>
+        <p>
+          Correcções, sugestões, recomendações de lugares, restaurantes e festas que devíamos cobrir — tudo é bem-vindo. Estamos sempre interessados em saber o que nos está a escapar na Margem Sul.
+        </p>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .page { padding: var(--space-2xl) 0 var(--space-3xl); }
+  .page__inner { max-width: var(--content-column); margin: 0 auto; }
+  .page__kicker { margin: 0 0 var(--space-md); color: var(--color-accent); font-size: var(--type-caption); }
+  .page__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-lg);
+  }
+  @media (max-width: 720px) { .page__title { font-size: var(--type-h1-mobile); } }
+  .page__lede {
+    font-family: var(--font-body);
+    font-size: var(--type-lead);
+    margin: 0 0 var(--space-lg);
+    line-height: 1.5;
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'Parcerias · Margem Cool',
+  inLanguage: 'pt-PT',
+  url: 'https://margemcool.pt/parcerias/',
+};
+---
+
+<BaseLayout
+  lang="pt"
+  title="Parcerias · Margem Cool"
+  description="Trabalhar com a Margem Cool em projectos da Margem Sul."
+  alternateUrl="/en/partnerships/"
+  canonicalPath="/parcerias/"
+  jsonLd={jsonLd}
+>
+  <article class="page">
+    <div class="container">
+      <div class="page__inner">
+        <p class="page__kicker smallcaps">Margem Cool</p>
+        <h1 class="page__title">Parcerias</h1>
+        <p class="page__lede">
+          Se estás a trabalhar em algo ligado à Margem Sul, fala connosco. Escreve para <a href="mailto:hello@margemcool.pt">hello@margemcool.pt</a>.
+        </p>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .page { padding: var(--space-2xl) 0 var(--space-3xl); }
+  .page__inner { max-width: var(--content-column); margin: 0 auto; }
+  .page__kicker { margin: 0 0 var(--space-md); color: var(--color-accent); font-size: var(--type-caption); }
+  .page__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-lg);
+  }
+  @media (max-width: 720px) { .page__title { font-size: var(--type-h1-mobile); } }
+  .page__lede {
+    font-family: var(--font-body);
+    font-size: var(--type-lead);
+    margin: 0;
+    line-height: 1.5;
+  }
+</style>

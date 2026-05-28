@@ -19,6 +19,7 @@ A bilingual editorial publication of the Margem Sul, written from where we live,
 - **Push and deploy without reserve through ~2026-06-25.** No real visitors yet — every change goes straight to `main` and Cloudflare auto-deploys. Don't ask "shall I push?". See `project_margem_cool_free_deploy.md` in the global memory for the time-bound version.
 - **The build must pass before pushing.** `npm run build` runs schema and cross-reference validation. Broken builds are not "live without reserve", they're broken.
 - **Portuguese content needs Lucia's review.** Anything new in Portuguese is `draft: true` until she clears it.
+- **Draft and discuss in English first, translate to Portuguese after.** James's English is stronger than his Portuguese. Show him EN copy for review; PT comes once EN is locked. See `feedback_english_first_then_translate.md`.
 
 ## Hard-won lessons from this session (2026-05-27 / 28)
 
