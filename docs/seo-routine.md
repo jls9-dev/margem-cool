@@ -15,7 +15,21 @@ npm run seo:brief -- "cacilhas" --lang pt
 npm run seo:brief -- "cacilhas" --lang en
 ```
 
-Briefs land in `seo/briefs/<slug>-<lang>.md` plus a raw JSON dump alongside (gitignored). Cross-check the key terms against Ubersuggest for real volume; drop weird terms; add high-volume terms NeuronWriter missed. **NeuronWriter is one input, not gospel** — `feedback_neuronwriter_not_gospel.md` in the global memory.
+Briefs land in `seo/briefs/<slug>-<lang>.md` plus a raw JSON dump alongside (gitignored).
+
+**How to read the brief — what to use, what to ignore.**
+
+NeuronWriter is for **vocabulary coverage** and **intent discovery**. It is *not* a length target, structural blueprint, or list of sites to mimic. See `feedback_neuronwriter_use_judiciously.md` in the global memory for the canonical guidance. Specifically:
+
+- **Use** Block 1 / Block 2 terms as a vocabulary coverage check — make sure we naturally hit the topical words competitors converge on. Drop weird outliers.
+- **Use** the People Also Ask + suggest questions + topic-importance matrix to make sure we answer every real user intent on the subject.
+- **Filter** the competitor list manually before reading heading patterns. The top 10 SERP results almost always include a ferry timetable, a Wikipedia infobox, a hotel booking aggregator, and a tourism aggregator — none of which are trying to be a useful guide. Identify the 2-3 entries that are actually trying (Time Out, Lisboa Secreta, the best municipal pages) and learn from those.
+- **Ignore** the competitor word-count median as a target. Use it only as a "we should be substantially more comprehensive than this" floor.
+- **Ignore** the heading texts as a structural copy-paste skeleton — read them for intent signals, then design our own structure to be the best possible answer.
+
+The win condition is to be **by far the most thorough, comprehensive, clear, useful, and interesting resource on the subject** — better than anything that exists. Don't be afraid of length when the content earns it; do invest in scannability (anchored sections, tight intros, sidenotes, table of contents on longer pages).
+
+Cross-check key terms against Ubersuggest for real volume. Add high-volume terms NW missed.
 
 ### 2 — Plan
 
