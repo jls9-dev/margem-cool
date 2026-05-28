@@ -117,27 +117,37 @@ export async function findProjectByName(name) {
   return all.find(p => p.name?.toLowerCase().includes(lower)) ?? null;
 }
 
-// Convenience: get or create a query for a keyword in a project. If an existing
-// "ready" query for the same keyword+language exists, returns it; otherwise
-// creates a new one (which consumes a monthly query limit) and polls until ready.
-export async function getOrCreateQuery({ project, keyword, engine = 'google.pt', language = 'Portuguese', maxWaitMs = 120000 }) {
-  // Look for an existing query first
-  const existing = await listQueries({ project, keyword, language, engine, status: 'ready' });
-  if (Array.isArray(existing) && existing.length > 0) {
-    return { query: existing[0].query, created: false };
+// Convenience: get or create a query for a keyword in a project.
+// First looks for ANY existing query (ready or processing) matching keyword+lang+engine
+// to avoid double-spending a monthly quota credit. Only creates a new one if none exists.
+// Then polls until ready or timeout.
+export async function getOrCreateQuery({ project, keyword, engine = 'google.pt', language = 'Portuguese', maxWaitMs = 300000 }) {
+  // Look for ANY existing query for this combo — including ones still processing.
+  // The status param filters; omit it to get all.
+  const all = await listQueries({ project, keyword, language, engine });
+  let queryId;
+  let created = false;
+  if (Array.isArray(all) && all.length > 0) {
+    queryId = all[0].query;
+    if (all[0].status === 'ready') {
+      const data = await getQuery(queryId);
+      return { query: queryId, created: false, data };
+    }
+  } else {
+    const fresh = await newQuery({ project, keyword, engine, language });
+    queryId = fresh.query;
+    created = true;
   }
-
-  const created = await newQuery({ project, keyword, engine, language });
-  const queryId = created.query;
 
   // Poll until ready, with backoff
   const start = Date.now();
-  let waitMs = 3000;
+  let waitMs = 5000;
   while (Date.now() - start < maxWaitMs) {
     const q = await getQuery(queryId);
-    if (q.status === 'ready') return { query: queryId, created: true, data: q };
+    if (q.status === 'ready') return { query: queryId, created, data: q };
+    process.stderr.write(`  status: ${q.status || 'unknown'} (waited ${Math.round((Date.now() - start) / 1000)}s)\n`);
     await new Promise(r => setTimeout(r, waitMs));
-    waitMs = Math.min(waitMs * 1.5, 15000);
+    waitMs = Math.min(waitMs * 1.3, 20000);
   }
-  throw new Error(`Query ${queryId} did not become ready within ${maxWaitMs / 1000}s`);
+  throw new Error(`Query ${queryId} did not become ready within ${maxWaitMs / 1000}s. Re-run the brief command to resume polling — the existing query will be reused without spending a fresh quota credit.`);
 }
