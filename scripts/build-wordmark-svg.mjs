@@ -119,10 +119,11 @@ function measureText(text) {
     `Q ${(lX + lStemWidth / 2).toFixed(2)} ${(lStemTop - lStemWidth * 0.3).toFixed(2)} ` +
     `${(lX).toFixed(2)} ${lStemTop.toFixed(2)} Z`;
 
-  // Bottom must clear the deepest bezier control point plus the stroke
-  // half-width plus breathing room — the curve approaches each control point
-  // but never reaches it; we pad generously so it never clips.
-  const deepest = Math.max(c1y, c2y, c3y, c4y, riverStartY);
+  // Bottom must clear the deepest bezier control point including the implicit
+  // control of the smooth-cubic (S) continuation, which is the reflection of
+  // the prior control across the previous endpoint. Pad by stroke-width + 8px.
+  const sReflectedY = 2 * c3y - c2y;
+  const deepest = Math.max(c1y, c2y, c3y, c4y, sReflectedY, riverStartY);
   const vbX = -2;
   const vbY = baselineY - FONT_SIZE * 0.85 - 4;
   const vbW = riverEndX + 6;
@@ -184,7 +185,8 @@ function measureText(text) {
     `Q ${(lX + lStemWidth / 2).toFixed(2)} ${(lStemTop - lStemWidth * 0.3).toFixed(2)} ` +
     `${(lX).toFixed(2)} ${lStemTop.toFixed(2)} Z`;
 
-  const deepest = Math.max(c1y, c2y, c3y, c4y, riverStartY);
+  const sReflectedY = 2 * c3y - c2y;
+  const deepest = Math.max(c1y, c2y, c3y, c4y, sReflectedY, riverStartY);
   const vbX = -2;
   const vbY = topBaseY - fontSize * 0.85 - 4;
   const vbW = riverEndX + 6;
