@@ -44,7 +44,6 @@ export const PILLARS = [
 
 export const PRIMARY_NAV = {
   pt: [
-    { href: '/', label: 'Início' },
     { href: '/lugares/', label: 'Lugares' },
     { href: '/comer-e-beber/', label: 'Comer & Beber' },
     { href: '/praia-e-natureza/', label: 'Praia & Natureza' },
@@ -53,7 +52,6 @@ export const PRIMARY_NAV = {
     { href: '/sobre/', label: 'Sobre' },
   ],
   en: [
-    { href: '/en/', label: 'Home' },
     { href: '/en/places/', label: 'Places' },
     { href: '/en/eat-and-drink/', label: 'Eat & Drink' },
     { href: '/en/beach-and-outdoors/', label: 'Beach & Outdoors' },
