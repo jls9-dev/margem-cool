@@ -3,7 +3,7 @@ import '../styles/tokens.css';
 import '../styles/base.css';
 
 import WordmarkCompact from '../components/brand/WordmarkCompact.astro';
-import MCMonogram from '../components/brand/MCMonogram.astro';
+import Wordmark from '../components/brand/Wordmark.astro';
 import { PRIMARY_NAV, htmlLang, SITE_URL, type Lang } from '../utils/i18n';
 
 interface Props {
@@ -114,8 +114,8 @@ const copyrightLabel = lang === 'pt'
     <footer class="site-footer">
       <div class="container site-footer__inner">
         <div class="site-footer__brand">
-          <MCMonogram variant="open" size={56} />
-          <p class="site-footer__tagline smallcaps">{secondaryTagline} · Margem Cool</p>
+          <Wordmark size={160} ariaLabel="Margem Cool" />
+          <p class="site-footer__tagline smallcaps">{secondaryTagline}</p>
         </div>
         <p class="site-footer__meta">{copyrightLabel}</p>
       </div>
@@ -213,7 +213,7 @@ const copyrightLabel = lang === 'pt'
       .site-footer__brand {
         display: flex;
         align-items: center;
-        gap: var(--space-sm);
+        gap: var(--space-md);
       }
       .site-footer__tagline {
         margin: 0;
