@@ -83,7 +83,7 @@ const copyrightLabel = lang === 'pt'
     <header class="site-header">
       <div class="container site-header__inner">
         <a class="site-header__brand" href={lang === 'pt' ? '/' : '/en/'} aria-label="Margem Cool">
-          <WordmarkCompact size={22} />
+          <WordmarkCompact height={36} />
         </a>
         <nav class="site-nav" aria-label={lang === 'pt' ? 'Navegação principal' : 'Primary navigation'}>
           <ul>
@@ -138,7 +138,7 @@ const copyrightLabel = lang === 'pt'
         position: sticky;
         top: 0;
         z-index: 50;
-        padding: 12px 0;
+        padding: 14px 0;
         background: color-mix(in srgb, var(--color-background) 92%, transparent);
         backdrop-filter: saturate(140%) blur(8px);
         -webkit-backdrop-filter: saturate(140%) blur(8px);
@@ -148,7 +148,7 @@ const copyrightLabel = lang === 'pt'
         display: flex;
         align-items: center;
         gap: var(--space-md);
-        min-height: 32px;
+        min-height: 40px;
       }
       .site-header__brand {
         border-bottom: 0;

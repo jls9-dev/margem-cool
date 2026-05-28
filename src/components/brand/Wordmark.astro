@@ -1,94 +1,29 @@
 ---
 /**
- * Wordmark — the stacked "margem cool" mark with the l descending into the river.
- *
- * Renders as inline SVG so the letterforms inherit the page's Outfit Variable
- * font and the rust accent is a real stroke, not an image.
- *
- * Props:
- *   size       — rendered width in px (height scales proportionally). Default 320.
- *   monochrome — when true, the entire mark renders in the current text colour.
- *                Use this on dark backgrounds with text colour set to cream.
- *   ariaLabel  — overrides the default accessible label.
+ * Wordmark — the full stacked "margem cool" mark with the l descending into
+ * the river. Loaded from /public/wordmark-stacked.svg so the letterforms
+ * render identically everywhere with no webfont dependency.
  */
 interface Props {
   size?: number;
-  monochrome?: boolean;
   ariaLabel?: string;
 }
-const { size = 320, monochrome = false, ariaLabel = 'margem cool' } = Astro.props;
+const { size = 360, ariaLabel = 'margem cool' } = Astro.props;
 
-const VBW = 600;
-const VBH = 280;
-const aspect = VBH / VBW;
-const height = Math.round(size * aspect);
-
-// Colour roles — swap to currentColor when monochrome.
-const inkColor = monochrome ? 'currentColor' : 'var(--mc-charcoal, #1F2328)';
-const accentColor = monochrome ? 'currentColor' : 'var(--mc-rust, #B85C38)';
-
-// In dark mode body sets text to cream; the inline charcoal would clash, so
-// we honour the page's text colour for the ink when in dark mode.
+// SVG intrinsic viewBox is 500 × 217 — width 500 sets the scale
+const aspectH = 217 / 500;
+const height = Math.round(size * aspectH);
 ---
 
-<svg
+<img
   class="mc-wordmark"
+  src="/wordmark-stacked.svg"
   width={size}
   height={height}
-  viewBox={`0 0 ${VBW} ${VBH}`}
-  xmlns="http://www.w3.org/2000/svg"
-  role="img"
-  aria-label={ariaLabel}
->
-  <!-- "margem" — top line -->
-  <text
-    x="0"
-    y="125"
-    class="mc-wordmark__text"
-    style={`fill: ${inkColor};`}
-  >margem</text>
-
-  <!-- "coo" — bottom line; the l is part of the river path -->
-  <text
-    x="0"
-    y="245"
-    class="mc-wordmark__text"
-    style={`fill: ${inkColor};`}
-  >coo</text>
-
-  <!--
-    The l-into-river path. Single continuous stroke in rust.
-    Starts at the top of the l (above the x-height of "coo"),
-    descends as the stem of the l, then curves smoothly right
-    into a slight ripple — one rise, one fall, trailing off.
-  -->
-  <path
-    d="
-      M 252 115
-      L 252 248
-      C 252 268, 270 274, 290 268
-      C 320 258, 340 240, 380 235
-      C 420 230, 450 248, 480 244
-      C 510 240, 540 232, 580 230
-    "
-    fill="none"
-    stroke={accentColor}
-    stroke-width="20"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-</svg>
+  alt={ariaLabel}
+  decoding="async"
+/>
 
 <style>
-  .mc-wordmark {
-    display: block;
-    overflow: visible;
-  }
-  .mc-wordmark__text {
-    font-family: var(--font-display, 'Outfit Variable', system-ui, sans-serif);
-    font-weight: 600;
-    font-size: 150px;
-    letter-spacing: -0.02em;
-    dominant-baseline: alphabetic;
-  }
+  .mc-wordmark { display: block; }
 </style>
