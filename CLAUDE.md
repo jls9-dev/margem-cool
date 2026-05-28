@@ -4,7 +4,7 @@ This file loads automatically whenever Claude Code starts in this repo. It carri
 
 ## The three canonical references
 
-**`docs/brand.md`** — editorial, visual, vocabulary. The constraints all visual and editorial work must respect.
+**`docs/brand.md`** — brand, visual, vocabulary. **Always re-read §4 (voice principles) before drafting any user-facing copy.** Writing can be eloquent and interesting but must respect the rules.
 **`docs/architecture.md`** — entity model, taxonomy, URL structure. The constraints all code must respect.
 **`docs/claude-code-handover.md`** — what was built in Phase 0 and what Phase 1 looks like.
 
