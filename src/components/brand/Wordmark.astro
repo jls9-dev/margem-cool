@@ -1,12 +1,8 @@
 ---
 /**
- * Wordmark — stacked "margem cool" mark with l descending into the river.
- *
- * Inlines the SVG file at build time via the `?raw` import suffix so the
- * embedded style block is treated as a normal stylesheet by the browser.
- * When SVGs are loaded via <img>, browsers run them in a restricted mode
- * that can skip class-based fills, which is why we don't load it as an
- * external image.
+ * Wordmark — stacked "margem cool" mark with the l descending into the river.
+ * Inlined at build time so the CSS classes inside the SVG (charcoal letters,
+ * rust l-stem and river, dark-mode variants) actually apply in the browser.
  */
 import svgSource from '../../../public/wordmark-stacked.svg?raw';
 

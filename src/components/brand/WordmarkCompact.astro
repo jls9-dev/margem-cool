@@ -1,14 +1,9 @@
 ---
 /**
  * WordmarkCompact — horizontal "margem cool" wordmark for the slim header.
- *
- * Inlines the SVG file at build time. Wraps in a span that crops the river
- * curve off — at 36px tall the river would be illegible anyway, and the
- * letters fill the bar properly when the river is hidden.
- *
- * The SVG file's viewBox is 849 × 128; the letter region occupies ~99 of
- * those 128 (≈77%). We render the SVG at an internal height that puts the
- * letters at `height` pixels, and the wrapper crops the bottom.
+ * Inlined at build time. Displayed at its natural aspect ratio, nothing
+ * cropped or wrapped — the river extends to the right of the letters as
+ * the brand mark intends.
  */
 import svgSource from '../../../public/wordmark.svg?raw';
 
@@ -18,30 +13,12 @@ interface Props {
 }
 const { height = 36, ariaLabel = 'margem cool' } = Astro.props;
 
-const LETTER_FRACTION = 99 / 128;
-const fullHeight = Math.round(height / LETTER_FRACTION);
-const fullWidth = Math.round(fullHeight * (849 / 128));
+// SVG viewBox 869 × 156 → width per unit height = 869/156 = 5.57
+const width = Math.round(height * (869 / 156));
 
 const sized = svgSource
-  .replace('<svg ', `<svg width="${fullWidth}" height="${fullHeight}" `)
+  .replace('<svg ', `<svg width="${width}" height="${height}" `)
   .replace('aria-label="margem cool"', `aria-label="${ariaLabel}"`);
 ---
 
-<span
-  class="mc-wordmark-compact"
-  style={`height: ${height}px; width: ${fullWidth}px;`}
->
-  <Fragment set:html={sized} />
-</span>
-
-<style>
-  .mc-wordmark-compact {
-    display: inline-block;
-    overflow: hidden;
-    vertical-align: middle;
-    line-height: 0;
-  }
-  .mc-wordmark-compact :global(svg) {
-    display: block;
-  }
-</style>
+<Fragment set:html={sized} />
