@@ -73,13 +73,3 @@
   --tracking-masthead: 0.14em;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--mc-charcoal);
-    --color-text: var(--mc-cream);
-    --color-text-secondary: var(--mc-cool-grey-dark);
-    --color-brand: var(--mc-teal-dark);
-    --color-accent: var(--mc-rust-dark);
-    --color-rule: rgba(245, 241, 232, 0.18);
-  }
-}
