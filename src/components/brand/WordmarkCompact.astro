@@ -1,25 +1,53 @@
 ---
 /**
- * WordmarkCompact — horizontal "margem cool" wordmark for headers and compact
- * spots. Loads the standalone paths-only SVG from /public/wordmark.svg so the
- * mark renders identically everywhere with no webfont dependency.
+ * WordmarkCompact — horizontal wordmark for the slim sticky header.
+ *
+ * The /wordmark.svg file carries the full mark including the river curve
+ * with proper padding so it never clips. In the header we only want the
+ * letters: the river at 36px would be too small to read anyway, so the
+ * wrapper crops it off via overflow:hidden. We let the img render at the
+ * natural aspect needed for the LETTERS to be `height` tall, and the
+ * wrapper hides everything below that.
+ *
+ * Within the SVG viewBox (869 × 156) the letter region runs vY=-4 to ~95
+ * (baseline + descender), i.e. ~99 of 156 → letters are 63.5% of total.
  */
 interface Props {
   height?: number;
   ariaLabel?: string;
 }
 const { height = 36, ariaLabel = 'margem cool' } = Astro.props;
+
+// SVG viewBox is 849 × 128; letters occupy ~99 of 128 vertical → ~77%.
+const LETTER_FRACTION = 99 / 128;
+const fullImgHeight = Math.round(height / LETTER_FRACTION);
+const fullImgWidth = Math.round(fullImgHeight * (849 / 128));
 ---
 
-<img
+<span
   class="mc-wordmark-compact"
-  src="/wordmark.svg"
-  height={height}
-  width={Math.round(height * (869 / 156))}
-  alt={ariaLabel}
-  decoding="async"
-/>
+  role="img"
+  aria-label={ariaLabel}
+  style={`height: ${height}px; width: ${fullImgWidth}px;`}
+>
+  <img
+    src="/wordmark.svg"
+    height={fullImgHeight}
+    width={fullImgWidth}
+    alt=""
+    decoding="async"
+  />
+</span>
 
 <style>
-  .mc-wordmark-compact { display: block; }
+  .mc-wordmark-compact {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+    line-height: 0;
+  }
+  .mc-wordmark-compact img {
+    display: block;
+    border: 0;
+  }
 </style>

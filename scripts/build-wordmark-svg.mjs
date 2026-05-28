@@ -90,24 +90,21 @@ function measureText(text) {
   const lStemBottom = baselineY - FONT_SIZE * 0.02;
   const lStemWidth = FONT_SIZE * 0.13;            // matches Outfit 600 stem weight
 
-  // River curve — starts at bottom of l, sweeps right with one rise and one fall.
+  // River — single smooth bezier from the base of the l, dips gently then
+  // trails off level. One C, no S — predictable bounds, designer-clean.
   const riverStartX = lX + lStemWidth / 2;
   const riverStartY = lStemBottom;
-  const riverEndX = riverStartX + FONT_SIZE * 2.8;  // ~1.5x wordmark widths beyond
-  const c1x = riverStartX + FONT_SIZE * 0.4;
+  const riverEndX = riverStartX + FONT_SIZE * 2.6;
+  const riverEndY = riverStartY + FONT_SIZE * 0.04;
+  const c1x = riverStartX + FONT_SIZE * 0.6;
   const c1y = riverStartY + FONT_SIZE * 0.20;
-  const c2x = riverStartX + FONT_SIZE * 0.95;
-  const c2y = riverStartY - FONT_SIZE * 0.18;
-  const c3x = riverStartX + FONT_SIZE * 1.5;
-  const c3y = riverStartY + FONT_SIZE * 0.15;
-  const c4x = riverStartX + FONT_SIZE * 2.1;
-  const c4y = riverStartY - FONT_SIZE * 0.06;
+  const c2x = riverEndX - FONT_SIZE * 0.6;
+  const c2y = riverEndY + FONT_SIZE * 0.04;
 
   const riverPath =
     `M ${riverStartX.toFixed(2)} ${riverStartY.toFixed(2)} ` +
     `C ${c1x.toFixed(2)} ${c1y.toFixed(2)}, ${c2x.toFixed(2)} ${c2y.toFixed(2)}, ` +
-    `${c3x.toFixed(2)} ${c3y.toFixed(2)} ` +
-    `S ${c4x.toFixed(2)} ${c4y.toFixed(2)}, ${riverEndX.toFixed(2)} ${riverStartY.toFixed(2)}`;
+    `${riverEndX.toFixed(2)} ${riverEndY.toFixed(2)}`;
 
   // l-stem as a rounded rect
   const lStemPath =
@@ -119,11 +116,7 @@ function measureText(text) {
     `Q ${(lX + lStemWidth / 2).toFixed(2)} ${(lStemTop - lStemWidth * 0.3).toFixed(2)} ` +
     `${(lX).toFixed(2)} ${lStemTop.toFixed(2)} Z`;
 
-  // Bottom must clear the deepest bezier control point including the implicit
-  // control of the smooth-cubic (S) continuation, which is the reflection of
-  // the prior control across the previous endpoint. Pad by stroke-width + 8px.
-  const sReflectedY = 2 * c3y - c2y;
-  const deepest = Math.max(c1y, c2y, c3y, c4y, sReflectedY, riverStartY);
+  const deepest = Math.max(c1y, c2y, riverStartY, riverEndY);
   const vbX = -2;
   const vbY = baselineY - FONT_SIZE * 0.85 - 4;
   const vbW = riverEndX + 6;
@@ -160,21 +153,17 @@ function measureText(text) {
 
   const riverStartX = lX + lStemWidth / 2;
   const riverStartY = lStemBottom;
-  const riverEndX = riverStartX + fontSize * 3.2;
-  const c1x = riverStartX + fontSize * 0.5;
+  const riverEndX = riverStartX + fontSize * 3.0;
+  const riverEndY = riverStartY + fontSize * 0.04;
+  const c1x = riverStartX + fontSize * 0.7;
   const c1y = riverStartY + fontSize * 0.22;
-  const c2x = riverStartX + fontSize * 1.1;
-  const c2y = riverStartY - fontSize * 0.20;
-  const c3x = riverStartX + fontSize * 1.7;
-  const c3y = riverStartY + fontSize * 0.16;
-  const c4x = riverStartX + fontSize * 2.4;
-  const c4y = riverStartY - fontSize * 0.06;
+  const c2x = riverEndX - fontSize * 0.7;
+  const c2y = riverEndY + fontSize * 0.04;
 
   const riverPath =
     `M ${riverStartX.toFixed(2)} ${riverStartY.toFixed(2)} ` +
     `C ${c1x.toFixed(2)} ${c1y.toFixed(2)}, ${c2x.toFixed(2)} ${c2y.toFixed(2)}, ` +
-    `${c3x.toFixed(2)} ${c3y.toFixed(2)} ` +
-    `S ${c4x.toFixed(2)} ${c4y.toFixed(2)}, ${riverEndX.toFixed(2)} ${riverStartY.toFixed(2)}`;
+    `${riverEndX.toFixed(2)} ${riverEndY.toFixed(2)}`;
 
   const lStemPath =
     `M ${(lX).toFixed(2)} ${lStemTop.toFixed(2)} ` +
@@ -185,8 +174,7 @@ function measureText(text) {
     `Q ${(lX + lStemWidth / 2).toFixed(2)} ${(lStemTop - lStemWidth * 0.3).toFixed(2)} ` +
     `${(lX).toFixed(2)} ${lStemTop.toFixed(2)} Z`;
 
-  const sReflectedY = 2 * c3y - c2y;
-  const deepest = Math.max(c1y, c2y, c3y, c4y, sReflectedY, riverStartY);
+  const deepest = Math.max(c1y, c2y, riverStartY, riverEndY);
   const vbX = -2;
   const vbY = topBaseY - fontSize * 0.85 - 4;
   const vbW = riverEndX + 6;
