@@ -52,10 +52,16 @@ const CONCELHOS = [
 // and parts outside the viewBox clip naturally so the coast appears to
 // continue west (toward Cascais) and east (toward Loures) past the frame.
 const CONTEXT_NORTH = [
-  { file: 'Cascais.json', slug: 'cascais' },
-  { file: 'Oeiras.json',  slug: 'oeiras' },
-  { file: 'Lisboa.json',  slug: 'lisboa' },
-  { file: 'Loures.json',  slug: 'loures' },
+  { file: 'Sintra.json',           slug: 'sintra' },
+  { file: 'Mafra.json',            slug: 'mafra' },
+  { file: 'Cascais.json',          slug: 'cascais' },
+  { file: 'Oeiras.json',           slug: 'oeiras' },
+  { file: 'Amadora.json',          slug: 'amadora' },
+  { file: 'Odivelas.json',         slug: 'odivelas' },
+  { file: 'Lisboa.json',           slug: 'lisboa' },
+  { file: 'Loures.json',           slug: 'loures' },
+  { file: 'VilaFrancaDeXira.json', slug: 'vila-franca-de-xira' },
+  { file: 'Benavente.json',        slug: 'benavente' },
 ];
 
 // Concelhos rendered as faint context on the south + east side so the
