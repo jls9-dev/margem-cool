@@ -71,6 +71,19 @@ const waterLabels = {
   atlantic: lang === 'en' ? 'Atlantic Ocean' : 'Oceano Atlântico',
   sado:     lang === 'en' ? 'Sado Estuary'   : 'Estuário do Sado',
 };
+
+// Tejo bridges as straight rust spans between real lat/lng anchors. Now that
+// the water reads as water, the bridges make sense.
+const bridges = [
+  {
+    from: project(-9.1772, 38.7042), // Alcântara (north end)
+    to:   project(-9.1775, 38.6789), // Almada (south end)
+  },
+  {
+    from: project(-9.0413, 38.7920), // Sacavém (north end)
+    to:   project(-9.0107, 38.7448), // Montijo (south end)
+  },
+];
 ---
 
 <figure class={`margem-map margem-map--${size}`} aria-label={`Mapa da Margem Sul${placeName ? ` — ${placeName}` : ''}`}>
@@ -112,6 +125,17 @@ const waterLabels = {
       >
         {lang === 'en' ? 'Lisbon' : 'Lisboa'}
       </text>
+    </g>
+
+    {/* Tejo bridges — rust spans connecting Lisbon to the Margem Sul. */}
+    <g class="bridges">
+      {bridges.map((b) => (
+        <line
+          x1={b.from[0]} y1={b.from[1]}
+          x2={b.to[0]}   y2={b.to[1]}
+          class="bridge"
+        />
+      ))}
     </g>
 
     {/* Water labels — set in the negative space between the two coasts.
@@ -360,6 +384,17 @@ const waterLabels = {
   .margem-map--standard .context-label {
     font-size: 13px;
     fill-opacity: 0.7;
+  }
+
+  /* ──────── Bridges ──────── */
+  .bridge {
+    stroke: var(--color-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-opacity: 0.85;
+  }
+  .margem-map--standard .bridge {
+    stroke-width: 2.4;
   }
 
   /* ──────── Landmarks (standard mode only) ──────── */
