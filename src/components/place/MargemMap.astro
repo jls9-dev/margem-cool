@@ -108,10 +108,17 @@ const waterLabels = {
       </text>
     </g>
 
-    {/* Water labels — set in the negative space between the two coasts. */}
+    {/* Water labels — set in the negative space between the two coasts.
+        Tejo positioned at lat/lng so it lands in actual water (between
+        Almada and Lisbon), not on top of land. */}
     {isStandard && (
       <g class="map-water-labels">
-        <text x={vbW * 0.40} y={vbH * 0.27} class="water-label water-label--major">
+        <text
+          x={project(-9.105, 38.708)[0]}
+          y={project(-9.105, 38.708)[1]}
+          class="water-label water-label--major"
+          text-anchor="middle"
+        >
           {waterLabels.tejo}
         </text>
         <text x={vbW * 0.04} y={vbH * 0.55} class="water-label" transform={`rotate(-90 ${vbW * 0.04} ${vbH * 0.55})`}>
@@ -286,33 +293,34 @@ const waterLabels = {
   }
 
   /* ──────── Concelho labels ──────── */
+  /* Hidden via `opacity` (not `fill-opacity`), so the cream paint-order
+     stroke doesn't ghost through. Become visible on hover, tap, or
+     when this concelho is the current page. */
   .concelho-label {
     font-family: var(--font-display);
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     fill: var(--color-text);
-    fill-opacity: 0;
+    fill-opacity: 0.9;
     pointer-events: none;
-    transition: fill-opacity 200ms ease;
     paint-order: stroke;
     stroke: var(--color-background);
     stroke-width: 3px;
     stroke-linejoin: round;
+    opacity: 0;
+    transition: opacity 200ms ease;
   }
   .concelho-link:hover .concelho-label,
   .concelho-link:focus-visible .concelho-label,
   .concelho-link.is-tapped .concelho-label {
-    fill-opacity: 0.85;
+    opacity: 1;
   }
   .concelho-label.is-current {
     fill: var(--color-accent);
-    fill-opacity: 1;
+    opacity: 1;
     font-size: 14px;
     font-weight: 600;
-  }
-  .concelho-label.is-standard {
-    font-size: 12px;
   }
   .concelho-label.is-standard.is-current {
     font-size: 14px;
