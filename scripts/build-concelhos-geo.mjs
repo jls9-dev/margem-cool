@@ -149,6 +149,31 @@ function ringToPath(ring) {
   return d + ' Z';
 }
 
+/**
+ * Closed-loop Catmull-Rom-to-cubic-bezier path. Turns a polyline of vertices
+ * into smooth cubic curves that pass through each point, so the resulting
+ * silhouette reads as a continuous traced line rather than a polygon. Tension
+ * 0.5 gives a balanced curve (no overshoot, no sag).
+ */
+function ringToSmoothPath(ring) {
+  const n = ring.length;
+  if (n < 3) return ringToPath(ring);
+  const fmt = (v) => v.toFixed(2);
+  let d = `M ${fmt(ring[0][0])} ${fmt(ring[0][1])}`;
+  for (let i = 0; i < n; i++) {
+    const p0 = ring[(i - 1 + n) % n];
+    const p1 = ring[i];
+    const p2 = ring[(i + 1) % n];
+    const p3 = ring[(i + 2) % n];
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6;
+    const c1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6;
+    const c2y = p2[1] - (p3[1] - p1[1]) / 6;
+    d += ` C ${fmt(c1x)} ${fmt(c1y)}, ${fmt(c2x)} ${fmt(c2y)}, ${fmt(p2[0])} ${fmt(p2[1])}`;
+  }
+  return d + ' Z';
+}
+
 const EPSILON_DEG = 0.0008; // ~80m at this latitude. Keeps detail along the coast.
 
 async function main() {
@@ -225,9 +250,20 @@ async function main() {
   const unionInputs = concelhos.flatMap((c) => c.rings.map((ring) => [[ring]]));
   const unionResult = polygonClipping.union(...unionInputs);
   // unionResult: MultiPolygon = Array<Polygon = Array<Ring = Array<[lng,lat]>>>
-  // Project + path-ise every outer ring (skip holes — Margem Sul has none of consequence)
+
+  // The silhouette is shown at brand-mark scale (favicon → 260px outline).
+  // Re-simplify at a larger epsilon (~250m) and run Catmull-Rom-to-cubic-bezier
+  // smoothing so the line reads as deliberately traced, not pixel-stepped.
+  const SILHOUETTE_EPSILON = 0.0025;
   const silhouettePaths = unionResult.flatMap((poly) =>
-    poly.map((ring, i) => (i === 0 ? ringToPath(ring.map(project)) : null)).filter(Boolean),
+    poly
+      .map((ring, i) => {
+        if (i !== 0) return null;
+        const simpler = rdp(ring, SILHOUETTE_EPSILON);
+        const projected = simpler.map(project);
+        return ringToSmoothPath(projected);
+      })
+      .filter(Boolean),
   );
   // Compute combined bbox of the silhouette in SVG space for tight-cropped exports.
   let silMinX = Infinity, silMinY = Infinity, silMaxX = -Infinity, silMaxY = -Infinity;
