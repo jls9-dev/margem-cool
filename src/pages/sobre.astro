@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import MargemSulMark from '../components/brand/MargemSulMark.astro';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -20,14 +21,41 @@ const jsonLd = {
 >
   <article class="about">
     <div class="container">
-      <div class="about__inner">
-        <p class="about__kicker smallcaps">Análise atenta</p>
-        <h1 class="about__title">Sobre</h1>
-        <p class="about__lede">
-          Margem Cool é uma publicação da Margem Sul, escrita de onde vivemos, em português e inglês, para as pessoas da região e para quem a quer conhecer melhor.
+      <header class="about__head">
+        <div class="about__mark" aria-hidden="true">
+          <MargemSulMark size={260} variant="outline" ariaHidden />
+        </div>
+        <div class="about__intro">
+          <p class="about__kicker smallcaps">Sobre</p>
+          <h1 class="about__title">
+            A publicação que vês <span class="about__title-em">cobre esta forma.</span>
+          </h1>
+          <p class="about__lede">
+            Margem Cool é uma publicação da Margem Sul — os nove concelhos a sul do Tejo,
+            de Almada a Alcochete, da Costa da Caparica à serra da Arrábida. Escrita de onde vivemos,
+            em português e inglês.
+          </p>
+        </div>
+      </header>
+
+      <div class="about__body">
+        <p>
+          A forma ao lado é a silhueta dos nove concelhos juntos — Almada, Seixal, Sesimbra,
+          Setúbal, Palmela, Barreiro, Moita, Montijo e Alcochete. É o mapa do que cobrimos
+          e o limite do que cobrimos. Tudo o que está dentro pode aparecer aqui; o que está
+          fora, não.
         </p>
         <p>
-          Esta página será desenvolvida em breve. Por agora, a publicação está em construção: a infraestrutura está pronta, os concelhos e freguesias estão mapeados, o conteúdo editorial está a chegar.
+          Trabalhamos com calma, peça a peça. Começámos pelos lugares — uma freguesia
+          aqui, um bairro ali — e seguimos para temas: comer e beber, praia e natureza,
+          cultura e agenda, dormir, viver aqui. Não fazemos guias-relâmpago. Quando aparece
+          aqui um sítio ou uma freguesia, fizemos o trabalho.
+        </p>
+        <p>
+          A maior parte do conteúdo é escrito em português, com versão em inglês a seguir.
+          O registo é o tu — falamos com vizinhos e curiosos, não com turistas-padrão. Se
+          conheces a Margem Sul de dentro vais reconhecer-te; se a queres conhecer melhor,
+          aqui não há filtros.
         </p>
         <p class="about__tagline smallcaps">O outro lado</p>
       </div>
@@ -36,11 +64,46 @@ const jsonLd = {
 </BaseLayout>
 
 <style>
-  .about { padding: var(--space-2xl) 0 var(--space-3xl); }
-  .about__inner {
-    max-width: var(--content-column);
-    margin: 0 auto;
+  .about {
+    padding: var(--space-2xl) 0 var(--space-3xl);
   }
+
+  /* ───── Head: silhouette + intro side-by-side on desktop, stacked on mobile ───── */
+  .about__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-2xl);
+    align-items: center;
+    max-width: var(--wide-section);
+    margin: 0 auto var(--space-2xl);
+  }
+  @media (max-width: 820px) {
+    .about__head {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+  .about__intro {
+    max-width: 50ch;
+  }
+  .about__mark {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    line-height: 0;
+  }
+  .about__mark :global(.ms-mark--outline path) {
+    stroke-width: 5;
+    stroke: var(--color-accent);
+    opacity: 0.85;
+  }
+  @media (max-width: 820px) {
+    .about__mark {
+      grid-column: 1;
+      justify-self: center;
+    }
+  }
+
   .about__kicker {
     margin: 0 0 var(--space-md);
     color: var(--color-accent);
@@ -49,18 +112,33 @@ const jsonLd = {
   .about__title {
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: var(--type-h1);
-    line-height: var(--leading-headline);
-    margin: 0 0 var(--space-lg);
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0 0 var(--space-md);
   }
-  @media (max-width: 720px) {
-    .about__title { font-size: var(--type-h1-mobile); }
+  .about__title-em {
+    font-style: italic;
+    color: var(--color-accent);
   }
   .about__lede {
     font-family: var(--font-body);
     font-size: var(--type-lead);
-    margin: 0 0 var(--space-lg);
     line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* ───── Body ───── */
+  .about__body {
+    max-width: var(--content-column);
+    margin: 0 auto;
+    font-family: var(--font-body);
+    font-size: var(--type-body);
+    line-height: 1.6;
+  }
+  .about__body p {
+    margin: 0 0 var(--space-md);
   }
   .about__tagline {
     margin-top: var(--space-2xl);

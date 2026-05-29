@@ -85,7 +85,6 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
     <header class="site-header">
       <div class="site-header__inner">
         <a class="site-header__brand" href={lang === 'pt' ? '/' : '/en/'} aria-label="Margem Cool">
-          <MargemSulMark size={28} ariaHidden class="site-header__mark" />
           <WordmarkCompact height={36} />
         </a>
 
@@ -247,18 +246,10 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
-        gap: 10px;
         flex-shrink: 0;
         transition: opacity 160ms ease;
       }
       .site-header__brand:hover { opacity: 0.85; }
-      .site-header__mark {
-        flex-shrink: 0;
-      }
-      @media (max-width: 480px) {
-        /* On narrow mobile, drop the mark; the wordmark alone is the lockup. */
-        .site-header__mark { display: none; }
-      }
 
       .site-nav {
         flex: 1;
