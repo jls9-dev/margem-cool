@@ -270,12 +270,24 @@ async function main() {
   const VIEW_WIDTH = 800;
   const { project, viewHeight } = makeProjector(bbox, VIEW_WIDTH);
 
-  // 3b. Project context concelho rings (Lisboa, Oeiras) for the north outline.
-  const contextProjected = contextConcelhos.map((c) => ({
-    slug: c.slug,
-    name: c.name,
-    paths: c.rings.map((ring) => ringToPath(ring.map(project))),
-  }));
+  // 3b. Union the context concelhos into a single north-coast polygon, so
+  // simplification mismatches at adjacent borders don't leak the water
+  // base through as visible teal gaps inside the land.
+  const contextUnionInputs = contextConcelhos.flatMap((c) =>
+    c.rings.map((ring) => [[ring]]),
+  );
+  const contextUnion = polygonClipping.union(...contextUnionInputs);
+  const contextProjected = [
+    {
+      slug: 'north-coast',
+      name: 'Margem Norte',
+      // Take outer rings only (drop any holes — Lisbon/Loures don't have
+      // legit lakes that matter at this scale).
+      paths: contextUnion
+        .map((poly) => poly[0])
+        .map((ring) => ringToPath(ring.map(project))),
+    },
+  ];
 
   // 4. Project Margem Sul rings and centroids into SVG space
   const projected = concelhos.map((c) => {
