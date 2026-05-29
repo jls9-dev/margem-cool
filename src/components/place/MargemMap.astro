@@ -65,11 +65,12 @@ const projectedLandmarks = landmarks.map((m) => ({
   xy: project(m.lng, m.lat),
 }));
 
-// Bridge spans across the Tejo — drawn as thin rust lines.
-const bridges: Array<{ from: [number, number]; to: [number, number]; pt: string; en: string }> = [
-  { from: project(-9.1769, 38.6860), to: project(-9.1748, 38.7035), pt: 'Ponte 25 de Abril', en: 'Ponte 25 de Abril' },
-  { from: project(-9.0407, 38.7575), to: project(-9.0177, 38.7780), pt: 'Ponte Vasco da Gama', en: 'Ponte Vasco da Gama' },
-];
+// Bilingual water labels (Tejo, Atlantic, Sado). EN gets the international forms.
+const waterLabels = {
+  tejo:     lang === 'en' ? 'Tagus'          : 'Tejo',
+  atlantic: lang === 'en' ? 'Atlantic Ocean' : 'Oceano Atlântico',
+  sado:     lang === 'en' ? 'Sado Estuary'   : 'Estuário do Sado',
+};
 ---
 
 <figure class={`margem-map margem-map--${size}`} aria-label={`Mapa da Margem Sul${placeName ? ` — ${placeName}` : ''}`}>
@@ -107,30 +108,17 @@ const bridges: Array<{ from: [number, number]; to: [number, number]; pt: string;
       </text>
     </g>
 
-    {/* Bridges — straight thin spans across the Tejo. Standard only. */}
-    {isStandard && (
-      <g class="bridges">
-        {bridges.map((b) => (
-          <line
-            x1={b.from[0]} y1={b.from[1]}
-            x2={b.to[0]}   y2={b.to[1]}
-            class="bridge"
-          />
-        ))}
-      </g>
-    )}
-
     {/* Water labels — set in the negative space between the two coasts. */}
     {isStandard && (
       <g class="map-water-labels">
         <text x={vbW * 0.40} y={vbH * 0.27} class="water-label water-label--major">
-          Tejo
+          {waterLabels.tejo}
         </text>
         <text x={vbW * 0.04} y={vbH * 0.55} class="water-label" transform={`rotate(-90 ${vbW * 0.04} ${vbH * 0.55})`}>
-          Oceano Atlântico
+          {waterLabels.atlantic}
         </text>
         <text x={vbW * 0.55} y={vbH * 0.96} class="water-label">
-          Estuário do Sado
+          {waterLabels.sado}
         </text>
       </g>
     )}
@@ -267,10 +255,10 @@ const bridges: Array<{ from: [number, number]; to: [number, number]; pt: string;
   /* ──────── Concelho fills ──────── */
   .concelho {
     fill: var(--color-text);
-    fill-opacity: 0.05;
+    fill-opacity: 0.08;
     stroke: var(--color-text);
-    stroke-opacity: 0.35;
-    stroke-width: 0.9;
+    stroke-opacity: 0.55;
+    stroke-width: 1;
     stroke-linejoin: round;
     transition: fill-opacity 200ms ease, stroke-opacity 200ms ease;
   }
@@ -331,17 +319,20 @@ const bridges: Array<{ from: [number, number]; to: [number, number]; pt: string;
   }
 
   /* ──────── North-of-the-Tejo context (Lisboa + Oeiras outline) ──────── */
+  /* Same land tone as the concelhos so it's obvious "this is land too",
+     just visually distinct from the Margem Sul subjects (no per-concelho
+     subdivision, slightly lower opacity). */
   .context-shape {
     fill: var(--color-text);
-    fill-opacity: 0.06;
+    fill-opacity: 0.07;
     stroke: var(--color-text);
     stroke-opacity: 0.55;
-    stroke-width: 1.1;
+    stroke-width: 1;
     stroke-linejoin: round;
   }
   .margem-map--standard .context-shape {
     stroke-opacity: 0.6;
-    stroke-width: 1.3;
+    stroke-width: 1.2;
   }
   .context-label {
     font-family: var(--font-display);
@@ -355,14 +346,6 @@ const bridges: Array<{ from: [number, number]; to: [number, number]; pt: string;
   .margem-map--standard .context-label {
     font-size: 13px;
     fill-opacity: 0.7;
-  }
-
-  /* ──────── Bridges across the Tejo ──────── */
-  .bridge {
-    stroke: var(--color-accent);
-    stroke-width: 1.4;
-    stroke-linecap: round;
-    stroke-opacity: 0.75;
   }
 
   /* ──────── Landmarks (standard mode only) ──────── */
