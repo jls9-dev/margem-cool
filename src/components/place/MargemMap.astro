@@ -55,7 +55,6 @@ const isStandard = size === 'standard';
 // Landmark anchors — projected once. PT/EN labels chosen by `lang` prop.
 type Landmark = { lng: number; lat: number; pt: string; en: string; dx?: number; dy?: number };
 const landmarks: Landmark[] = [
-  { lng: -9.1394, lat: 38.7223, pt: 'Lisboa', en: 'Lisboa',           dx: 0,  dy: -10 },
   { lng: -9.1697, lat: 38.6772, pt: 'Cristo Rei', en: 'Cristo Rei',   dx: -8, dy: 10 },
   { lng: -9.2148, lat: 38.4138, pt: 'Cabo Espichel', en: 'Cabo Espichel', dx: 10, dy: 6 },
   { lng: -8.9783, lat: 38.4783, pt: 'Serra da Arrábida', en: 'Serra da Arrábida', dx: 0, dy: -10 },
@@ -90,13 +89,22 @@ const bridges: Array<{ from: [number, number]; to: [number, number]; pt: string;
       </filter>
     </defs>
 
-    {/* Lisbon + Oeiras — north-of-the-Tejo context outline. Thin and faint
-        so the eye reads it as "the other side" and the Margem Sul carries
-        the visual weight. */}
+    {/* Lisbon + Oeiras — north-of-the-Tejo context outline. Faint enough
+        to read as "the other side", clear enough to orient the viewer. */}
     <g class="context-north">
       {geoData.context_north.map((c) => c.paths.map((d) => (
         <path d={d} class="context-shape" />
       )))}
+      {/* Always-on "Lisboa" anchor label inside the Lisbon outline, so even
+          in mini mode the viewer knows what they're looking at. */}
+      <text
+        x={project(-9.1430, 38.7440)[0]}
+        y={project(-9.1430, 38.7440)[1]}
+        class="context-label"
+        text-anchor="middle"
+      >
+        {lang === 'en' ? 'Lisbon' : 'Lisboa'}
+      </text>
     </g>
 
     {/* Bridges — straight thin spans across the Tejo. Standard only. */}
@@ -325,16 +333,28 @@ const bridges: Array<{ from: [number, number]; to: [number, number]; pt: string;
   /* ──────── North-of-the-Tejo context (Lisboa + Oeiras outline) ──────── */
   .context-shape {
     fill: var(--color-text);
-    fill-opacity: 0.025;
+    fill-opacity: 0.06;
     stroke: var(--color-text);
-    stroke-opacity: 0.28;
-    stroke-width: 0.7;
+    stroke-opacity: 0.55;
+    stroke-width: 1.1;
     stroke-linejoin: round;
-    stroke-dasharray: none;
   }
   .margem-map--standard .context-shape {
-    stroke-opacity: 0.35;
-    stroke-width: 0.9;
+    stroke-opacity: 0.6;
+    stroke-width: 1.3;
+  }
+  .context-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    fill: var(--color-text);
+    fill-opacity: 0.55;
+    pointer-events: none;
+  }
+  .margem-map--standard .context-label {
+    font-size: 13px;
+    fill-opacity: 0.7;
   }
 
   /* ──────── Bridges across the Tejo ──────── */
