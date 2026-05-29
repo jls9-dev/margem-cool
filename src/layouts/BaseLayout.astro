@@ -179,7 +179,7 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
       <div class="site-footer__motif" aria-hidden="true">
         <MargemSulMark size={280} variant="outline" ariaHidden />
       </div>
-      <div class="container site-footer__inner">
+      <div class="site-footer__inner">
         <nav class="site-footer__columns" aria-label={lang === 'pt' ? 'Rodapé' : 'Footer'}>
           <div class="site-footer__col">
             <h2 class="site-footer__col-h smallcaps">{footerNav.pillars.heading}</h2>
@@ -402,13 +402,20 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
         display: flex;
         flex-direction: column;
         gap: var(--space-2xl);
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 var(--space-lg);
+      }
+      @media (max-width: 720px) {
+        .site-footer__inner {
+          padding: 0 var(--page-margin-mobile);
+        }
       }
 
       .site-footer__columns {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: var(--space-xl);
-        max-width: var(--wide-section);
       }
       .site-footer__col-h {
         margin: 0 0 var(--space-md);

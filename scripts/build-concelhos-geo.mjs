@@ -46,6 +46,13 @@ const CONCELHOS = [
   { file: 'Alcochete.json', slug: 'alcochete' },
 ];
 
+// Concelhos rendered as faint context outline on the north side of the Tejo
+// so a viewer can place the Margem Sul against Lisbon at a glance.
+const CONTEXT_NORTH = [
+  { file: 'Lisboa.json',  slug: 'lisboa' },
+  { file: 'Oeiras.json',  slug: 'oeiras' },
+];
+
 /**
  * Ramer-Douglas-Peucker simplification.
  * epsilon in degrees. A reasonable value for our latitude is ~0.0015
@@ -150,6 +157,27 @@ function ringToPath(ring) {
 }
 
 /**
+ * Closed-loop Chaikin's corner-cutting. For each edge (p, q), replace with
+ * two new points at 1/4 and 3/4 along the edge. Iterating N times rounds
+ * angular corners into smooth curves at the cost of vertex count.
+ */
+function chaikin(ring, iterations = 1) {
+  let pts = ring;
+  for (let it = 0; it < iterations; it++) {
+    const out = [];
+    const n = pts.length;
+    for (let i = 0; i < n; i++) {
+      const p = pts[i];
+      const q = pts[(i + 1) % n];
+      out.push([p[0] * 0.75 + q[0] * 0.25, p[1] * 0.75 + q[1] * 0.25]);
+      out.push([p[0] * 0.25 + q[0] * 0.75, p[1] * 0.25 + q[1] * 0.75]);
+    }
+    pts = out;
+  }
+  return pts;
+}
+
+/**
  * Closed-loop Catmull-Rom-to-cubic-bezier path. Turns a polyline of vertices
  * into smooth cubic curves that pass through each point, so the resulting
  * silhouette reads as a continuous traced line rather than a polygon. Tension
@@ -219,11 +247,38 @@ async function main() {
     });
   }
 
-  // 2. Build projector once bbox is known
+  // 2. Load the north-coast context concelhos and expand bbox so they fit.
+  const contextConcelhos = [];
+  for (const { file, slug } of CONTEXT_NORTH) {
+    const raw = JSON.parse(await readFile(join(RAW_DIR, file), 'utf8'));
+    const allRings = extractPolygons(raw.geojson.geometry);
+    const ringsWithArea = allRings.map((ring) => ({ ring, area: ringArea(ring) }));
+    const maxArea = Math.max(...ringsWithArea.map((r) => r.area));
+    const keptRings = ringsWithArea.filter((r) => r.area >= maxArea * 0.005).map((r) => r.ring);
+    const simplified = keptRings.map((ring) => {
+      for (const [lng, lat] of ring) {
+        if (lng < bbox.minLng) bbox.minLng = lng;
+        if (lng > bbox.maxLng) bbox.maxLng = lng;
+        if (lat < bbox.minLat) bbox.minLat = lat;
+        if (lat > bbox.maxLat) bbox.maxLat = lat;
+      }
+      return rdp(ring, EPSILON_DEG);
+    });
+    contextConcelhos.push({ slug, name: raw.nome, rings: simplified });
+  }
+
+  // 3. Build projector once expanded bbox is known
   const VIEW_WIDTH = 800;
   const { project, viewHeight } = makeProjector(bbox, VIEW_WIDTH);
 
-  // 3. Project rings and centroids into SVG space
+  // 3b. Project context concelho rings (Lisboa, Oeiras) for the north outline.
+  const contextProjected = contextConcelhos.map((c) => ({
+    slug: c.slug,
+    name: c.name,
+    paths: c.rings.map((ring) => ringToPath(ring.map(project))),
+  }));
+
+  // 4. Project Margem Sul rings and centroids into SVG space
   const projected = concelhos.map((c) => {
     const paths = c.rings.map((ring) => ringToPath(ring.map(project)));
     const labelXY = project(c.centroidLngLat);
@@ -252,14 +307,18 @@ async function main() {
   // unionResult: MultiPolygon = Array<Polygon = Array<Ring = Array<[lng,lat]>>>
 
   // The silhouette is shown at brand-mark scale (favicon → 260px outline).
-  // Re-simplify at a larger epsilon (~250m) and run Catmull-Rom-to-cubic-bezier
-  // smoothing so the line reads as deliberately traced, not pixel-stepped.
-  const SILHOUETTE_EPSILON = 0.0025;
+  // Push simplification hard, then run a Chaikin-style corner-cutting pass,
+  // then run Catmull-Rom-to-cubic-bezier smoothing on top. We sacrifice
+  // micro-detail on purpose — we want an ownable mark, not an accurate map.
+  // 1.5km RDP tolerance + 2 corner-cuts gets us a confident sweep with the
+  // knot at the Almada/Cacilhas shoreline ironed flat.
+  const SILHOUETTE_EPSILON = 0.015;
   const silhouettePaths = unionResult.flatMap((poly) =>
     poly
       .map((ring, i) => {
         if (i !== 0) return null;
-        const simpler = rdp(ring, SILHOUETTE_EPSILON);
+        let simpler = rdp(ring, SILHOUETTE_EPSILON);
+        simpler = chaikin(simpler, 2);
         const projected = simpler.map(project);
         return ringToSmoothPath(projected);
       })
@@ -300,6 +359,7 @@ async function main() {
       paths: silhouettePaths,
       polygons: unionResult.length,
     },
+    context_north: contextProjected,
     concelhos: projected,
   };
 
