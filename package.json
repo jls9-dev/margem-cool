@@ -15,7 +15,8 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.0",
     "@astrojs/sitemap": "^3.7.2",
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "marked": "^18.0.4"
   },
   "devDependencies": {
     "opentype.js": "^2.0.0",

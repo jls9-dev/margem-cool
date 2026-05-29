@@ -19,10 +19,6 @@ const allPlaces = await getCollection('places');
 const byId = indexBySlug(allPlaces);
 const ancestors = ancestorChain(place, byId);
 const children = childrenOf(place.slug, allPlaces);
-
-const { Content } = await place.render();
 ---
 
-<PlaceLayout lang="en" place={place} ancestors={ancestors} children={children}>
-  <Content />
-</PlaceLayout>
+<PlaceLayout lang="en" place={place} ancestors={ancestors} children={children} />

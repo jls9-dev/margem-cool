@@ -8,6 +8,7 @@
  * to this layout via a `<PlaceLayout>` wrapper around `<Content />`.
  */
 import type { CollectionEntry } from 'astro:content';
+import { marked } from 'marked';
 
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumb from '../components/place/Breadcrumb.astro';
@@ -98,6 +99,9 @@ const description = langData.short_description;
 const facts = langData.facts;
 const faqs = langData.faqs;
 const isPlaceholder = langData.page_status === 'placeholder';
+const bodyHtml = langData.body
+  ? await marked.parse(langData.body, { async: true })
+  : null;
 
 const lastUpdated = place.data.last_updated instanceof Date
   ? place.data.last_updated
@@ -195,7 +199,13 @@ function formatDate(d: Date, l: Lang): string {
 
   <QuickFacts facts={facts} />
 
-  {isPlaceholder ? (
+  {bodyHtml ? (
+    <article class="place-body">
+      <div class="container">
+        <div class="place-body__inner" set:html={bodyHtml} />
+      </div>
+    </article>
+  ) : isPlaceholder ? (
     <section class="place-placeholder">
       <div class="container">
         <div class="place-placeholder__inner">
@@ -204,15 +214,7 @@ function formatDate(d: Date, l: Lang): string {
         </div>
       </div>
     </section>
-  ) : (
-    <article class="place-body">
-      <div class="container">
-        <div class="place-body__inner">
-          <slot />
-        </div>
-      </div>
-    </article>
-  )}
+  ) : null}
 
   {childrenItems.length > 0 && (
     <RelatedGrid
@@ -247,7 +249,7 @@ function formatDate(d: Date, l: Lang): string {
 
 <style>
   .place-body {
-    padding: var(--space-xl) 0;
+    padding: var(--space-xl) 0 var(--space-2xl);
   }
   .place-body__inner {
     max-width: var(--content-column);
@@ -259,8 +261,67 @@ function formatDate(d: Date, l: Lang): string {
     line-height: var(--leading-body);
     margin: 0 0 var(--space-md);
   }
+  .place-body__inner :global(p:first-child) {
+    font-size: var(--type-lead);
+    line-height: 1.55;
+    margin-bottom: var(--space-lg);
+  }
   @media (max-width: 720px) {
     .place-body__inner :global(p) { font-size: var(--type-body-mobile); }
+  }
+  .place-body__inner :global(h2) {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
+    letter-spacing: -0.01em;
+    margin: var(--space-2xl) 0 var(--space-md);
+    scroll-margin-top: var(--space-xl);
+  }
+  @media (max-width: 720px) {
+    .place-body__inner :global(h2) { font-size: var(--type-h2-mobile); }
+  }
+  .place-body__inner :global(h3) {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--type-h3);
+    line-height: var(--leading-headline);
+    margin: var(--space-xl) 0 var(--space-sm);
+  }
+  @media (max-width: 720px) {
+    .place-body__inner :global(h3) { font-size: var(--type-h3-mobile); }
+  }
+  .place-body__inner :global(strong) { font-weight: 600; }
+  .place-body__inner :global(em) { font-style: italic; }
+  .place-body__inner :global(ul),
+  .place-body__inner :global(ol) {
+    margin: 0 0 var(--space-md);
+    padding-left: var(--space-lg);
+  }
+  .place-body__inner :global(li) {
+    margin-bottom: 6px;
+    font-family: var(--font-body);
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+  }
+  .place-body__inner :global(a) {
+    color: var(--color-text);
+    border-bottom-color: var(--color-accent);
+  }
+  .place-body__inner :global(a:hover) {
+    color: var(--color-accent);
+  }
+  .place-body__inner :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--color-rule);
+    margin: var(--space-2xl) 0;
+  }
+  .place-body__inner :global(blockquote) {
+    margin: var(--space-xl) 0;
+    padding-left: var(--space-lg);
+    border-left: 3px solid var(--color-accent);
+    font-style: italic;
+    color: var(--color-text-secondary);
   }
 
   .place-placeholder {

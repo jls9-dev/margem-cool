@@ -139,6 +139,7 @@ const placeSchema = z.object({
     meta_description: z.string().max(170).optional(),
     facts: z.array(placeFact).optional(),
     faqs: z.array(placeFaq).optional(),
+    body: z.string().optional(),   // markdown body, rendered with marked
   }),
   en: z.object({
     short_description: z.string().max(280),
@@ -147,6 +148,7 @@ const placeSchema = z.object({
     meta_description: z.string().max(170).optional(),
     facts: z.array(placeFact).optional(),
     faqs: z.array(placeFaq).optional(),
+    body: z.string().optional(),   // markdown body, rendered with marked
   }),
 
   // Tracking — used by automation, monthly review, staleness detection
