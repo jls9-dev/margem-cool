@@ -72,18 +72,65 @@ const waterLabels = {
   sado:     lang === 'en' ? 'Sado Estuary'   : 'Estuário do Sado',
 };
 
-// Tejo bridges as straight rust spans between real lat/lng anchors. Now that
-// the water reads as water, the bridges make sense.
-const bridges = [
+// Tejo bridges — anchor coordinates, tower positions, labels.
+// 25 de Abril: suspension bridge between Alcântara and Almada — two towers.
+// Vasco da Gama: cable-stayed + viaduct between Sacavém and Montijo — one tower.
+type Bridge = {
+  from: [number, number];
+  to: [number, number];
+  towers: number[];   // positions along the bridge (0..1) for perpendicular ticks
+  pt: string;
+  en: string;
+  labelOffset: number; // perpendicular distance for the label (positive = right of bridge direction)
+};
+
+const bridgeData: Bridge[] = [
   {
-    from: project(-9.1772, 38.7042), // Alcântara (north end)
-    to:   project(-9.1775, 38.6789), // Almada (south end)
+    from: project(-9.1808, 38.7042), // Alcântara north anchor
+    to:   project(-9.1772, 38.6815), // Almada south anchor
+    towers: [0.18, 0.82],
+    pt: 'Ponte 25 de Abril',
+    en: '25 de Abril Bridge',
+    labelOffset: -22,
   },
   {
-    from: project(-9.0413, 38.7920), // Sacavém (north end)
-    to:   project(-9.0107, 38.7448), // Montijo (south end)
+    from: project(-9.0322, 38.7833), // Sacavém north anchor
+    to:   project(-9.0080, 38.7263), // Montijo south anchor
+    towers: [0.32],
+    pt: 'Ponte Vasco da Gama',
+    en: 'Vasco da Gama Bridge',
+    labelOffset: 24,
   },
 ];
+
+// Pre-compute geometry: midpoint, perpendicular unit vector, tower segments,
+// and label anchor offset from the bridge midpoint.
+const bridges = bridgeData.map((b) => {
+  const dx = b.to[0] - b.from[0];
+  const dy = b.to[1] - b.from[1];
+  const len = Math.sqrt(dx * dx + dy * dy);
+  const perp: [number, number] = [-dy / len, dx / len];
+  const tickHalf = 7;
+  const towers = b.towers.map((t) => {
+    const cx = b.from[0] + t * dx;
+    const cy = b.from[1] + t * dy;
+    return {
+      x1: cx + perp[0] * tickHalf,
+      y1: cy + perp[1] * tickHalf,
+      x2: cx - perp[0] * tickHalf,
+      y2: cy - perp[1] * tickHalf,
+    };
+  });
+  const midX = b.from[0] + dx * 0.5;
+  const midY = b.from[1] + dy * 0.5;
+  return {
+    ...b,
+    name: lang === 'en' ? b.en : b.pt,
+    towers,
+    labelXY: [midX + perp[0] * b.labelOffset, midY + perp[1] * b.labelOffset] as [number, number],
+    labelAngle: (Math.atan2(dy, dx) * 180) / Math.PI,
+  };
+});
 ---
 
 <figure class={`margem-map margem-map--${size}`} aria-label={`Mapa da Margem Sul${placeName ? ` — ${placeName}` : ''}`}>
@@ -136,14 +183,37 @@ const bridges = [
       </text>
     </g>
 
-    {/* Tejo bridges — rust spans connecting Lisbon to the Margem Sul. */}
+    {/* Tejo bridges — proper rust structures connecting Lisbon to the Margem
+        Sul. Each has a thick deck line, perpendicular tower ticks
+        (suspension towers for 25 de Abril, single cable-stayed mast for
+        Vasco da Gama), endpoint anchor dots, and an italic label rotated
+        along the bridge axis. */}
     <g class="bridges">
       {bridges.map((b) => (
-        <line
-          x1={b.from[0]} y1={b.from[1]}
-          x2={b.to[0]}   y2={b.to[1]}
-          class="bridge"
-        />
+        <g class="bridge">
+          <line
+            x1={b.from[0]} y1={b.from[1]}
+            x2={b.to[0]}   y2={b.to[1]}
+            class="bridge__deck"
+          />
+          {b.towers.map((t) => (
+            <line x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} class="bridge__tower" />
+          ))}
+          <circle cx={b.from[0]} cy={b.from[1]} r="2.6" class="bridge__anchor" />
+          <circle cx={b.to[0]}   cy={b.to[1]}   r="2.6" class="bridge__anchor" />
+          {isStandard && (
+            <text
+              x={b.labelXY[0]}
+              y={b.labelXY[1]}
+              transform={`rotate(${b.labelAngle} ${b.labelXY[0]} ${b.labelXY[1]})`}
+              text-anchor="middle"
+              dominant-baseline="middle"
+              class="bridge__label"
+            >
+              {b.name}
+            </text>
+          )}
+        </g>
       ))}
     </g>
 
@@ -402,14 +472,38 @@ const bridges = [
   }
 
   /* ──────── Bridges ──────── */
-  .bridge {
+  .bridge__deck {
+    stroke: var(--color-accent);
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-opacity: 1;
+  }
+  .margem-map--standard .bridge__deck {
+    stroke-width: 3.6;
+  }
+  .bridge__tower {
     stroke: var(--color-accent);
     stroke-width: 2;
     stroke-linecap: round;
-    stroke-opacity: 0.85;
+    stroke-opacity: 1;
   }
-  .margem-map--standard .bridge {
-    stroke-width: 2.4;
+  .bridge__anchor {
+    fill: var(--color-accent);
+    stroke: var(--color-background);
+    stroke-width: 1;
+  }
+  .bridge__label {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    fill: var(--color-accent);
+    fill-opacity: 0.9;
+    paint-order: stroke;
+    stroke: var(--color-background);
+    stroke-width: 3;
+    stroke-linejoin: round;
+    pointer-events: none;
   }
 
   /* ──────── Landmarks (standard mode only) ──────── */
