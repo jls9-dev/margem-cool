@@ -4,6 +4,7 @@ import '../styles/base.css';
 
 import WordmarkCompact from '../components/brand/WordmarkCompact.astro';
 import Wordmark from '../components/brand/Wordmark.astro';
+import MargemSulMark from '../components/brand/MargemSulMark.astro';
 import { PRIMARY_NAV, FOOTER_NAV, htmlLang, SITE_URL, type Lang } from '../utils/i18n';
 
 interface Props {
@@ -82,6 +83,7 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
     <header class="site-header">
       <div class="site-header__inner">
         <a class="site-header__brand" href={lang === 'pt' ? '/' : '/en/'} aria-label="Margem Cool">
+          <MargemSulMark size={28} ariaHidden class="site-header__mark" />
           <WordmarkCompact height={36} />
         </a>
 
@@ -173,6 +175,9 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
     </main>
 
     <footer class="site-footer">
+      <div class="site-footer__motif" aria-hidden="true">
+        <MargemSulMark size={280} variant="outline" ariaHidden />
+      </div>
       <div class="container site-footer__inner">
         <nav class="site-footer__columns" aria-label={lang === 'pt' ? 'Rodapé' : 'Footer'}>
           <div class="site-footer__col">
@@ -240,7 +245,17 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
+        gap: 10px;
         flex-shrink: 0;
+        transition: opacity 160ms ease;
+      }
+      .site-header__brand:hover { opacity: 0.85; }
+      .site-header__mark {
+        flex-shrink: 0;
+      }
+      @media (max-width: 480px) {
+        /* On narrow mobile, drop the mark; the wordmark alone is the lockup. */
+        .site-header__mark { display: none; }
       }
 
       .site-nav {
@@ -364,6 +379,8 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
       }
 
       .site-footer {
+        position: relative;
+        overflow: hidden;
         margin-top: var(--space-3xl);
         padding: var(--space-2xl) 0 var(--space-xl);
         background: color-mix(in srgb, var(--mc-cream) 78%, var(--mc-cool-grey) 12%);
@@ -373,7 +390,22 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
           background: color-mix(in srgb, var(--mc-charcoal) 82%, var(--mc-cool-grey-dark) 14%);
         }
       }
+      .site-footer__motif {
+        position: absolute;
+        right: -40px;
+        bottom: -60px;
+        opacity: 0.07;
+        pointer-events: none;
+        line-height: 0;
+      }
+      .site-footer__motif :global(.ms-mark--outline path) {
+        stroke-width: 4;
+      }
+      @media (max-width: 720px) {
+        .site-footer__motif :global(.ms-mark) { width: 200px; height: auto; }
+      }
       .site-footer__inner {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: var(--space-2xl);

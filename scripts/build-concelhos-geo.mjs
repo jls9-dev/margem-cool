@@ -28,6 +28,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import polygonClipping from 'polygon-clipping';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW_DIR = join(__dirname, '..', 'src', 'data', 'geo', 'raw');
@@ -218,6 +219,34 @@ async function main() {
   const padding = 16;
   const scale = (VIEW_WIDTH - padding * 2) / ((bbox.maxLng - bbox.minLng) * kLat);
 
+  // 4. Compute the union silhouette of all 9 concelhos.
+  //    polygon-clipping wants each input as [[outerRing, ...holes]].
+  //    Our simplified rings have no holes, so we wrap each as [[ring]].
+  const unionInputs = concelhos.flatMap((c) => c.rings.map((ring) => [[ring]]));
+  const unionResult = polygonClipping.union(...unionInputs);
+  // unionResult: MultiPolygon = Array<Polygon = Array<Ring = Array<[lng,lat]>>>
+  // Project + path-ise every outer ring (skip holes — Margem Sul has none of consequence)
+  const silhouettePaths = unionResult.flatMap((poly) =>
+    poly.map((ring, i) => (i === 0 ? ringToPath(ring.map(project)) : null)).filter(Boolean),
+  );
+  // Compute combined bbox of the silhouette in SVG space for tight-cropped exports.
+  let silMinX = Infinity, silMinY = Infinity, silMaxX = -Infinity, silMaxY = -Infinity;
+  for (const poly of unionResult) {
+    for (const [lng, lat] of poly[0]) {
+      const [x, y] = project([lng, lat]);
+      if (x < silMinX) silMinX = x;
+      if (y < silMinY) silMinY = y;
+      if (x > silMaxX) silMaxX = x;
+      if (y > silMaxY) silMaxY = y;
+    }
+  }
+  const silhouetteViewBox = [
+    Math.floor(silMinX) - 2,
+    Math.floor(silMinY) - 2,
+    Math.ceil(silMaxX - silMinX) + 4,
+    Math.ceil(silMaxY - silMinY) + 4,
+  ];
+
   const out = {
     generated: new Date().toISOString(),
     epsilon: EPSILON_DEG,
@@ -230,8 +259,24 @@ async function main() {
       padding,
       formula: 'x = padding + (lng - bbox.minLng) * kLat * scale; y = padding + (bbox.maxLat - lat) * scale',
     },
+    silhouette: {
+      viewBox: silhouetteViewBox,
+      paths: silhouettePaths,
+      polygons: unionResult.length,
+    },
     concelhos: projected,
   };
+
+  // 5. Write a standalone silhouette SVG for use as a brand mark / favicon / mask.
+  const sd = silhouettePaths
+    .map((p) => `<path d="${p}" />`)
+    .join('\n  ');
+  const sv = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${silhouetteViewBox.join(' ')}" role="img" aria-label="Margem Sul">
+  <title>Margem Sul — silhueta dos nove concelhos</title>
+  ${sd}
+</svg>
+`;
+  await writeFile(join(__dirname, '..', 'public', 'brand', 'margem-sul-silhouette.svg'), sv);
 
   await writeFile(OUT_FILE, JSON.stringify(out, null, 2));
   const totalPoints = projected.reduce(
@@ -243,6 +288,8 @@ async function main() {
   console.log(
     `  bbox: lng ${bbox.minLng.toFixed(4)}..${bbox.maxLng.toFixed(4)}, lat ${bbox.minLat.toFixed(4)}..${bbox.maxLat.toFixed(4)}`,
   );
+  const silEdges = silhouettePaths.reduce((s, p) => s + (p.match(/L /g) || []).length, 0);
+  console.log(`  silhouette: ${unionResult.length} polygon(s), ${silEdges} edges, viewBox=${silhouetteViewBox.join(' ')}`);
 }
 
 main().catch((err) => {

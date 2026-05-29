@@ -1,0 +1,75 @@
+---
+/**
+ * MargemSulMark — silhouette of the nine Margem Sul concelhos as a single
+ * outline, used as a brand mark beside the wordmark, as a watermark, or
+ * as a section accent. Geometry is the polygon-clipping union of the same
+ * simplified concelho data the MargemMap uses, so the mark and the map
+ * always agree.
+ *
+ * Variants:
+ *   - 'solid'   (default) — single filled silhouette in accent (or override)
+ *   - 'outline'           — stroked outline only, no fill
+ *
+ * Source data: src/data/geo/concelhos.json → silhouette.{viewBox, paths}.
+ * Standalone SVG also lives at /public/brand/margem-sul-silhouette.svg.
+ */
+import geo from '../../data/geo/concelhos.json';
+
+interface Props {
+  size?: number;          // pixel height
+  variant?: 'solid' | 'outline';
+  color?: string;         // optional fill (solid) or stroke (outline) override
+  ariaLabel?: string;
+  ariaHidden?: boolean;
+  class?: string;
+}
+
+const {
+  size = 32,
+  variant = 'solid',
+  color,
+  ariaLabel = 'Margem Sul',
+  ariaHidden = false,
+  class: extraClass = '',
+} = Astro.props;
+
+const { viewBox, paths } = geo.silhouette;
+const [, , vbW, vbH] = viewBox;
+const aspect = vbW / vbH;
+const width = Math.round(size * aspect);
+---
+
+<svg
+  class:list={['ms-mark', `ms-mark--${variant}`, extraClass]}
+  viewBox={viewBox.join(' ')}
+  width={width}
+  height={size}
+  xmlns="http://www.w3.org/2000/svg"
+  role={ariaHidden ? undefined : 'img'}
+  aria-label={ariaHidden ? undefined : ariaLabel}
+  aria-hidden={ariaHidden ? 'true' : undefined}
+  style={color ? `--ms-mark-color: ${color}` : undefined}
+>
+  {!ariaHidden && <title>{ariaLabel}</title>}
+  {paths.map((d) => (
+    <path d={d} />
+  ))}
+</svg>
+
+<style>
+  .ms-mark {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .ms-mark--solid path {
+    fill: var(--ms-mark-color, var(--color-accent));
+  }
+  .ms-mark--outline path {
+    fill: none;
+    stroke: var(--ms-mark-color, var(--color-accent));
+    stroke-width: 8;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+</style>
