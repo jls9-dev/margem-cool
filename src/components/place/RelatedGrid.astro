@@ -1,0 +1,117 @@
+---
+/**
+ * RelatedGrid — 3-card grid linking to related guides or pages. Each card has
+ * a name, optional description, and "read the guide →" affordance.
+ *
+ * Hidden entirely if no items.
+ */
+interface RelatedItem {
+  href: string;
+  name: string;
+  description?: string;
+}
+interface Props {
+  kicker: string;
+  title: string;
+  subtitle?: string;
+  ctaLabel: string;   // e.g. "Ler o guia →" / "Read the guide →"
+  items?: ReadonlyArray<RelatedItem>;
+}
+const { kicker, title, subtitle, ctaLabel, items = [] } = Astro.props;
+if (items.length === 0) return null;
+---
+
+<section class="related" aria-labelledby="related-h">
+  <div class="container">
+    <div class="related__inner">
+      <header class="related__header">
+        <p class="related__kicker smallcaps">{kicker}</p>
+        <h2 id="related-h" class="related__title">{title}</h2>
+        {subtitle && <p class="related__subtitle">{subtitle}</p>}
+      </header>
+      <div class="related__grid">
+        {items.slice(0, 6).map((item) => (
+          <a class="related__card" href={item.href}>
+            <h3 class="related__name">{item.name}</h3>
+            {item.description && <p class="related__desc">{item.description}</p>}
+            <span class="related__cta smallcaps">{ctaLabel}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .related {
+    padding: var(--space-2xl) 0;
+  }
+  .related__inner {
+    max-width: var(--wide-section);
+    margin: 0 auto;
+  }
+  .related__header {
+    max-width: var(--content-column);
+    margin: 0 0 var(--space-xl);
+  }
+  .related__kicker {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .related__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-sm);
+  }
+  @media (max-width: 720px) {
+    .related__title { font-size: var(--type-h2-mobile); }
+  }
+  .related__subtitle {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-md);
+  }
+  .related__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-md);
+    border: 1px solid var(--color-rule);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-rule);
+    transition: border-color 160ms ease, transform 160ms ease;
+  }
+  .related__card:hover {
+    border-color: var(--color-accent);
+  }
+  .related__name {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h3);
+    margin: 0;
+    color: var(--color-text);
+    line-height: var(--leading-headline);
+  }
+  .related__desc {
+    margin: 0;
+    font-size: var(--type-small);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+  .related__cta {
+    margin-top: auto;
+    font-family: var(--font-display);
+    font-size: var(--type-caption);
+    color: var(--color-accent);
+  }
+</style>

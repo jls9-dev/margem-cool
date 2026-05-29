@@ -1,0 +1,121 @@
+---
+/**
+ * Section — a content block with eyebrow + H2 + optional subtitle + body slot.
+ * Alternating background (cream/white) provides visual rhythm. Pass `tone="cream"`
+ * to render the cream variant; default is white-on-cream.
+ *
+ * H2 anchors are generated from the title slug so in-page TOC navigation and
+ * deep links work.
+ */
+interface Props {
+  kicker?: string;
+  title: string;
+  subtitle?: string;
+  tone?: 'cream' | 'white';
+  id?: string;
+}
+const { kicker, title, subtitle, tone = 'white', id } = Astro.props;
+
+function slugify(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+const anchorId = id ?? slugify(title);
+---
+
+<section class:list={['place-section', `place-section--${tone}`]} aria-labelledby={`${anchorId}-h`} id={anchorId}>
+  <div class="container">
+    <div class="place-section__inner">
+      <header class="place-section__header">
+        {kicker && <p class="place-section__kicker smallcaps">{kicker}</p>}
+        <h2 id={`${anchorId}-h`} class="place-section__title">{title}</h2>
+        {subtitle && <p class="place-section__subtitle">{subtitle}</p>}
+      </header>
+      <div class="place-section__body">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .place-section {
+    padding: var(--space-2xl) 0;
+  }
+  .place-section--cream {
+    background: color-mix(in srgb, var(--mc-cream) 60%, transparent);
+  }
+  @media (prefers-color-scheme: dark) {
+    .place-section--cream {
+      background: color-mix(in srgb, var(--mc-charcoal) 60%, transparent);
+    }
+  }
+  .place-section__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .place-section__header {
+    margin-bottom: var(--space-xl);
+  }
+  .place-section__kicker {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .place-section__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-md);
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 720px) {
+    .place-section__title { font-size: var(--type-h2-mobile); }
+  }
+  .place-section__subtitle {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  .place-section__body :global(h3) {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--type-h3);
+    margin: var(--space-xl) 0 var(--space-sm);
+    line-height: var(--leading-headline);
+  }
+  @media (max-width: 720px) {
+    .place-section__body :global(h3) { font-size: var(--type-h3-mobile); }
+  }
+  .place-section__body :global(p) {
+    font-family: var(--font-body);
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+    margin: 0 0 var(--space-md);
+  }
+  @media (max-width: 720px) {
+    .place-section__body :global(p) { font-size: var(--type-body-mobile); }
+  }
+  .place-section__body :global(ul),
+  .place-section__body :global(ol) {
+    margin: 0 0 var(--space-md);
+    padding-left: var(--space-lg);
+  }
+  .place-section__body :global(li) {
+    margin-bottom: 6px;
+  }
+  .place-section__body :global(a) {
+    color: var(--color-text);
+    border-bottom-color: var(--color-accent);
+  }
+  .place-section__body :global(a:hover) {
+    color: var(--color-accent);
+  }
+</style>

@@ -1,0 +1,284 @@
+---
+/**
+ * PlaceLayout — composes the place-page chrome from a Place entry, then slots
+ * in the markdown body between intro (description + facts) and FAQ/related.
+ *
+ * Consumed by /lugares/[...slug].astro and /en/places/[...slug].astro. Both
+ * routes pull the entry, build the ancestor + children lists, then hand off
+ * to this layout via a `<PlaceLayout>` wrapper around `<Content />`.
+ */
+import type { CollectionEntry } from 'astro:content';
+
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/place/Breadcrumb.astro';
+import GuideHero from '../components/place/GuideHero.astro';
+import QuickFacts from '../components/place/QuickFacts.astro';
+import FAQ from '../components/place/FAQ.astro';
+import RelatedGrid from '../components/place/RelatedGrid.astro';
+import CTA from '../components/place/CTA.astro';
+import BackLink from '../components/place/BackLink.astro';
+
+import { buildPlaceJsonLd } from '../utils/schema-org';
+import { SITE_URL, type Lang } from '../utils/i18n';
+
+type Place = CollectionEntry<'places'>;
+
+interface Props {
+  lang: Lang;
+  place: Place;
+  ancestors: Place[];
+  children?: Place[];
+}
+const { lang, place, ancestors, children = [] } = Astro.props;
+
+// --- Per-language strings ---
+const COPY = {
+  pt: {
+    breadcrumbLabel: 'Caminho',
+    breadcrumbRoot: { href: '/lugares/', label: 'Lugares' },
+    levelLabel: {
+      concelho: 'Concelho',
+      freguesia: 'Freguesia',
+      bairro: 'Bairro',
+      lugar: 'Lugar',
+    },
+    updatedLabel: (d: Date) => `Atualizado · ${formatDate(d, 'pt')}`,
+    childrenKicker: 'Áreas dentro',
+    childrenTitleConcelho: 'Freguesias do concelho',
+    childrenTitleOther: 'Áreas dentro',
+    childrenCta: 'Explorar →',
+    placeholderKicker: 'Em construção',
+    placeholderBody: 'Esta página está em desenvolvimento. Em breve com conteúdo completo.',
+    faqKicker: 'Perguntas frequentes',
+    faqTitle: 'Perguntas comuns',
+    ctaKicker: 'Margem Cool',
+    ctaTitle: 'Conheces algo que devíamos saber?',
+    ctaBody: 'Restaurantes, festas, recantos, correcções — escreve-nos. Esta página é melhor com a tua ajuda.',
+    ctaButton: 'Escrever para a Margem Cool →',
+    ctaHref: '/contacto/',
+    backLabel: '← Voltar a todos os lugares',
+    backHref: '/lugares/',
+  },
+  en: {
+    breadcrumbLabel: 'Breadcrumb',
+    breadcrumbRoot: { href: '/en/places/', label: 'Places' },
+    levelLabel: {
+      concelho: 'Concelho',
+      freguesia: 'Freguesia',
+      bairro: 'Bairro',
+      lugar: 'Lugar',
+    },
+    updatedLabel: (d: Date) => `Updated · ${formatDate(d, 'en')}`,
+    childrenKicker: 'Areas within',
+    childrenTitleConcelho: 'Freguesias of the concelho',
+    childrenTitleOther: 'Areas within',
+    childrenCta: 'Explore →',
+    placeholderKicker: 'Under construction',
+    placeholderBody: 'This page is being developed. Fuller content is coming soon.',
+    faqKicker: 'Common questions',
+    faqTitle: 'Frequently asked',
+    ctaKicker: 'Margem Cool',
+    ctaTitle: 'Know something we should know?',
+    ctaBody: 'Restaurants, festas, corners, corrections — write to us. This page gets better with your help.',
+    ctaButton: 'Write to Margem Cool →',
+    ctaHref: '/en/contact/',
+    backLabel: '← Back to all places',
+    backHref: '/en/places/',
+  },
+} as const;
+
+const copy = COPY[lang];
+
+// --- Derived values ---
+const langData = lang === 'pt' ? place.data.pt : place.data.en;
+const displayName = lang === 'en'
+  ? (place.data.name_en ?? place.data.name_pt)
+  : place.data.name_pt;
+const description = langData.short_description;
+const facts = langData.facts;
+const faqs = langData.faqs;
+const isPlaceholder = langData.page_status === 'placeholder';
+
+const lastUpdated = place.data.last_updated instanceof Date
+  ? place.data.last_updated
+  : new Date(place.data.last_updated);
+
+// Paths
+const segments = ancestorPathSegments(place, ancestors);
+const canonicalPath = lang === 'pt'
+  ? `/lugares/${segments.join('/')}/`
+  : `/en/places/${segments.join('/')}/`;
+const alternatePath = lang === 'pt'
+  ? `/en/places/${segments.join('/')}/`
+  : `/lugares/${segments.join('/')}/`;
+const canonicalUrl = new URL(canonicalPath, SITE_URL).toString();
+
+// Breadcrumb (visual)
+const breadcrumbItems = [
+  copy.breadcrumbRoot,
+  ...ancestors.map((a, i) => ({
+    href: `${copy.breadcrumbRoot.href}${segments.slice(0, i + 1).join('/')}/`,
+    label: lang === 'en' ? (a.data.name_en ?? a.data.name_pt) : a.data.name_pt,
+  })),
+  { label: displayName },
+];
+
+// Children list (rendered as a Related-style grid)
+const childrenItems = children
+  .sort((a, b) => a.data.name_pt.localeCompare(b.data.name_pt, 'pt'))
+  .map((c) => {
+    const childSegments = [...segments, c.slug.split('/').pop()!];
+    const href = lang === 'pt'
+      ? `/lugares/${childSegments.join('/')}/`
+      : `/en/places/${childSegments.join('/')}/`;
+    return {
+      href,
+      name: lang === 'en' ? (c.data.name_en ?? c.data.name_pt) : c.data.name_pt,
+      description: lang === 'en' ? c.data.en.short_description : c.data.pt.short_description,
+    };
+  });
+
+const featuredLinks = (place.data.featured_links ?? []).map((fl) => ({
+  href: fl.href,
+  name: lang === 'en' ? fl.name_en : fl.name_pt,
+  description: lang === 'en' ? fl.description_en : fl.description_pt,
+}));
+
+// JSON-LD @graph
+const jsonLd = buildPlaceJsonLd({
+  place,
+  lang,
+  ancestors,
+  url: canonicalUrl,
+});
+
+// Meta
+const metaTitle = langData.meta_title ?? `${displayName} · Margem Cool`;
+const metaDescription = langData.meta_description ?? description;
+
+// Pillar / tagline copy passed to BaseLayout via slots — none needed; layout
+// just wraps the standard chrome.
+
+function ancestorPathSegments(p: Place, ancs: Place[]): string[] {
+  // p.slug is path-like e.g. "almada/cacilhas"; the last segment is the place's own slug.
+  // We rebuild the segment list from ancestors + the place's final segment.
+  const own = p.slug.split('/').pop()!;
+  return [...ancs.map(a => a.slug.split('/').pop()!), own];
+}
+
+function formatDate(d: Date, l: Lang): string {
+  if (l === 'pt') {
+    const months = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+    return `${months[d.getMonth()]} de ${d.getFullYear()}`;
+  }
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+---
+
+<BaseLayout
+  lang={lang}
+  title={metaTitle}
+  description={metaDescription}
+  alternateUrl={alternatePath}
+  canonicalPath={canonicalPath}
+  jsonLd={jsonLd}
+>
+  <Breadcrumb ariaLabel={copy.breadcrumbLabel} items={breadcrumbItems} />
+
+  <GuideHero
+    kicker={copy.levelLabel[place.data.level]}
+    title={displayName}
+    dek={description}
+    updatedLabel={copy.updatedLabel(lastUpdated)}
+  />
+
+  <QuickFacts facts={facts} />
+
+  {isPlaceholder ? (
+    <section class="place-placeholder">
+      <div class="container">
+        <div class="place-placeholder__inner">
+          <p class="place-placeholder__kicker smallcaps">{copy.placeholderKicker}</p>
+          <p>{copy.placeholderBody}</p>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <article class="place-body">
+      <div class="container">
+        <div class="place-body__inner">
+          <slot />
+        </div>
+      </div>
+    </article>
+  )}
+
+  {childrenItems.length > 0 && (
+    <RelatedGrid
+      kicker={copy.childrenKicker}
+      title={place.data.level === 'concelho' ? copy.childrenTitleConcelho : copy.childrenTitleOther}
+      ctaLabel={copy.childrenCta}
+      items={childrenItems}
+    />
+  )}
+
+  <FAQ kicker={copy.faqKicker} title={copy.faqTitle} items={faqs} />
+
+  {featuredLinks.length > 0 && (
+    <RelatedGrid
+      kicker={lang === 'pt' ? 'Mais para ler' : 'Keep reading'}
+      title={lang === 'pt' ? 'Guias relacionados' : 'Related guides'}
+      ctaLabel={lang === 'pt' ? 'Ler o guia →' : 'Read the guide →'}
+      items={featuredLinks}
+    />
+  )}
+
+  <CTA
+    kicker={copy.ctaKicker}
+    title={copy.ctaTitle}
+    body={copy.ctaBody}
+    buttonLabel={copy.ctaButton}
+    href={copy.ctaHref}
+  />
+
+  <BackLink href={copy.backHref} label={copy.backLabel} />
+</BaseLayout>
+
+<style>
+  .place-body {
+    padding: var(--space-xl) 0;
+  }
+  .place-body__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .place-body__inner :global(p) {
+    font-family: var(--font-body);
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+    margin: 0 0 var(--space-md);
+  }
+  @media (max-width: 720px) {
+    .place-body__inner :global(p) { font-size: var(--type-body-mobile); }
+  }
+
+  .place-placeholder {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+  .place-placeholder__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .place-placeholder__kicker {
+    color: var(--color-text-secondary);
+    font-size: var(--type-caption);
+    margin: 0 0 var(--space-sm);
+  }
+  .place-placeholder p {
+    font-family: var(--font-body);
+    font-size: var(--type-body);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+</style>

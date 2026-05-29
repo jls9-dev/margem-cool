@@ -1,0 +1,66 @@
+---
+/**
+ * GuideHero — top of every place page.
+ * Eyebrow (level label) + H1 + dek (short description) + updated date.
+ *
+ * The hero block matches LP/SBRE patterns: a clear title-as-answer-to-the-question,
+ * the lede beneath, and the freshness signal in the same eye-line so readers and
+ * crawlers both pick it up.
+ */
+interface Props {
+  kicker: string;
+  title: string;
+  dek: string;
+  updatedLabel: string;   // e.g. "Updated May 2026" / "Atualizado em maio de 2026"
+}
+const { kicker, title, dek, updatedLabel } = Astro.props;
+---
+
+<header class="guide-hero">
+  <div class="container">
+    <div class="guide-hero__inner">
+      <p class="guide-hero__kicker smallcaps">{kicker}</p>
+      <h1 class="guide-hero__title">{title}</h1>
+      <p class="guide-hero__dek">{dek}</p>
+      <p class="guide-hero__updated smallcaps">{updatedLabel}</p>
+    </div>
+  </div>
+</header>
+
+<style>
+  .guide-hero {
+    padding: var(--space-2xl) 0 var(--space-xl);
+  }
+  .guide-hero__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .guide-hero__kicker {
+    margin: 0 0 var(--space-md);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .guide-hero__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h1);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-md);
+    letter-spacing: -0.015em;
+  }
+  @media (max-width: 720px) {
+    .guide-hero__title { font-size: var(--type-h1-mobile); }
+  }
+  .guide-hero__dek {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-lg);
+  }
+  .guide-hero__updated {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--type-caption);
+  }
+</style>

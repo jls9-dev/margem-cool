@@ -1,0 +1,69 @@
+---
+/**
+ * QuickFacts — strip of 4 metric cards. Each card has a value and a label.
+ * Sits between hero and intro. Gives the reader and Google structured signals
+ * about the place upfront.
+ *
+ * Hidden entirely if there are no facts to show.
+ */
+interface Fact {
+  value: string;
+  label: string;
+}
+interface Props {
+  facts?: ReadonlyArray<Fact>;
+}
+const { facts = [] } = Astro.props;
+if (facts.length === 0) return null;
+---
+
+<section class="quick-facts" aria-label="Quick facts">
+  <div class="container">
+    <div class="quick-facts__inner">
+      {facts.map((f) => (
+        <div class="quick-facts__card">
+          <div class="quick-facts__value">{f.value}</div>
+          <div class="quick-facts__label smallcaps">{f.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .quick-facts {
+    padding: var(--space-lg) 0 var(--space-xl);
+  }
+  .quick-facts__inner {
+    max-width: var(--wide-section);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-md);
+    padding: var(--space-lg) var(--space-lg);
+    border-top: 1px solid var(--color-rule);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .quick-facts__card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .quick-facts__value {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: 1.05;
+    color: var(--color-text);
+  }
+  @media (max-width: 720px) {
+    .quick-facts__value { font-size: var(--type-h2-mobile); }
+    .quick-facts__inner { padding: var(--space-md); }
+  }
+  .quick-facts__label {
+    font-family: var(--font-display);
+    font-size: var(--type-caption);
+    color: var(--color-text-secondary);
+    letter-spacing: var(--tracking-smallcaps);
+  }
+</style>

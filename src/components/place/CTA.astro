@@ -1,0 +1,76 @@
+---
+/**
+ * CTA — single soft call-to-action at the bottom of a place page.
+ * Margem Cool isn't selling a service, so the CTA is a "got something to add /
+ * stay in touch" prompt rather than the buyer-agent "book a call" pattern from
+ * LP/SBRE.
+ */
+interface Props {
+  kicker?: string;
+  title: string;
+  body: string;
+  buttonLabel: string;
+  href: string;
+}
+const { kicker, title, body, buttonLabel, href } = Astro.props;
+---
+
+<section class="place-cta" aria-labelledby="cta-h">
+  <div class="container">
+    <div class="place-cta__inner">
+      {kicker && <p class="place-cta__kicker smallcaps">{kicker}</p>}
+      <h2 id="cta-h" class="place-cta__title">{title}</h2>
+      <p class="place-cta__body">{body}</p>
+      <a class="place-cta__button smallcaps" href={href}>{buttonLabel}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .place-cta {
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--color-rule);
+  }
+  .place-cta__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+    text-align: left;
+  }
+  .place-cta__kicker {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .place-cta__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-md);
+  }
+  @media (max-width: 720px) {
+    .place-cta__title { font-size: var(--type-h2-mobile); }
+  }
+  .place-cta__body {
+    font-family: var(--font-body);
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-lg);
+    max-width: 60ch;
+    line-height: 1.5;
+  }
+  .place-cta__button {
+    display: inline-block;
+    padding: 12px 20px;
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: var(--type-small);
+    border-bottom-color: var(--color-text);
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+  .place-cta__button:hover {
+    background: var(--color-text);
+    color: var(--color-background);
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+/**
+ * Callout — a bordered note inside a section. Used for warnings, tips, or
+ * "good to know" content that should stand apart from body prose.
+ */
+interface Props {
+  title?: string;
+}
+const { title } = Astro.props;
+---
+
+<aside class="callout">
+  {title && <h4 class="callout__title smallcaps">{title}</h4>}
+  <div class="callout__body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    margin: var(--space-xl) 0;
+    padding: var(--space-md) var(--space-lg);
+    border-left: 3px solid var(--color-accent);
+    background: color-mix(in srgb, var(--mc-cream) 60%, transparent);
+  }
+  @media (prefers-color-scheme: dark) {
+    .callout {
+      background: color-mix(in srgb, var(--mc-charcoal) 75%, transparent);
+    }
+  }
+  .callout__title {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .callout__body :global(p) {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+  }
+  .callout__body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

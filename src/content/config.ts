@@ -82,6 +82,31 @@ const month = z.enum([
 
 const pageStatus = z.enum(['placeholder', 'thin', 'developed', 'comprehensive']);
 
+const placeFact = z.object({
+  value: z.string(),     // e.g. "26,000", "5 min", "Ferry", "UNESCO"
+  label: z.string(),     // e.g. "Habitantes", "Ferry para Lisboa"
+});
+
+const placeFaq = z.object({
+  question: z.string(),
+  answer: z.string(),
+});
+
+const placeGalleryItem = z.object({
+  src: z.string(),                 // path under /public/images/places/...
+  alt_pt: z.string(),
+  alt_en: z.string(),
+  credit: z.string().optional(),
+});
+
+const placeFeaturedLink = z.object({
+  href: z.string(),
+  name_pt: z.string(),
+  name_en: z.string(),
+  description_pt: z.string().optional(),
+  description_en: z.string().optional(),
+});
+
 const placeSchema = z.object({
   level: z.enum(['concelho', 'freguesia', 'bairro', 'lugar']),
   name_pt: z.string(),
@@ -98,18 +123,40 @@ const placeSchema = z.object({
   population: z.number().optional(),
   population_year: z.number().optional(),
 
+  // Shared assets — language-neutral, with bilingual alt text where needed
+  hero_image: z.string().optional(),               // path under /public/images/places/...
+  hero_image_alt_pt: z.string().optional(),
+  hero_image_alt_en: z.string().optional(),
+  hero_image_credit: z.string().optional(),
+
+  gallery: z.array(placeGalleryItem).optional(),
+  featured_links: z.array(placeFeaturedLink).optional(),
+
   pt: z.object({
     short_description: z.string().max(280),
     page_status: pageStatus,
+    meta_title: z.string().max(70).optional(),
+    meta_description: z.string().max(170).optional(),
+    facts: z.array(placeFact).optional(),
+    faqs: z.array(placeFaq).optional(),
   }),
   en: z.object({
     short_description: z.string().max(280),
     page_status: pageStatus,
+    meta_title: z.string().max(70).optional(),
+    meta_description: z.string().max(170).optional(),
+    facts: z.array(placeFact).optional(),
+    faqs: z.array(placeFaq).optional(),
   }),
 
+  // Tracking — used by automation, monthly review, staleness detection
   last_updated: z.date(),
   last_visited: z.date().optional(),
   draft: z.boolean().default(false),
+
+  // NW query IDs for scoring back via the SEO CLI
+  nw_query_pt: z.string().optional(),
+  nw_query_en: z.string().optional(),
 });
 
 /* -------------------------------------------------------------------------
