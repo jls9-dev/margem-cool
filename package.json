@@ -10,7 +10,10 @@
     "astro": "astro",
     "seo": "node scripts/seo/cli.mjs",
     "seo:projects": "node scripts/seo/cli.mjs projects",
-    "seo:brief": "node scripts/seo/cli.mjs brief"
+    "seo:brief": "node scripts/seo/cli.mjs brief",
+    "geo:build": "node scripts/build-concelhos-geo.mjs",
+    "brand:favicons": "node scripts/build-favicons.mjs",
+    "brand:wordmark": "node scripts/build-wordmark-svg.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.0",
