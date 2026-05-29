@@ -58,6 +58,14 @@ const CONTEXT_NORTH = [
   { file: 'Loures.json',  slug: 'loures' },
 ];
 
+// Concelhos rendered as faint context on the south + east side so the
+// Sado estuary has Tróia closing it (Grândola) and the eastern Alentejo
+// boundary shows beyond Palmela / Setúbal (Alcácer do Sal).
+const CONTEXT_SOUTH = [
+  { file: 'Grandola.json',     slug: 'grandola' },
+  { file: 'AlcacerDoSal.json', slug: 'alcacer-do-sal' },
+];
+
 /**
  * Ramer-Douglas-Peucker simplification.
  * epsilon in degrees. A reasonable value for our latitude is ~0.0015
@@ -252,41 +260,45 @@ async function main() {
     });
   }
 
-  // 2. Load the north-coast context concelhos. Do NOT update bbox — we want
-  // the Margem Sul to take the full viewBox and the north-coast shapes to
-  // clip naturally where they extend past the frame.
-  const contextConcelhos = [];
-  for (const { file, slug } of CONTEXT_NORTH) {
-    const raw = JSON.parse(await readFile(join(RAW_DIR, file), 'utf8'));
-    const allRings = extractPolygons(raw.geojson.geometry);
-    const ringsWithArea = allRings.map((ring) => ({ ring, area: ringArea(ring) }));
-    const maxArea = Math.max(...ringsWithArea.map((r) => r.area));
-    const keptRings = ringsWithArea.filter((r) => r.area >= maxArea * 0.005).map((r) => r.ring);
-    const simplified = keptRings.map((ring) => rdp(ring, EPSILON_DEG));
-    contextConcelhos.push({ slug, name: raw.nome, rings: simplified });
+  // 2. Load the context concelhos (north of the Tejo + south/east of the
+  // Sado). Do NOT update bbox — we want the Margem Sul to take the full
+  // viewBox and the context shapes to clip naturally where they extend
+  // past the frame.
+  async function loadContext(list) {
+    const out = [];
+    for (const { file, slug } of list) {
+      const raw = JSON.parse(await readFile(join(RAW_DIR, file), 'utf8'));
+      const allRings = extractPolygons(raw.geojson.geometry);
+      const ringsWithArea = allRings.map((ring) => ({ ring, area: ringArea(ring) }));
+      const maxArea = Math.max(...ringsWithArea.map((r) => r.area));
+      const keptRings = ringsWithArea.filter((r) => r.area >= maxArea * 0.005).map((r) => r.ring);
+      const simplified = keptRings.map((ring) => rdp(ring, EPSILON_DEG));
+      out.push({ slug, name: raw.nome, rings: simplified });
+    }
+    return out;
   }
+  const contextConcelhos = await loadContext(CONTEXT_NORTH);
+  const contextSouthConcelhos = await loadContext(CONTEXT_SOUTH);
 
   // 3. Build projector once expanded bbox is known
   const VIEW_WIDTH = 800;
   const { project, viewHeight } = makeProjector(bbox, VIEW_WIDTH);
 
-  // 3b. Union the context concelhos into a single north-coast polygon, so
+  // 3b. Union the context concelhos into single per-side polygons, so
   // simplification mismatches at adjacent borders don't leak the water
   // base through as visible teal gaps inside the land.
-  const contextUnionInputs = contextConcelhos.flatMap((c) =>
-    c.rings.map((ring) => [[ring]]),
-  );
-  const contextUnion = polygonClipping.union(...contextUnionInputs);
+  function unionAndProject(group, slug, name) {
+    const inputs = group.flatMap((c) => c.rings.map((ring) => [[ring]]));
+    const result = polygonClipping.union(...inputs);
+    return {
+      slug,
+      name,
+      paths: result.map((poly) => poly[0]).map((ring) => ringToPath(ring.map(project))),
+    };
+  }
   const contextProjected = [
-    {
-      slug: 'north-coast',
-      name: 'Margem Norte',
-      // Take outer rings only (drop any holes — Lisbon/Loures don't have
-      // legit lakes that matter at this scale).
-      paths: contextUnion
-        .map((poly) => poly[0])
-        .map((ring) => ringToPath(ring.map(project))),
-    },
+    unionAndProject(contextConcelhos, 'north-coast', 'Margem Norte'),
+    unionAndProject(contextSouthConcelhos, 'south-coast', 'Sul do Sado'),
   ];
 
   // 4. Project Margem Sul rings and centroids into SVG space
