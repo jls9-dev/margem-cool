@@ -1,6 +1,29 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import MastheadLockup from '../../components/brand/MastheadLockup.astro';
+import Wordmark from '../../components/brand/Wordmark.astro';
+import MargemMap from '../../components/place/MargemMap.astro';
+import { concelhos } from '../../utils/place-hierarchy';
+
+const allPlaces = await getCollection('places');
+const concelhoList = concelhos(allPlaces);
+
+const featuredSlugs = [
+  'almada/almada-cova-da-piedade-pragal-e-cacilhas/cacilhas',
+  'seixal/amora/belverde',
+];
+const featured = featuredSlugs
+  .map((s) => allPlaces.find((p) => p.slug === s))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+const pillars: Array<{ href: string; name: string; blurb: string }> = [
+  { href: '/en/places/',          name: 'Places',           blurb: 'Nine concelhos, freguesia by freguesia.' },
+  { href: '/en/eat-and-drink/',   name: 'Eat & drink',      blurb: 'Marisqueiras, bakeries, tascas, markets.' },
+  { href: '/en/beach-and-nature/',name: 'Beach & nature',   blurb: 'Costa da Caparica to the Arrábida, trails and capes.' },
+  { href: '/en/culture-and-agenda/', name: 'Culture & agenda', blurb: 'What\'s on this week — from Almada to the quintas.' },
+  { href: '/en/sleep/',           name: 'Sleep',            blurb: 'Where to stay from Cacilhas to Setúbal without paying Lisbon prices.' },
+  { href: '/en/living-here/',     name: 'Living here',      blurb: 'Moving, renting, working and growing up on the south bank.' },
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -9,71 +32,284 @@ const jsonLd = {
   alternateName: 'Margem Cool — the Margem Sul, no filters',
   url: 'https://margemcool.pt/en/',
   inLanguage: ['en', 'pt-PT'],
-  description: 'Margem Cool is a publication of the Margem Sul, written from where we live, in Portuguese and English, for the people of the region and the people who want to know it better.',
+  description:
+    'Margem Cool is a publication of the Margem Sul, written from where we live, in Portuguese and English.',
 };
 ---
 
 <BaseLayout
   lang="en"
-  title="Margem Cool · The Margem Sul, no filters"
-  description="Margem Cool is a publication of the Margem Sul, written from where we live, in Portuguese and English."
+  title="Margem Cool · The Margem Sul, from the inside"
+  description="The nine concelhos of the Margem Sul — Almada, Seixal, Sesimbra, Setúbal, Palmela, Barreiro, Moita, Montijo, Alcochete — written from where we live."
   alternateUrl="/"
   canonicalPath="/en/"
   jsonLd={jsonLd}
 >
-  <section class="hero">
-    <div class="container">
-      <div class="hero__inner">
-        <MastheadLockup size={420} />
-        <p class="hero__lede">
-          A publication of the Margem Sul, written from where we live, in Portuguese and English, for the people of the region and the people who want to know it better.
-        </p>
-        <p class="hero__status smallcaps">Under construction · Back soon</p>
-        <p class="hero__links">
-          <a href="/en/places/">Places</a>
-          <span aria-hidden="true">·</span>
-          <a href="/en/about/">About</a>
-          <span aria-hidden="true">·</span>
-          <a href="/" hreflang="pt-PT">Português</a>
-        </p>
+  {/* ─────────── Hero ─────────── */}
+  <section class="home-hero" aria-label="Margem Cool">
+    <picture class="home-hero__bg">
+      <source media="(min-width: 720px)" srcset="/images/home/hero-cristo-rei.webp" type="image/webp" />
+      <source media="(min-width: 720px)" srcset="/images/home/hero-cristo-rei.jpg" />
+      <source srcset="/images/home/hero-cristo-rei-mobile.webp" type="image/webp" />
+      <img
+        src="/images/home/hero-cristo-rei-mobile.jpg"
+        alt="Cristo Rei above Almada, with the 25 de Abril Bridge and the Tagus at sunset."
+        loading="eager"
+        fetchpriority="high"
+      />
+    </picture>
+    <div class="home-hero__veil"></div>
+    <div class="home-hero__content">
+      <div class="home-hero__mark">
+        <Wordmark size={520} ariaLabel="Margem Cool" />
       </div>
+      <p class="home-hero__tagline smallcaps">The Margem Sul, from the inside</p>
+      <p class="home-hero__cue smallcaps" aria-hidden="true">
+        <span class="home-hero__arrow">↓</span> Read on
+      </p>
+    </div>
+  </section>
+
+  {/* ─────────── The map ─────────── */}
+  <section class="home-map">
+    <div class="container">
+      <header class="home-map__head">
+        <p class="home-map__kicker smallcaps">Where to start</p>
+        <h2 class="home-map__title">
+          Nine concelhos. <span class="home-map__title-em">One bank.</span>
+        </h2>
+        <p class="home-map__dek">
+          From the Costa da Caparica to the Serra da Arrábida, from Cristo Rei to the Sado estuary.
+          Tap a concelho to begin — there's no right order.
+        </p>
+      </header>
+      <div class="home-map__canvas">
+        <MargemMap size="standard" lang="en" />
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────── Featured ─────────── */}
+  <section class="home-featured">
+    <div class="container">
+      <header class="home-featured__head">
+        <p class="home-featured__kicker smallcaps">In focus</p>
+        <h2 class="home-featured__title">Where we've been</h2>
+      </header>
+      <ul class="home-featured__grid" role="list">
+        {featured.map((p) => {
+          const langData = p.data.en ?? p.data.pt;
+          const name = p.data.name_en ?? p.data.name_pt;
+          return (
+            <li class="featured-card">
+              <a href={`/en/places/${p.slug}/`}>
+                <span class="featured-card__kicker smallcaps">
+                  {p.data.level === 'concelho' ? 'Concelho' : p.data.level === 'freguesia' ? 'Freguesia' : 'Bairro'} · {name}
+                </span>
+                <h3 class="featured-card__name">{name}</h3>
+                <p class="featured-card__blurb">{langData.short_description}</p>
+                <span class="featured-card__cta smallcaps">Read →</span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  {/* ─────────── Themes ─────────── */}
+  <section class="home-themes">
+    <div class="container">
+      <header class="home-themes__head">
+        <p class="home-themes__kicker smallcaps">By theme</p>
+        <h2 class="home-themes__title">Other ways in</h2>
+      </header>
+      <ul class="home-themes__grid" role="list">
+        {pillars.map((p) => (
+          <li class="theme-card">
+            <a href={p.href}>
+              <h3 class="theme-card__name">{p.name}</h3>
+              <p class="theme-card__blurb">{p.blurb}</p>
+              <span class="theme-card__cta" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ─────────── PT bridge ─────────── */}
+  <section class="home-en-bridge">
+    <div class="container">
+      <p class="home-en-bridge__line smallcaps">
+        Prefere ler em português? <a href="/" hreflang="pt-PT">Ver a edição portuguesa →</a>
+      </p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .hero {
-    padding: var(--space-3xl) 0 var(--space-2xl);
+  /* ─────────────────────── Hero ─────────────────────── */
+  .home-hero {
+    position: relative;
+    width: 100%;
+    height: 92vh;
+    min-height: 560px;
+    max-height: 880px;
+    overflow: hidden;
+    background: #1d1612;
   }
-  .hero__inner {
-    max-width: var(--content-column);
+  .home-hero__bg,
+  .home-hero__bg img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+  }
+  .home-hero__veil {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.10) 40%,
+        rgba(0,0,0,0.55) 100%
+      );
+    pointer-events: none;
+  }
+  .home-hero__content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    max-width: var(--wide-section);
     margin: 0 auto;
+    padding: 0 var(--space-lg);
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     align-items: flex-start;
-    gap: var(--space-xl);
+    gap: var(--space-md);
+    padding-bottom: var(--space-2xl);
   }
-  .hero__lede {
-    font-family: var(--font-body);
-    font-size: var(--type-lead);
-    line-height: 1.5;
+  .home-hero__mark {
+    color: #F5F1E8;
+  }
+  .home-hero__mark :global(.mc-ink)        { fill: #F5F1E8 !important; }
+  .home-hero__mark :global(.mc-rust-fill)  { fill: #E08B5C !important; }
+  .home-hero__mark :global(.mc-rust-stroke){ stroke: #E08B5C !important; }
+  .home-hero__mark :global(svg) {
+    width: min(520px, 78vw);
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.35));
+  }
+  .home-hero__tagline {
     margin: 0;
-    max-width: 60ch;
-  }
-  .hero__status {
-    margin: 0;
-    color: var(--color-text-secondary);
-    font-size: var(--type-small);
-  }
-  .hero__links {
+    color: #F5F1E8;
     font-family: var(--font-display);
-    font-size: var(--type-small);
-    color: var(--color-text-secondary);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
+    font-size: clamp(14px, 1.6vw, 18px);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.92;
   }
-  .hero__links span { color: var(--color-rule); }
+  .home-hero__cue {
+    margin: var(--space-md) 0 0;
+    color: #F5F1E8;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    opacity: 0.65;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .home-hero__arrow {
+    display: inline-block;
+    animation: hero-bob 2.4s ease-in-out infinite;
+  }
+  @keyframes hero-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-hero__arrow { animation: none; }
+  }
+  @media (max-width: 720px) {
+    .home-hero { height: 86vh; min-height: 480px; }
+    .home-hero__mark :global(svg) { width: 86vw; }
+  }
+
+  /* ─────────────────────── Map section ─────────────────────── */
+  .home-map { background: var(--color-background); padding: var(--space-3xl) 0 var(--space-2xl); }
+  .home-map__head { max-width: var(--content-column); margin: 0 auto var(--space-xl); text-align: center; }
+  .home-map__kicker { margin: 0 0 var(--space-md); color: var(--color-accent); font-size: var(--type-caption); }
+  .home-map__title {
+    font-family: var(--font-body); font-weight: 600;
+    font-size: clamp(36px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 var(--space-md);
+  }
+  .home-map__title-em { font-style: italic; color: var(--color-accent); }
+  .home-map__dek {
+    font-family: var(--font-body); font-size: var(--type-lead); color: var(--color-text-secondary);
+    margin: 0; max-width: 56ch; margin-inline: auto; line-height: 1.5;
+  }
+  .home-map__canvas { max-width: 820px; margin: 0 auto; }
+
+  /* ─────────────────────── Featured ─────────────────────── */
+  .home-featured {
+    background: color-mix(in srgb, var(--color-accent) 4%, var(--color-background));
+    padding: var(--space-3xl) 0;
+  }
+  .home-featured__head { max-width: var(--wide-section); margin: 0 auto var(--space-xl); padding: 0 var(--space-lg); }
+  .home-featured__kicker { margin: 0 0 var(--space-sm); color: var(--color-accent); font-size: var(--type-caption); }
+  .home-featured__title { font-family: var(--font-body); font-weight: 600; font-size: clamp(28px, 3.6vw, 40px); margin: 0; line-height: 1.1; }
+  .home-featured__grid {
+    list-style: none; padding: 0 var(--space-lg); margin: 0; max-width: var(--wide-section);
+    margin-inline: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-lg);
+  }
+  .featured-card a {
+    display: flex; flex-direction: column; gap: var(--space-sm);
+    padding: var(--space-lg); background: var(--color-background);
+    border: 1px solid color-mix(in srgb, var(--color-accent) 18%, transparent);
+    text-decoration: none; border-radius: 2px;
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    height: 100%;
+  }
+  .featured-card a:hover {
+    transform: translateY(-2px); border-color: var(--color-accent);
+    box-shadow: 0 8px 24px -12px color-mix(in srgb, var(--color-accent) 50%, transparent);
+  }
+  .featured-card__kicker { color: var(--color-accent); font-size: var(--type-caption); }
+  .featured-card__name { font-family: var(--font-body); font-weight: 600; font-size: var(--type-h3); margin: 0; color: var(--color-text); line-height: 1.15; }
+  .featured-card__blurb { font-family: var(--font-body); font-size: var(--type-small); color: var(--color-text-secondary); margin: 0; line-height: 1.5; }
+  .featured-card__cta { margin-top: auto; color: var(--color-accent); font-size: var(--type-caption); }
+
+  /* ─────────────────────── Themes ─────────────────────── */
+  .home-themes { background: var(--color-background); padding: var(--space-3xl) 0; }
+  .home-themes__head { max-width: var(--wide-section); margin: 0 auto var(--space-xl); padding: 0 var(--space-lg); }
+  .home-themes__kicker { margin: 0 0 var(--space-sm); color: var(--color-accent); font-size: var(--type-caption); }
+  .home-themes__title { font-family: var(--font-body); font-weight: 600; font-size: clamp(28px, 3.6vw, 40px); margin: 0; line-height: 1.1; }
+  .home-themes__grid {
+    list-style: none; padding: 0 var(--space-lg); margin: 0; max-width: var(--wide-section);
+    margin-inline: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0; border-top: 1px solid var(--color-rule); border-left: 1px solid var(--color-rule);
+  }
+  .theme-card a {
+    display: block; padding: var(--space-lg) var(--space-md);
+    border-right: 1px solid var(--color-rule); border-bottom: 1px solid var(--color-rule);
+    text-decoration: none; height: 100%; position: relative; transition: background 160ms ease;
+  }
+  .theme-card a:hover { background: color-mix(in srgb, var(--color-accent) 6%, transparent); }
+  .theme-card__name { font-family: var(--font-body); font-weight: 600; font-size: var(--type-h3); margin: 0 0 var(--space-xs); color: var(--color-text); line-height: 1.2; }
+  .theme-card__blurb { font-family: var(--font-body); font-size: var(--type-small); color: var(--color-text-secondary); margin: 0; line-height: 1.45; max-width: 36ch; }
+  .theme-card__cta { position: absolute; top: var(--space-md); right: var(--space-md); color: var(--color-accent); font-family: var(--font-display); opacity: 0; transition: opacity 160ms ease, transform 160ms ease; }
+  .theme-card a:hover .theme-card__cta { opacity: 1; transform: translateX(2px); }
+
+  /* ─────────────────────── PT bridge ─────────────────────── */
+  .home-en-bridge { padding: var(--space-lg) 0 var(--space-2xl); text-align: center; background: var(--color-background); }
+  .home-en-bridge__line { margin: 0; color: var(--color-text-secondary); font-size: var(--type-caption); }
+  .home-en-bridge__line a { color: var(--color-accent); text-decoration: none; }
+  .home-en-bridge__line a:hover { text-decoration: underline; }
 </style>

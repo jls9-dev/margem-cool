@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import MargemMap from '../../../components/place/MargemMap.astro';
 import { concelhos } from '../../../utils/place-hierarchy';
 import { validateAllReferences } from '../../../utils/validate-refs';
 
@@ -40,6 +41,12 @@ const jsonLd = {
           Nine concelhos, thirty-nine freguesias. The geographic spine of the publication.
         </p>
       </header>
+
+      <div class="places-index__map">
+        <MargemMap size="standard" lang="en" />
+      </div>
+
+      <p class="places-index__cue smallcaps">Or in list form —</p>
 
       <ul class="concelho-list" role="list">
         {concelhoList.map((c) => (
@@ -82,6 +89,18 @@ const jsonLd = {
     font-size: var(--type-lead);
     color: var(--color-text-secondary);
     margin: 0;
+  }
+  .places-index__map {
+    max-width: 820px;
+    margin: 0 auto var(--space-xl);
+  }
+  .places-index__cue {
+    max-width: var(--wide-section);
+    margin: 0 auto var(--space-md);
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: var(--type-caption);
+    letter-spacing: var(--tracking-smallcaps);
   }
   .concelho-list {
     list-style: none;

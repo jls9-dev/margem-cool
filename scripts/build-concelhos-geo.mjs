@@ -186,8 +186,8 @@ async function main() {
     concelhos.push({
       slug,
       name: raw.nome,
-      areaKm2: raw.areaha, // geoapi.pt mislabels this — it's actually km²
-      population: raw.censos2021 ? raw.censos2021.N_INDIVIDUOS : null,
+      areaKm2: Number(raw.areaha), // geoapi.pt mislabels this — it's actually km², and the value comes back as a string
+      population: raw.censos2021 ? Number(raw.censos2021.N_INDIVIDUOS) : null,
       rings: simplified,
       centroidLngLat: centroidLL,
     });
