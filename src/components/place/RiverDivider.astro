@@ -8,22 +8,29 @@
  *   C 40 20, 95 -18, 150 15
  *   S 210 -6, 280 0
  *
- * Same gesture, same proportions, same stroke-to-width ratio. Just smaller.
+ * The `S` continuation has an IMPLICIT control point — the reflection of
+ * the previous control (95, -18) across the segment endpoint (150, 15),
+ * which lands at (205, 48). That dips the curve far deeper than the
+ * explicit controls suggest, and the previous viewBox of -25 to 25 was
+ * clipping it. ViewBox below accounts for the reflected control plus the
+ * stroke half-width plus breathing room — matches the bounds the wordmark
+ * generator already calculates correctly.
  */
 interface Props {
   width?: number;
   align?: 'left' | 'center';
 }
 const { width = 200, align = 'center' } = Astro.props;
-const aspect = 50 / 290;
-const height = Math.round(width * aspect);
+const VB_W = 290;
+const VB_H = 100;
+const height = Math.round(width * (VB_H / VB_W));
 ---
 
 <div class={`river-divider river-divider--${align}`} aria-hidden="true">
   <svg
     width={width}
     height={height}
-    viewBox="-5 -25 290 50"
+    viewBox={`-5 -30 ${VB_W} ${VB_H}`}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
