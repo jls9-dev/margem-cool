@@ -91,6 +91,11 @@ const waterLabels = {
       </filter>
     </defs>
 
+    {/* Water base — brand teal at low opacity. Land shapes (concelhos +
+        context_north) draw over this with a solid land tone so the teal
+        shows through only in the actual sea / river / estuary. */}
+    <rect x={vbX} y={vbY} width={vbW} height={vbH} class="water-base" />
+
     {/* Lisbon + Oeiras — north-of-the-Tejo context outline. Faint enough
         to read as "the other side", clear enough to orient the viewer. */}
     <g class="context-north">
@@ -260,15 +265,19 @@ const waterLabels = {
     height: auto;
   }
 
-  /* ──────── Concelho fills ──────── */
+  /* ──────── Water base + concelho fills ──────── */
+  /* The water base is a faint teal wash. Land shapes draw OVER it with a
+     solid warm-grey fill so the teal only reads in the sea / river. */
+  .water-base {
+    fill: color-mix(in srgb, var(--mc-teal) 14%, var(--color-background));
+  }
   .concelho {
-    fill: var(--color-text);
-    fill-opacity: 0.08;
+    fill: color-mix(in srgb, var(--color-text) 9%, var(--color-background));
     stroke: var(--color-text);
     stroke-opacity: 0.55;
     stroke-width: 1;
     stroke-linejoin: round;
-    transition: fill-opacity 200ms ease, stroke-opacity 200ms ease;
+    transition: fill 200ms ease, stroke-opacity 200ms ease;
   }
   .concelho-link {
     cursor: pointer;
@@ -277,20 +286,18 @@ const waterLabels = {
   .concelho-link:hover .concelho,
   .concelho-link:focus-visible .concelho,
   .concelho-link.is-tapped .concelho {
-    fill: var(--color-accent);
-    fill-opacity: 0.14;
+    fill: color-mix(in srgb, var(--color-accent) 18%, var(--color-background));
     stroke-opacity: 0.7;
   }
   .concelho.is-current {
-    fill: var(--color-accent);
-    fill-opacity: 0.28;
+    fill: color-mix(in srgb, var(--color-accent) 32%, var(--color-background));
     stroke: var(--color-accent);
     stroke-opacity: 0.8;
     stroke-width: 1.4;
   }
   .concelho-link.is-current:hover .concelho,
   .concelho-link.is-current.is-tapped .concelho {
-    fill-opacity: 0.36;
+    fill: color-mix(in srgb, var(--color-accent) 40%, var(--color-background));
   }
 
   /* ──────── Concelho labels ──────── */
@@ -327,13 +334,11 @@ const waterLabels = {
     font-size: 14px;
   }
 
-  /* ──────── North-of-the-Tejo context (Lisboa + Oeiras outline) ──────── */
-  /* Same land tone as the concelhos so it's obvious "this is land too",
-     just visually distinct from the Margem Sul subjects (no per-concelho
-     subdivision, slightly lower opacity). */
+  /* ──────── North-of-the-Tejo context (Cascais, Oeiras, Lisboa, Loures) ──────── */
+  /* Same land tone as the concelhos, opaque so the water doesn't bleed
+     through. Slightly lighter than concelho-fill since these are context. */
   .context-shape {
-    fill: var(--color-text);
-    fill-opacity: 0.07;
+    fill: color-mix(in srgb, var(--color-text) 7%, var(--color-background));
     stroke: var(--color-text);
     stroke-opacity: 0.55;
     stroke-width: 1;
