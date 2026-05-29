@@ -11,29 +11,29 @@ const RULES = [
   {
     slot: 'Getting there',
     patterns: [
-      /\bbarco\b|\bferry\b|cacilheiro|transtejo/i,
-      /\bchegar\b|como ir\b|how to get|\breach\b|\baccess\b/i,
-      /transporte|public transport|\bpúblico\b/i,
-      /\bcarro\b|\bcar\b|\bdrive\b|de comboio|\btrain\b|\bbus\b|autocarro/i,
-      /horário|timetable|\bschedule\b/i,
-      /\bviagem\b|\bjourney\b|trip duration|tempo demora/i,
+      /\bbarco\b|\bboats?\b|\bferry\b|\bferries\b|cacilheiro|transtejo/i,
+      /\bchegar\b|como ir\b|how to get|\breach\b|\baccess\b|how do i (?:get|reach|travel)/i,
+      /transporte|\btransport\b|transportation|public transport|\bpúblico\b/i,
+      /\bcarro\b|\bcar\b|\bdrive\b|driving|de comboio|\btrain\b|\bbus\b|\bbuses\b|autocarro/i,
+      /horário|timetable|\bschedule\b|departures?|arrivals?/i,
+      /\bviagem\b|\bjourney\b|\btrip\b|trip duration|tempo demora|how long.*(take|travel)/i,
     ],
   },
   {
     slot: 'Eat & drink',
     patterns: [
-      /\bcomer\b|\beat\b|\bfood\b|restaurant|restaurante|\btasca\b/i,
-      /\bbeber\b|\bdrink\b|\bwine\b|\bvinho\b/i,
-      /marisqueira|\bmarisco\b|\bpeixe\b|\bfish\b|seafood/i,
-      /pastelaria|padaria|\bcafé\b|\bcafe\b|cafetaria/i,
+      /\bcomer\b|\beat\b|\beating\b|\bfood\b|restaurants?|restaurante|\btasca\b|tascas/i,
+      /\bbeber\b|\bdrink\b|\bdrinks\b|\bwine\b|\bvinho\b|\bbar\b|\bbars\b/i,
+      /marisqueira|\bmarisco\b|\bpeixe\b|\bfish\b|\bseafood\b/i,
+      /pastelaria|padaria|\bcafé\b|\bcafe\b|\bcafes\b|\bcafés\b|cafetaria/i,
       /onde comer|where to eat|where to drink/i,
     ],
   },
   {
     slot: 'Where to stay',
     patterns: [
-      /\bficar\b|\bstay\b|\bdormir\b|\bhotel\b|\bhostel\b|alojamento/i,
-      /onde ficar|where to stay/i,
+      /\bficar\b|\bstay\b|\bdormir\b|hotels?|hostels?|alojamento|accommodation|guesthouses?|pousada/i,
+      /onde ficar|where to stay|places? to stay/i,
     ],
   },
   {
@@ -47,15 +47,7 @@ const RULES = [
       /\bmuseu\b|\bmuseum\b|monumento|\bmonument\b/i,
     ],
   },
-  {
-    slot: 'What & where',
-    patterns: [
-      /significa|\bmeaning\b|what is|what does|o que é/i,
-      /onde fica|where is/i,
-      /qual concelho|que freguesia|de que freguesia|de que concelho/i,
-      /which município|which concelho/i,
-    ],
-  },
+  // History before generic "what & where" so "What is the history of X" matches here
   {
     slot: 'History',
     patterns: [
@@ -65,13 +57,34 @@ const RULES = [
       /\broman\b|romano|reconquista|terramoto|\b1755\b|século/i,
     ],
   },
+  // Broadest "what is X" / "where is X" catch-all — must come AFTER the topical buckets
+  {
+    slot: 'What & where',
+    patterns: [
+      /significa|\bmeaning\b|refer to|o que é/i,
+      /onde fica|where (?:is|exactly)/i,
+      /qual concelho|que freguesia|de que freguesia|de que concelho/i,
+      /which município|which concelho/i,
+      /what (?:is|does) ['"]?cacilhas['"]?|what does .* mean/i,
+    ],
+  },
+  // Nearby before Living here — "nearby neighbourhoods" should not count as a living question
+  {
+    slot: 'Nearby',
+    patterns: [
+      /\bperto\b|\bnear\b|nearby|\bpróximos?\b|próximas?|adjacent/i,
+      /neighbouring|adjacent freguesias|surrounding/i,
+      /\baround\b|\barredores\b/i,
+    ],
+  },
   {
     slot: 'Living here',
     patterns: [
-      /\bviver\b|\blive\b|living|moradores/i,
-      /residencial|residential|neighbourhood|\bbairro\b/i,
-      /\bescola\b|\bschool\b|\bsaúde\b|healthcare/i,
-      /\bvida\b|daily life|life in/i,
+      /\bviver\b|\blive\b|living|moradores|residents?/i,
+      /residencial|residential|best neighbou?rhood|where to live/i,
+      /\bescola\b|schools?|\bsaúde\b|healthcare|hospital/i,
+      /\bvida\b|daily life|life in|moving to|relocate/i,
+      /real estate|apartments?|imobiliário|comprar casa|buy a house|\brent\b/i,
     ],
   },
   {
@@ -93,14 +106,6 @@ const RULES = [
       /\bfeira\b|\bfair\b|\bmarket\b/i,
       /\bevent\b|evento|calendário/i,
       /\bannual\b|\banual\b/i,
-    ],
-  },
-  {
-    slot: 'Nearby',
-    patterns: [
-      /\bperto\b|\bnear\b|nearby|próximo|adjacent/i,
-      /bairros|neighbouring|adjacent freguesias/i,
-      /around|surrounding|arredores/i,
     ],
   },
 ];

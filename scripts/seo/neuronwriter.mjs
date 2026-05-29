@@ -123,13 +123,22 @@ export async function findProjectByName(name) {
 // Then polls until ready or timeout.
 export async function getOrCreateQuery({ project, keyword, engine = 'google.pt', language = 'Portuguese', maxWaitMs = 300000 }) {
   // Look for ANY existing query for this combo — including ones still processing.
-  // The status param filters; omit it to get all.
-  const all = await listQueries({ project, keyword, language, engine });
+  // NW's listQueries language/engine filters appear to be loose, so we re-verify
+  // here strictly: keyword + language + engine all have to match.
+  const all = await listQueries({ project, keyword });
+  const match = Array.isArray(all)
+    ? all.find(q =>
+        q.keyword?.toLowerCase() === keyword.toLowerCase() &&
+        q.language === language &&
+        q.engine === engine
+      )
+    : null;
+
   let queryId;
   let created = false;
-  if (Array.isArray(all) && all.length > 0) {
-    queryId = all[0].query;
-    if (all[0].status === 'ready') {
+  if (match) {
+    queryId = match.query;
+    if (match.status === 'ready') {
       const data = await getQuery(queryId);
       return { query: queryId, created: false, data };
     }
