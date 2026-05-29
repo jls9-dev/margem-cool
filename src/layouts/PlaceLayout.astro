@@ -22,6 +22,7 @@ import Timeline from '../components/place/Timeline.astro';
 import RiverDivider from '../components/place/RiverDivider.astro';
 import TransportOptions from '../components/place/TransportOptions.astro';
 import EateryGrid from '../components/place/EateryGrid.astro';
+import MiniMap from '../components/place/MiniMap.astro';
 
 import { buildPlaceJsonLd } from '../utils/schema-org';
 import { SITE_URL, type Lang } from '../utils/i18n';
@@ -122,6 +123,23 @@ const eateryCopy = lang === 'pt'
   ? { kicker: 'Comer e beber', title: 'Onde comer em ' + displayName, subtitle: 'Marisqueiras, restaurantes, bares.' }
   : { kicker: 'Eat and drink', title: 'Where to eat in ' + displayName, subtitle: 'Marisqueiras, restaurants, bars.' };
 
+// Hero context line — "BAIRRO · SEIXAL · MARGEM SUL" instead of just "BAIRRO"
+const heroKicker = (() => {
+  const levelLabel = copy.levelLabel[place.data.level];
+  const region = 'Margem Sul';
+  if (place.data.level === 'concelho') {
+    return `${levelLabel} · ${region}`;
+  }
+  const concelhoAncestor = ancestors.find(a => a.data.level === 'concelho');
+  if (concelhoAncestor) {
+    const concelhoName = lang === 'en'
+      ? (concelhoAncestor.data.name_en ?? concelhoAncestor.data.name_pt)
+      : concelhoAncestor.data.name_pt;
+    return `${levelLabel} · ${concelhoName} · ${region}`;
+  }
+  return `${levelLabel} · ${region}`;
+})();
+
 const lastUpdated = place.data.last_updated instanceof Date
   ? place.data.last_updated
   : new Date(place.data.last_updated);
@@ -210,11 +228,25 @@ function formatDate(d: Date, l: Lang): string {
   <Breadcrumb ariaLabel={copy.breadcrumbLabel} items={breadcrumbItems} />
 
   <GuideHero
-    kicker={copy.levelLabel[place.data.level]}
+    kicker={heroKicker}
     title={displayName}
     dek={description}
     updatedLabel={copy.updatedLabel(lastUpdated)}
-  />
+  >
+    {(() => {
+      const concelhoSlug = place.data.level === 'concelho'
+        ? place.slug
+        : (ancestors.find(a => a.data.level === 'concelho')?.slug ?? '');
+      return concelhoSlug ? (
+        <MiniMap
+          slot="map"
+          concelhoSlug={concelhoSlug}
+          placeSlug={place.slug}
+          placeName={displayName}
+        />
+      ) : null;
+    })()}
+  </GuideHero>
 
   <QuickFacts facts={facts} />
 
@@ -332,6 +364,28 @@ function formatDate(d: Date, l: Lang): string {
     font-size: var(--type-lead);
     line-height: 1.55;
     margin-bottom: var(--space-lg);
+  }
+  /* Drop cap — first letter of the lead paragraph. Rust display type, large,
+     left-floated. Mobile drops the cap (would dominate at narrow widths). */
+  .place-body__inner :global(p:first-child::first-letter) {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-accent);
+    font-size: 5.4em;
+    line-height: 0.85;
+    float: left;
+    padding: 6px 12px 0 0;
+    margin: 4px 0 0;
+    letter-spacing: -0.04em;
+  }
+  @media (max-width: 540px) {
+    .place-body__inner :global(p:first-child::first-letter) {
+      font-size: 1em;
+      float: none;
+      padding: 0;
+      color: inherit;
+      font-weight: inherit;
+    }
   }
   @media (max-width: 720px) {
     .place-body__inner :global(p) { font-size: var(--type-body-mobile); }

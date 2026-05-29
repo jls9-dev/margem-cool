@@ -1,17 +1,15 @@
 ---
 /**
  * GuideHero — top of every place page.
- * Eyebrow (level label) + H1 + dek (short description) + updated date.
- *
- * The hero block matches LP/SBRE patterns: a clear title-as-answer-to-the-question,
- * the lede beneath, and the freshness signal in the same eye-line so readers and
- * crawlers both pick it up.
+ * Eyebrow (context line) + H1 + dek (short description) + updated date,
+ * with an optional MiniMap slot positioned to the right on desktop and
+ * stacked beneath on mobile.
  */
 interface Props {
   kicker: string;
   title: string;
   dek: string;
-  updatedLabel: string;   // e.g. "Updated May 2026" / "Atualizado em maio de 2026"
+  updatedLabel: string;
 }
 const { kicker, title, dek, updatedLabel } = Astro.props;
 ---
@@ -19,10 +17,15 @@ const { kicker, title, dek, updatedLabel } = Astro.props;
 <header class="guide-hero">
   <div class="container">
     <div class="guide-hero__inner">
-      <p class="guide-hero__kicker smallcaps">{kicker}</p>
-      <h1 class="guide-hero__title">{title}</h1>
-      <p class="guide-hero__dek">{dek}</p>
-      <p class="guide-hero__updated smallcaps">{updatedLabel}</p>
+      <div class="guide-hero__text">
+        <p class="guide-hero__kicker smallcaps">{kicker}</p>
+        <h1 class="guide-hero__title">{title}</h1>
+        <p class="guide-hero__dek">{dek}</p>
+        <p class="guide-hero__updated smallcaps">{updatedLabel}</p>
+      </div>
+      <div class="guide-hero__map">
+        <slot name="map" />
+      </div>
     </div>
   </div>
 </header>
@@ -32,9 +35,29 @@ const { kicker, title, dek, updatedLabel } = Astro.props;
     padding: var(--space-2xl) 0 var(--space-xl);
   }
   .guide-hero__inner {
-    max-width: var(--content-column);
+    max-width: var(--wide-section);
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-2xl);
+    align-items: start;
   }
+  @media (max-width: 900px) {
+    .guide-hero__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+  .guide-hero__text {
+    max-width: var(--content-column);
+  }
+  .guide-hero__map {
+    min-width: 240px;
+  }
+  @media (max-width: 900px) {
+    .guide-hero__map { order: -1; }
+  }
+
   .guide-hero__kicker {
     margin: 0 0 var(--space-md);
     color: var(--color-accent);
