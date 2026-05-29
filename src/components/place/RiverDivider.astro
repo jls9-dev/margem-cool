@@ -1,0 +1,37 @@
+---
+/**
+ * RiverDivider — the brand's river curve, scaled small, used as a section
+ * separator. Reused brand element from the wordmark; appearing in body content
+ * gives the page identity beyond the chrome.
+ *
+ * Per brand.md §6.7: the wave from the wordmark is a portable brand element
+ * for section dividers, beneath section headers, at the end of articles.
+ */
+interface Props {
+  width?: number;       // pixels — the visible curve width
+  align?: 'left' | 'center';
+}
+const { width = 180, align = 'center' } = Astro.props;
+---
+
+<div class={`river-divider river-divider--${align}`} aria-hidden="true">
+  <svg width={width} height={Math.round(width * 0.18)} viewBox="0 0 180 32" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M 4 10 C 30 30, 60 -4, 90 18 S 150 28, 176 12"
+      fill="none"
+      stroke="var(--color-accent)"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</div>
+
+<style>
+  .river-divider {
+    display: flex;
+    padding: var(--space-lg) 0;
+  }
+  .river-divider--center { justify-content: center; }
+  .river-divider--left { justify-content: flex-start; }
+</style>

@@ -1,8 +1,11 @@
 ---
 /**
- * QuickFacts — strip of 4 metric cards. Each card has a value and a label.
- * Sits between hero and intro. Gives the reader and Google structured signals
- * about the place upfront.
+ * QuickFacts — confident display-type metric strip.
+ *
+ * Each card has a value (display numerals, oversized) and a label (small caps,
+ * cool grey). The first card gets a rust accent on the value to break the
+ * monochrome and pull the eye in. Vertical dividers between cards rather than
+ * boxed cards.
  *
  * Hidden entirely if there are no facts to show.
  */
@@ -20,8 +23,8 @@ if (facts.length === 0) return null;
 <section class="quick-facts" aria-label="Quick facts">
   <div class="container">
     <div class="quick-facts__inner">
-      {facts.map((f) => (
-        <div class="quick-facts__card">
+      {facts.map((f, i) => (
+        <div class:list={['quick-facts__card', i === 0 && 'quick-facts__card--accent']}>
           <div class="quick-facts__value">{f.value}</div>
           <div class="quick-facts__label smallcaps">{f.label}</div>
         </div>
@@ -32,38 +35,63 @@ if (facts.length === 0) return null;
 
 <style>
   .quick-facts {
-    padding: var(--space-lg) 0 var(--space-xl);
+    padding: var(--space-xl) 0 var(--space-2xl);
   }
   .quick-facts__inner {
     max-width: var(--wide-section);
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: var(--space-md);
-    padding: var(--space-lg) var(--space-lg);
-    border-top: 1px solid var(--color-rule);
+    gap: var(--space-lg);
+    border-top: 2px solid var(--color-text);
     border-bottom: 1px solid var(--color-rule);
+    padding: var(--space-xl) 0;
+  }
+  @media (max-width: 720px) {
+    .quick-facts__inner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+      padding: var(--space-lg) 0;
+    }
   }
   .quick-facts__card {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
+    padding: 0 var(--space-lg) 0 0;
+    border-right: 1px solid var(--color-rule);
+  }
+  .quick-facts__card:last-child {
+    border-right: 0;
+    padding-right: 0;
+  }
+  @media (max-width: 720px) {
+    .quick-facts__card {
+      border-right: 0;
+      padding-right: 0;
+    }
+    .quick-facts__card:nth-child(odd) {
+      border-right: 1px solid var(--color-rule);
+      padding-right: var(--space-lg);
+    }
   }
   .quick-facts__value {
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: var(--type-h2);
-    line-height: 1.05;
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
     color: var(--color-text);
   }
-  @media (max-width: 720px) {
-    .quick-facts__value { font-size: var(--type-h2-mobile); }
-    .quick-facts__inner { padding: var(--space-md); }
+  .quick-facts__card--accent .quick-facts__value {
+    color: var(--color-accent);
   }
   .quick-facts__label {
     font-family: var(--font-display);
-    font-size: var(--type-caption);
+    font-weight: 500;
+    font-size: 11px;
     color: var(--color-text-secondary);
     letter-spacing: var(--tracking-smallcaps);
+    line-height: 1.35;
   }
 </style>

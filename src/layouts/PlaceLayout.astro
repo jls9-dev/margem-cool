@@ -18,6 +18,8 @@ import FAQ from '../components/place/FAQ.astro';
 import RelatedGrid from '../components/place/RelatedGrid.astro';
 import CTA from '../components/place/CTA.astro';
 import BackLink from '../components/place/BackLink.astro';
+import Timeline from '../components/place/Timeline.astro';
+import RiverDivider from '../components/place/RiverDivider.astro';
 
 import { buildPlaceJsonLd } from '../utils/schema-org';
 import { SITE_URL, type Lang } from '../utils/i18n';
@@ -98,10 +100,15 @@ const displayName = lang === 'en'
 const description = langData.short_description;
 const facts = langData.facts;
 const faqs = langData.faqs;
+const timeline = langData.timeline;
 const isPlaceholder = langData.page_status === 'placeholder';
 const bodyHtml = langData.body
   ? await marked.parse(langData.body, { async: true })
   : null;
+
+const timelineCopy = lang === 'pt'
+  ? { kicker: 'Cronologia', title: 'Os marcos da história' }
+  : { kicker: 'Timeline', title: 'Key dates' };
 
 const lastUpdated = place.data.last_updated instanceof Date
   ? place.data.last_updated
@@ -216,6 +223,22 @@ function formatDate(d: Date, l: Lang): string {
     </section>
   ) : null}
 
+  {timeline && timeline.length > 0 && (
+    <section class="place-timeline-wrap">
+      <div class="container">
+        <div class="place-timeline-wrap__inner">
+          <Timeline
+            kicker={timelineCopy.kicker}
+            title={timelineCopy.title}
+            entries={timeline}
+          />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <RiverDivider />
+
   {childrenItems.length > 0 && (
     <RelatedGrid
       kicker={copy.childrenKicker}
@@ -248,6 +271,22 @@ function formatDate(d: Date, l: Lang): string {
 </BaseLayout>
 
 <style>
+  .place-timeline-wrap {
+    padding: var(--space-2xl) 0;
+    background: color-mix(in srgb, var(--mc-cream) 55%, var(--mc-charcoal) 4%);
+    border-top: 1px solid var(--color-rule);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  @media (prefers-color-scheme: dark) {
+    .place-timeline-wrap {
+      background: color-mix(in srgb, var(--mc-charcoal) 80%, var(--mc-teal) 6%);
+    }
+  }
+  .place-timeline-wrap__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+
   .place-body {
     padding: var(--space-xl) 0 var(--space-2xl);
   }

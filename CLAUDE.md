@@ -13,12 +13,13 @@ When in doubt about the project's framing or principles, the source of truth is 
 
 ## Operating principles for this project
 
-Load-bearing. Every architectural and content decision should be checked against them. The full canonical version lives in `project_margem_cool_principles.md` in the global memory.
+Load-bearing. Every architectural and content decision should be checked against them. The full canonical version lives in `project_margem_cool_principles.md` + `project_margem_cool_must_be_cool.md` in the global memory.
 
+0. **Margem Cool has to actually be cool.** The name is a brand promise. Every page must be visually interesting, varied per section, with the brand palette (rust + teal) present, the river curve appearing as a layout element, and presentation that earns the name. Walls of monotone cream text are an immediate fail. Think component-first per section: timeline for histories, cards for restaurants, bigger numerals for facts, pull-quotes for striking lines. Don't overwhelm — variety with restraint — but don't be boring either. See `project_margem_cool_must_be_cool.md`.
 1. **Near-total automation.** Weekly automated content drops with minimal James input. Engineer the routine, not the exception. Don't rely on human review as the safety net — self-review against these principles is the safety net.
 2. **Simple, robust, fast, efficient systems.** Every system in this repo — schemas, generators, scrapers, build pipelines, scheduled routines — should be simple to understand, robust to changes, fast at runtime, efficient in resources. Weigh options on all four.
 3. **Genuinely useful for residents.** The test for any page or feature: would James (or any Margem Sul resident) actually want this? Not "is this impressive editorial". Just: is it useful?
-4. **Clear and simple UX.** The interface and design — pages look like the answer to the user's question, actionable parts surface first, layout is consistent across page types, no decorative chrome that doesn't earn its place, mobile-readable. (Writing voice is governed by `docs/standards/brand.md` §4, not by this principle.)
+4. **Clear and simple UX.** Mobile-readable, actionable parts surface first, layout consistent across page types, no decorative chrome that doesn't earn its place. (Writing voice is governed by `docs/standards/brand.md` §4, not by this principle. Visual variety is governed by principle 0, not by this one.)
 
 ## Framing
 

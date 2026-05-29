@@ -139,6 +139,11 @@ const placeSchema = z.object({
     meta_description: z.string().max(170).optional(),
     facts: z.array(placeFact).optional(),
     faqs: z.array(placeFaq).optional(),
+    timeline: z.array(z.object({
+      year: z.string(),       // "1147", "1755", "c. 3000 BC"
+      label: z.string().optional(),  // optional kicker label
+      body: z.string(),       // markdown-formatted plain text
+    })).optional(),
     body: z.string().optional(),   // markdown body, rendered with marked
   }),
   en: z.object({
@@ -148,7 +153,12 @@ const placeSchema = z.object({
     meta_description: z.string().max(170).optional(),
     facts: z.array(placeFact).optional(),
     faqs: z.array(placeFaq).optional(),
-    body: z.string().optional(),   // markdown body, rendered with marked
+    timeline: z.array(z.object({
+      year: z.string(),
+      label: z.string().optional(),
+      body: z.string(),
+    })).optional(),
+    body: z.string().optional(),
   }),
 
   // Tracking — used by automation, monthly review, staleness detection

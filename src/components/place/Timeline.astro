@@ -1,0 +1,147 @@
+---
+/**
+ * Timeline — vertical timeline for historical events. Each entry has a year
+ * (big display type, rust-coloured), an optional label, and a body sentence
+ * or two.
+ *
+ * Designed for the History section of a place page: a structured visual
+ * replaces what would otherwise be five H3+paragraph stacks.
+ */
+interface TimelineEntry {
+  year: string;
+  label?: string;
+  body: string;
+}
+interface Props {
+  kicker?: string;
+  title?: string;
+  entries: ReadonlyArray<TimelineEntry>;
+}
+const { kicker, title, entries } = Astro.props;
+if (!entries || entries.length === 0) return null;
+---
+
+<section class="timeline" aria-label={title ?? 'Timeline'}>
+  {(kicker || title) && (
+    <header class="timeline__header">
+      {kicker && <p class="timeline__kicker smallcaps">{kicker}</p>}
+      {title && <h2 class="timeline__title">{title}</h2>}
+    </header>
+  )}
+  <ol class="timeline__list">
+    {entries.map((e) => (
+      <li class="timeline__entry">
+        <div class="timeline__year-col">
+          <span class="timeline__year">{e.year}</span>
+          {e.label && <span class="timeline__label smallcaps">{e.label}</span>}
+        </div>
+        <div class="timeline__body-col">
+          <span class="timeline__rail" aria-hidden="true"></span>
+          <p class="timeline__body">{e.body}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .timeline {
+    margin: var(--space-xl) 0;
+  }
+  .timeline__header {
+    margin-bottom: var(--space-lg);
+  }
+  .timeline__kicker {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .timeline__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
+    margin: 0;
+  }
+  @media (max-width: 720px) {
+    .timeline__title { font-size: var(--type-h2-mobile); }
+  }
+
+  .timeline__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .timeline__entry {
+    display: grid;
+    grid-template-columns: minmax(120px, 160px) 1fr;
+    gap: var(--space-lg);
+    padding: var(--space-md) 0;
+  }
+  @media (max-width: 540px) {
+    .timeline__entry {
+      grid-template-columns: 1fr;
+      gap: var(--space-xs);
+    }
+  }
+
+  .timeline__year-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 4px;
+  }
+  .timeline__year {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--color-accent);
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 540px) {
+    .timeline__year { font-size: 22px; }
+  }
+  .timeline__label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    letter-spacing: var(--tracking-smallcaps);
+  }
+
+  .timeline__body-col {
+    position: relative;
+    padding-left: var(--space-md);
+    border-left: 1px solid var(--color-rule);
+    padding-bottom: var(--space-sm);
+  }
+  .timeline__body-col::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 12px;
+    width: 9px;
+    height: 9px;
+    background: var(--color-accent);
+    border-radius: 50%;
+  }
+  @media (max-width: 540px) {
+    .timeline__body-col {
+      padding-left: var(--space-md);
+      padding-top: var(--space-xs);
+    }
+    .timeline__body-col::before {
+      top: 0;
+    }
+  }
+  .timeline__body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+    color: var(--color-text);
+  }
+  @media (max-width: 720px) {
+    .timeline__body { font-size: var(--type-body-mobile); }
+  }
+</style>

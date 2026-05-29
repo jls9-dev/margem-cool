@@ -45,10 +45,42 @@ pt:
       answer: "Cacilhas foi freguesia autónoma entre 1985 e 2013. Desde a reforma administrativa de 2013 faz parte da União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. Localmente continua a ser tratada como o seu próprio lugar."
     - question: "Cacilhas é de que concelho?"
       answer: "Cacilhas pertence ao concelho de Almada, na margem sul do Tejo. Almada é um dos nove concelhos da Margem Sul (Península de Setúbal) que compõem a margem sul da Área Metropolitana de Lisboa."
+  timeline:
+    - year: "c. 3000 BC"
+      label: "Neolítico"
+      body: "Ocupação humana em Quinta do Almaraz, no ponto mais alto do território — cerâmica, instrumentos de pedra, estruturas fortificadas."
+    - year: "VII–VI BC"
+      label: "Idade do Ferro"
+      body: "Cais junto ao actual Largo Alfredo Dinis, evidência de actividade portuária ribeirinha."
+    - year: "Séc. I–III"
+      label: "Romano"
+      body: "Complexo de salga de peixe — pelo menos quinze cetárias em torno de um pátio central — produz garum e conservas exportadas pelo império."
+    - year: "1147"
+      body: "Um cruzado descreve a região como fértil — \"searas, vinhos, figos, romãs, mel e caça\"."
+    - year: "1195"
+      body: "D. Sancho I retoma definitivamente Almada das forças almóadas."
+    - year: "1284"
+      body: "Primeira regulamentação das travessias fluviais entre Cacilhas e Lisboa."
+    - year: "1384"
+      body: "A 18 de Julho, combate naval em Cacilhas durante o cerco castelhano a Lisboa. Os portugueses perdem três navios mas rompem o bloqueio."
+    - year: "1755"
+      body: "O terramoto de 1 de Novembro destrói as capelas medievais."
+    - year: "1759"
+      body: "Reconstrução da Igreja de Nossa Senhora do Bom Sucesso. Comemora o milagre do barqueiro que terá afastado as águas com uma imagem da Virgem."
+    - year: "1836"
+      body: "Introdução dos cacilheiros — barcos a vapor — regularizando a travessia para escala industrial."
+    - year: "1967–2000"
+      body: "Estaleiros Lisnave, na Margueira a oeste de Cacilhas, são uma das maiores operações europeias de reparação naval. Milhares de trabalhadores."
+    - year: "1985"
+      body: "Cacilhas torna-se freguesia autónoma (Lei 86/85)."
+    - year: "2008"
+      body: "Inauguração do Metro Sul do Tejo. Cacilhas é estação terminal."
+    - year: "2013"
+      body: "Reforma administrativa: Cacilhas integra a União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas."
   body: |
     A versão portuguesa desta página está em tradução. Em breve estará disponível com o conteúdo completo.
 
-    Por agora, vê a versão em inglês para o texto integral, ou usa as perguntas frequentes acima para as respostas práticas.
+    Por agora, vê a versão em inglês para o texto integral, ou usa as perguntas frequentes e a cronologia acima.
 
 en:
   short_description: "Cacilhas, on the south bank of the Tagus opposite Lisbon, connected by ferry since 1836. The Cais do Ginjal walk, the marisco strip near the terminal, and history layered from the Romans onward."
@@ -79,6 +111,38 @@ en:
       answer: "Cacilhas was a standalone freguesia from 1985 to 2013. Since the 2013 administrative reform it has been part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. Locally it's still treated as its own place."
     - question: "What concelho is Cacilhas in?"
       answer: "Cacilhas is in the concelho of Almada, on the south bank of the Tagus. Almada is one of the nine concelhos of the Margem Sul (Setúbal Peninsula) that make up the south side of the Lisbon metropolitan area."
+  timeline:
+    - year: "c. 3000 BC"
+      label: "Neolithic"
+      body: "Human occupation at Quinta do Almaraz, on the highest point of the area — pottery, stone tools, fortified structures."
+    - year: "7th–6th BC"
+      label: "Iron Age"
+      body: "A working dock at what is now Largo Alfredo Dinis — evidence of waterfront activity at the river's edge."
+    - year: "1st–3rd c."
+      label: "Roman"
+      body: "Fish-salting complex — at least fifteen cetárias arranged around a central courtyard — producing garum and preserved fish exported across the empire."
+    - year: "1147"
+      body: "A Crusader describes the broader area as fertile country — \"grain, wine, figs, pomegranates, honey, game\"."
+    - year: "1195"
+      body: "D. Sancho I retakes Almada definitively from the Almohad forces."
+    - year: "1284"
+      body: "First regulations governing river crossings between Cacilhas and Lisbon."
+    - year: "1384"
+      body: "On 18 July, naval combat off Cacilhas during the Castilian siege of Lisbon. The Portuguese lose three ships but break the blockade."
+    - year: "1755"
+      body: "The November earthquake destroys the medieval chapels."
+    - year: "1759"
+      body: "Igreja de Nossa Senhora do Bom Sucesso rebuilt. The church commemorates the local miracle of a boatman holding the Virgin's image against rising floodwaters."
+    - year: "1836"
+      body: "Cacilheiros — steam ferries — introduced, regularising the river crossing at industrial scale for the first time."
+    - year: "1967–2000"
+      body: "Lisnave shipyard in the Margueira, west of Cacilhas, becomes one of the largest naval-repair operations in Europe, employing thousands."
+    - year: "1985"
+      body: "Cacilhas becomes a standalone freguesia (Lei 86/85)."
+    - year: "2008"
+      body: "Metro Sul do Tejo opens. Cacilhas is the terminal station."
+    - year: "2013"
+      body: "Administrative reform: Cacilhas merged into the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas."
   body: |
     Cacilhas sits on the south bank of the Tagus directly opposite central Lisbon, ten minutes by ferry from Cais do Sodré. It is the southern terminus of one of the oldest scheduled river crossings in Portugal — first regulated in 1284, mechanised with steam *cacilheiros* in 1836, and run today by Transtejo Soflusa with a mix of conventional and electric vessels.
 
@@ -102,38 +166,6 @@ en:
     ## The name
 
     The origin of the name *Cacilhas* isn't fully settled in the scholarship. Some traditional theories tie it to the Arabic *al-qasr* (the fortified place), reflecting the area's Moorish-period administrative role; others trace it to the verb *caçar* (to hunt). The name appears in its current form in medieval documents, but neither Wikipedia nor the official Junta de Freguesia history page commits to a definitive etymology. Treat anyone who tells you they know for certain with some scepticism.
-
-    ## A short history
-
-    Cacilhas's history is layered, and the layers are unusually visible.
-
-    ### Pre-Roman
-
-    The hillside site at Quinta do Almaraz, above modern Cacilhas, has occupation evidence going back to the Neolithic and Chalcolithic (around 3,000–3,400 BC) — pottery fragments, stone tools, food remains, and fortified structures. By the Iron Age (7th–6th centuries BC) there was a working dock at the location now known as Largo Alfredo Dinis, near the modern riverfront.
-
-    ### Roman
-
-    From the 1st through the 3rd century AD, Cacilhas was part of one of the major fish-processing centres of the western Roman world. The Romans operated *cetárias* — rectangular stone tanks for salting fish and producing *garum* — organised around a central courtyard. At least fifteen tanks have been documented archaeologically. The Roman complex appears to have been an extension of the Quinta do Almaraz settlement. The preserved fish products were exported across the empire.
-
-    ### Medieval
-
-    A Crusader account from 1147 describes the broader area as fertile country — "*searas, vinhos, figos, romãs, mel e caça*". Cacilhas changed hands several times during the late 12th century as Christian and Almohad forces contested the Tagus crossing; D. Sancho I definitively retook Almada in 1195, with full Portuguese integration of the south Tagus following the 1217 capture of Alcácer do Sal. By 1284, the first regulations governing river crossings between Cacilhas and Lisbon were in force.
-
-    On 18 July 1384, during the Castilian siege of Lisbon, an intense naval combat took place off Cacilhas. The Portuguese lost three ships but broke the blockade.
-
-    ### After 1755
-
-    Like Lisbon and Almada itself, Cacilhas was devastated by the November earthquake. The medieval chapels were destroyed. The current parish church, Nossa Senhora do Bom Sucesso, was rebuilt in 1759. It commemorates a local miracle in which a boatman is said to have held an image of the Virgin Mary towards rising floodwaters, which receded. The annual 1 November procession from the church still marks the event, traditionally funded by people working in river transport and shipbuilding.
-
-    ### Industrial 19th and 20th centuries
-
-    Industrial installations began appearing along the Cacilhas waterfront from 1816 onward. *Cacilheiros* — steam-powered ferry boats — were introduced in 1836, regularising the river crossing for the first time at industrial scale. Through the 19th century the area developed a working-river economy: cooperage (*tanoaria*), textiles, cork, shipbuilding, distilleries, and the *conserva* industry (fish canning). The Cais do Ginjal served as a working port that could take vessels regardless of the tide.
-
-    The largest single industrial chapter was Lisnave. Between 1967 and 2000, the Lisnave shipyard in the Margueira area west of Cacilhas was one of the largest naval-repair operations in Europe. It employed thousands of workers. Building it required massive landfill, which permanently changed the local coastline. Its closure in 2000 marked the end of the riverside industrial era.
-
-    ### Recent decades
-
-    The opening of the Ponte 25 de Abril in 1966 diverted Lisbon-Almada traffic from river to road, contributing to the long decline of the Cais do Ginjal. Most of the waterfront industrial buildings emptied between the 1970s and the 1990s. The Metro Sul do Tejo arrived in 2008, with Cacilhas as a terminal. Restaurants and small businesses have reoccupied parts of the older urban fabric, particularly along Rua Cândido dos Reis. Redevelopment plans for the Cais do Ginjal have been announced and paused on several occasions; the cais remains in transition.
 
     ## What to see and do
 
