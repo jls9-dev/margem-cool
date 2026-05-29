@@ -7,14 +7,14 @@ Repeatable workflows, routines, and operating procedures. Read before running a 
 | Doc | Status | What it covers | Read before… |
 |---|---|---|---|
 | [seo-routine.md](seo-routine.md) | canonical | The 8-phase per-page SEO process — research, plan, draft, translate, self-review, score, ship, monitor | Building or refreshing any non-utility page |
-| [brief-format.md](brief-format.md) | draft | NeuronWriter brief format spec — what fields, what filters, what the brief is for and isn't for | Generating, reading, or refactoring a brief |
+| [brief-format.md](brief-format.md) | canonical | NeuronWriter brief format spec — what fields, what filters, what the brief is for and isn't for | Generating, reading, or refactoring a brief |
+| [place-page-workflow.md](place-page-workflow.md) | canonical | End-to-end workflow for a place page — Cacilhas is the worked example | Building any concelho / freguesia / bairro / lugar page |
+| [content-quality-checklist.md](content-quality-checklist.md) | canonical | The pre-ship gate — every page passes this before commit | Shipping any page; setting up the weekly automation merge gate |
 
 ## Stubs (to be written)
 
 | Doc | Status | What it will cover |
 |---|---|---|
-| place-page-workflow.md | not yet written | End-to-end workflow for one place page: brief → competitor filter → outline → write EN → translate PT → score → ship. The Cacilhas-style flow, generalised |
-| content-quality-checklist.md | not yet written | The self-review gate that every page passes before merging — principles check, brand voice check, schema check, link check, mobile check |
 | weekly-automation.md | not yet written | The cloud routine that runs every week: which queries, which enrichments, what PRs it opens, kill switch, escalation |
 | article-workflow.md | not yet written | For pillar features and editorial articles — distinct from place pages, lighter on schema, heavier on voice |
 | festa-calendar-scraper.md | not yet written | Scraping festa/feira calendars from Câmara Municipal + Junta de Freguesia sites for the Cultura & Agenda pillar |
