@@ -317,6 +317,13 @@ async function main() {
   const unionResult = polygonClipping.union(...unionInputs);
   // unionResult: MultiPolygon = Array<Polygon = Array<Ring = Array<[lng,lat]>>>
 
+  // Also produce the SAME union projected at the regular epsilon (no smoothing),
+  // for use as the LAND BASE under the individual concelho strokes — eliminates
+  // the inter-concelho gaps that leak the water tint through.
+  const margemSulLandPaths = unionResult.flatMap((poly) =>
+    poly.map((ring, i) => (i === 0 ? ringToPath(ring.map(project)) : null)).filter(Boolean),
+  );
+
   // The silhouette is shown at brand-mark scale (favicon → 260px outline).
   // Push simplification hard, then run a Chaikin-style corner-cutting pass,
   // then run Catmull-Rom-to-cubic-bezier smoothing on top. We sacrifice
@@ -370,6 +377,7 @@ async function main() {
       paths: silhouettePaths,
       polygons: unionResult.length,
     },
+    margem_sul_land: margemSulLandPaths,
     context_north: contextProjected,
     concelhos: projected,
   };

@@ -109,6 +109,15 @@ const bridges = [
         shows through only in the actual sea / river / estuary. */}
     <rect x={vbX} y={vbY} width={vbW} height={vbH} class="water-base" />
 
+    {/* Margem Sul land base — unioned outline of all 9 concelhos at the
+        regular epsilon, so the land reads as one solid mass and the water
+        tint can't leak through inter-concelho seams. */}
+    <g class="margem-sul-land">
+      {geoData.margem_sul_land.map((d) => (
+        <path d={d} class="land-base" />
+      ))}
+    </g>
+
     {/* Lisbon + Oeiras — north-of-the-Tejo context outline. Faint enough
         to read as "the other side", clear enough to orient the viewer. */}
     <g class="context-north">
@@ -289,14 +298,20 @@ const bridges = [
     height: auto;
   }
 
-  /* ──────── Water base + concelho fills ──────── */
-  /* The water base is a faint teal wash. Land shapes draw OVER it with a
-     solid warm-grey fill so the teal only reads in the sea / river. */
+  /* ──────── Water base + land base + concelho borders ──────── */
+  /* The water base is a faint teal wash. The Margem Sul land base is a
+     single unioned shape drawn over the water so the land reads continuously.
+     Individual concelhos are then drawn on top as fill: none — only their
+     borders show, no per-concelho seam can leak teal through. */
   .water-base {
     fill: color-mix(in srgb, var(--mc-teal) 14%, var(--color-background));
   }
-  .concelho {
+  .land-base {
     fill: color-mix(in srgb, var(--color-text) 9%, var(--color-background));
+    stroke: none;
+  }
+  .concelho {
+    fill: transparent;
     stroke: var(--color-text);
     stroke-opacity: 0.55;
     stroke-width: 1;
