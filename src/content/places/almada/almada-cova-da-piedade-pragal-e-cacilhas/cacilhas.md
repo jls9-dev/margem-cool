@@ -17,32 +17,32 @@ featured_links:
     description_en: "The administrative union that has included Cacilhas since the 2013 reform."
 
 pt:
-  short_description: "Cacilhas, vila ribeirinha em frente a Lisboa, ligada por ferry desde o Cais do Sodré. O passeio do Cais do Ginjal, a marisqueira, a história desde os romanos."
+  short_description: "Cacilhas, na margem sul do Tejo em frente a Lisboa, ligada por ferry desde 1836. O passeio do Cais do Ginjal, as marisqueiras junto ao terminal, e camadas de história desde os romanos."
   page_status: placeholder
-  meta_title: "Cacilhas — A Vila Ribeirinha de Almada em Frente a Lisboa"
-  meta_description: "Cacilhas, em frente a Lisboa pelo Tejo: como chegar, o que fazer, onde comer, e a história da vila ribeirinha de Almada."
+  meta_title: "Cacilhas — A Margem Sul em Frente a Lisboa"
+  meta_description: "Cacilhas, em frente a Lisboa pelo Tejo: como chegar, o que fazer, onde comer, e a história desde os romanos até hoje."
   facts:
     - value: "10 min"
       label: "Ferry para o Cais do Sodré"
-    - value: "1147"
-      label: "Primeiro registo escrito"
-    - value: "Almada"
-      label: "Concelho"
-    - value: "Cais do Ginjal"
-      label: "Passeio ribeirinho"
+    - value: "~9 000"
+      label: "Habitantes (estimativa 2017)"
+    - value: "0,97 km²"
+      label: "Área"
+    - value: "1759"
+      label: "Igreja matriz reconstruída"
   faqs:
     - question: "Como chegar a Cacilhas?"
-      answer: "Apanha o ferry no Cais do Sodré. A Transtejo Soflusa opera a travessia a cada 10–15 minutos durante o dia. O bilhete simples custa cerca de 1,45€ em 2026. Também podes chegar de carro pela Ponte 25 de Abril (saída Almada) ou de Fertagus, com mudança em Pragal."
+      answer: "Apanha o ferry da Transtejo Soflusa no Cais do Sodré. A travessia demora cerca de 10 minutos. Em horas de ponta há saídas a cada 5 a 15 minutos; fora de horas é menos frequente. O bilhete simples custa 2,00€ (tarifário 2026). Em alternativa, podes vir de carro pela Ponte 25 de Abril ou de Fertagus com mudança em Pragal."
     - question: "Quanto tempo demora o ferry para Cacilhas?"
-      answer: "Cerca de 10 minutos para a travessia. De porta a porta a partir do centro de Lisboa conta entre 25 e 30 minutos, incluindo a chegada aos terminais. Os ferries elétricos introduzidos a partir de 2024 fizeram a viagem mais silenciosa."
+      answer: "Cerca de 10 minutos para a travessia. De porta a porta a partir do centro de Lisboa conta entre 25 e 30 minutos, incluindo a chegada aos terminais."
     - question: "O que significa o nome Cacilhas?"
-      answer: "A teoria mais aceite na toponímia portuguesa faz remontar o nome ao árabe al-qasr (o lugar fortificado) ou qaçar (palácio, fortaleza), reflexo do período moçárabe. O nome aparece já com a forma atual nos registos do século XII, depois da Reconquista."
+      answer: "A origem do nome não está completamente esclarecida. Algumas hipóteses tradicionais ligam-no ao árabe al-qasr (lugar fortificado), outras ao verbo caçar. Nenhuma fonte académica fecha a questão; o nome aparece com a forma atual em documentos medievais."
     - question: "O que há para fazer em Cacilhas?"
-      answer: "O passeio pelo Cais do Ginjal, o Elevador da Boca do Vento que sobe a Almada Velha, as vistas a partir do Cristo Rei, o sítio arqueológico da Quinta do Almaraz, e a marisqueira junto ao ferry. Tudo cabe numa tarde."
+      answer: "O passeio pelo Cais do Ginjal, o Elevador da Boca do Vento que sobe a Almada Velha, as vistas a partir do Cristo Rei, o sítio arqueológico da Quinta do Almaraz, e as marisqueiras junto ao ferry. A fragata D. Fernando II e Glória, ancorada no porto de Cacilhas, é a única embarcação à vela do antigo Estado Português da Índia que sobrevive."
     - question: "Onde se come em Cacilhas?"
-      answer: "As marisqueiras junto ao terminal de ferry e ao longo da margem são a sua tradição. O Ponto Final, no Cais do Ginjal, é o restaurante mais fotografado da margem sul. A faixa de restaurantes na zona do ferry serve a mesma carta a preços variados."
+      answer: "O Ponto Final no Cais do Ginjal é o restaurante mais fotografado da margem sul. Junto ao terminal de ferry e ao longo da margem encontras o Atira-te ao Rio (marisco e carnes, aberto há quase 30 anos) e o Farol (mariscada, ameijoa à Bulhão Pato a cerca de 15€). Na Rua Cândido dos Reis há o Mercado de Cacilhas, com sete restaurantes de várias cozinhas, aberto desde 2019."
     - question: "Cacilhas é uma freguesia?"
-      answer: "Desde a reforma administrativa de 2013, Cacilhas faz parte da União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. Antes era freguesia autónoma. Localmente continua a ser tratada como o seu próprio lugar."
+      answer: "Cacilhas foi freguesia autónoma entre 1985 e 2013. Desde a reforma administrativa de 2013 faz parte da União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. Localmente continua a ser tratada como o seu próprio lugar."
     - question: "Cacilhas é de que concelho?"
       answer: "Cacilhas pertence ao concelho de Almada, na margem sul do Tejo. Almada é um dos nove concelhos da Margem Sul (Península de Setúbal) que compõem a margem sul da Área Metropolitana de Lisboa."
   body: |
@@ -51,120 +51,143 @@ pt:
     Por agora, vê a versão em inglês para o texto integral, ou usa as perguntas frequentes acima para as respostas práticas.
 
 en:
-  short_description: "Cacilhas, the riverside town opposite Lisbon by ferry from Cais do Sodré. The Cais do Ginjal walk, the marisco strip, and the history from Roman times forward."
+  short_description: "Cacilhas, on the south bank of the Tagus opposite Lisbon, connected by ferry since 1836. The Cais do Ginjal walk, the marisco strip near the terminal, and history layered from the Romans onward."
   page_status: developed
-  meta_title: "Cacilhas — Almada's Riverside Town Across from Lisbon"
-  meta_description: "Cacilhas, opposite Lisbon by ferry: how to get there, what to do, where to eat, and the history of Almada's riverside town."
+  meta_title: "Cacilhas — The South Bank Across from Lisbon"
+  meta_description: "Cacilhas, opposite Lisbon by ferry: how to get there, what to do, where to eat, and the history from Roman times forward."
   facts:
     - value: "10 min"
       label: "Ferry to Cais do Sodré"
-    - value: "1147"
-      label: "First written record"
-    - value: "Almada"
-      label: "Concelho"
-    - value: "Cais do Ginjal"
-      label: "Riverside walk"
+    - value: "~9,000"
+      label: "Inhabitants (2017 est.)"
+    - value: "0.97 km²"
+      label: "Area"
+    - value: "1759"
+      label: "Parish church rebuilt"
   faqs:
     - question: "How do I get to Cacilhas?"
-      answer: "Take the ferry from Cais do Sodré in central Lisbon. Transtejo Soflusa runs the service every 10–15 minutes during the day. A single ticket costs around €1.45 in 2026. You can also drive over the Ponte 25 de Abril (exit Almada) or take the Fertagus train with a connection at Pragal."
+      answer: "Take the Transtejo Soflusa ferry from Cais do Sodré. The crossing takes about 10 minutes. Peak weekday departures run every 5–15 minutes; off-peak is less frequent. A single ticket costs €2.00 (2026 tariff). You can also drive over the Ponte 25 de Abril (exit Almada) or take the Fertagus train with a connection at Pragal."
     - question: "How long does the ferry to Cacilhas take?"
-      answer: "About 10 minutes for the crossing itself. Door-to-door from central Lisbon, allow 25–30 minutes including walks to the terminals. The electric ferries introduced from 2024 have made the trip quieter."
+      answer: "About 10 minutes for the crossing. Door-to-door from central Lisbon, allow 25–30 minutes including walks to the terminals."
     - question: "What does the name 'Cacilhas' mean?"
-      answer: "The most accepted theory in Portuguese toponymy traces it to Arabic al-qasr (the fortified place) or qaçar (palace, fortress), a Mozarabic legacy. The name appears in its current form in 12th-century records, after the Reconquista."
+      answer: "The origin of the name isn't fully settled. Some traditional theories tie it to Arabic al-qasr (fortified place), others to the verb caçar (to hunt). No academic source closes the question; the name appears in its current form in medieval documents."
     - question: "What's there to do in Cacilhas?"
-      answer: "The Cais do Ginjal waterfront walk, the Elevador da Boca do Vento up to Almada Velha, the views from the Cristo Rei, the Quinta do Almaraz archaeological site, and the marisco restaurants near the ferry. All of it fits in an afternoon."
+      answer: "The Cais do Ginjal waterfront walk, the Elevador da Boca do Vento up to Almada Velha, the views from the Cristo Rei, the Quinta do Almaraz archaeological site, and the marisco restaurants near the ferry. The Fragata D. Fernando II e Glória, anchored at Cacilhas, is the only surviving sailing vessel of the former Portuguese State of India."
     - question: "Where do I eat in Cacilhas?"
-      answer: "The marisqueiras near the ferry terminal and along the waterfront are the place's tradition. Ponto Final on the Cais do Ginjal is the most-photographed restaurant on the south bank. The cluster around the ferry terminal serves the same menu at varying prices."
+      answer: "Ponto Final on the Cais do Ginjal is the most-photographed restaurant on the south bank. Around the ferry terminal and along the waterfront you'll find Atira-te ao Rio (shellfish and meat, open nearly 30 years) and O Farol (shellfish, clams à Bulhão Pato around €15). Rua Cândido dos Reis has the Mercado de Cacilhas with seven restaurants across various cuisines, open since 2019."
     - question: "Is Cacilhas a freguesia?"
-      answer: "Since the 2013 administrative reform, Cacilhas has been part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. Before then it was its own standalone freguesia. Locally it's still treated as its own place."
+      answer: "Cacilhas was a standalone freguesia from 1985 to 2013. Since the 2013 administrative reform it has been part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. Locally it's still treated as its own place."
     - question: "What concelho is Cacilhas in?"
       answer: "Cacilhas is in the concelho of Almada, on the south bank of the Tagus. Almada is one of the nine concelhos of the Margem Sul (Setúbal Peninsula) that make up the south side of the Lisbon metropolitan area."
   body: |
-    Cacilhas sits across the Tagus from central Lisbon, ten minutes by ferry from Cais do Sodré, at the northern edge of Almada. It is the landing point for everyone who comes south from the city on foot or without a car, and the launching point for everyone going the other way. The ferry connects two sides of the same metropolitan area, but the crossing changes everything — city becomes south bank, hill becomes river-level, north light becomes south light.
+    Cacilhas sits on the south bank of the Tagus directly opposite central Lisbon, ten minutes by ferry from Cais do Sodré. It is the southern terminus of one of the oldest scheduled river crossings in Portugal — first regulated in 1284, mechanised with steam *cacilheiros* in 1836, and run today by Transtejo Soflusa with a mix of conventional and electric vessels.
 
-    For much of the 19th and 20th centuries Cacilhas was where Lisbon's industry put what it didn't want at home: fish-canning factories, salting tanks, dry docks, the iron foundries of the Cais do Ginjal. The legacy is a riverfront that still carries the bones of all that. Abandoned warehouses, the long (sometimes-fenced-off) Cais do Ginjal walk, and the pull of a place caught mid-transformation. Most of the working buildings are gone or closed; what remains is a stone embankment with views back at Lisbon that nothing in Lisbon itself can match.
-
-    Administratively Cacilhas forms part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas — a union created in the 2013 reform that merged the old standalone parish into a larger unit. Locally, though, it is still Cacilhas. It has its own ferry terminal, its own bus interchange, its own restaurants, its own pace.
+    Administratively, Cacilhas was a standalone freguesia from 1985 to 2013. Since then it has formed part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. The settlement occupies just under one square kilometre on the riverbank below the cliff of Almada Velha, with about 9,000 residents as of 2017.
 
     ## Getting there
 
-    The short answer: ferry, from Cais do Sodré, every 10 to 15 minutes during the day, less frequently at night. Operator: Transtejo Soflusa, the public ferry company that runs the Tagus services for the metropolitan area. The crossing takes about 10 minutes. Electric ferries (some of the route's fleet was replaced from 2024 onward) have made the trip cleaner and quieter.
+    The short answer: ferry, from Cais do Sodré. The Transtejo Soflusa service runs roughly every 5 to 15 minutes during weekday peaks, less frequently in the evenings. First ferry around 00:05 from Cacilhas; last ferry around 23:33. The crossing takes 10 minutes on average. Some of the route's fleet has been replaced with electric vessels under Transtejo's modernisation plan.
 
-    A single ticket in 2026 costs around €1.45. You can pay with a Navegante card (the integrated metropolitan transport card), a Lisboa Card, or contactless card at the gate. No advance booking — turn up and board.
+    A single ticket costs €2.00 under the 2026 tariff. You can use a Navegante card (the integrated metropolitan transport pass) for all river connections — the *navegante metropolitano* monthly is €40.00; the *navegante +65* concessionary version is €20.00. The 24-hour combined Carris/Metro/TTSL ticket is €10.35.
 
     ### Other ways in
 
     - **Car** via the Ponte 25 de Abril, exit at Almada, then descend to the river. Allow 15–25 minutes from central Lisbon depending on bridge traffic. Parking near the ferry terminal is paid and limited.
-    - **Train** — the Fertagus line from Roma-Areeiro or Sete Rios runs to Pragal, a short bus ride or a 15-minute walk from Cacilhas. Useful if you are coming from north Lisbon and want to skip the ferry queue at peak hours.
-    - **Bus** from Cacilhas's interchange connects onward to Costa da Caparica, Charneca de Caparica, Setúbal, and across the Sesimbra side of the Margem Sul. The terminal is integrated with the ferry, so a single Navegante card covers both legs.
+    - **Train** — the Fertagus line from Roma-Areeiro or Sete Rios runs to Pragal, a short bus ride or 15-minute walk from Cacilhas. Useful if you're coming from north Lisbon and want to skip the ferry queue at peak hours.
+    - **Bus** from Cacilhas's interchange connects onward to Costa da Caparica, Charneca de Caparica, Setúbal, and across the Sesimbra side of the Margem Sul.
+    - **Metro Sul do Tejo** (MST, the surface light-rail system that opened in 2008) terminates in Cacilhas. The line connects with Pragal, Cova da Piedade, Almada and outward to the south.
 
-    Walking around Cacilhas itself does not need transport. The main strip — from the ferry to the Cais do Ginjal east, or up the hill to Almada Velha west — is twenty minutes end to end.
+    Walking around Cacilhas itself doesn't need transport. From the ferry to the Cais do Ginjal east, or up the hill to Almada Velha west, is twenty minutes end to end.
 
     ## The name
 
-    There are two main theories about the name. The mainstream one is Arabic: a derivative of *al-qasr* (the fortified place) or *qaçar* (palace, fortress), reflecting the area's Moorish-period administrative role. The alternative theory traces it to *caçar* (to hunt), referencing prehistoric and Roman-era hunting grounds along the south bank.
-
-    The Arabic theory is now broadly accepted in modern Portuguese toponymy scholarship. The name appears in the earliest medieval records of the Reconquista period in the 12th century, already in roughly its current form, which fits with Mozarabic transmission of an earlier Arabic placename.
+    The origin of the name *Cacilhas* isn't fully settled in the scholarship. Some traditional theories tie it to the Arabic *al-qasr* (the fortified place), reflecting the area's Moorish-period administrative role; others trace it to the verb *caçar* (to hunt). The name appears in its current form in medieval documents, but neither Wikipedia nor the official Junta de Freguesia history page commits to a definitive etymology. Treat anyone who tells you they know for certain with some scepticism.
 
     ## A short history
 
     Cacilhas's history is layered, and the layers are unusually visible.
 
-    ### Iron Age and Roman
+    ### Pre-Roman
 
-    The hillside site at Quinta do Almaraz, on the ridge above modern Cacilhas, was one of the larger pre-Roman Iron Age oppida in the area, occupied continuously into the Roman imperial period. Down at the waterfront, the Romans operated *cetárias* — stone tanks for salting fish — that turned the south Tagus into one of the major fish-processing centres of the western Mediterranean. Fragments of these tanks survive in archaeological excavations.
+    The hillside site at Quinta do Almaraz, above modern Cacilhas, has occupation evidence going back to the Neolithic and Chalcolithic (around 3,000–3,400 BC) — pottery fragments, stone tools, food remains, and fortified structures. By the Iron Age (7th–6th centuries BC) there was a working dock at the location now known as Largo Alfredo Dinis, near the modern riverfront.
 
-    ### Reconquista
+    ### Roman
 
-    Almada and its riverside, including Cacilhas, were taken from the Almoravid Muslims by Afonso Henriques during the same campaign that conquered Lisbon in 1147. The earliest written record of Cacilhas dates from this period.
+    From the 1st through the 3rd century AD, Cacilhas was part of one of the major fish-processing centres of the western Roman world. The Romans operated *cetárias* — rectangular stone tanks for salting fish and producing *garum* — organised around a central courtyard. At least fifteen tanks have been documented archaeologically. The Roman complex appears to have been an extension of the Quinta do Almaraz settlement. The preserved fish products were exported across the empire.
+
+    ### Medieval
+
+    A Crusader account from 1147 describes the broader area as fertile country — "*searas, vinhos, figos, romãs, mel e caça*". Cacilhas changed hands several times during the late 12th century as Christian and Almohad forces contested the Tagus crossing; D. Sancho I definitively retook Almada in 1195, with full Portuguese integration of the south Tagus following the 1217 capture of Alcácer do Sal. By 1284, the first regulations governing river crossings between Cacilhas and Lisbon were in force.
+
+    On 18 July 1384, during the Castilian siege of Lisbon, an intense naval combat took place off Cacilhas. The Portuguese lost three ships but broke the blockade.
 
     ### After 1755
 
-    Like Lisbon and Almada itself, Cacilhas was devastated by the November earthquake. The original parish church of Nossa Senhora do Bom Sucesso was destroyed; the current church on Praceta Cândido dos Reis dates from the rebuild.
+    Like Lisbon and Almada itself, Cacilhas was devastated by the November earthquake. The medieval chapels were destroyed. The current parish church, Nossa Senhora do Bom Sucesso, was rebuilt in 1759. It commemorates a local miracle in which a boatman is said to have held an image of the Virgin Mary towards rising floodwaters, which receded. The annual 1 November procession from the church still marks the event, traditionally funded by people working in river transport and shipbuilding.
 
     ### Industrial 19th and 20th centuries
 
-    From the late 1800s through the mid-20th century Cacilhas became the metropolitan area's south-bank industrial frontier. Fish-canning factories (*conserva*) processed sardines and tuna for export. The Cais do Ginjal warehouses handled coal and bulk goods. The Estaleiros da Margueira shipyards a little further west built and repaired the merchant marine. Most of these industries collapsed between the 1970s and the 1990s, leaving the riverfront buildings empty and the local economy adrift for two decades.
+    Industrial installations began appearing along the Cacilhas waterfront from 1816 onward. *Cacilheiros* — steam-powered ferry boats — were introduced in 1836, regularising the river crossing for the first time at industrial scale. Through the 19th century the area developed a working-river economy: cooperage (*tanoaria*), textiles, cork, shipbuilding, distilleries, and the *conserva* industry (fish canning). The Cais do Ginjal served as a working port that could take vessels regardless of the tide.
+
+    The largest single industrial chapter was Lisnave. Between 1967 and 2000, the Lisnave shipyard in the Margueira area west of Cacilhas was one of the largest naval-repair operations in Europe. It employed thousands of workers. Building it required massive landfill, which permanently changed the local coastline. Its closure in 2000 marked the end of the riverside industrial era.
 
     ### Recent decades
 
-    The decline has been partly reversed by re-discovery: Lisboetas crossing for marisco meals at the cais, restaurants opening in the older buildings, and the area's appearance as a film location, including in *La Casa de Papel*, which used the Cais do Ginjal as a recurring setting. The waterfront remains in transition — rehabilitation projects have been announced and paused several times.
+    The opening of the Ponte 25 de Abril in 1966 diverted Lisbon-Almada traffic from river to road, contributing to the long decline of the Cais do Ginjal. Most of the waterfront industrial buildings emptied between the 1970s and the 1990s. The Metro Sul do Tejo arrived in 2008, with Cacilhas as a terminal. Restaurants and small businesses have reoccupied parts of the older urban fabric, particularly along Rua Cândido dos Reis. Redevelopment plans for the Cais do Ginjal have been announced and paused on several occasions; the cais remains in transition.
 
     ## What to see and do
 
     ### The riverfront walk and Cais do Ginjal
 
-    From the ferry terminal, turn east (left as you face the river from inland). The walk follows the old industrial cais along the south bank, passing the abandoned warehouses and arriving, about 20 minutes' walk along, at the Ponto Final restaurant — perched on the edge of the river with the Cristo Rei rising directly above. The walk is one of the most photographed stretches of waterfront in the metropolitan area. Conditions vary: sections have been closed for safety since the 2025 partial fence-off. Check before going.
+    From the ferry terminal, turn east (left as you face the river from inland). The walk follows the old industrial cais along the south bank, passing the abandoned warehouses and arriving, about 20 minutes' walk along, at Ponto Final. The walk is one of the most photographed stretches of waterfront in the metropolitan area. Conditions vary year to year — sections have intermittently been closed for safety while redevelopment plans go through their cycles, so check locally before going.
 
     ### Elevador da Boca do Vento
 
-    A free vertical elevator that lifts you from river level up to Almada Velha (Old Almada) on the cliff above. Built in 2000, it is painted the rust-orange that has become an unofficial Almada signature. From the top you walk into the cobbled streets of the old town, with views back over the river to Lisbon.
+    A vertical elevator that lifts you from river level up to Almada Velha (Old Almada) on the cliff above. From the top you walk into the cobbled streets of the old town, with views back over the river to Lisbon.
 
     ### Cristo Rei and Almada Velha
 
-    Almada Velha sits on the same ridge as the Cristo Rei statue — the 110-metre concrete Christ figure that overlooks the river from the south bank. A short walk from the top of the Elevador da Boca do Vento takes you through the old town to the Cristo Rei sanctuary. The viewing platform at the base of the statue gives the broadest panorama of Lisbon from any single vantage point.
+    Almada Velha sits on the same ridge as the Cristo Rei statue — the giant concrete Christ figure that overlooks the river from the south bank. A short walk from the top of the Elevador da Boca do Vento takes you through the old town to the Cristo Rei sanctuary. The viewing platform at the base of the statue gives one of the broadest panoramas of Lisbon from any single vantage point.
 
     ### Quinta do Almaraz
 
-    The archaeological site on the hill above Cacilhas — Iron Age and Roman remains, walkable, with signage in Portuguese and English. Generally open to walkers; formal visits require coordination with the Câmara Municipal de Almada.
+    The archaeological site on the hill above Cacilhas. Pre-Roman Iron Age remains plus Roman-era cetárias fragments. The site is generally walkable; formal visits and guided access are coordinated through the Câmara Municipal de Almada.
 
     ### Igreja de Nossa Senhora do Bom Sucesso
 
-    The post-1755 parish church on Praceta Cândido dos Reis, the central square of old Cacilhas. Modest, working community church, occasionally open for visits outside service hours.
+    The post-1755 parish church on Praceta Cândido dos Reis, the central square of old Cacilhas. Rebuilt in 1759 after the earthquake. The annual 1 November procession is the area's main religious festival.
+
+    ### Fragata D. Fernando II e Glória
+
+    The 19th-century sailing frigate, anchored permanently at Cacilhas, is the only surviving sailing vessel of the former Portuguese State of India. Built at the Damão royal shipyard in India. Open to visit as a museum ship.
 
     ## Eat and drink
 
-    The Cacilhas marisco strip is the place's signature food culture. Six or eight restaurants cluster along the waterfront and the streets behind the ferry terminal, serving shellfish brought in from south-bank fisheries: *ameijoas*, *gambas*, *carabineiros*, *santola*, *sapateira*. Prices usually sit a touch below central Lisbon for the same plate, and the rooms are larger.
+    The marisco strip is the place's signature food culture. Restaurants cluster along the waterfront and the streets behind the ferry terminal. The following are specific places mentioned in recent (2024 onward) Lisbon-press coverage and worth knowing about. Prices and conditions are subject to change — verify before going.
 
-    **Ponto Final**, the riverfront restaurant on the Cais do Ginjal, is the most-photographed restaurant in the metropolitan area. It is also a working restaurant with limited tables, mostly serving fresh fish and shellfish. Booking is essential for evenings; walk-in is possible for late lunches mid-week.
+    **Ponto Final** sits on the Cais do Ginjal walk, near the Elevador da Boca do Vento, with tables literally over the river. Marinated anchovies around €5.50, monkfish rice for two around €40, grilled gilt-head around €15. Booking strongly advised for evenings.
 
-    The traditional marisqueiras around the ferry terminal — *Atira-te ao Rio* for grilled fish with a river view, *O Farol*, and several others on Rua do Ginjal and surrounding streets — serve the standard south-Tagus marisco menu. Average dinner with wine sits in the €25–€45 per-person range.
+    **Atira-te ao Rio** has been operating for nearly 30 years. Shellfish and meat, river views. The same family-run group is associated with the Bica restaurant scene across the river.
 
-    Ginjinha at the cais: the cherry-liqueur shot is a Lisbon tradition that crossed the river years ago. Several small bars along the waterfront serve it cold in a chocolate cup or in a plain glass for €1.50–€2.
+    **O Farol** is another landmark on the riverside Cacilhas strip. Specialises in shellfish — lobster, prawn, crab. Ameijoas à Bulhão Pato around €15; full shellfish platters from €35 by weight.
+
+    **Mercado de Cacilhas** at Rua Cândido dos Reis 144, open since November 2019, gathers seven restaurants across Japanese, Greek, Italian, Brazilian and other cuisines into a 400 m² market-hall format, with a bar.
+
+    **Boteco 47**, also on Rua Cândido dos Reis, does finger food — fried shrimp, *prego*, sardines, tuna *tataki*.
+
+    **Estaminé 1955** is a hamburger restaurant that won the Time Out readers' Best Restaurant award in 2018. Vegetarian options.
+
+    **Máfia das Pizzas** does rustic pizzas from around €10.
+
+    **Meating Steakhouse** does meat-focused mains. The chuletón for two runs around €59.
+
+    **Meia Volta de Úrano — Casa das Artes** on Rua Cândido dos Reis is a bar, bookstore and small gallery, open since July 2016. Open until 2am.
+
+    **Ginjal Terrasse**, on the river itself, is a terrace bar with sunset views and light snacks.
 
     ## Living here
 
-    For residents, Cacilhas combines river access, fast Lisbon connection, and a quieter pace than the north bank. Average property prices for apartments in 2025–26 sit around €3,800–€4,500/m² — well below central Lisbon — though new development is gradually pulling the figure up. The ferry commute to Cais do Sodré is reliable; many residents work in central Lisbon and travel daily.
+    For residents, Cacilhas combines river access, fast Lisbon connection, and a quieter pace than the north bank. The ferry commute to Cais do Sodré is reliable; many residents work in central Lisbon and travel daily. The Metro Sul do Tejo terminal opened in 2008 gives access onward to the rest of Almada and the south side of the metropolitan area.
 
     - **Schools** are part of the Almada concelho network. Several Portuguese-language state schools serve the area; the nearest international option is across the river in Lisbon.
     - **Healthcare** — Centro de Saúde in Cova da Piedade, hospital access at Hospital Garcia de Orta in central Almada.
@@ -173,9 +196,9 @@ en:
 
     ## The honest bit
 
-    Cacilhas is a place caught between two economies. The marisco-and-views weekend rush brings visitors but doesn't always reach the resident community. The Cais do Ginjal redevelopment plans have been announced, paused, restarted, and paused again over the past decade; sections of the cais are unsafe, sections have been fenced off, and any visitor week-to-week may find different bits closed. Property prices are climbing fast enough that long-time residents notice. The ferry, despite the new electric vessels, can still struggle with rush-hour capacity.
+    The Cacilhas waterfront has been mid-transition for decades. The Lisnave closure in 2000, the on-and-off Cais do Ginjal redevelopment plans, and the slower-than-expected reuse of the older industrial buildings have left parts of the riverside in an unusual state — neither working port nor finished waterfront promenade. Things you could walk through last year might be fenced this year, and vice versa.
 
-    The crossing still works, the riverfront views are still extraordinary, and the basic geometry — a cliff above a river opposite a famous city — still produces moments you do not get on the other side. That is the through-line, and it remains worth going for.
+    But the basic geometry — a cliff above a river opposite a famous city, with the layers of a Roman fish-processing site, a medieval river crossing, a 19th-century industrial frontier and a 21st-century working-class neighbourhood all still legible — produces moments you don't get on the other side. The crossing still works. The view back at Lisbon is still the best view back at Lisbon you can get from anywhere.
 
 last_updated: 2026-05-29
 nw_query_pt: "f47f511cd090ec57"
