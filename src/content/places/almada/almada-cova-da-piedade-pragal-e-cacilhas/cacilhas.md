@@ -77,10 +77,80 @@ pt:
       body: "Inauguração do Metro Sul do Tejo. Cacilhas é estação terminal."
     - year: "2013"
       body: "Reforma administrativa: Cacilhas integra a União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas."
+  transport_options:
+    - mode: "Ferry"
+      duration: "10 min"
+      price: "2,00€"
+      detail: "Transtejo Soflusa do Cais do Sodré. Em hora de ponta a cada 5–15 minutos; menos frequente à noite. Primeira saída cerca das 00:05; última cerca das 23:33."
+    - mode: "Carro"
+      duration: "15–25 min"
+      detail: "Pela Ponte 25 de Abril, saída Almada, descer até ao rio. Estacionamento junto ao terminal é pago e escasso."
+    - mode: "Comboio"
+      duration: "+ a pé"
+      detail: "Linha de Fertagus de Roma-Areeiro ou Sete Rios até Pragal, com autocarro ou 15 minutos a pé até Cacilhas."
+    - mode: "Metro"
+      duration: "MST terminal"
+      detail: "O Metro Sul do Tejo, em serviço desde 2008, tem terminal em Cacilhas, com ligações para Pragal, Cova da Piedade e Almada."
+    - mode: "Autocarro"
+      detail: "O terminal de Cacilhas liga à Costa da Caparica, Charneca de Caparica, Setúbal e ao lado de Sesimbra. Integrado com o ferry."
+  eateries:
+    - name: "Ponto Final"
+      cuisine: "Marisco · com vista"
+      description: "O restaurante mais fotografado da margem sul, com mesas literalmente sobre o rio no Cais do Ginjal, junto ao Elevador da Boca do Vento."
+      location: "Cais do Ginjal"
+      price_range: "€€€"
+      signature: "Arroz de tamboril c. 40€ · grelhada de peixe c. 15€"
+      emphasis: true
+    - name: "Atira-te ao Rio"
+      cuisine: "Marisco e carnes"
+      description: "Aberto há quase 30 anos pelo Mikas (figura da Bica). Marisco e carnes, vistas para o Tejo, considerado uma instituição."
+      location: "Margem"
+      price_range: "€€"
+    - name: "O Farol"
+      cuisine: "Marisqueira"
+      description: "Outra referência na margem ribeirinha de Cacilhas. Especialidade em marisco — lavagante, gambas, sapateira, santola."
+      location: "Margem"
+      price_range: "€€"
+      signature: "Ameijoa à Bulhão Pato c. 15,40€ · marisco a peso desde 35€"
+    - name: "Mercado de Cacilhas"
+      cuisine: "Várias cozinhas"
+      description: "Sete restaurantes (japonês, grego, italiano, brasileiro), um bar e duas escape rooms num espaço de 400m². Aberto desde Novembro de 2019."
+      location: "R. Cândido dos Reis 144"
+      price_range: "€€"
+    - name: "Boteco 47"
+      cuisine: "Petiscos"
+      description: "Camarão frito, prego, sardinhas, tartare de atum, espadarte."
+      location: "R. Cândido dos Reis"
+      price_range: "€"
+    - name: "Estaminé 1955"
+      cuisine: "Hambúrgueres"
+      description: "Vencedor do prémio Melhor Restaurante dos leitores Time Out em 2018. Opções vegetarianas."
+      location: "Cacilhas centro"
+      price_range: "€"
+    - name: "Máfia das Pizzas"
+      cuisine: "Pizza"
+      description: "Pizzas rústicas a partir de cerca de 10,40€; presunto curado a partir de 11,50€."
+      location: "Cacilhas centro"
+      price_range: "€"
+    - name: "Meating Steakhouse"
+      cuisine: "Carnes"
+      description: "Foco em carne. Chuletón para dois cerca de 59€; bife com lagosta também 59€."
+      location: "Cacilhas centro"
+      price_range: "€€€"
+    - name: "Meia Volta de Úrano"
+      cuisine: "Bar · livraria · galeria"
+      description: "Casa das Artes — bar, livraria e pequena galeria, com mini-concertos e jam sessions. Aberta desde Julho de 2016, fecha às 2h."
+      location: "R. Cândido dos Reis"
+      price_range: "€"
+    - name: "Ginjal Terrasse"
+      cuisine: "Bar ribeirinho"
+      description: "Terraço diretamente sobre o rio, vistas para o pôr-do-sol, opções de snack."
+      location: "Cais do Ginjal"
+      price_range: "€"
   body: |
     A versão portuguesa desta página está em tradução. Em breve estará disponível com o conteúdo completo.
 
-    Por agora, vê a versão em inglês para o texto integral, ou usa as perguntas frequentes e a cronologia acima.
+    Por agora, vê a versão em inglês para o texto integral, ou usa as secções acima — perguntas frequentes, cronologia, formas de chegar e onde comer.
 
 en:
   short_description: "Cacilhas, on the south bank of the Tagus opposite Lisbon, connected by ferry since 1836. The Cais do Ginjal walk, the marisco strip near the terminal, and history layered from the Romans onward."
@@ -143,23 +213,80 @@ en:
       body: "Metro Sul do Tejo opens. Cacilhas is the terminal station."
     - year: "2013"
       body: "Administrative reform: Cacilhas merged into the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas."
+  transport_options:
+    - mode: "Ferry"
+      duration: "10 min"
+      price: "€2.00"
+      detail: "Transtejo Soflusa from Cais do Sodré. Peak weekdays every 5–15 minutes; off-peak less frequent. First ferry around 00:05; last around 23:33."
+    - mode: "Car"
+      duration: "15–25 min"
+      detail: "Over the Ponte 25 de Abril, exit at Almada, descend to the river. Parking near the ferry terminal is paid and limited."
+    - mode: "Train"
+      duration: "+ walk"
+      detail: "Fertagus line from Roma-Areeiro or Sete Rios to Pragal, then a short bus ride or 15-minute walk to Cacilhas."
+    - mode: "Metro"
+      duration: "MST terminal"
+      detail: "Metro Sul do Tejo, operating since 2008, terminates in Cacilhas with connections to Pragal, Cova da Piedade and Almada."
+    - mode: "Bus"
+      detail: "Cacilhas's terminal connects onward to Costa da Caparica, Charneca de Caparica, Setúbal and the Sesimbra side of the Margem Sul. Integrated with the ferry."
+  eateries:
+    - name: "Ponto Final"
+      cuisine: "Marisco · with a view"
+      description: "The most-photographed restaurant on the south bank — tables literally over the river on the Cais do Ginjal, near the Elevador da Boca do Vento."
+      location: "Cais do Ginjal"
+      price_range: "€€€"
+      signature: "Monkfish rice c. €40 · grilled gilt-head c. €15"
+      emphasis: true
+    - name: "Atira-te ao Rio"
+      cuisine: "Shellfish and meat"
+      description: "Open nearly 30 years, run by Mikas of Bica fame. Shellfish, meat, river views. Considered an institution."
+      location: "Riverside"
+      price_range: "€€"
+    - name: "O Farol"
+      cuisine: "Marisqueira"
+      description: "Another landmark on the riverside strip. Shellfish specialist — lobster, prawns, crab, santola."
+      location: "Riverside"
+      price_range: "€€"
+      signature: "Clams Bulhão Pato c. €15.40 · platters from €35"
+    - name: "Mercado de Cacilhas"
+      cuisine: "Multiple cuisines"
+      description: "Seven restaurants (Japanese, Greek, Italian, Brazilian), one bar and two escape rooms in 400 m². Open since November 2019."
+      location: "R. Cândido dos Reis 144"
+      price_range: "€€"
+    - name: "Boteco 47"
+      cuisine: "Finger food"
+      description: "Fried shrimp, prego, sardines, tuna tataki, swordfish."
+      location: "R. Cândido dos Reis"
+      price_range: "€"
+    - name: "Estaminé 1955"
+      cuisine: "Hamburgers"
+      description: "Time Out readers' Best Restaurant 2018. Vegetarian options."
+      location: "Cacilhas centre"
+      price_range: "€"
+    - name: "Máfia das Pizzas"
+      cuisine: "Pizza"
+      description: "Rustic pizzas from about €10.40; prosciutto from €11.50."
+      location: "Cacilhas centre"
+      price_range: "€"
+    - name: "Meating Steakhouse"
+      cuisine: "Steak"
+      description: "Meat-focused. Chuletón for two around €59; steak-and-lobster combo also €59."
+      location: "Cacilhas centre"
+      price_range: "€€€"
+    - name: "Meia Volta de Úrano"
+      cuisine: "Bar · bookshop · gallery"
+      description: "Casa das Artes — bar, bookshop and small gallery, with mini-concerts and jam sessions. Open since July 2016, closes at 2am."
+      location: "R. Cândido dos Reis"
+      price_range: "€"
+    - name: "Ginjal Terrasse"
+      cuisine: "Riverside bar"
+      description: "Terrace directly over the river, sunset views, light snacks."
+      location: "Cais do Ginjal"
+      price_range: "€"
   body: |
     Cacilhas sits on the south bank of the Tagus directly opposite central Lisbon, ten minutes by ferry from Cais do Sodré. It is the southern terminus of one of the oldest scheduled river crossings in Portugal — first regulated in 1284, mechanised with steam *cacilheiros* in 1836, and run today by Transtejo Soflusa with a mix of conventional and electric vessels.
 
     Administratively, Cacilhas was a standalone freguesia from 1985 to 2013. Since then it has formed part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. The settlement occupies just under one square kilometre on the riverbank below the cliff of Almada Velha, with about 9,000 residents as of 2017.
-
-    ## Getting there
-
-    The short answer: ferry, from Cais do Sodré. The Transtejo Soflusa service runs roughly every 5 to 15 minutes during weekday peaks, less frequently in the evenings. First ferry around 00:05 from Cacilhas; last ferry around 23:33. The crossing takes 10 minutes on average. Some of the route's fleet has been replaced with electric vessels under Transtejo's modernisation plan.
-
-    A single ticket costs €2.00 under the 2026 tariff. You can use a Navegante card (the integrated metropolitan transport pass) for all river connections — the *navegante metropolitano* monthly is €40.00; the *navegante +65* concessionary version is €20.00. The 24-hour combined Carris/Metro/TTSL ticket is €10.35.
-
-    ### Other ways in
-
-    - **Car** via the Ponte 25 de Abril, exit at Almada, then descend to the river. Allow 15–25 minutes from central Lisbon depending on bridge traffic. Parking near the ferry terminal is paid and limited.
-    - **Train** — the Fertagus line from Roma-Areeiro or Sete Rios runs to Pragal, a short bus ride or 15-minute walk from Cacilhas. Useful if you're coming from north Lisbon and want to skip the ferry queue at peak hours.
-    - **Bus** from Cacilhas's interchange connects onward to Costa da Caparica, Charneca de Caparica, Setúbal, and across the Sesimbra side of the Margem Sul.
-    - **Metro Sul do Tejo** (MST, the surface light-rail system that opened in 2008) terminates in Cacilhas. The line connects with Pragal, Cova da Piedade, Almada and outward to the south.
 
     Walking around Cacilhas itself doesn't need transport. From the ferry to the Cais do Ginjal east, or up the hill to Almada Velha west, is twenty minutes end to end.
 
@@ -192,30 +319,6 @@ en:
     ### Fragata D. Fernando II e Glória
 
     The 19th-century sailing frigate, anchored permanently at Cacilhas, is the only surviving sailing vessel of the former Portuguese State of India. Built at the Damão royal shipyard in India. Open to visit as a museum ship.
-
-    ## Eat and drink
-
-    The marisco strip is the place's signature food culture. Restaurants cluster along the waterfront and the streets behind the ferry terminal. The following are specific places mentioned in recent (2024 onward) Lisbon-press coverage and worth knowing about. Prices and conditions are subject to change — verify before going.
-
-    **Ponto Final** sits on the Cais do Ginjal walk, near the Elevador da Boca do Vento, with tables literally over the river. Marinated anchovies around €5.50, monkfish rice for two around €40, grilled gilt-head around €15. Booking strongly advised for evenings.
-
-    **Atira-te ao Rio** has been operating for nearly 30 years. Shellfish and meat, river views. The same family-run group is associated with the Bica restaurant scene across the river.
-
-    **O Farol** is another landmark on the riverside Cacilhas strip. Specialises in shellfish — lobster, prawn, crab. Ameijoas à Bulhão Pato around €15; full shellfish platters from €35 by weight.
-
-    **Mercado de Cacilhas** at Rua Cândido dos Reis 144, open since November 2019, gathers seven restaurants across Japanese, Greek, Italian, Brazilian and other cuisines into a 400 m² market-hall format, with a bar.
-
-    **Boteco 47**, also on Rua Cândido dos Reis, does finger food — fried shrimp, *prego*, sardines, tuna *tataki*.
-
-    **Estaminé 1955** is a hamburger restaurant that won the Time Out readers' Best Restaurant award in 2018. Vegetarian options.
-
-    **Máfia das Pizzas** does rustic pizzas from around €10.
-
-    **Meating Steakhouse** does meat-focused mains. The chuletón for two runs around €59.
-
-    **Meia Volta de Úrano — Casa das Artes** on Rua Cândido dos Reis is a bar, bookstore and small gallery, open since July 2016. Open until 2am.
-
-    **Ginjal Terrasse**, on the river itself, is a terrace bar with sunset views and light snacks.
 
     ## Living here
 

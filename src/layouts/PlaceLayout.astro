@@ -20,6 +20,8 @@ import CTA from '../components/place/CTA.astro';
 import BackLink from '../components/place/BackLink.astro';
 import Timeline from '../components/place/Timeline.astro';
 import RiverDivider from '../components/place/RiverDivider.astro';
+import TransportOptions from '../components/place/TransportOptions.astro';
+import EateryGrid from '../components/place/EateryGrid.astro';
 
 import { buildPlaceJsonLd } from '../utils/schema-org';
 import { SITE_URL, type Lang } from '../utils/i18n';
@@ -101,6 +103,8 @@ const description = langData.short_description;
 const facts = langData.facts;
 const faqs = langData.faqs;
 const timeline = langData.timeline;
+const transportOptions = langData.transport_options;
+const eateries = langData.eateries;
 const isPlaceholder = langData.page_status === 'placeholder';
 const bodyHtml = langData.body
   ? await marked.parse(langData.body, { async: true })
@@ -109,6 +113,14 @@ const bodyHtml = langData.body
 const timelineCopy = lang === 'pt'
   ? { kicker: 'Cronologia', title: 'Os marcos da história' }
   : { kicker: 'Timeline', title: 'Key dates' };
+
+const transportCopy = lang === 'pt'
+  ? { kicker: 'Como chegar', title: 'Chegar a ' + displayName, subtitle: 'As opções, o tempo de viagem e o preço.' }
+  : { kicker: 'Getting there', title: 'How to reach ' + displayName, subtitle: 'The options, the duration, the cost.' };
+
+const eateryCopy = lang === 'pt'
+  ? { kicker: 'Comer e beber', title: 'Onde comer em ' + displayName, subtitle: 'Marisqueiras, restaurantes, bares.' }
+  : { kicker: 'Eat and drink', title: 'Where to eat in ' + displayName, subtitle: 'Marisqueiras, restaurants, bars.' };
 
 const lastUpdated = place.data.last_updated instanceof Date
   ? place.data.last_updated
@@ -223,6 +235,20 @@ function formatDate(d: Date, l: Lang): string {
     </section>
   ) : null}
 
+  <TransportOptions
+    kicker={transportCopy.kicker}
+    title={transportCopy.title}
+    subtitle={transportCopy.subtitle}
+    options={transportOptions}
+  />
+
+  <EateryGrid
+    kicker={eateryCopy.kicker}
+    title={eateryCopy.title}
+    subtitle={eateryCopy.subtitle}
+    items={eateries}
+  />
+
   {timeline && timeline.length > 0 && (
     <section class="place-timeline-wrap">
       <div class="container">
@@ -273,13 +299,13 @@ function formatDate(d: Date, l: Lang): string {
 <style>
   .place-timeline-wrap {
     padding: var(--space-2xl) 0;
-    background: color-mix(in srgb, var(--mc-cream) 55%, var(--mc-charcoal) 4%);
+    background: color-mix(in srgb, var(--mc-cream) 78%, var(--mc-charcoal) 5%);
     border-top: 1px solid var(--color-rule);
     border-bottom: 1px solid var(--color-rule);
   }
   @media (prefers-color-scheme: dark) {
     .place-timeline-wrap {
-      background: color-mix(in srgb, var(--mc-charcoal) 80%, var(--mc-teal) 6%);
+      background: color-mix(in srgb, var(--mc-charcoal) 88%, var(--mc-cream) 4%);
     }
   }
   .place-timeline-wrap__inner {

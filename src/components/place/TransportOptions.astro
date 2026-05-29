@@ -1,0 +1,153 @@
+---
+/**
+ * TransportOptions — grid of cards for ways of getting to a place.
+ * Each card shows the mode (small-caps), the most useful number (duration
+ * or price, big display type), and a short detail sentence. The first card
+ * gets a rust accent rule to anchor the eye.
+ *
+ * Sits on a warm-cream background (cream tinted with rust) to give the
+ * Getting-there section a distinct tone from prose.
+ */
+interface TransportOption {
+  mode: string;
+  duration?: string;
+  price?: string;
+  detail: string;
+}
+interface Props {
+  kicker: string;
+  title: string;
+  subtitle?: string;
+  options?: ReadonlyArray<TransportOption>;
+}
+const { kicker, title, subtitle, options = [] } = Astro.props;
+if (options.length === 0) return null;
+---
+
+<section class="transport" aria-labelledby="transport-h">
+  <div class="container">
+    <div class="transport__inner">
+      <header class="transport__header">
+        <p class="transport__kicker smallcaps">{kicker}</p>
+        <h2 id="transport-h" class="transport__title">{title}</h2>
+        {subtitle && <p class="transport__subtitle">{subtitle}</p>}
+      </header>
+      <div class="transport__grid">
+        {options.map((o, i) => (
+          <div class:list={['transport__card', i === 0 && 'transport__card--accent']}>
+            <p class="transport__mode smallcaps">{o.mode}</p>
+            {(o.duration || o.price) && (
+              <div class="transport__metrics">
+                {o.duration && <span class="transport__duration">{o.duration}</span>}
+                {o.duration && o.price && <span class="transport__sep" aria-hidden="true">·</span>}
+                {o.price && <span class="transport__price">{o.price}</span>}
+              </div>
+            )}
+            <p class="transport__detail">{o.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .transport {
+    padding: var(--space-2xl) 0;
+    background: color-mix(in srgb, var(--mc-cream) 75%, var(--mc-rust) 4%);
+    border-top: 1px solid color-mix(in srgb, var(--mc-rust) 30%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--mc-rust) 30%, transparent);
+  }
+  @media (prefers-color-scheme: dark) {
+    .transport {
+      background: color-mix(in srgb, var(--mc-charcoal) 85%, var(--mc-rust) 6%);
+    }
+  }
+  .transport__inner {
+    max-width: var(--wide-section);
+    margin: 0 auto;
+  }
+  .transport__header {
+    max-width: var(--content-column);
+    margin: 0 0 var(--space-xl);
+  }
+  .transport__kicker {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .transport__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-sm);
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 720px) {
+    .transport__title { font-size: var(--type-h2-mobile); }
+  }
+  .transport__subtitle {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .transport__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .transport__card {
+    background: var(--color-background);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    border-top: 1px solid var(--color-rule);
+  }
+  .transport__card--accent {
+    border-top: 3px solid var(--color-accent);
+  }
+  .transport__mode {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    letter-spacing: var(--tracking-smallcaps);
+    margin: 0;
+  }
+  .transport__metrics {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--font-body);
+  }
+  .transport__duration {
+    font-weight: 600;
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+  .transport__price {
+    font-weight: 500;
+    font-size: var(--type-h3);
+    color: var(--color-accent);
+    line-height: 1;
+  }
+  .transport__sep {
+    color: var(--color-rule);
+    font-size: var(--type-h3);
+  }
+  .transport__detail {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--type-small);
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+  }
+</style>

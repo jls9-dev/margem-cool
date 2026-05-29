@@ -140,11 +140,26 @@ const placeSchema = z.object({
     facts: z.array(placeFact).optional(),
     faqs: z.array(placeFaq).optional(),
     timeline: z.array(z.object({
-      year: z.string(),       // "1147", "1755", "c. 3000 BC"
-      label: z.string().optional(),  // optional kicker label
-      body: z.string(),       // markdown-formatted plain text
+      year: z.string(),
+      label: z.string().optional(),
+      body: z.string(),
     })).optional(),
-    body: z.string().optional(),   // markdown body, rendered with marked
+    transport_options: z.array(z.object({
+      mode: z.string(),
+      duration: z.string().optional(),
+      price: z.string().optional(),
+      detail: z.string(),
+    })).optional(),
+    eateries: z.array(z.object({
+      name: z.string(),
+      cuisine: z.string().optional(),
+      description: z.string(),
+      price_range: z.string().optional(),
+      location: z.string().optional(),
+      signature: z.string().optional(),
+      emphasis: z.boolean().optional(),
+    })).optional(),
+    body: z.string().optional(),
   }),
   en: z.object({
     short_description: z.string().max(280),
@@ -157,6 +172,21 @@ const placeSchema = z.object({
       year: z.string(),
       label: z.string().optional(),
       body: z.string(),
+    })).optional(),
+    transport_options: z.array(z.object({
+      mode: z.string(),
+      duration: z.string().optional(),
+      price: z.string().optional(),
+      detail: z.string(),
+    })).optional(),
+    eateries: z.array(z.object({
+      name: z.string(),
+      cuisine: z.string().optional(),
+      description: z.string(),
+      price_range: z.string().optional(),
+      location: z.string().optional(),
+      signature: z.string().optional(),
+      emphasis: z.boolean().optional(),
     })).optional(),
     body: z.string().optional(),
   }),

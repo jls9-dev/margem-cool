@@ -41,11 +41,15 @@ if (items.length === 0) return null;
 <style>
   .faq {
     padding: var(--space-2xl) 0;
-    background: color-mix(in srgb, var(--mc-cream) 60%, transparent);
+    background: color-mix(in srgb, var(--mc-cream) 72%, var(--mc-teal) 5%);
+    border-top: 1px solid color-mix(in srgb, var(--mc-teal) 25%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--mc-teal) 25%, transparent);
   }
   @media (prefers-color-scheme: dark) {
     .faq {
-      background: color-mix(in srgb, var(--mc-charcoal) 60%, transparent);
+      background: color-mix(in srgb, var(--mc-charcoal) 85%, var(--mc-teal) 8%);
+      border-top: 1px solid color-mix(in srgb, var(--mc-teal-dark) 35%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--mc-teal-dark) 35%, transparent);
     }
   }
   .faq__inner {

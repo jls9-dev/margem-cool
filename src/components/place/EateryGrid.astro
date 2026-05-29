@@ -1,0 +1,184 @@
+---
+/**
+ * EateryGrid — editorial card grid for restaurants, bars, cafés.
+ *
+ * Each card carries a name (display type), a cuisine label (small caps,
+ * accent), a description, optional location chip, optional price-range chip,
+ * and an optional signature dish + price line. The first card with
+ * emphasis:true gets a stronger top rule and a hairline rust accent.
+ *
+ * Sits on a deeper-cream background (cream + small charcoal) to give the
+ * Eat-and-drink section its own tone, distinct from prose and from the
+ * warm-cream transport block.
+ */
+interface Eatery {
+  name: string;
+  cuisine?: string;
+  description: string;
+  price_range?: string;
+  location?: string;
+  signature?: string;
+  emphasis?: boolean;
+}
+interface Props {
+  kicker: string;
+  title: string;
+  subtitle?: string;
+  items?: ReadonlyArray<Eatery>;
+}
+const { kicker, title, subtitle, items = [] } = Astro.props;
+if (items.length === 0) return null;
+---
+
+<section class="eateries" aria-labelledby="eateries-h">
+  <div class="container">
+    <div class="eateries__inner">
+      <header class="eateries__header">
+        <p class="eateries__kicker smallcaps">{kicker}</p>
+        <h2 id="eateries-h" class="eateries__title">{title}</h2>
+        {subtitle && <p class="eateries__subtitle">{subtitle}</p>}
+      </header>
+      <div class="eateries__grid">
+        {items.map((e) => (
+          <article class:list={['eatery', e.emphasis && 'eatery--emphasis']}>
+            <header class="eatery__head">
+              {e.cuisine && <p class="eatery__cuisine smallcaps">{e.cuisine}</p>}
+              <h3 class="eatery__name">{e.name}</h3>
+            </header>
+            <p class="eatery__description">{e.description}</p>
+            {(e.location || e.price_range) && (
+              <div class="eatery__chips">
+                {e.location && <span class="eatery__chip">{e.location}</span>}
+                {e.price_range && <span class="eatery__chip eatery__chip--price">{e.price_range}</span>}
+              </div>
+            )}
+            {e.signature && (
+              <p class="eatery__signature smallcaps">{e.signature}</p>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .eateries {
+    padding: var(--space-2xl) 0;
+    background: color-mix(in srgb, var(--mc-cream) 68%, var(--mc-charcoal) 6%);
+    border-top: 1px solid var(--color-rule);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  @media (prefers-color-scheme: dark) {
+    .eateries {
+      background: color-mix(in srgb, var(--mc-charcoal) 82%, var(--mc-cream) 4%);
+    }
+  }
+  .eateries__inner {
+    max-width: var(--wide-section);
+    margin: 0 auto;
+  }
+  .eateries__header {
+    max-width: var(--content-column);
+    margin: 0 0 var(--space-xl);
+  }
+  .eateries__kicker {
+    margin: 0 0 var(--space-sm);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .eateries__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-sm);
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 720px) {
+    .eateries__title { font-size: var(--type-h2-mobile); }
+  }
+  .eateries__subtitle {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--type-lead);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .eateries__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .eatery {
+    background: var(--color-background);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    border-top: 1px solid var(--color-rule);
+  }
+  .eatery--emphasis {
+    border-top: 3px solid var(--color-accent);
+  }
+
+  .eatery__head {
+    margin-bottom: 4px;
+  }
+  .eatery__cuisine {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--color-accent);
+    letter-spacing: var(--tracking-smallcaps);
+    margin: 0 0 4px;
+  }
+  .eatery__name {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h3);
+    line-height: var(--leading-headline);
+    margin: 0;
+    color: var(--color-text);
+  }
+  @media (max-width: 720px) {
+    .eatery__name { font-size: var(--type-h3-mobile); }
+  }
+  .eatery__description {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--type-small);
+    line-height: 1.55;
+    color: var(--color-text);
+  }
+  .eatery__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: var(--space-xs);
+  }
+  .eatery__chip {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    border: 1px solid var(--color-rule);
+    color: var(--color-text-secondary);
+    border-radius: 2px;
+  }
+  .eatery__chip--price {
+    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+    color: var(--color-accent);
+  }
+  .eatery__signature {
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    letter-spacing: var(--tracking-smallcaps);
+    padding-top: var(--space-xs);
+    border-top: 1px dashed var(--color-rule);
+    margin: 0;
+  }
+</style>
