@@ -1,0 +1,319 @@
+---
+/**
+ * MargemMap — interactive map of the Margem Sul's 9 concelhos.
+ *
+ * Built from real geoapi.pt geometry, simplified with Douglas-Peucker
+ * (~125 edges per concelho), projected with latitude-corrected
+ * equirectangular into an 800-wide viewBox. The Tejo, Atlantic and Sado
+ * are implied by the negative space; we add rust italic labels to name
+ * them. Each concelho is a link to its overview page, the current one is
+ * filled with the brand teal/rust, and any provided place centroid drops
+ * a rust dot on the geography.
+ *
+ * Sizes:
+ *   - 'mini' — hero slot use; outlines only, current concelho highlighted,
+ *     place dot present, no permanent labels for the other 8 (hover shows them)
+ *   - 'standard' — feature use on concelho pages; all labels visible,
+ *     stronger geographic context (Tejo, Atlantic, Sado, Lisboa anchor)
+ *
+ * Data: src/data/geo/concelhos.json (regenerate via scripts/build-concelhos-geo.mjs)
+ */
+import geoData from '../../data/geo/concelhos.json';
+
+interface Props {
+  size?: 'mini' | 'standard';
+  concelhoSlug?: string;     // The concelho to highlight (place's parent)
+  placeName?: string;        // For caption + dot accessibility
+  placeCentroid?: [number, number];  // [lng, lat] from frontmatter geo.centroid
+  lang?: 'pt' | 'en';        // For link URL prefix
+}
+
+const {
+  size = 'mini',
+  concelhoSlug,
+  placeName,
+  placeCentroid,
+  lang = 'pt',
+} = Astro.props;
+
+const [vbX, vbY, vbW, vbH] = geoData.viewBox;
+const { padding, kLat, scale } = geoData.project;
+const { bbox } = geoData;
+
+function project(lng: number, lat: number): [number, number] {
+  const x = padding + (lng - bbox.minLng) * kLat * scale;
+  const y = padding + (bbox.maxLat - lat) * scale;
+  return [x, y];
+}
+
+const placeXY = placeCentroid ? project(placeCentroid[0], placeCentroid[1]) : null;
+
+const baseHref = lang === 'en' ? '/en/places' : '/lugares';
+
+const isStandard = size === 'standard';
+
+// For mini: no Lisboa anchor or river labels (it's small)
+// For standard: full geographic context
+---
+
+<figure class={`margem-map margem-map--${size}`} aria-label={`Mapa da Margem Sul${placeName ? ` — ${placeName}` : ''}`}>
+  <svg
+    viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`}
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-hidden="false"
+  >
+    <defs>
+      <filter id="dot-glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="6" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+
+    {/* Tejo curve — brand-signature rust line through the negative space at top,
+        echoing the wordmark river. Drawn before concelhos so they sit on top. */}
+    <path
+      d={`M ${vbW * 0.02} ${vbH * 0.14}
+          C ${vbW * 0.18} ${vbH * 0.06}, ${vbW * 0.38} ${vbH * 0.20}, ${vbW * 0.55} ${vbH * 0.10}
+          S ${vbW * 0.88} ${vbH * 0.05}, ${vbW * 1.0} ${vbH * 0.18}`}
+      class="tejo-gesture"
+      fill="none"
+    />
+
+    {/* Geographic context labels (italic rust, set in the negative space) */}
+    {isStandard && (
+      <g class="map-water-labels">
+        <text x={vbW * 0.42} y={vbH * 0.08} class="water-label water-label--major">
+          Tejo
+        </text>
+        <text x={vbW * 0.06} y={vbH * 0.55} class="water-label" transform={`rotate(-90 ${vbW * 0.06} ${vbH * 0.55})`}>
+          Oceano Atlântico
+        </text>
+        <text x={vbW * 0.62} y={vbH * 0.95} class="water-label">
+          Estuário do Sado
+        </text>
+        <text x={vbW * 0.42} y={vbH * 0.03} class="anchor-label">
+          ↑ Lisboa
+        </text>
+      </g>
+    )}
+    {!isStandard && (
+      <text x={vbW * 0.5} y={vbH * 0.04} class="anchor-label" text-anchor="middle">
+        ↑ Lisboa · Tejo
+      </text>
+    )}
+
+    {/* Concelho polygons — each wrapped in a link */}
+    <g class="concelhos">
+      {geoData.concelhos.map((c) => {
+        const isCurrent = c.slug === concelhoSlug;
+        return (
+          <a href={`${baseHref}/${c.slug}/`} class={`concelho-link ${isCurrent ? 'is-current' : ''}`}>
+            <title>{c.name}{isStandard ? ` — ${c.area_km2.toFixed(0)} km² · ${c.population_2021?.toLocaleString('pt-PT')} habitantes` : ''}</title>
+            {c.paths.map((d) => (
+              <path
+                d={d}
+                class={`concelho ${isCurrent ? 'is-current' : ''}`}
+              />
+            ))}
+            {/* Label always visible for current; on hover for others */}
+            <text
+              x={c.labelXY[0]}
+              y={c.labelXY[1]}
+              class={`concelho-label ${isCurrent ? 'is-current' : ''} ${isStandard ? 'is-standard' : ''}`}
+              text-anchor="middle"
+              dominant-baseline="middle"
+            >
+              {c.name}
+            </text>
+          </a>
+        );
+      })}
+    </g>
+
+    {/* Place dot — drawn last so it sits on top */}
+    {placeXY && (
+      <g class="place-marker">
+        <circle
+          cx={placeXY[0]}
+          cy={placeXY[1]}
+          r="14"
+          class="place-marker__halo"
+        />
+        <circle
+          cx={placeXY[0]}
+          cy={placeXY[1]}
+          r="6"
+          class="place-marker__dot"
+        />
+        <circle
+          cx={placeXY[0]}
+          cy={placeXY[1]}
+          r="2.5"
+          class="place-marker__core"
+        />
+      </g>
+    )}
+  </svg>
+
+  {placeName && (
+    <figcaption class="margem-map__caption smallcaps">
+      {placeName} · Margem Sul
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .margem-map {
+    margin: 0;
+    padding: 0;
+  }
+  .margem-map--mini {
+    max-width: 360px;
+  }
+  .margem-map--standard {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .margem-map svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ──────── Concelho fills ──────── */
+  .concelho {
+    fill: var(--color-text);
+    fill-opacity: 0.05;
+    stroke: var(--color-text);
+    stroke-opacity: 0.35;
+    stroke-width: 0.9;
+    stroke-linejoin: round;
+    transition: fill-opacity 200ms ease, stroke-opacity 200ms ease;
+  }
+  .concelho-link {
+    cursor: pointer;
+    outline: none;
+  }
+  .concelho-link:hover .concelho,
+  .concelho-link:focus-visible .concelho {
+    fill: var(--color-accent);
+    fill-opacity: 0.14;
+    stroke-opacity: 0.7;
+  }
+  .concelho.is-current {
+    fill: var(--color-accent);
+    fill-opacity: 0.28;
+    stroke: var(--color-accent);
+    stroke-opacity: 0.8;
+    stroke-width: 1.4;
+  }
+  .concelho-link.is-current:hover .concelho {
+    fill-opacity: 0.36;
+  }
+
+  /* ──────── Concelho labels ──────── */
+  .concelho-label {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    fill: var(--color-text);
+    fill-opacity: 0;
+    pointer-events: none;
+    transition: fill-opacity 200ms ease;
+    paint-order: stroke;
+    stroke: var(--color-background);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+  }
+  .concelho-link:hover .concelho-label,
+  .concelho-link:focus-visible .concelho-label {
+    fill-opacity: 0.85;
+  }
+  .concelho-label.is-current {
+    fill: var(--color-accent);
+    fill-opacity: 1;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .concelho-label.is-standard {
+    fill-opacity: 0.7;
+    font-size: 11px;
+  }
+  .concelho-label.is-standard.is-current {
+    fill-opacity: 1;
+    font-size: 14px;
+  }
+
+  /* ──────── Tejo brand gesture ──────── */
+  .tejo-gesture {
+    stroke: var(--color-accent);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-opacity: 0.55;
+  }
+  .margem-map--standard .tejo-gesture {
+    stroke-width: 2.2;
+    stroke-opacity: 0.65;
+  }
+
+  /* ──────── Water labels ──────── */
+  .water-label {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    fill: var(--color-accent);
+    fill-opacity: 0.55;
+    pointer-events: none;
+  }
+  .water-label--major {
+    font-size: 28px;
+    fill-opacity: 0.65;
+  }
+  .anchor-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    fill: var(--color-text);
+    fill-opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* ──────── Place marker ──────── */
+  .place-marker__halo {
+    fill: var(--color-accent);
+    fill-opacity: 0.12;
+    animation: place-pulse 2.8s ease-in-out infinite;
+  }
+  .place-marker__dot {
+    fill: var(--color-accent);
+    stroke: var(--color-background);
+    stroke-width: 2;
+  }
+  .place-marker__core {
+    fill: var(--color-background);
+  }
+  @keyframes place-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.55; transform-origin: center; transform-box: fill-box; }
+    50% { transform: scale(1.35); opacity: 0.18; transform-origin: center; transform-box: fill-box; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .place-marker__halo { animation: none; }
+  }
+
+  /* ──────── Caption ──────── */
+  .margem-map__caption {
+    display: block;
+    margin: var(--space-xs) 0 0;
+    font-family: var(--font-display);
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    letter-spacing: var(--tracking-smallcaps);
+  }
+</style>

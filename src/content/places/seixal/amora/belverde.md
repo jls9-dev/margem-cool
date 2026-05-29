@@ -4,6 +4,9 @@ name_pt: "Belverde"
 name_en: "Belverde"
 parent_slug: "seixal/amora"
 
+geo:
+  centroid: [-9.1083, 38.6131]
+
 featured_links:
   - href: "/lugares/seixal/amora/"
     name_pt: "Amora"

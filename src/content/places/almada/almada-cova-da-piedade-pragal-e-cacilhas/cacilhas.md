@@ -4,6 +4,9 @@ name_pt: "Cacilhas"
 name_en: "Cacilhas"
 parent_slug: "almada/almada-cova-da-piedade-pragal-e-cacilhas"
 
+geo:
+  centroid: [-9.1499, 38.6873]
+
 featured_links:
   - href: "/lugares/almada/"
     name_pt: "Almada"

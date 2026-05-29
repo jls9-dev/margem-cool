@@ -22,7 +22,7 @@ import Timeline from '../components/place/Timeline.astro';
 import RiverDivider from '../components/place/RiverDivider.astro';
 import TransportOptions from '../components/place/TransportOptions.astro';
 import EateryGrid from '../components/place/EateryGrid.astro';
-import MiniMap from '../components/place/MiniMap.astro';
+import MargemMap from '../components/place/MargemMap.astro';
 
 import { buildPlaceJsonLd } from '../utils/schema-org';
 import { SITE_URL, type Lang } from '../utils/i18n';
@@ -238,11 +238,13 @@ function formatDate(d: Date, l: Lang): string {
         ? place.slug
         : (ancestors.find(a => a.data.level === 'concelho')?.slug ?? '');
       return concelhoSlug ? (
-        <MiniMap
+        <MargemMap
           slot="map"
+          size="mini"
           concelhoSlug={concelhoSlug}
-          placeSlug={place.slug}
           placeName={displayName}
+          placeCentroid={place.data.geo?.centroid}
+          lang={lang}
         />
       ) : null;
     })()}
