@@ -9,6 +9,7 @@ Canonical documents describing the project's brand, voice, architecture, and pat
 | [brand.md](brand.md) | canonical | Brand identity, voice, vocabulary, visual system, banned terms, editorial principles | Drafting any user-facing copy, building any UI |
 | [architecture.md](architecture.md) | canonical | Entity model, URL structure, content schemas, validation rules, Schema.org mapping | Touching content collections, routes, the data model |
 | [page-patterns.md](page-patterns.md) | canonical | Page structure patterns derived from LP and SBRE — hero, facts panel, sections, FAQ, JSON-LD `@graph` | Building or extending a page template |
+| [colour-policy.md](colour-policy.md) | canonical | Background-tone rules — what each tone means, when to use it, what it rules out | Designing any new component or section; deciding on backgrounds |
 
 ## Stubs (to be written)
 

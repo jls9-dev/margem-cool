@@ -299,13 +299,15 @@ function formatDate(d: Date, l: Lang): string {
 <style>
   .place-timeline-wrap {
     padding: var(--space-2xl) 0;
-    background: color-mix(in srgb, var(--mc-cream) 78%, var(--mc-charcoal) 5%);
-    border-top: 1px solid var(--color-rule);
-    border-bottom: 1px solid var(--color-rule);
+    background: color-mix(in srgb, var(--mc-cream) 70%, var(--mc-cool-grey) 10%);
+    border-top: 1px solid color-mix(in srgb, var(--mc-cool-grey) 35%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--mc-cool-grey) 35%, transparent);
   }
   @media (prefers-color-scheme: dark) {
     .place-timeline-wrap {
-      background: color-mix(in srgb, var(--mc-charcoal) 88%, var(--mc-cream) 4%);
+      background: color-mix(in srgb, var(--mc-charcoal) 80%, var(--mc-cool-grey-dark) 15%);
+      border-top: 1px solid color-mix(in srgb, var(--mc-cool-grey-dark) 40%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--mc-cool-grey-dark) 40%, transparent);
     }
   }
   .place-timeline-wrap__inner {
