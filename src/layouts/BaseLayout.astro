@@ -418,6 +418,12 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
         align-items: center;
         gap: var(--space-sm);
       }
+      @media (max-width: 720px) {
+        .site-footer__brand :global(svg) {
+          width: 130px;
+          height: auto;
+        }
+      }
       .site-footer__tagline {
         margin: 0;
         font-size: var(--type-masthead-meta);
