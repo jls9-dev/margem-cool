@@ -46,11 +46,16 @@ const CONCELHOS = [
   { file: 'Alcochete.json', slug: 'alcochete' },
 ];
 
-// Concelhos rendered as faint context outline on the north side of the Tejo
-// so a viewer can place the Margem Sul against Lisbon at a glance.
+// Concelhos rendered as a faint context outline on the north side of the
+// Tejo so a viewer can place the Margem Sul against Lisbon at a glance.
+// These do NOT influence the bbox — they project at the Margem-Sul scale,
+// and parts outside the viewBox clip naturally so the coast appears to
+// continue west (toward Cascais) and east (toward Loures) past the frame.
 const CONTEXT_NORTH = [
-  { file: 'Lisboa.json',  slug: 'lisboa' },
+  { file: 'Cascais.json', slug: 'cascais' },
   { file: 'Oeiras.json',  slug: 'oeiras' },
+  { file: 'Lisboa.json',  slug: 'lisboa' },
+  { file: 'Loures.json',  slug: 'loures' },
 ];
 
 /**
@@ -247,7 +252,9 @@ async function main() {
     });
   }
 
-  // 2. Load the north-coast context concelhos and expand bbox so they fit.
+  // 2. Load the north-coast context concelhos. Do NOT update bbox — we want
+  // the Margem Sul to take the full viewBox and the north-coast shapes to
+  // clip naturally where they extend past the frame.
   const contextConcelhos = [];
   for (const { file, slug } of CONTEXT_NORTH) {
     const raw = JSON.parse(await readFile(join(RAW_DIR, file), 'utf8'));
@@ -255,15 +262,7 @@ async function main() {
     const ringsWithArea = allRings.map((ring) => ({ ring, area: ringArea(ring) }));
     const maxArea = Math.max(...ringsWithArea.map((r) => r.area));
     const keptRings = ringsWithArea.filter((r) => r.area >= maxArea * 0.005).map((r) => r.ring);
-    const simplified = keptRings.map((ring) => {
-      for (const [lng, lat] of ring) {
-        if (lng < bbox.minLng) bbox.minLng = lng;
-        if (lng > bbox.maxLng) bbox.maxLng = lng;
-        if (lat < bbox.minLat) bbox.minLat = lat;
-        if (lat > bbox.maxLat) bbox.maxLat = lat;
-      }
-      return rdp(ring, EPSILON_DEG);
-    });
+    const simplified = keptRings.map((ring) => rdp(ring, EPSILON_DEG));
     contextConcelhos.push({ slug, name: raw.nome, rings: simplified });
   }
 
