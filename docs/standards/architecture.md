@@ -1,5 +1,7 @@
 # Margem Cool — Architecture
 
+> **Status**: canonical · **Last reviewed**: 2026-05-29 · **Type**: standard
+
 This document codifies the technical and structural decisions that the codebase implements. When in doubt about a data-model or URL-structure question, defer to this document over local instinct. When this document is wrong or incomplete, update it and commit alongside the code change.
 
 The companion document is `brand.md`, which covers the editorial, visual, and linguistic constraints. Architecture decisions should be consistent with the brand principles; this document is the technical translation of those principles into structure.

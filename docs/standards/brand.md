@@ -1,5 +1,7 @@
 # Margem Cool — Brand Documentation
 
+> **Status**: canonical · **Last reviewed**: 2026-05-29 · **Type**: standard
+
 This document is the canonical reference for the Margem Cool brand. All visual, editorial, and linguistic decisions should be checked against this document. When in doubt, defer to the principles here over local instinct.
 
 This documentation is kept in English by convention. The brand operates bilingually but the internal documentation is in English so future contributors and developers — who may not all speak Portuguese — can apply the brand correctly.

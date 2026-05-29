@@ -8,9 +8,9 @@ This repository contains everything: brand documentation, architectural decision
 
 Read these documents in order before doing anything else:
 
-1. `docs/brand.md` — canonical brand reference. The constraints all visual and editorial work must respect.
-2. `docs/architecture.md` — entity model, taxonomy, URL structure, content management. The constraints all code must respect.
-3. `docs/claude-code-handover.md` — the working session handover. Where this project is, what's next, what to build.
+1. `docs/standards/brand.md` — canonical brand reference. The constraints all visual and editorial work must respect.
+2. `docs/standards/architecture.md` — entity model, taxonomy, URL structure, content management. The constraints all code must respect.
+3. `docs/history/claude-code-handover.md` — the working session handover. Where this project is, what's next, what to build.
 
 After reading these, you should understand:
 - What Margem Cool is (a publication, not a business)
@@ -56,10 +56,11 @@ It is a useful local information site for the Margem Sul, built to grow into muc
 
 ```
 margem-cool/
-├── docs/                        # Brand, architecture, and handover docs
-│   ├── brand.md                 # Canonical brand reference
-│   ├── architecture.md          # Entity model, taxonomy, URL structure
-│   └── claude-code-handover.md  # Working session handover
+├── docs/
+│   ├── README.md                # Map of all documentation
+│   ├── standards/               # What's true about the project (brand, architecture, patterns)
+│   ├── processes/               # How we do things (SEO routine, workflows, automation)
+│   └── history/                 # One-off records (handovers, migration notes)
 ├── src/
 │   ├── content/                 # All editorial content as Markdown
 │   │   ├── articles/            # Editorial pieces by language and pillar

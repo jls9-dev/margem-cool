@@ -1,5 +1,7 @@
 # SEO routine for Margem Cool
 
+> **Status**: canonical · **Last reviewed**: 2026-05-29 · **Type**: process
+
 The canonical per-page SEO process. Every non-utility page is built through these phases. The CLI tools in `scripts/seo/` automate the API-mediated parts.
 
 For utility pages (Contacto, Sobre, Parcerias, Colofão, Privacy) skip Phases 1, 2 and 6. For pillar / place / article pages run the full routine.
@@ -37,7 +39,7 @@ From each brief: primary keyword + 3-5 supporting keywords per language. H1/H2/H
 
 ### 3 — Draft (English first)
 
-Re-read `docs/brand.md` §4 before writing. Voice rules, *tu* register, banned vocabulary, sentence-level grammar. Draft English copy hitting the keyword frequencies, the H1/H2 skeleton, the gap. Generate meta title (≤60 chars), meta description (≤160 chars), JSON-LD (BreadcrumbList + page-type schema).
+Re-read `docs/standards/brand.md` §4 before writing. Voice rules, *tu* register, banned vocabulary, sentence-level grammar. Draft English copy hitting the keyword frequencies, the H1/H2 skeleton, the gap. Generate meta title (≤60 chars), meta description (≤160 chars), JSON-LD (BreadcrumbList + page-type schema).
 
 ### 4 — Translate to Portuguese
 

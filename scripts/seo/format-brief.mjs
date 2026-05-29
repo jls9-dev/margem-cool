@@ -1,21 +1,20 @@
-// Format a NeuronWriter query response into the 4-block brief James uses,
-// plus People-Also-Ask, topic-importance matrix and competitor benchmarks.
+// Brief formatter v2 — produces a drafting-ready document, not a research dump.
+// Spec: docs/processes/brief-format.md
 //
-// Actual NW response shape (confirmed against cacilhas-pt query 2026-05-28):
-//   terms.content_basic[]:    { t, usage_pc, sugg_usage: [min, max] }
-//   terms.content_extended[]: same shape, broader keyword set
-//   terms.h1[], terms.h2[]:   { t, usage_pc } — keyword terms used in competitor headings
-//   competitors[].headers:    [[level, text], …] — actual heading texts in order
-//   competitors[]:            { rank, url, title, content_score, readability, word_count, ... }
-//   ideas.people_also_ask[]:  { q }
-//   ideas.suggest_questions[]: { q }
-//   ideas.topic_matrix:       { "question": { importance } }
-//   metrics.word_count:       { median, target }
+// Surfaces signal first (user intent bucketed by section), filters noise
+// automatically (aggregator domains, one-off terms, heading-text dumps),
+// drops misleading framings ("target word count"). The reader (or automated
+// drafter) should be able to write the page directly from this brief without
+// going back to the raw NW JSON.
+
+import { bucketIntent, SLOT_ORDER } from './intent-buckets.mjs';
+import { classifyCompetitor, isNoiseTerm } from './noise-filter.mjs';
 
 export function formatBrief({ keyword, language, engine, queryId, queryUrl, data }) {
   const today = new Date().toISOString().slice(0, 10);
   const lines = [];
 
+  // --- Header ---
   lines.push(`# NeuronWriter brief — "${keyword}" (${language})`);
   lines.push('');
   lines.push(`- **Generated**: ${today}`);
@@ -23,36 +22,64 @@ export function formatBrief({ keyword, language, engine, queryId, queryUrl, data
   lines.push(`- **Language**: ${language}`);
   lines.push(`- **Query ID**: ${queryId}`);
   if (queryUrl) lines.push(`- **NW URL**: ${queryUrl}`);
-  if (data.metrics?.word_count?.target) {
-    lines.push(`- **Target word count**: ${data.metrics.word_count.target} (median across competitors)`);
+  if (data.metrics?.word_count?.median) {
+    lines.push(`- **Median competitor word count**: ${data.metrics.word_count.median} (treat as floor, not target)`);
   }
   lines.push('');
-
-  // --- Block 1 — Basic terms ---
-  const basic = data.terms?.content_basic ?? [];
-  lines.push('## Block 1 — Basic terms (must appear)');
+  lines.push(`> This brief is one input, not gospel. Length follows subject demand. Aim to be by far the most useful resource on the subject — better than anything that exists. Before drafting copy, re-read [\`docs/standards/brand.md\`](../standards/brand.md) §4.`);
   lines.push('');
-  lines.push('Core topical vocabulary. Each term has a suggested usage range; hit it.');
+
+  // --- 1. User intent (page skeleton) ---
+  const intents = collectIntents(data);
+  lines.push('## 1. User intent — what users actually want to know');
+  lines.push('');
+  if (intents.length === 0) {
+    lines.push('_(no intent data returned)_');
+  } else {
+    lines.push('| Importance | Question / intent | Section slot |');
+    lines.push('|------------|-------------------|--------------|');
+    for (const it of intents) {
+      const imp = it.importance != null ? `${it.importance}/10` : '—';
+      lines.push(`| ${imp} | ${it.text} | ${it.slot} |`);
+    }
+    lines.push('');
+    // Grouped view by slot — easier to use as outlining tool
+    lines.push('### Intents grouped by section');
+    lines.push('');
+    const bySlot = groupBySlot(intents);
+    for (const slot of SLOT_ORDER) {
+      const items = bySlot[slot];
+      if (!items || items.length === 0) continue;
+      lines.push(`**${slot}**`);
+      for (const it of items) {
+        const imp = it.importance != null ? ` _(${it.importance}/10)_` : '';
+        lines.push(`- ${it.text}${imp}`);
+      }
+      lines.push('');
+    }
+  }
+
+  // --- 2. Topical vocabulary ---
+  const basic = (data.terms?.content_basic ?? []).filter(t => !isNoiseTerm(t.t));
+  const extended = filterExtendedTerms(data.terms?.content_extended ?? []);
+  lines.push('## 2. Topical vocabulary');
+  lines.push('');
+  lines.push('### Must cover — basic terms');
   lines.push('');
   if (basic.length === 0) {
     lines.push('_(no basic terms returned)_');
   } else {
     for (const t of basic) {
       const range = t.sugg_usage ? `${t.sugg_usage[0]}–${t.sugg_usage[1]}×` : '';
-      const coverage = t.usage_pc != null ? ` _(in ${t.usage_pc}% of top results)_` : '';
+      const coverage = t.usage_pc != null ? ` _(${t.usage_pc}% of top results)_` : '';
       lines.push(`- **${t.t}**${range ? ` — ${range}` : ''}${coverage}`);
     }
   }
   lines.push('');
-
-  // --- Block 2 — Extended key terms ---
-  const extended = data.terms?.content_extended ?? [];
-  lines.push('## Block 2 — Extended key terms (broader vocabulary)');
-  lines.push('');
-  lines.push('Wider topical set. Cover what fits naturally — over-stuffing penalises the score.');
+  lines.push('### Worth covering — extended terms (filtered)');
   lines.push('');
   if (extended.length === 0) {
-    lines.push('_(no extended terms returned)_');
+    lines.push('_(no extended terms passed the filter)_');
   } else {
     for (const t of extended) {
       const range = t.sugg_usage ? `${t.sugg_usage[0]}–${t.sugg_usage[1]}×` : '';
@@ -62,167 +89,163 @@ export function formatBrief({ keyword, language, engine, queryId, queryUrl, data
   }
   lines.push('');
 
-  // --- Block 3 — H1 headings (actual texts from competitors) ---
-  const h1Texts = collectHeadingTexts(data, 'h1');
-  lines.push('## Block 3 — H1 headings (top competitors, actual texts)');
+  // --- 3. Suitable competitors ---
+  const classified = (data.competitors ?? []).map(c => ({
+    ...c,
+    class: classifyCompetitor(c),
+  }));
+  const useful = classified.filter(c => c.class === 'useful');
+  const reference = classified.filter(c => c.class === 'reference');
+  const noise = classified.filter(c => c.class === 'noise');
+
+  lines.push('## 3. Competitors worth reading');
   lines.push('');
-  lines.push('Pick one H1 that fits brand voice and covers the primary keyword + 1–2 supporting terms.');
-  lines.push('');
-  if (h1Texts.length === 0) {
-    lines.push('_(no H1 texts in competitor data)_');
+  if (useful.length === 0 && reference.length === 0) {
+    lines.push('_(no suitable competitors found in the SERP — check the raw block below)_');
   } else {
-    for (const h of h1Texts) lines.push(`- ${h}`);
-  }
-  lines.push('');
-
-  // --- Block 4 — H2/H3 headings (actual texts from competitors) ---
-  const h2Texts = collectHeadingTexts(data, 'h2');
-  const h3Texts = collectHeadingTexts(data, 'h3');
-  lines.push('## Block 4 — H2 / H3 headings (top competitors, actual texts)');
-  lines.push('');
-  lines.push('Use as the skeleton for section structure. Adapt for brand voice — don\'t copy verbatim.');
-  lines.push('');
-  if (h2Texts.length === 0 && h3Texts.length === 0) {
-    lines.push('_(no H2/H3 texts in competitor data)_');
-  } else {
-    if (h2Texts.length > 0) {
-      lines.push('### H2 (most common across competitors)');
-      lines.push('');
-      for (const h of h2Texts) lines.push(`- ${h}`);
-      lines.push('');
-    }
-    if (h3Texts.length > 0) {
-      lines.push('### H3');
-      lines.push('');
-      for (const h of h3Texts) lines.push(`- ${h}`);
-    }
-  }
-  lines.push('');
-
-  // --- Heading-keyword targets (helps when writing the skeleton) ---
-  if (data.terms?.h1?.length || data.terms?.h2?.length) {
-    lines.push('## Heading keyword targets');
-    lines.push('');
-    lines.push('Words competitors put in their H1/H2. Useful when titling sections.');
-    lines.push('');
-    if (data.terms.h1?.length > 0) {
-      lines.push('### In H1 across competitors');
-      lines.push('');
-      for (const t of data.terms.h1) {
-        lines.push(`- **${t.t}** _(${t.usage_pc}% of competitors)_`);
-      }
-      lines.push('');
-    }
-    if (data.terms.h2?.length > 0) {
-      lines.push('### In H2 across competitors');
-      lines.push('');
-      for (const t of data.terms.h2) {
-        lines.push(`- **${t.t}** _(${t.usage_pc}%)_`);
-      }
-      lines.push('');
-    }
-  }
-
-  // --- People Also Ask + Suggest questions ---
-  const paa = data.ideas?.people_also_ask ?? [];
-  const sugg = data.ideas?.suggest_questions ?? [];
-  if (paa.length > 0 || sugg.length > 0) {
-    lines.push('## User questions — answer these in the page');
-    lines.push('');
-    if (paa.length > 0) {
-      lines.push('### People Also Ask (from Google SERP)');
-      lines.push('');
-      for (const q of paa) lines.push(`- ${q.q}`);
-      lines.push('');
-    }
-    if (sugg.length > 0) {
-      lines.push('### Search suggestions');
-      lines.push('');
-      for (const q of sugg) lines.push(`- ${q.q}`);
-      lines.push('');
-    }
-  }
-
-  // --- Topic matrix (importance-ranked subjects) ---
-  if (data.ideas?.topic_matrix && Object.keys(data.ideas.topic_matrix).length > 0) {
-    const entries = Object.entries(data.ideas.topic_matrix)
-      .map(([topic, meta]) => ({ topic, importance: meta?.importance ?? 0 }))
-      .sort((a, b) => b.importance - a.importance);
-    lines.push('## Topic importance (NW ranking)');
-    lines.push('');
-    lines.push('Topics competitors converge on, ranked by importance. The top items must be covered.');
-    lines.push('');
-    for (const e of entries) {
-      lines.push(`- **${e.importance}/10** — ${e.topic}`);
-    }
-    lines.push('');
-  }
-
-  // --- Title & description term hints ---
-  if (data.terms?.title?.length || data.terms?.desc?.length) {
-    lines.push('## Meta tag term hints');
-    lines.push('');
-    if (data.terms.title?.length > 0) {
-      lines.push('### Words to consider in the page <title>');
-      lines.push('');
-      for (const t of data.terms.title) {
-        lines.push(`- **${t.t}** _(${t.usage_pc}%)_`);
-      }
-      lines.push('');
-    }
-    if (data.terms.desc?.length > 0) {
-      lines.push('### Words to consider in the meta description');
-      lines.push('');
-      for (const t of data.terms.desc) {
-        lines.push(`- **${t.t}** _(${t.usage_pc}%)_`);
-      }
-      lines.push('');
-    }
-  }
-
-  // --- Competitor benchmarks ---
-  const competitors = data.competitors ?? [];
-  if (competitors.length > 0) {
-    lines.push('## Top competitors');
-    lines.push('');
-    lines.push('| Rank | Word count | Score | URL |');
-    lines.push('|------|------------|-------|-----|');
-    for (const c of competitors.slice(0, 15)) {
-      const wc = c.word_count ?? '?';
-      const score = c.content_score ?? '?';
-      const url = c.url ?? '';
+    lines.push('| Source | Words | NW score | URL |');
+    lines.push('|--------|-------|----------|-----|');
+    for (const c of useful.slice(0, 10)) {
       const title = (c.title ?? '').replace(/\|/g, '\\|').slice(0, 80);
-      lines.push(`| ${c.rank ?? '?'} | ${wc} | ${score} | [${title}](${url}) |`);
+      lines.push(`| ${title || '(no title)'} | ${c.word_count ?? '?'} | ${c.content_score ?? '?'} | ${c.url} |`);
     }
+    if (reference.length > 0) {
+      lines.push('');
+      lines.push('**Reference (facts, not voice):**');
+      lines.push('');
+      for (const c of reference.slice(0, 5)) {
+        const title = (c.title ?? '').replace(/\|/g, '\\|').slice(0, 80);
+        lines.push(`- ${title || '(no title)'} — ${c.url}`);
+      }
+    }
+  }
+  lines.push('');
+
+  if (noise.length > 0) {
+    lines.push('<details>');
+    lines.push('<summary>Raw SERP, classified as noise (' + noise.length + ' — not for benchmarking)</summary>');
+    lines.push('');
+    for (const c of noise) {
+      const title = (c.title ?? '').replace(/\|/g, '\\|').slice(0, 80);
+      lines.push(`- ${title || '(no title)'} — ${c.url}`);
+    }
+    lines.push('');
+    lines.push('</details>');
     lines.push('');
   }
 
-  // --- Notes ---
-  lines.push('## Notes for the writer');
+  // --- 4. Meta tag word suggestions ---
+  const titleTerms = (data.terms?.title ?? []).filter(t => !isNoiseTerm(t.t));
+  const descTerms = (data.terms?.desc ?? []).filter(t => !isNoiseTerm(t.t));
+  if (titleTerms.length > 0 || descTerms.length > 0) {
+    lines.push('## 4. Meta tag word suggestions');
+    lines.push('');
+    if (titleTerms.length > 0) {
+      lines.push('### Page `<title>`');
+      lines.push('');
+      for (const t of titleTerms.slice(0, 12)) {
+        lines.push(`- **${t.t}** _(${t.usage_pc}%)_`);
+      }
+      lines.push('');
+    }
+    if (descTerms.length > 0) {
+      lines.push('### Meta description');
+      lines.push('');
+      for (const t of descTerms.slice(0, 12)) {
+        lines.push(`- **${t.t}** _(${t.usage_pc}%)_`);
+      }
+      lines.push('');
+    }
+  }
+
+  // --- 5. What this brief excluded ---
+  lines.push('## 5. What this brief excluded');
   lines.push('');
-  lines.push('- Cross-check key terms against Ubersuggest for real volume. Drop weird ones. Add ones NW missed.');
-  lines.push('- NeuronWriter is one input, not gospel (`feedback_neuronwriter_not_gospel.md`).');
-  lines.push('- Before drafting copy: re-read `docs/brand.md` §4 (voice principles, banned vocabulary).');
-  lines.push('- After writing, score the page back via: `npm run seo -- score ' + queryId + ' --html <built file>`');
+  lines.push('Excluded as noise per [`docs/processes/brief-format.md`](brief-format.md):');
+  lines.push('');
+  lines.push(`- Competitor H1/H2/H3 text dumps (90% noise; signal carried by sections 1 and 3)`);
+  lines.push(`- Word-count median treated as a *target* (shown above as a *floor* only)`);
+  lines.push(`- One-off terms with no semantic value (single chars, raw numbers, code leaks)`);
+  if (noise.length > 0) {
+    lines.push(`- ${noise.length} raw SERP entries from aggregator / timetable / social-media / our-own-properties (see collapsible block above)`);
+  }
+  lines.push('');
+  lines.push('If you need any of this, see `seo/briefs/*.raw.json`.');
+  lines.push('');
+
+  // --- 6. Writer notes ---
+  lines.push('## 6. Writer notes');
+  lines.push('');
+  lines.push(`- This brief is one input, not gospel — see \`feedback_neuronwriter_use_judiciously.md\` in the global memory.`);
+  lines.push(`- Length follows subject demand. The median is a floor, never a target.`);
+  lines.push(`- Before drafting: re-read [\`docs/standards/brand.md\`](../standards/brand.md) §4 (voice, *tu* register, banned vocabulary).`);
+  lines.push(`- After writing, score the page back via: \`npm run seo -- score ${queryId} --html <built file>\``);
   lines.push('');
 
   return lines.join('\n');
 }
 
-function collectHeadingTexts(data, level) {
-  const seen = new Map(); // text → count across competitors
-  const competitors = data.competitors ?? [];
-  for (const c of competitors) {
-    const headers = c.headers ?? [];
-    for (const h of headers) {
-      if (Array.isArray(h) && h[0] === level && h[1]) {
-        const text = String(h[1]).trim();
-        if (text) seen.set(text, (seen.get(text) ?? 0) + 1);
-      }
+function collectIntents(data) {
+  const items = [];
+
+  // From topic_matrix — has importance scores
+  if (data.ideas?.topic_matrix && typeof data.ideas.topic_matrix === 'object') {
+    for (const [text, meta] of Object.entries(data.ideas.topic_matrix)) {
+      items.push({
+        text,
+        importance: meta?.importance ?? null,
+        slot: bucketIntent(text),
+      });
     }
   }
-  return [...seen.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .map(([text, count]) => count > 1 ? `${text} _(seen in ${count} competitors)_` : text)
-    .slice(0, 30);
+
+  // From PAA — no importance score, default to 7 if not already present
+  const seen = new Set(items.map(i => i.text));
+  for (const paa of data.ideas?.people_also_ask ?? []) {
+    if (!paa.q || seen.has(paa.q)) continue;
+    items.push({
+      text: paa.q,
+      importance: null,
+      slot: bucketIntent(paa.q),
+    });
+  }
+
+  // From suggest_questions — same treatment as PAA
+  for (const sq of data.ideas?.suggest_questions ?? []) {
+    if (!sq.q || seen.has(sq.q)) continue;
+    items.push({
+      text: sq.q,
+      importance: null,
+      slot: bucketIntent(sq.q),
+    });
+  }
+
+  // Sort by importance desc (nulls last), then by slot order
+  items.sort((a, b) => {
+    if (a.importance != null && b.importance != null) return b.importance - a.importance;
+    if (a.importance != null) return -1;
+    if (b.importance != null) return 1;
+    return SLOT_ORDER.indexOf(a.slot) - SLOT_ORDER.indexOf(b.slot);
+  });
+
+  return items;
+}
+
+function groupBySlot(intents) {
+  const out = {};
+  for (const it of intents) {
+    if (!out[it.slot]) out[it.slot] = [];
+    out[it.slot].push(it);
+  }
+  return out;
+}
+
+function filterExtendedTerms(extended) {
+  if (!Array.isArray(extended)) return [];
+  return extended
+    .filter(t => !isNoiseTerm(t.t))
+    // Keep top 20 by usage_pc, then any with usage_pc >= 22
+    .sort((a, b) => (b.usage_pc ?? 0) - (a.usage_pc ?? 0))
+    .filter((t, i) => i < 20 || (t.usage_pc ?? 0) >= 22)
+    .slice(0, 40);
 }

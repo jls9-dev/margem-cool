@@ -1,6 +1,8 @@
 # Claude Code Handover — Margem Cool
 
-This document is for a Claude Code session in VSCodium picking up Margem Cool to build it. Read this first. It tells you where the project is, what the next concrete tasks are, and how to operate within the project's constraints.
+> **Status**: archived · **Last reviewed**: 2026-05-29 · **Type**: history (one-off record from Phase 0 handover; not actively maintained)
+
+This document was the original handover from the design conversation to the Claude Code session that built Phase 0. Phase 0 is complete; this document is kept for historical context. For current canonical references see `docs/standards/` and `docs/processes/`.
 
 The two companion documents (`brand.md` and `architecture.md`) are the canonical references for editorial and technical decisions respectively. This document is operational — it tells you what to do, in what order.
 
@@ -36,8 +38,8 @@ The conversational work that produced this state ran for many hours across multi
 Before writing any code:
 
 1. Read `README.md` (top-level orientation)
-2. Read `docs/brand.md` (editorial and visual constraints)
-3. Read `docs/architecture.md` (technical structure)
+2. Read `docs/standards/brand.md` (editorial and visual constraints)
+3. Read `docs/standards/architecture.md` (technical structure)
 4. Read this document in full
 
 These are not optional. The decisions in them are committed. Building without reading them will produce work that has to be redone.
@@ -80,7 +82,7 @@ The empty site should be visible at localhost. This confirms the environment.
 
 ### Step 4 — Implement the Zod schemas
 
-This is the first real code task. Open `docs/architecture.md` and translate the five entity schemas (Place, Establishment, Service, Beach/Outdoor, Event) plus the Article schema into `src/content/config.ts`.
+This is the first real code task. Open `docs/standards/architecture.md` and translate the five entity schemas (Place, Establishment, Service, Beach/Outdoor, Event) plus the Article schema into `src/content/config.ts`.
 
 The schemas in `architecture.md` are normative. Implement them as written. The exception: where the architecture document says "TBD" or marks a decision as open, use the recommendation in section 9 of `architecture.md` for the default and note in code comments that the decision can be revisited.
 

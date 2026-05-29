@@ -1,5 +1,7 @@
 # Page patterns — derived from LP and SBRE
 
+> **Status**: canonical · **Last reviewed**: 2026-05-29 · **Type**: standard
+
 The Lisbon Property and South Bank Real Estate guides are the proven-working benchmark for what a well-structured, SEO-optimised, useful guide page looks like in James's ecosystem. This document captures the patterns those guides converge on, ready to adapt for Margem Cool place pages and pillar landings.
 
 Source guides studied: `southbank-pt/src/pages/guides/arrabida-natural-park.astro`, `southbank-pt/src/pages/guides/wine-setubal-peninsula.astro`, `southbank-pt/src/pages/guides/where-is-the-margem-sul.astro`, `lisbonproperty-pt/src/content/guides/lisbon-metropolitan-area.md`, plus the SBRE and LP `[slug].astro` templates.
