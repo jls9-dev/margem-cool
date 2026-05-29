@@ -2,7 +2,26 @@
 
 > **Status**: canonical · **Last reviewed**: 2026-05-29 · **Type**: standard
 
-The Lisbon Property and South Bank Real Estate guides are the proven-working benchmark for what a well-structured, SEO-optimised, useful guide page looks like in James's ecosystem. This document captures the patterns those guides converge on, ready to adapt for Margem Cool place pages and pillar landings.
+The Lisbon Property and South Bank Real Estate guides are the proven-working benchmark for what a well-structured, SEO-optimised, useful guide page looks like in James's ecosystem.
+
+## Background colour policy
+
+**A background-tone change signifies a different content type, not a sub-section within the same content.** Body prose stays on cream throughout; H2/H3 typography carries the hierarchy within prose. Tone is reserved for component-level content blocks where the change of colour also signals a change of *kind*.
+
+| Tone | Where | Meaning |
+|---|---|---|
+| **Cream** | Body prose · Hero · QuickFacts · BackLink | The default canvas |
+| **Warm cream** (rust ~4%) | TransportOptions | "How to get here" |
+| **Sandstone** (charcoal ~6%) | EateryGrid | "Where to eat" |
+| **Slightly-darker cream** (charcoal ~3-5%) | Timeline | Historical record |
+| **Cool cream** (teal ~5%) | FAQ | Common questions |
+| **Inverted charcoal** | Reserved for marquee CTAs | The strongest tonal break — used sparingly |
+
+Each component type has a signature tone. Once a component uses a tone, it uses that tone consistently across every page. Adding a new tone means committing to what content type it represents — it doesn't get added for decoration.
+
+When a page reads as too monotone, the fix is **not** to add tones to the prose — it's to ask whether a dense prose section should actually be a structured component (Timeline / Cards / Grid) carrying its own tone.
+
+Full rationale: `project_margem_cool_color_policy.md` in the global memory. This document captures the patterns those guides converge on, ready to adapt for Margem Cool place pages and pillar landings.
 
 Source guides studied: `southbank-pt/src/pages/guides/arrabida-natural-park.astro`, `southbank-pt/src/pages/guides/wine-setubal-peninsula.astro`, `southbank-pt/src/pages/guides/where-is-the-margem-sul.astro`, `lisbonproperty-pt/src/content/guides/lisbon-metropolitan-area.md`, plus the SBRE and LP `[slug].astro` templates.
 
