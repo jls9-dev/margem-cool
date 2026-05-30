@@ -20,6 +20,7 @@
  */
 import geoData from '../../data/geo/concelhos.json';
 import landData from '../../data/geo/osm-land.json';
+import bridgeData from '../../data/geo/bridges.json';
 
 interface Props {
   size?: 'mini' | 'standard';
@@ -60,47 +61,13 @@ const waterLabels = {
   sado:     lang === 'en' ? 'Sado Estuary'   : 'Estuário do Sado',
 };
 
-// Tejo bridges — endpoints land clearly on Lisbon-side and Margem-Sul-side
-// shores so the deck visually spans the visible water on top.
-type Bridge = {
-  from: [number, number];
-  to: [number, number];
-  pt: string;
-  en: string;
-  labelOffset: number; // perpendicular distance from midpoint (positive = right of bridge direction)
-};
-
-const bridgeData: Bridge[] = [
-  {
-    from: project(-9.1773, 38.7060), // Alcântara, Lisbon shore
-    to:   project(-9.1755, 38.6760), // Pragal, Almada shore
-    pt: 'Ponte 25 de Abril',
-    en: '25 de Abril Bridge',
-    labelOffset: -16,
-  },
-  {
-    from: project(-9.0455, 38.7790), // Sacavém / Parque das Nações shore
-    to:   project(-8.9700, 38.7010), // Sarilhos Pequenos, Montijo shore
-    pt: 'Ponte Vasco da Gama',
-    en: 'Vasco da Gama Bridge',
-    labelOffset: 16,
-  },
-];
-
-const bridges = bridgeData.map((b) => {
-  const dx = b.to[0] - b.from[0];
-  const dy = b.to[1] - b.from[1];
-  const len = Math.sqrt(dx * dx + dy * dy);
-  const perp: [number, number] = [-dy / len, dx / len];
-  const midX = b.from[0] + dx * 0.5;
-  const midY = b.from[1] + dy * 0.5;
-  return {
-    ...b,
-    name: lang === 'en' ? b.en : b.pt,
-    labelXY: [midX + perp[0] * b.labelOffset, midY + perp[1] * b.labelOffset] as [number, number],
-    labelAngle: (Math.atan2(dy, dx) * 180) / Math.PI,
-  };
-});
+// Tejo bridges — real OSM geometry. 25 de Abril is the deck outline as a
+// closed polygon; Vasco da Gama is the highway route stitched into one
+// polyline. See scripts/build-bridges.mjs.
+const bridges = bridgeData.bridges.map((b) => ({
+  ...b,
+  name: lang === 'en' ? b.en : b.pt,
+}));
 ---
 
 <figure class={`margem-map margem-map--${size}`} aria-label={`Mapa da Margem Sul${placeName ? ` — ${placeName}` : ''}`}>
@@ -152,7 +119,7 @@ const bridges = bridgeData.map((b) => {
       {geoData.concelhos.map((c) => {
         const isCurrent = c.slug === concelhoSlug;
         return (
-          <a href={`${baseHref}/${c.slug}/`} class={`concelho-link ${isCurrent ? 'is-current' : ''}`}>
+          <a href={`${baseHref}/${c.slug}/`} class={`concelho-link ${isCurrent ? 'is-current' : ''}`} data-concelho-slug={c.slug}>
             <title>{c.name}{isStandard ? ` — ${c.area_km2.toFixed(0)} km² · ${c.population_2021?.toLocaleString('pt-PT')} habitantes` : ''}</title>
             {c.paths.map((d) => (
               <path
@@ -160,39 +127,33 @@ const bridges = bridgeData.map((b) => {
                 class={`concelho ${isCurrent ? 'is-current' : ''}`}
               />
             ))}
-            <text
-              x={c.labelXY[0]}
-              y={c.labelXY[1]}
-              class={`concelho-label ${isCurrent ? 'is-current' : ''} ${isStandard ? 'is-standard' : ''}`}
-              text-anchor="middle"
-              dominant-baseline="middle"
-            >
-              {c.name}
-            </text>
+            {(c.labelPositions ?? [c.labelXY]).map(([lx, ly]) => (
+              <text
+                x={lx}
+                y={ly}
+                class={`concelho-label ${isCurrent ? 'is-current' : ''} ${isStandard ? 'is-standard' : ''}`}
+                text-anchor="middle"
+                dominant-baseline="middle"
+              >
+                {c.name}
+              </text>
+            ))}
           </a>
         );
       })}
     </g>
 
-    {/* Tejo bridges — single rust deck line with anchor dots at each
-        shore, italic label rotated along the bridge axis. The tower
-        ticks have come off: at this map scale they read as visual noise
-        rather than structure. */}
+    {/* Tejo bridges — real OSM geometry. 25 de Abril is the deck-outline
+        polygon (closed); Vasco da Gama is the route centerline (open
+        polyline). Both rendered in brand rust with an italic label. */}
     <g class="bridges">
       {bridges.map((b) => (
         <g class="bridge">
-          <line
-            x1={b.from[0]} y1={b.from[1]}
-            x2={b.to[0]}   y2={b.to[1]}
-            class="bridge__deck"
-          />
-          <circle cx={b.from[0]} cy={b.from[1]} r="2.4" class="bridge__anchor" />
-          <circle cx={b.to[0]}   cy={b.to[1]}   r="2.4" class="bridge__anchor" />
+          <path d={b.d} class={b.shape === 'polygon' ? 'bridge__deck-poly' : 'bridge__deck-line'} />
           {isStandard && (
             <text
               x={b.labelXY[0]}
               y={b.labelXY[1]}
-              transform={`rotate(${b.labelAngle} ${b.labelXY[0]} ${b.labelXY[1]})`}
               text-anchor="middle"
               dominant-baseline="middle"
               class="bridge__label"
@@ -317,6 +278,26 @@ const bridges = bridgeData.map((b) => {
       });
     });
   })();
+
+  // List ↔ map hover sync. Any element with [data-concelho-link] on the
+  // same page lights up the matching concelho on every MargemMap instance
+  // when hovered/focused. Used by the /lugares list to mirror the map.
+  (() => {
+    if (typeof window === 'undefined') return;
+    const apply = (slug, on) => {
+      document.querySelectorAll(`.margem-map .concelho-link[data-concelho-slug="${slug}"]`).forEach((el) => {
+        el.classList.toggle('is-listhover', on);
+      });
+    };
+    document.querySelectorAll('[data-concelho-link]').forEach((item) => {
+      const slug = item.getAttribute('data-concelho-link');
+      if (!slug) return;
+      item.addEventListener('mouseenter', () => apply(slug, true));
+      item.addEventListener('mouseleave', () => apply(slug, false));
+      item.addEventListener('focus', () => apply(slug, true));
+      item.addEventListener('blur', () => apply(slug, false));
+    });
+  })();
 </script>
 
 <style>
@@ -416,8 +397,9 @@ const bridges = bridgeData.map((b) => {
   }
   .concelho-link:hover .concelho,
   .concelho-link:focus-visible .concelho,
-  .concelho-link.is-tapped .concelho {
-    fill: color-mix(in srgb, var(--color-accent) 18%, var(--color-background));
+  .concelho-link.is-tapped .concelho,
+  .concelho-link.is-listhover .concelho {
+    fill: color-mix(in srgb, var(--color-accent) 22%, var(--color-background));
     stroke-opacity: 0.7;
   }
   .concelho.is-current {
@@ -432,36 +414,39 @@ const bridges = bridgeData.map((b) => {
   }
 
   /* ──────── Concelho labels ──────── */
-  /* Hidden via `opacity` (not `fill-opacity`), so the cream paint-order
-     stroke doesn't ghost through. Become visible on hover, tap, or
-     when this concelho is the current page. */
+  /* Permanently visible — hovering only changes the polygon fill, not
+     the label visibility. paint-order: stroke gives a cream halo around
+     each label so it reads cleanly on any background. */
   .concelho-label {
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     fill: var(--color-text);
-    fill-opacity: 0.9;
+    fill-opacity: 0.85;
     pointer-events: none;
     paint-order: stroke;
     stroke: var(--color-background);
     stroke-width: 3px;
     stroke-linejoin: round;
-    opacity: 0;
-    transition: opacity 200ms ease;
+    transition: fill 200ms ease, fill-opacity 200ms ease;
   }
   .concelho-link:hover .concelho-label,
   .concelho-link:focus-visible .concelho-label,
-  .concelho-link.is-tapped .concelho-label {
-    opacity: 1;
+  .concelho-link.is-tapped .concelho-label,
+  .concelho-link.is-listhover .concelho-label {
+    fill: var(--color-accent);
+    fill-opacity: 1;
   }
   .concelho-label.is-current {
     fill: var(--color-accent);
-    opacity: 1;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
   }
-  .concelho-label.is-standard.is-current {
+  .margem-map--standard .concelho-label {
+    font-size: 12px;
+  }
+  .margem-map--standard .concelho-label.is-current {
     font-size: 14px;
   }
 
@@ -480,18 +465,23 @@ const bridges = bridgeData.map((b) => {
   }
 
   /* ──────── Bridges ──────── */
-  .bridge__deck {
-    stroke: var(--color-accent);
-    stroke-width: 2.6;
-    stroke-linecap: round;
-  }
-  .margem-map--standard .bridge__deck {
-    stroke-width: 3;
-  }
-  .bridge__anchor {
+  /* 25 de Abril — closed deck outline as a filled polygon. */
+  .bridge__deck-poly {
     fill: var(--color-accent);
-    stroke: var(--color-background);
-    stroke-width: 1;
+    stroke: var(--color-accent);
+    stroke-width: 0.5;
+    stroke-linejoin: round;
+  }
+  /* Vasco da Gama — full route centerline as a stroked polyline. */
+  .bridge__deck-line {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .margem-map--standard .bridge__deck-line {
+    stroke-width: 2.4;
   }
   .bridge__label {
     font-family: var(--font-display);

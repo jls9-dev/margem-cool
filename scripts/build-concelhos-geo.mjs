@@ -393,6 +393,19 @@ async function main() {
   const projected = concelhos.map((c) => {
     const paths = c.rings.map((ring) => ringToPath(ring.map(project)));
     const labelXY = project(c.centroidLngLat);
+    // For multi-ring concelhos (Montijo has an exclave at Sarilhos
+    // Pequenos), emit a label position for every ring whose area is at
+    // least 5% of the biggest — so users see the name on each visible
+    // part and don't read the exclave as a mystery floating polygon.
+    const ringAreas = c.rings.map((r) => ringArea(r));
+    const maxRingArea = Math.max(...ringAreas);
+    const labelPositions = c.rings
+      .map((r, i) => ({ centroid: polygonCentroid(r), area: ringAreas[i] }))
+      .filter((r) => r.area >= maxRingArea * 0.05)
+      .map((r) => {
+        const [x, y] = project(r.centroid);
+        return [Math.round(x), Math.round(y)];
+      });
     return {
       slug: c.slug,
       name: c.name,
@@ -400,6 +413,7 @@ async function main() {
       population_2021: c.population,
       paths,
       labelXY: [Math.round(labelXY[0]), Math.round(labelXY[1])],
+      labelPositions,
       centroidLngLat: c.centroidLngLat,
     };
   });

@@ -51,7 +51,7 @@ const jsonLd = {
       <ul class="concelho-list" role="list">
         {concelhoList.map((c) => (
           <li class="concelho-list__item">
-            <a href={`/lugares/${c.slug}/`}>
+            <a href={`/lugares/${c.slug}/`} data-concelho-link={c.slug}>
               <h2 class="concelho-list__name">{c.data.name_pt}</h2>
               <p class="concelho-list__short">{c.data.pt.short_description}</p>
             </a>
