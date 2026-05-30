@@ -98,8 +98,10 @@ async function main() {
   const out = [];
 
   // 25 de Abril — use the longest `across` member (the road deck
-  // centerline) as a polyline. At our map scale the closed outline reads
-  // as a sliver, where a stroked centerline reads as a proper bridge.
+  // centerline). The OSM deck ends at the bridge towers (not on the
+  // shore road), which leaves a visible gap to the coastline; extend
+  // each end along the bridge's local axis by ~400m so the deck
+  // visually meets the shore on both sides.
   const a25 = raw.elements.find((e) => e.type === 'relation' && e.id === 18334918);
   if (a25) {
     const acrosses = a25.members
@@ -107,12 +109,24 @@ async function main() {
       .map((m) => m.geometry.map((p) => [p.lon, p.lat]));
     acrosses.sort((a, b) => b.length - a.length);
     if (acrosses.length) {
+      const line = acrosses[0].slice();
+      const EXTEND_DEG = 0.0035; // ~400m
+      // extend at start
+      const s0 = line[0], s1 = line[1];
+      const ds = Math.hypot(s1[0]-s0[0], s1[1]-s0[1]);
+      line.unshift([s0[0] - (s1[0]-s0[0]) / ds * EXTEND_DEG,
+                    s0[1] - (s1[1]-s0[1]) / ds * EXTEND_DEG]);
+      // extend at end
+      const e0 = line[line.length - 2], e1 = line[line.length - 1];
+      const de = Math.hypot(e1[0]-e0[0], e1[1]-e0[1]);
+      line.push([e1[0] + (e1[0]-e0[0]) / de * EXTEND_DEG,
+                 e1[1] + (e1[1]-e0[1]) / de * EXTEND_DEG]);
       out.push({
         id: 'ponte-25-abril',
         pt: 'Ponte 25 de Abril',
         en: '25 de Abril Bridge',
         shape: 'line',
-        d: ringToPath(acrosses[0].map(project), false),
+        d: ringToPath(line.map(project), false),
       });
     }
   }
@@ -127,9 +141,11 @@ async function main() {
     chains.sort((a, b) => b.length - a.length);
     const main = chains[0];
 
-    // The cable-stayed + viaduct extent: roughly lng -9.060 to -8.967,
-    // lat 38.778 (Sacavém shore) to 38.708 (Sarilhos Pequenos shore).
-    const BRIDGE_BBOX = { minLng: -9.060, minLat: 38.708, maxLng: -8.965, maxLat: 38.785 };
+    // Tight clip to the actual bridge anchors so the line stops at the
+    // shore, not in the approach causeway. North anchor (Sacavém):
+    // (-9.0413, 38.7747). South anchor (Sarilhos Pequenos): (-8.9690,
+    // 38.7080). 10m fuzz on each side.
+    const BRIDGE_BBOX = { minLng: -9.045, minLat: 38.7075, maxLng: -8.965, maxLat: 38.7752 };
     const inside = (p) =>
       p[0] >= BRIDGE_BBOX.minLng && p[0] <= BRIDGE_BBOX.maxLng &&
       p[1] >= BRIDGE_BBOX.minLat && p[1] <= BRIDGE_BBOX.maxLat;
