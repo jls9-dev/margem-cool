@@ -19,7 +19,7 @@
  * Data: src/data/geo/concelhos.json (regenerate via scripts/build-concelhos-geo.mjs)
  */
 import geoData from '../../data/geo/concelhos.json';
-import waterData from '../../data/geo/water.json';
+import coastData from '../../data/geo/coast.json';
 
 interface Props {
   size?: 'mini' | 'standard';
@@ -126,37 +126,33 @@ const bridges = bridgeData.map((b) => {
         shows through only in the actual sea / river / estuary. */}
     <rect x={vbX} y={vbY} width={vbW} height={vbH} class="water-base" />
 
-    {/* Margem Sul land base — unioned outline of all 9 concelhos at the
-        regular epsilon, so the land reads as one solid mass and the water
-        tint can't leak through inter-concelho seams. */}
-    <g class="margem-sul-land">
-      {geoData.margem_sul_land.map((d) => (
-        <path d={d} class="land-base" />
+    {/* Precise land outline from OpenStreetMap natural=coastline. Each
+        polygon is a closed LAND region derived from real coastlines —
+        the Atlantic shore, the Tagus and bay, the Sado estuary, every
+        inlet — so what you see as cream is actual land, and the teal
+        underneath is actual water. evenodd fill so self-intersecting
+        closures from multi-crossing chains still resolve to land vs
+        water cleanly. */}
+    <g class="coast">
+      {coastData.paths.map((p) => (
+        <path d={p.path} class="land-base" fill-rule="evenodd" />
       ))}
     </g>
 
-    {/* Lisbon + Oeiras — north-of-the-Tejo context outline. Faint enough
-        to read as "the other side", clear enough to orient the viewer. */}
-    <g class="context-north">
-      {geoData.context_north.map((c) => c.paths.map((d) => (
-        <path d={d} class="context-shape" />
-      )))}
-      {/* Always-on "Lisboa" anchor label inside the Lisbon outline, so even
-          in mini mode the viewer knows what they're looking at. */}
-      <text
-        x={project(-9.1430, 38.7440)[0]}
-        y={project(-9.1430, 38.7440)[1]}
-        class="context-label"
-        text-anchor="middle"
-      >
-        {lang === 'en' ? 'Lisbon' : 'Lisboa'}
-      </text>
-    </g>
+    {/* Always-on "Lisboa" anchor label so the viewer knows which side
+        of the Tagus they're looking at. */}
+    <text
+      x={project(-9.1430, 38.7440)[0]}
+      y={project(-9.1430, 38.7440)[1]}
+      class="context-label"
+      text-anchor="middle"
+    >
+      {lang === 'en' ? 'Lisbon' : 'Lisboa'}
+    </text>
 
-    {/* Concelho polygons — drawn here (before the water layer) so the bay
-        inlets the admin boundaries cover up get visually hidden by the
-        real water polygon on top. The link wrappers stay clickable because
-        the water layer is pointer-events:none. */}
+    {/* Concelho polygons — clickable navigation. Drawn on top of the
+        precise land with transparent fill + faint strokes for the
+        internal admin borders. */}
     <g class="concelhos">
       {geoData.concelhos.map((c) => {
         const isCurrent = c.slug === concelhoSlug;
@@ -181,20 +177,6 @@ const bridges = bridgeData.map((b) => {
           </a>
         );
       })}
-    </g>
-
-    {/* Real water — Mar da Palha (Tagus bay) + Estuário do Sado polygons
-        from OpenStreetMap, drawn on top of the concelhos so the bay
-        inlets the admin boundaries cover up are restored to the visible
-        coastline. fill-rule="evenodd" lets islands inside each polygon
-        render back as land. pointer-events:none so the concelho links
-        underneath stay clickable. */}
-    <g class="water-features">
-      {waterData.features.map((f) => (
-        <path d={f.d} class="water-feature" fill-rule="evenodd">
-          <title>{f.source}</title>
-        </path>
-      ))}
     </g>
 
     {/* Tejo bridges — single rust deck line with anchor dots at each
@@ -417,9 +399,13 @@ const bridges = bridgeData.map((b) => {
   .land-base {
     fill: var(--color-background);
     stroke: color-mix(in srgb, var(--mc-teal) 70%, var(--color-text));
-    stroke-width: 1.2;
+    stroke-width: 1;
     stroke-linejoin: round;
     stroke-opacity: 0.85;
+  }
+  .margem-map--standard .land-base {
+    stroke-width: 1.2;
+    stroke-opacity: 0.9;
   }
   .concelho {
     fill: transparent;
@@ -484,20 +470,6 @@ const bridges = bridgeData.map((b) => {
     font-size: 14px;
   }
 
-  /* ──────── North-of-the-Tejo context (Cascais, Oeiras, Lisboa, Loures) ──────── */
-  /* Same land tone as the concelhos, opaque so the water doesn't bleed
-     through. Slightly lighter than concelho-fill since these are context. */
-  .context-shape {
-    fill: var(--color-background);
-    stroke: color-mix(in srgb, var(--mc-teal) 70%, var(--color-text));
-    stroke-opacity: 0.85;
-    stroke-width: 1.2;
-    stroke-linejoin: round;
-  }
-  .margem-map--standard .context-shape {
-    stroke-opacity: 0.9;
-    stroke-width: 1.4;
-  }
   .context-label {
     font-family: var(--font-display);
     font-size: 11px;
@@ -538,23 +510,6 @@ const bridges = bridgeData.map((b) => {
     stroke-width: 3;
     stroke-linejoin: round;
     pointer-events: none;
-  }
-
-  /* ──────── Real water polygons (OSM-sourced bay + estuary) ──────── */
-  /* Drawn after the land base so the actual Tagus bay / Sado estuary
-     shoreline overrides the concelho administrative outline. Same teal
-     as the water-base so the whole "wet" surface reads as one body. */
-  .water-feature {
-    fill: color-mix(in srgb, var(--mc-teal) 32%, var(--color-background));
-    stroke: color-mix(in srgb, var(--mc-teal) 70%, var(--color-text));
-    stroke-width: 1.2;
-    stroke-opacity: 0.85;
-    stroke-linejoin: round;
-    pointer-events: none;
-  }
-  .margem-map--standard .water-feature {
-    stroke-width: 1.4;
-    stroke-opacity: 0.9;
   }
 
   /* ──────── Water labels ──────── */
