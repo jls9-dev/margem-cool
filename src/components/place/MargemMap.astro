@@ -86,20 +86,20 @@ type Bridge = {
 
 const bridgeData: Bridge[] = [
   {
-    from: project(-9.1808, 38.7042), // Alcântara north anchor
-    to:   project(-9.1772, 38.6815), // Almada south anchor
-    towers: [0.18, 0.82],
+    from: project(-9.1758, 38.7020), // Alcântara north anchor (Lisbon shore)
+    to:   project(-9.1745, 38.6780), // Almada south anchor (Pragal shore)
+    towers: [0.22, 0.78],
     pt: 'Ponte 25 de Abril',
     en: '25 de Abril Bridge',
     labelOffset: -22,
   },
   {
-    from: project(-9.0322, 38.7833), // Sacavém north anchor
-    to:   project(-9.0080, 38.7263), // Montijo south anchor
-    towers: [0.32],
+    from: project(-9.0413, 38.7727), // Sacavém north anchor (Parque das Nações shore)
+    to:   project(-8.9690, 38.7080), // Sarilhos Pequenos south anchor (Montijo shore)
+    towers: [0.18],
     pt: 'Ponte Vasco da Gama',
     en: 'Vasco da Gama Bridge',
-    labelOffset: 24,
+    labelOffset: 22,
   },
 ];
 
@@ -316,19 +316,42 @@ const bridges = bridgeData.map((b) => {
       {placeName} · Margem Sul
     </figcaption>
   )}
+
+  {/* Mobile tap callout. Hidden by default, populated + shown by the
+      tap-twice script on touch devices. First tap on a concelho fills
+      this in with its name and a "tap again to open" hint; second tap
+      navigates. */}
+  <div class="margem-map__popup" aria-live="polite" data-empty>
+    <span class="margem-map__popup-name"></span>
+    <span class="margem-map__popup-hint" data-pt="Tocar de novo para abrir →" data-en="Tap again to open →"></span>
+  </div>
 </figure>
 
 <script>
   // Tap-to-reveal-name pattern on touch devices: first tap on a concelho
-  // shows its name and highlights it, the second tap on the same concelho
-  // navigates. On a different concelho the selection moves and you still
-  // need a second tap. Desktop (hover capable) keeps single-click navigation.
+  // populates the popup with the concelho name + a "tap again" hint and
+  // highlights the shape. Second tap navigates. On a different concelho
+  // the selection moves and you still need a second tap. Desktop
+  // (hover capable) keeps single-click navigation.
   (() => {
     if (typeof window === 'undefined') return;
     const touch = window.matchMedia('(hover: none)').matches;
     if (!touch) return;
+    const lang = document.documentElement.lang?.startsWith('en') ? 'en' : 'pt';
+
     document.querySelectorAll('.margem-map').forEach((map) => {
       const links = map.querySelectorAll('.concelho-link');
+      const popup = map.querySelector('.margem-map__popup');
+      const popupName = popup?.querySelector('.margem-map__popup-name');
+      const popupHint = popup?.querySelector('.margem-map__popup-hint');
+      if (!popup || !popupName || !popupHint) return;
+
+      const clearTapped = () => {
+        links.forEach((l) => l.classList.remove('is-tapped'));
+        popup.setAttribute('data-empty', '');
+        popupName.textContent = '';
+      };
+
       links.forEach((link) => {
         link.addEventListener('click', (event) => {
           if (link.classList.contains('is-tapped') || link.classList.contains('is-current')) {
@@ -337,14 +360,20 @@ const bridges = bridgeData.map((b) => {
           event.preventDefault();
           links.forEach((l) => l.classList.remove('is-tapped'));
           link.classList.add('is-tapped');
+          // The concelho's name is in its <title> child.
+          const title = link.querySelector('title');
+          popupName.textContent = title ? title.textContent : '';
+          popupHint.textContent = popupHint.dataset[lang] || popupHint.dataset.pt || '';
+          popup.removeAttribute('data-empty');
         });
       });
-      // Tap outside any concelho clears the highlight.
+
+      // Tap outside any concelho clears the highlight + popup.
       map.addEventListener('click', (event) => {
         const target = event.target;
         if (!(target instanceof Element)) return;
         if (target.closest('.concelho-link')) return;
-        links.forEach((l) => l.classList.remove('is-tapped'));
+        clearTapped();
       });
     });
   })();
@@ -354,6 +383,52 @@ const bridges = bridgeData.map((b) => {
   .margem-map {
     margin: 0;
     padding: 0;
+    position: relative;
+  }
+  .margem-map__popup {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 10px 18px;
+    background: var(--color-background);
+    border: 1.5px solid var(--color-accent);
+    border-radius: 999px;
+    box-shadow: 0 6px 20px -8px color-mix(in srgb, var(--color-accent) 70%, transparent);
+    pointer-events: none;
+    z-index: 5;
+    transition: opacity 160ms ease, transform 200ms ease;
+    opacity: 1;
+    max-width: 90%;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .margem-map__popup[data-empty] {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-6px);
+  }
+  .margem-map__popup-name {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-accent);
+    line-height: 1.1;
+  }
+  .margem-map__popup-hint {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: var(--tracking-smallcaps);
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    line-height: 1.1;
+  }
+  @media (hover: hover) {
+    /* Desktop never shows the popup — hover does the work. */
+    .margem-map__popup { display: none; }
   }
   .margem-map--mini {
     max-width: 360px;
@@ -374,17 +449,20 @@ const bridges = bridgeData.map((b) => {
      Individual concelhos are then drawn on top as fill: none — only their
      borders show, no per-concelho seam can leak teal through. */
   .water-base {
-    fill: color-mix(in srgb, var(--mc-teal) 14%, var(--color-background));
+    fill: color-mix(in srgb, var(--mc-teal) 32%, var(--color-background));
   }
   .land-base {
-    fill: color-mix(in srgb, var(--color-text) 9%, var(--color-background));
-    stroke: none;
+    fill: var(--color-background);
+    stroke: color-mix(in srgb, var(--mc-teal) 70%, var(--color-text));
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+    stroke-opacity: 0.85;
   }
   .concelho {
     fill: transparent;
     stroke: var(--color-text);
-    stroke-opacity: 0.55;
-    stroke-width: 1;
+    stroke-opacity: 0.25;
+    stroke-width: 0.8;
     stroke-linejoin: round;
     transition: fill 200ms ease, stroke-opacity 200ms ease;
   }
@@ -447,15 +525,15 @@ const bridges = bridgeData.map((b) => {
   /* Same land tone as the concelhos, opaque so the water doesn't bleed
      through. Slightly lighter than concelho-fill since these are context. */
   .context-shape {
-    fill: color-mix(in srgb, var(--color-text) 7%, var(--color-background));
-    stroke: var(--color-text);
-    stroke-opacity: 0.55;
-    stroke-width: 1;
+    fill: var(--color-background);
+    stroke: color-mix(in srgb, var(--mc-teal) 70%, var(--color-text));
+    stroke-opacity: 0.85;
+    stroke-width: 1.2;
     stroke-linejoin: round;
   }
   .margem-map--standard .context-shape {
-    stroke-opacity: 0.6;
-    stroke-width: 1.2;
+    stroke-opacity: 0.9;
+    stroke-width: 1.4;
   }
   .context-label {
     font-family: var(--font-display);
