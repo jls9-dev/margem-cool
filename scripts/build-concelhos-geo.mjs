@@ -176,14 +176,14 @@ function ringToPath(ring) {
 }
 
 /**
- * Polygon → SVG path with holes preserved. polygon-clipping emits each
- * polygon as [outerRing, ...innerHoles]; we project every ring and join
- * them into a single `d` string, so SVG's fill-rule renders enclosed
- * water (e.g. Seixal Bay, Coina inlet inside the Margem Sul union) as
- * actual gaps rather than filled land.
+ * Polygon → SVG path. Emits only the outer ring. polygon-clipping returns
+ * inner "holes" as a side-effect of simplification mismatches between
+ * adjacent concelho boundaries (10⁻⁶ to 10⁻⁹ sq° slivers), and dropping
+ * them is safe because no concelho administratively encloses real water.
+ * The actual bay water is drawn separately from OSM in water.json.
  */
 function polygonToPath(polygon, project) {
-  return polygon.map((ring) => ringToPath(ring.map(project))).join(' ');
+  return ringToPath(polygon[0].map(project));
 }
 
 /**

@@ -60,61 +60,43 @@ const waterLabels = {
   sado:     lang === 'en' ? 'Sado Estuary'   : 'Estuário do Sado',
 };
 
-// Tejo bridges — anchor coordinates, tower positions, labels.
-// 25 de Abril: suspension bridge between Alcântara and Almada — two towers.
-// Vasco da Gama: cable-stayed + viaduct between Sacavém and Montijo — one tower.
+// Tejo bridges — endpoints land clearly on Lisbon-side and Margem-Sul-side
+// shores so the deck visually spans the visible water on top.
 type Bridge = {
   from: [number, number];
   to: [number, number];
-  towers: number[];   // positions along the bridge (0..1) for perpendicular ticks
   pt: string;
   en: string;
-  labelOffset: number; // perpendicular distance for the label (positive = right of bridge direction)
+  labelOffset: number; // perpendicular distance from midpoint (positive = right of bridge direction)
 };
 
 const bridgeData: Bridge[] = [
   {
-    from: project(-9.1758, 38.7020), // Alcântara north anchor (Lisbon shore)
-    to:   project(-9.1745, 38.6780), // Almada south anchor (Pragal shore)
-    towers: [0.22, 0.78],
+    from: project(-9.1773, 38.7060), // Alcântara, Lisbon shore
+    to:   project(-9.1755, 38.6760), // Pragal, Almada shore
     pt: 'Ponte 25 de Abril',
     en: '25 de Abril Bridge',
-    labelOffset: -22,
+    labelOffset: -16,
   },
   {
-    from: project(-9.0413, 38.7727), // Sacavém north anchor (Parque das Nações shore)
-    to:   project(-8.9690, 38.7080), // Sarilhos Pequenos south anchor (Montijo shore)
-    towers: [0.18],
+    from: project(-9.0455, 38.7790), // Sacavém / Parque das Nações shore
+    to:   project(-8.9700, 38.7010), // Sarilhos Pequenos, Montijo shore
     pt: 'Ponte Vasco da Gama',
     en: 'Vasco da Gama Bridge',
-    labelOffset: 22,
+    labelOffset: 16,
   },
 ];
 
-// Pre-compute geometry: midpoint, perpendicular unit vector, tower segments,
-// and label anchor offset from the bridge midpoint.
 const bridges = bridgeData.map((b) => {
   const dx = b.to[0] - b.from[0];
   const dy = b.to[1] - b.from[1];
   const len = Math.sqrt(dx * dx + dy * dy);
   const perp: [number, number] = [-dy / len, dx / len];
-  const tickHalf = 7;
-  const towers = b.towers.map((t) => {
-    const cx = b.from[0] + t * dx;
-    const cy = b.from[1] + t * dy;
-    return {
-      x1: cx + perp[0] * tickHalf,
-      y1: cy + perp[1] * tickHalf,
-      x2: cx - perp[0] * tickHalf,
-      y2: cy - perp[1] * tickHalf,
-    };
-  });
   const midX = b.from[0] + dx * 0.5;
   const midY = b.from[1] + dy * 0.5;
   return {
     ...b,
     name: lang === 'en' ? b.en : b.pt,
-    towers,
     labelXY: [midX + perp[0] * b.labelOffset, midY + perp[1] * b.labelOffset] as [number, number],
     labelAngle: (Math.atan2(dy, dx) * 180) / Math.PI,
   };
@@ -149,7 +131,7 @@ const bridges = bridgeData.map((b) => {
         tint can't leak through inter-concelho seams. */}
     <g class="margem-sul-land">
       {geoData.margem_sul_land.map((d) => (
-        <path d={d} class="land-base" fill-rule="evenodd" />
+        <path d={d} class="land-base" />
       ))}
     </g>
 
@@ -157,7 +139,7 @@ const bridges = bridgeData.map((b) => {
         to read as "the other side", clear enough to orient the viewer. */}
     <g class="context-north">
       {geoData.context_north.map((c) => c.paths.map((d) => (
-        <path d={d} class="context-shape" fill-rule="evenodd" />
+        <path d={d} class="context-shape" />
       )))}
       {/* Always-on "Lisboa" anchor label inside the Lisbon outline, so even
           in mini mode the viewer knows what they're looking at. */}
@@ -215,11 +197,10 @@ const bridges = bridgeData.map((b) => {
       ))}
     </g>
 
-    {/* Tejo bridges — proper rust structures connecting Lisbon to the Margem
-        Sul. Each has a thick deck line, perpendicular tower ticks
-        (suspension towers for 25 de Abril, single cable-stayed mast for
-        Vasco da Gama), endpoint anchor dots, and an italic label rotated
-        along the bridge axis. */}
+    {/* Tejo bridges — single rust deck line with anchor dots at each
+        shore, italic label rotated along the bridge axis. The tower
+        ticks have come off: at this map scale they read as visual noise
+        rather than structure. */}
     <g class="bridges">
       {bridges.map((b) => (
         <g class="bridge">
@@ -228,11 +209,8 @@ const bridges = bridgeData.map((b) => {
             x2={b.to[0]}   y2={b.to[1]}
             class="bridge__deck"
           />
-          {b.towers.map((t) => (
-            <line x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} class="bridge__tower" />
-          ))}
-          <circle cx={b.from[0]} cy={b.from[1]} r="2.6" class="bridge__anchor" />
-          <circle cx={b.to[0]}   cy={b.to[1]}   r="2.6" class="bridge__anchor" />
+          <circle cx={b.from[0]} cy={b.from[1]} r="2.4" class="bridge__anchor" />
+          <circle cx={b.to[0]}   cy={b.to[1]}   r="2.4" class="bridge__anchor" />
           {isStandard && (
             <text
               x={b.labelXY[0]}
@@ -537,18 +515,11 @@ const bridges = bridgeData.map((b) => {
   /* ──────── Bridges ──────── */
   .bridge__deck {
     stroke: var(--color-accent);
-    stroke-width: 3.2;
+    stroke-width: 2.6;
     stroke-linecap: round;
-    stroke-opacity: 1;
   }
   .margem-map--standard .bridge__deck {
-    stroke-width: 3.6;
-  }
-  .bridge__tower {
-    stroke: var(--color-accent);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-opacity: 1;
+    stroke-width: 3;
   }
   .bridge__anchor {
     fill: var(--color-accent);
