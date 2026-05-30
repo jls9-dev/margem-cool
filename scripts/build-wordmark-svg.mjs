@@ -28,15 +28,13 @@ const INK_DARK = '#F5F1E8';       // cream — letters on charcoal
 const RUST_LIGHT = '#B85C38';
 const RUST_DARK = '#D17347';
 
+// The page never swaps to a dark background, so the wordmark mustn't
+// either — a prefers-color-scheme: dark block would flip the letters
+// to cream on what's still a cream background = invisible logo.
 const STYLE_BLOCK = `<style>
     .mc-ink { fill: ${INK_LIGHT}; }
     .mc-rust-fill { fill: ${RUST_LIGHT}; }
     .mc-rust-stroke { stroke: ${RUST_LIGHT}; }
-    @media (prefers-color-scheme: dark) {
-      .mc-ink { fill: ${INK_DARK}; }
-      .mc-rust-fill { fill: ${RUST_DARK}; }
-      .mc-rust-stroke { stroke: ${RUST_DARK}; }
-    }
   </style>`;
 
 if (!existsSync(FONT_PATH)) {
