@@ -176,6 +176,17 @@ function ringToPath(ring) {
 }
 
 /**
+ * Polygon → SVG path with holes preserved. polygon-clipping emits each
+ * polygon as [outerRing, ...innerHoles]; we project every ring and join
+ * them into a single `d` string, so SVG's fill-rule renders enclosed
+ * water (e.g. Seixal Bay, Coina inlet inside the Margem Sul union) as
+ * actual gaps rather than filled land.
+ */
+function polygonToPath(polygon, project) {
+  return polygon.map((ring) => ringToPath(ring.map(project))).join(' ');
+}
+
+/**
  * Closed-loop Chaikin's corner-cutting. For each edge (p, q), replace with
  * two new points at 1/4 and 3/4 along the edge. Iterating N times rounds
  * angular corners into smooth curves at the cost of vertex count.
@@ -299,7 +310,7 @@ async function main() {
     return {
       slug,
       name,
-      paths: result.map((poly) => poly[0]).map((ring) => ringToPath(ring.map(project))),
+      paths: result.map((poly) => polygonToPath(poly, project)),
     };
   }
   const contextProjected = [
@@ -336,11 +347,10 @@ async function main() {
   // unionResult: MultiPolygon = Array<Polygon = Array<Ring = Array<[lng,lat]>>>
 
   // Also produce the SAME union projected at the regular epsilon (no smoothing),
-  // for use as the LAND BASE under the individual concelho strokes — eliminates
-  // the inter-concelho gaps that leak the water tint through.
-  const margemSulLandPaths = unionResult.flatMap((poly) =>
-    poly.map((ring, i) => (i === 0 ? ringToPath(ring.map(project)) : null)).filter(Boolean),
-  );
+  // for use as the LAND BASE under the individual concelho strokes. Holes are
+  // preserved so bays enclosed by concelho administrative boundaries
+  // (Seixal Bay, Coina inlet, Moita bay) render as actual water, not land.
+  const margemSulLandPaths = unionResult.map((poly) => polygonToPath(poly, project));
 
   // The silhouette is shown at brand-mark scale (favicon → 260px outline).
   // Push simplification hard, then run a Chaikin-style corner-cutting pass,

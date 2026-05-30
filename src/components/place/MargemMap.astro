@@ -19,6 +19,7 @@
  * Data: src/data/geo/concelhos.json (regenerate via scripts/build-concelhos-geo.mjs)
  */
 import geoData from '../../data/geo/concelhos.json';
+import waterData from '../../data/geo/water.json';
 
 interface Props {
   size?: 'mini' | 'standard';
@@ -51,19 +52,6 @@ const placeXY = placeCentroid ? project(placeCentroid[0], placeCentroid[1]) : nu
 const baseHref = lang === 'en' ? '/en/places' : '/lugares';
 
 const isStandard = size === 'standard';
-
-// Landmark anchors — projected once. PT/EN labels chosen by `lang` prop.
-type Landmark = { lng: number; lat: number; pt: string; en: string; dx?: number; dy?: number };
-const landmarks: Landmark[] = [
-  { lng: -9.1697, lat: 38.6772, pt: 'Cristo Rei', en: 'Cristo Rei',   dx: -8, dy: 10 },
-  { lng: -9.2148, lat: 38.4138, pt: 'Cabo Espichel', en: 'Cabo Espichel', dx: 10, dy: 6 },
-  { lng: -8.9783, lat: 38.4783, pt: 'Serra da Arrábida', en: 'Serra da Arrábida', dx: 0, dy: -10 },
-  { lng: -8.9019, lat: 38.5672, pt: 'Castelo de Palmela', en: 'Palmela castle',  dx: 0, dy: -10 },
-];
-const projectedLandmarks = landmarks.map((m) => ({
-  ...m,
-  xy: project(m.lng, m.lat),
-}));
 
 // Bilingual water labels (Tejo, Atlantic, Sado). EN gets the international forms.
 const waterLabels = {
@@ -161,7 +149,7 @@ const bridges = bridgeData.map((b) => {
         tint can't leak through inter-concelho seams. */}
     <g class="margem-sul-land">
       {geoData.margem_sul_land.map((d) => (
-        <path d={d} class="land-base" />
+        <path d={d} class="land-base" fill-rule="evenodd" />
       ))}
     </g>
 
@@ -169,7 +157,7 @@ const bridges = bridgeData.map((b) => {
         to read as "the other side", clear enough to orient the viewer. */}
     <g class="context-north">
       {geoData.context_north.map((c) => c.paths.map((d) => (
-        <path d={d} class="context-shape" />
+        <path d={d} class="context-shape" fill-rule="evenodd" />
       )))}
       {/* Always-on "Lisboa" anchor label inside the Lisbon outline, so even
           in mini mode the viewer knows what they're looking at. */}
@@ -181,6 +169,50 @@ const bridges = bridgeData.map((b) => {
       >
         {lang === 'en' ? 'Lisbon' : 'Lisboa'}
       </text>
+    </g>
+
+    {/* Concelho polygons — drawn here (before the water layer) so the bay
+        inlets the admin boundaries cover up get visually hidden by the
+        real water polygon on top. The link wrappers stay clickable because
+        the water layer is pointer-events:none. */}
+    <g class="concelhos">
+      {geoData.concelhos.map((c) => {
+        const isCurrent = c.slug === concelhoSlug;
+        return (
+          <a href={`${baseHref}/${c.slug}/`} class={`concelho-link ${isCurrent ? 'is-current' : ''}`}>
+            <title>{c.name}{isStandard ? ` — ${c.area_km2.toFixed(0)} km² · ${c.population_2021?.toLocaleString('pt-PT')} habitantes` : ''}</title>
+            {c.paths.map((d) => (
+              <path
+                d={d}
+                class={`concelho ${isCurrent ? 'is-current' : ''}`}
+              />
+            ))}
+            <text
+              x={c.labelXY[0]}
+              y={c.labelXY[1]}
+              class={`concelho-label ${isCurrent ? 'is-current' : ''} ${isStandard ? 'is-standard' : ''}`}
+              text-anchor="middle"
+              dominant-baseline="middle"
+            >
+              {c.name}
+            </text>
+          </a>
+        );
+      })}
+    </g>
+
+    {/* Real water — Mar da Palha (Tagus bay) + Estuário do Sado polygons
+        from OpenStreetMap, drawn on top of the concelhos so the bay
+        inlets the admin boundaries cover up are restored to the visible
+        coastline. fill-rule="evenodd" lets islands inside each polygon
+        render back as land. pointer-events:none so the concelho links
+        underneath stay clickable. */}
+    <g class="water-features">
+      {waterData.features.map((f) => (
+        <path d={f.d} class="water-feature" fill-rule="evenodd">
+          <title>{f.source}</title>
+        </path>
+      ))}
     </g>
 
     {/* Tejo bridges — proper rust structures connecting Lisbon to the Margem
@@ -236,53 +268,6 @@ const bridges = bridgeData.map((b) => {
         <text x={vbW * 0.55} y={vbH * 0.96} class="water-label">
           {waterLabels.sado}
         </text>
-      </g>
-    )}
-
-    {/* Concelho polygons — each wrapped in a link */}
-    <g class="concelhos">
-      {geoData.concelhos.map((c) => {
-        const isCurrent = c.slug === concelhoSlug;
-        return (
-          <a href={`${baseHref}/${c.slug}/`} class={`concelho-link ${isCurrent ? 'is-current' : ''}`}>
-            <title>{c.name}{isStandard ? ` — ${c.area_km2.toFixed(0)} km² · ${c.population_2021?.toLocaleString('pt-PT')} habitantes` : ''}</title>
-            {c.paths.map((d) => (
-              <path
-                d={d}
-                class={`concelho ${isCurrent ? 'is-current' : ''}`}
-              />
-            ))}
-            {/* Label always visible for current; on hover for others */}
-            <text
-              x={c.labelXY[0]}
-              y={c.labelXY[1]}
-              class={`concelho-label ${isCurrent ? 'is-current' : ''} ${isStandard ? 'is-standard' : ''}`}
-              text-anchor="middle"
-              dominant-baseline="middle"
-            >
-              {c.name}
-            </text>
-          </a>
-        );
-      })}
-    </g>
-
-    {/* Landmarks — small rust dots + labels. Standard only. */}
-    {isStandard && (
-      <g class="landmarks">
-        {projectedLandmarks.map((m) => (
-          <g>
-            <circle cx={m.xy[0]} cy={m.xy[1]} r="3.5" class="landmark-dot" />
-            <text
-              x={m.xy[0] + (m.dx ?? 8)}
-              y={m.xy[1] + (m.dy ?? -8)}
-              class="landmark-label"
-              text-anchor={(m.dx ?? 0) < 0 ? 'end' : 'start'}
-            >
-              {lang === 'en' ? m.en : m.pt}
-            </text>
-          </g>
-        ))}
       </g>
     )}
 
@@ -584,24 +569,21 @@ const bridges = bridgeData.map((b) => {
     pointer-events: none;
   }
 
-  /* ──────── Landmarks (standard mode only) ──────── */
-  .landmark-dot {
-    fill: var(--color-accent);
-    fill-opacity: 0.9;
-    stroke: var(--color-background);
-    stroke-width: 1;
-  }
-  .landmark-label {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 11px;
-    fill: var(--color-text);
-    fill-opacity: 0.85;
-    paint-order: stroke;
-    stroke: var(--color-background);
-    stroke-width: 3px;
+  /* ──────── Real water polygons (OSM-sourced bay + estuary) ──────── */
+  /* Drawn after the land base so the actual Tagus bay / Sado estuary
+     shoreline overrides the concelho administrative outline. Same teal
+     as the water-base so the whole "wet" surface reads as one body. */
+  .water-feature {
+    fill: color-mix(in srgb, var(--mc-teal) 32%, var(--color-background));
+    stroke: color-mix(in srgb, var(--mc-teal) 70%, var(--color-text));
+    stroke-width: 1.2;
+    stroke-opacity: 0.85;
     stroke-linejoin: round;
     pointer-events: none;
+  }
+  .margem-map--standard .water-feature {
+    stroke-width: 1.4;
+    stroke-opacity: 0.9;
   }
 
   /* ──────── Water labels ──────── */
