@@ -37,31 +37,39 @@ async function main() {
   // a thankless interpretation problem (the deck members stop at the
   // towers; extending them along local-segment direction kinks the line)
   // — hand-placing 5 points is faster and bridges don't move.
+  // Each bridge gets an extra overshoot point at both ends, pushed past
+  // the coast so the curve clearly lands inside the north and south banks
+  // rather than appearing to float over the water. The middle five points
+  // are the real towers / span landmarks from Google Maps.
   const handBridges = [
     {
       id: 'ponte-25-abril',
       pt: 'Ponte 25 de Abril',
       en: '25 de Abril Bridge',
-      // Alcântara approach → north tower → mid → south tower → Pragal approach
+      // overshoot N (Lisbon) → Alcântara → north tower → mid → south tower → Pragal → overshoot S (Almada)
       points: [
+        [-9.1772, 38.7150],
         [-9.1768, 38.7035],
         [-9.1762, 38.6970],
         [-9.1755, 38.6906],
         [-9.1748, 38.6845],
         [-9.1741, 38.6783],
+        [-9.1733, 38.6700],
       ],
     },
     {
       id: 'ponte-vasco-da-gama',
       pt: 'Ponte Vasco da Gama',
       en: 'Vasco da Gama Bridge',
-      // Sacavém anchor → cable-stayed mast → mid-viaduct → curve → Sarilhos anchor
+      // overshoot N (Sacavém/Lisbon) → Sacavém anchor → cable-stayed mast → mid-viaduct → curve → Sarilhos anchor → overshoot S (Montijo)
       points: [
+        [-9.0480, 38.7820],
         [-9.0413, 38.7747],
         [-9.0349, 38.7587],
         [-9.0150, 38.7378],
         [-8.9870, 38.7180],
         [-8.9690, 38.7080],
+        [-8.9520, 38.6980],
       ],
     },
   ];
