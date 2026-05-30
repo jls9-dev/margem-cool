@@ -30,6 +30,88 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import polygonClipping from 'polygon-clipping';
 
+/**
+ * Load the OSM water relations cached at raw/water-osm.json (fetched by
+ * scripts/build-water-geo.mjs) and assemble each into polygon-clipping
+ * MultiPolygon format. Returns { name, multipoly } entries — `multipoly`
+ * is `[[outerRing, ...holes]]`-style suitable for `polygonClipping.union`
+ * or `.difference`.
+ */
+async function loadWaterMultipolygons(rawDir) {
+  const path = join(rawDir, 'water-osm.json');
+  const raw = JSON.parse(await readFile(path, 'utf8'));
+  const out = [];
+  for (const rel of raw.elements) {
+    if (rel.type !== 'relation') continue;
+    const name = rel.tags?.name ?? `rel/${rel.id}`;
+    const outers = rel.members.filter((m) => m.type === 'way' && m.role === 'outer');
+    const inners = rel.members.filter((m) => m.type === 'way' && m.role === 'inner');
+    const outerRings = stitchWaysIntoRings(outers);
+    const innerRings = stitchWaysIntoRings(inners);
+    if (!outerRings.length) continue;
+    // polygon-clipping wants MultiPolygon = Array<Polygon>, Polygon = [outer, ...inners].
+    // We treat all outers as one MultiPolygon, with inners as holes of the largest outer.
+    const multipoly = outerRings.map((outer) => [outer]);
+    // Attach inner holes to whichever outer they sit in (approximate by area + bbox).
+    for (const inner of innerRings) {
+      // Pick the outer with the largest area that contains the inner's first point.
+      let best = 0;
+      let bestArea = -1;
+      for (let i = 0; i < outerRings.length; i++) {
+        if (pointInRing(inner[0], outerRings[i])) {
+          const a = ringArea(outerRings[i]);
+          if (a > bestArea) { bestArea = a; best = i; }
+        }
+      }
+      multipoly[best].push(inner);
+    }
+    out.push({ name, multipoly });
+  }
+  return out;
+}
+
+function stitchWaysIntoRings(ways) {
+  const segs = ways.map((w) => w.geometry.map((p) => [p.lon, p.lat]));
+  const rings = [];
+  while (segs.length) {
+    let current = segs.shift().slice();
+    let safety = 0;
+    while (!ringClosed(current) && safety++ < 50000) {
+      const tail = current[current.length - 1];
+      let matched = -1, reverse = false;
+      for (let i = 0; i < segs.length; i++) {
+        if (samePt(tail, segs[i][0])) { matched = i; reverse = false; break; }
+        if (samePt(tail, segs[i][segs[i].length - 1])) { matched = i; reverse = true; break; }
+      }
+      if (matched === -1) break;
+      const seg = segs.splice(matched, 1)[0];
+      const next = reverse ? seg.slice().reverse() : seg;
+      for (let k = 1; k < next.length; k++) current.push(next[k]);
+    }
+    if (ringClosed(current) && current.length >= 4) rings.push(current);
+  }
+  return rings;
+}
+function ringClosed(r) {
+  if (r.length < 4) return false;
+  return samePt(r[0], r[r.length - 1]);
+}
+function samePt(a, b) {
+  return Math.abs(a[0] - b[0]) < 1e-9 && Math.abs(a[1] - b[1]) < 1e-9;
+}
+function pointInRing(p, ring) {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i];
+    const [xj, yj] = ring[j];
+    if (((yi > p[1]) !== (yj > p[1])) &&
+        (p[0] < (xj - xi) * (p[1] - yi) / (yj - yi) + xi)) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW_DIR = join(__dirname, '..', 'src', 'data', 'geo', 'raw');
 const OUT_FILE = join(__dirname, '..', 'src', 'data', 'geo', 'concelhos.json');
@@ -301,21 +383,37 @@ async function main() {
   const VIEW_WIDTH = 800;
   const { project, viewHeight } = makeProjector(bbox, VIEW_WIDTH);
 
-  // 3b. Union the context concelhos into single per-side polygons, so
-  // simplification mismatches at adjacent borders don't leak the water
-  // base through as visible teal gaps inside the land.
-  function unionAndProject(group, slug, name) {
+  // 3b. Subtract real OSM water (Mar da Palha, Sado) from each admin union
+  // so the resulting land polygon has the actual coastline of the bay and
+  // estuary — not the admin boundary that claims water as territorial land.
+  // The Atlantic coast stays admin-derived; CAOP follows the actual shore
+  // closely on the ocean side, so admin minus water gives us precise land.
+  const waterFeatures = await loadWaterMultipolygons(RAW_DIR);
+  console.log(`Loaded ${waterFeatures.length} OSM water feature(s) for difference:`);
+  for (const w of waterFeatures) console.log(`  - ${w.name}`);
+
+  function unionMinusWater(group) {
     const inputs = group.flatMap((c) => c.rings.map((ring) => [[ring]]));
-    const result = polygonClipping.union(...inputs);
-    return {
-      slug,
-      name,
-      paths: result.map((poly) => polygonToPath(poly, project)),
-    };
+    let result = polygonClipping.union(...inputs);
+    for (const w of waterFeatures) {
+      result = polygonClipping.difference(result, w.multipoly);
+    }
+    return result; // MultiPolygon in lng/lat
   }
+
+  function projectMultiPolygonOuter(mp) {
+    // Output one SVG path per polygon's outer ring; holes are dropped on
+    // purpose for the same reason as before (simplification-seam slivers
+    // shouldn't be confused with real water — the real water was already
+    // subtracted at the geometry stage).
+    return mp.map((poly) => ringToPath(poly[0].map(project)));
+  }
+
+  const contextNorthMP = unionMinusWater(contextConcelhos);
+  const contextSouthMP = unionMinusWater(contextSouthConcelhos);
   const contextProjected = [
-    unionAndProject(contextConcelhos, 'north-coast', 'Margem Norte'),
-    unionAndProject(contextSouthConcelhos, 'south-coast', 'Sul do Sado'),
+    { slug: 'north-coast', name: 'Margem Norte', paths: projectMultiPolygonOuter(contextNorthMP) },
+    { slug: 'south-coast', name: 'Sul do Sado',  paths: projectMultiPolygonOuter(contextSouthMP) },
   ];
 
   // 4. Project Margem Sul rings and centroids into SVG space
@@ -339,18 +437,20 @@ async function main() {
   const padding = 16;
   const scale = (VIEW_WIDTH - padding * 2) / ((bbox.maxLng - bbox.minLng) * kLat);
 
-  // 4. Compute the union silhouette of all 9 concelhos.
-  //    polygon-clipping wants each input as [[outerRing, ...holes]].
-  //    Our simplified rings have no holes, so we wrap each as [[ring]].
+  // 4. Compute the union of all 9 concelhos, then subtract real OSM water
+  // bodies so the resulting land has the actual bay/estuary coastline.
   const unionInputs = concelhos.flatMap((c) => c.rings.map((ring) => [[ring]]));
-  const unionResult = polygonClipping.union(...unionInputs);
-  // unionResult: MultiPolygon = Array<Polygon = Array<Ring = Array<[lng,lat]>>>
+  const adminUnion = polygonClipping.union(...unionInputs);
+  let preciseLand = adminUnion;
+  for (const w of waterFeatures) {
+    preciseLand = polygonClipping.difference(preciseLand, w.multipoly);
+  }
 
-  // Also produce the SAME union projected at the regular epsilon (no smoothing),
-  // for use as the LAND BASE under the individual concelho strokes. Holes are
-  // preserved so bays enclosed by concelho administrative boundaries
-  // (Seixal Bay, Coina inlet, Moita bay) render as actual water, not land.
-  const margemSulLandPaths = unionResult.map((poly) => polygonToPath(poly, project));
+  // The MAP renders the precise (water-carved) land. The brand silhouette
+  // mark below uses the admin union — for an ownable mark we want the whole
+  // peninsula silhouette, not bisected by the bay.
+  const unionResult = adminUnion;
+  const margemSulLandPaths = preciseLand.map((poly) => ringToPath(poly[0].map(project)));
 
   // The silhouette is shown at brand-mark scale (favicon → 260px outline).
   // Push simplification hard, then run a Chaikin-style corner-cutting pass,

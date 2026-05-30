@@ -19,7 +19,6 @@
  * Data: src/data/geo/concelhos.json (regenerate via scripts/build-concelhos-geo.mjs)
  */
 import geoData from '../../data/geo/concelhos.json';
-import coastData from '../../data/geo/coast.json';
 
 interface Props {
   size?: 'mini' | 'standard';
@@ -126,29 +125,32 @@ const bridges = bridgeData.map((b) => {
         shows through only in the actual sea / river / estuary. */}
     <rect x={vbX} y={vbY} width={vbW} height={vbH} class="water-base" />
 
-    {/* Precise land outline from OpenStreetMap natural=coastline. Each
-        polygon is a closed LAND region derived from real coastlines —
-        the Atlantic shore, the Tagus and bay, the Sado estuary, every
-        inlet — so what you see as cream is actual land, and the teal
-        underneath is actual water. evenodd fill so self-intersecting
-        closures from multi-crossing chains still resolve to land vs
-        water cleanly. */}
-    <g class="coast">
-      {coastData.paths.map((p) => (
-        <path d={p.path} class="land-base" fill-rule="evenodd" />
+    {/* Margem Sul precise land — admin polygons unioned, with real OSM
+        Tagus bay and Sado estuary geometrically subtracted, so the
+        coastline along the bay/estuary follows actual water boundaries
+        and the Atlantic side follows the admin boundary (which CAOP
+        traces along the real coast at high resolution). */}
+    <g class="margem-sul-land">
+      {geoData.margem_sul_land.map((d) => (
+        <path d={d} class="land-base" />
       ))}
     </g>
 
-    {/* Always-on "Lisboa" anchor label so the viewer knows which side
-        of the Tagus they're looking at. */}
-    <text
-      x={project(-9.1430, 38.7440)[0]}
-      y={project(-9.1430, 38.7440)[1]}
-      class="context-label"
-      text-anchor="middle"
-    >
-      {lang === 'en' ? 'Lisbon' : 'Lisboa'}
-    </text>
+    {/* Lisbon + Cascais + Loures context — same admin-minus-OSM-water
+        treatment, so the Tagus north shore is precise too. */}
+    <g class="context-north">
+      {geoData.context_north.map((c) => c.paths.map((d) => (
+        <path d={d} class="land-base" />
+      )))}
+      <text
+        x={project(-9.1430, 38.7440)[0]}
+        y={project(-9.1430, 38.7440)[1]}
+        class="context-label"
+        text-anchor="middle"
+      >
+        {lang === 'en' ? 'Lisbon' : 'Lisboa'}
+      </text>
+    </g>
 
     {/* Concelho polygons — clickable navigation. Drawn on top of the
         precise land with transparent fill + faint strokes for the
