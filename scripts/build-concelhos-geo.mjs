@@ -383,38 +383,11 @@ async function main() {
   const VIEW_WIDTH = 800;
   const { project, viewHeight } = makeProjector(bbox, VIEW_WIDTH);
 
-  // 3b. Subtract real OSM water (Mar da Palha, Sado) from each admin union
-  // so the resulting land polygon has the actual coastline of the bay and
-  // estuary — not the admin boundary that claims water as territorial land.
-  // The Atlantic coast stays admin-derived; CAOP follows the actual shore
-  // closely on the ocean side, so admin minus water gives us precise land.
-  const waterFeatures = await loadWaterMultipolygons(RAW_DIR);
-  console.log(`Loaded ${waterFeatures.length} OSM water feature(s) for difference:`);
-  for (const w of waterFeatures) console.log(`  - ${w.name}`);
-
-  function unionMinusWater(group) {
-    const inputs = group.flatMap((c) => c.rings.map((ring) => [[ring]]));
-    let result = polygonClipping.union(...inputs);
-    for (const w of waterFeatures) {
-      result = polygonClipping.difference(result, w.multipoly);
-    }
-    return result; // MultiPolygon in lng/lat
-  }
-
-  function projectMultiPolygonOuter(mp) {
-    // Output one SVG path per polygon's outer ring; holes are dropped on
-    // purpose for the same reason as before (simplification-seam slivers
-    // shouldn't be confused with real water — the real water was already
-    // subtracted at the geometry stage).
-    return mp.map((poly) => ringToPath(poly[0].map(project)));
-  }
-
-  const contextNorthMP = unionMinusWater(contextConcelhos);
-  const contextSouthMP = unionMinusWater(contextSouthConcelhos);
-  const contextProjected = [
-    { slug: 'north-coast', name: 'Margem Norte', paths: projectMultiPolygonOuter(contextNorthMP) },
-    { slug: 'south-coast', name: 'Sul do Sado',  paths: projectMultiPolygonOuter(contextSouthMP) },
-  ];
+  // 3b. context_north / context_south no longer rendered — the OSM Land
+  // Polygons dataset (built by scripts/build-land-from-osm.mjs into
+  // src/data/geo/osm-land.json) is the canonical land outline now and
+  // covers both sides of the Tagus and beyond at the actual coastline.
+  const contextProjected = [];
 
   // 4. Project Margem Sul rings and centroids into SVG space
   const projected = concelhos.map((c) => {
@@ -437,20 +410,12 @@ async function main() {
   const padding = 16;
   const scale = (VIEW_WIDTH - padding * 2) / ((bbox.maxLng - bbox.minLng) * kLat);
 
-  // 4. Compute the union of all 9 concelhos, then subtract real OSM water
-  // bodies so the resulting land has the actual bay/estuary coastline.
+  // 4. Compute the union of all 9 concelhos for the brand silhouette mark.
   const unionInputs = concelhos.flatMap((c) => c.rings.map((ring) => [[ring]]));
-  const adminUnion = polygonClipping.union(...unionInputs);
-  let preciseLand = adminUnion;
-  for (const w of waterFeatures) {
-    preciseLand = polygonClipping.difference(preciseLand, w.multipoly);
-  }
-
-  // The MAP renders the precise (water-carved) land. The brand silhouette
-  // mark below uses the admin union — for an ownable mark we want the whole
-  // peninsula silhouette, not bisected by the bay.
-  const unionResult = adminUnion;
-  const margemSulLandPaths = preciseLand.map((poly) => ringToPath(poly[0].map(project)));
+  const unionResult = polygonClipping.union(...unionInputs);
+  // margem_sul_land kept empty — the actual map land comes from
+  // scripts/build-land-from-osm.mjs → src/data/geo/osm-land.json.
+  const margemSulLandPaths = [];
 
   // The silhouette is shown at brand-mark scale (favicon → 260px outline).
   // Push simplification hard, then run a Chaikin-style corner-cutting pass,

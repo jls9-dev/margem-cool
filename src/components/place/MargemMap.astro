@@ -19,6 +19,7 @@
  * Data: src/data/geo/concelhos.json (regenerate via scripts/build-concelhos-geo.mjs)
  */
 import geoData from '../../data/geo/concelhos.json';
+import landData from '../../data/geo/osm-land.json';
 
 interface Props {
   size?: 'mini' | 'standard';
@@ -125,23 +126,15 @@ const bridges = bridgeData.map((b) => {
         shows through only in the actual sea / river / estuary. */}
     <rect x={vbX} y={vbY} width={vbW} height={vbH} class="water-base" />
 
-    {/* Margem Sul precise land — admin polygons unioned, with real OSM
-        Tagus bay and Sado estuary geometrically subtracted, so the
-        coastline along the bay/estuary follows actual water boundaries
-        and the Atlantic side follows the admin boundary (which CAOP
-        traces along the real coast at high resolution). */}
-    <g class="margem-sul-land">
-      {geoData.margem_sul_land.map((d) => (
-        <path d={d} class="land-base" />
+    {/* Land outline from the OSM Land Polygons dataset (the same
+        coastline-derived land that every OSM tile renderer uses).
+        Clipped to viewBox and projected with our equirectangular
+        projector. evenodd fill so any enclosed water inside a tile
+        polygon (rare for this region) reads as water. */}
+    <g class="coast">
+      {landData.paths.map((p) => (
+        <path d={p.d} class="land-base" fill-rule="evenodd" />
       ))}
-    </g>
-
-    {/* Lisbon + Cascais + Loures context — same admin-minus-OSM-water
-        treatment, so the Tagus north shore is precise too. */}
-    <g class="context-north">
-      {geoData.context_north.map((c) => c.paths.map((d) => (
-        <path d={d} class="land-base" />
-      )))}
       <text
         x={project(-9.1430, 38.7440)[0]}
         y={project(-9.1430, 38.7440)[1]}
@@ -400,14 +393,14 @@ const bridges = bridgeData.map((b) => {
   }
   .land-base {
     fill: var(--color-background);
-    stroke: color-mix(in srgb, var(--mc-teal) 70%, var(--color-text));
-    stroke-width: 1;
+    stroke: color-mix(in srgb, var(--mc-teal) 75%, var(--color-text));
+    stroke-width: 0.6;
     stroke-linejoin: round;
-    stroke-opacity: 0.85;
+    stroke-opacity: 0.7;
   }
   .margem-map--standard .land-base {
-    stroke-width: 1.2;
-    stroke-opacity: 0.9;
+    stroke-width: 0.8;
+    stroke-opacity: 0.85;
   }
   .concelho {
     fill: transparent;
