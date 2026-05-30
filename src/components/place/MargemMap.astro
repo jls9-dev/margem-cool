@@ -1,31 +1,28 @@
 ---
 /**
- * MargemMap — interactive map of the Margem Sul's 9 concelhos.
+ * MargemMap — interactive Leaflet map of the Margem Sul's 9 concelhos.
  *
- * Built from real geoapi.pt geometry, simplified with Douglas-Peucker
- * (~125 edges per concelho), projected with latitude-corrected
- * equirectangular into an 800-wide viewBox. The Tejo, Atlantic and Sado
- * are implied by the negative space; we add rust italic labels to name
- * them. Each concelho is a link to its overview page, the current one is
- * filled with the brand teal/rust, and any provided place centroid drops
- * a rust dot on the geography.
+ * Built the same way southbank.pt/area-guides does it: Leaflet + CARTO
+ * light tiles + one marker per region. No hand-drawn SVG, no projection
+ * maths, no GeoJSON path tracing — bridges, coastlines, salinas all
+ * come from real OSM tiles. The brand colours apply to the markers and
+ * the chrome around the map; the geography is OSM's.
+ *
+ * Props are unchanged from the previous SVG implementation so this is
+ * a drop-in replacement.
  *
  * Sizes:
- *   - 'mini' — hero slot use; outlines only, current concelho highlighted,
- *     place dot present, no permanent labels for the other 8 (hover shows them)
- *   - 'standard' — feature use on concelho pages; all labels visible,
- *     stronger geographic context (Tejo, Atlantic, Sado, Lisboa anchor)
+ *   - 'mini' — hero slot use; 360px tall, fits in cards
+ *   - 'standard' — feature use on concelho pages and homepage; 540px tall
  *
- * Data: src/data/geo/concelhos.json (regenerate via scripts/build-concelhos-geo.mjs)
+ * Pattern reference: ~/southbank-pt/src/pages/area-guides/index.astro.
+ * Cross-project rule: feedback_real_map_not_handdrawn.md.
  */
-import geoData from '../../data/geo/concelhos.json';
-import landData from '../../data/geo/osm-land.json';
-import bridgeData from '../../data/geo/bridges.json';
 
 interface Props {
   size?: 'mini' | 'standard';
-  concelhoSlug?: string;     // The concelho to highlight (place's parent)
-  placeName?: string;        // For caption + dot accessibility
+  concelhoSlug?: string;     // Highlighted concelho (place's parent)
+  placeName?: string;        // For caption + place-marker tooltip
   placeCentroid?: [number, number];  // [lng, lat] from frontmatter geo.centroid
   lang?: 'pt' | 'en';        // For link URL prefix
 }
@@ -38,555 +35,410 @@ const {
   lang = 'pt',
 } = Astro.props;
 
-const [vbX, vbY, vbW, vbH] = geoData.viewBox;
-const { padding, kLat, scale } = geoData.project;
-const { bbox } = geoData;
-
-function project(lng: number, lat: number): [number, number] {
-  const x = padding + (lng - bbox.minLng) * kLat * scale;
-  const y = padding + (bbox.maxLat - lat) * scale;
-  return [x, y];
-}
-
-const placeXY = placeCentroid ? project(placeCentroid[0], placeCentroid[1]) : null;
-
 const baseHref = lang === 'en' ? '/en/places' : '/lugares';
 
-const isStandard = size === 'standard';
+// Town-centre lat/lng per concelho — anchors the marker where users
+// associate the concelho name (Almada town, not Almada's geometric
+// centroid which sits west of Costa da Caparica; Montijo town in the
+// western piece, not the eastern exclave centroid).
+const concelhos = [
+  { slug: 'almada',    name: 'Almada',    lat: 38.6788, lng: -9.1571 },
+  { slug: 'seixal',    name: 'Seixal',    lat: 38.6444, lng: -9.1042 },
+  { slug: 'sesimbra',  name: 'Sesimbra',  lat: 38.4458, lng: -9.1014 },
+  { slug: 'setubal',   name: 'Setúbal',   lat: 38.5244, lng: -8.8944 },
+  { slug: 'palmela',   name: 'Palmela',   lat: 38.5694, lng: -8.9028 },
+  { slug: 'barreiro',  name: 'Barreiro',  lat: 38.6594, lng: -9.0744 },
+  { slug: 'moita',     name: 'Moita',     lat: 38.6500, lng: -8.9900 },
+  { slug: 'montijo',   name: 'Montijo',   lat: 38.7100, lng: -8.9700 },
+  { slug: 'alcochete', name: 'Alcochete', lat: 38.7556, lng: -8.9667 },
+];
 
-// Bilingual water labels (Tejo, Atlantic, Sado). EN gets the international forms.
-const waterLabels = {
-  tejo:     lang === 'en' ? 'Tagus'          : 'Tejo',
-  atlantic: lang === 'en' ? 'Atlantic Ocean' : 'Oceano Atlântico',
-  sado:     lang === 'en' ? 'Sado Estuary'   : 'Estuário do Sado',
+// Serialise the data the inline init script needs. Avoids the script
+// having to import anything at runtime.
+const mapData = {
+  baseHref,
+  currentSlug: concelhoSlug ?? null,
+  concelhos,
+  place: placeCentroid && placeName
+    ? { name: placeName, lat: placeCentroid[1], lng: placeCentroid[0] }
+    : null,
 };
 
-// Tejo bridges — real OSM geometry. 25 de Abril is the deck outline as a
-// closed polygon; Vasco da Gama is the highway route stitched into one
-// polyline. See scripts/build-bridges.mjs.
-const bridges = bridgeData.bridges.map((b) => ({
-  ...b,
-  name: lang === 'en' ? b.en : b.pt,
-}));
+const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para abrir';
 ---
 
 <figure class={`margem-map margem-map--${size}`} aria-label={`Mapa da Margem Sul${placeName ? ` — ${placeName}` : ''}`}>
-  <svg
-    viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`}
-    xmlns="http://www.w3.org/2000/svg"
-    role="img"
-    aria-hidden="false"
-    overflow="hidden"
-  >
-    <defs>
-      <filter id="dot-glow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="6" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-    </defs>
-
-    {/* Water base — brand teal at low opacity. Land shapes (concelhos +
-        context_north) draw over this with a solid land tone so the teal
-        shows through only in the actual sea / river / estuary. */}
-    <rect x={vbX} y={vbY} width={vbW} height={vbH} class="water-base" />
-
-    {/* Land outline from the OSM Land Polygons dataset (the same
-        coastline-derived land that every OSM tile renderer uses).
-        Clipped to viewBox and projected with our equirectangular
-        projector. evenodd fill so any enclosed water inside a tile
-        polygon (rare for this region) reads as water. */}
-    <g class="coast">
-      {landData.paths.map((p) => (
-        <path d={p.d} class="land-base" fill-rule="evenodd" />
-      ))}
-      <text
-        x={project(-9.1430, 38.7440)[0]}
-        y={project(-9.1430, 38.7440)[1]}
-        class="context-label"
-        text-anchor="middle"
-      >
-        {lang === 'en' ? 'Lisbon' : 'Lisboa'}
-      </text>
-    </g>
-
-    {/* Concelho polygons — clickable navigation. Drawn on top of the
-        precise land with transparent fill + faint strokes for the
-        internal admin borders. */}
-    <g class="concelhos">
-      {geoData.concelhos.map((c) => {
-        const isCurrent = c.slug === concelhoSlug;
-        const [lx, ly] = c.labelXY;
-        const xPct = (lx / vbW) * 100;
-        const yPct = (ly / vbH) * 100;
-        return (
-          <a
-            href={`${baseHref}/${c.slug}/`}
-            class={`concelho-link ${isCurrent ? 'is-current' : ''}`}
-            data-concelho-slug={c.slug}
-            data-label-x={xPct.toFixed(3)}
-            data-label-y={yPct.toFixed(3)}
-          >
-            <title>{c.name}{isStandard ? ` — ${c.area_km2.toFixed(0)} km² · ${c.population_2021?.toLocaleString('pt-PT')} habitantes` : ''}</title>
-            {c.paths.map((d) => (
-              <path
-                d={d}
-                class={`concelho ${isCurrent ? 'is-current' : ''}`}
-              />
-            ))}
-            {(c.labelPositions ?? [c.labelXY]).map(([lx, ly]) => (
-              <text
-                x={lx}
-                y={ly}
-                class={`concelho-label ${isCurrent ? 'is-current' : ''} ${isStandard ? 'is-standard' : ''}`}
-                text-anchor="middle"
-                dominant-baseline="middle"
-              >
-                {c.name}
-              </text>
-            ))}
-          </a>
-        );
-      })}
-    </g>
-
-    {/* Tejo bridges — real OSM deck-outline polygons (man_made=bridge)
-        for both 25 de Abril and Vasco da Gama. Rendered in brand rust
-        with an italic label. */}
-    <g class="bridges">
-      {bridges.map((b) => (
-        <g class="bridge">
-          <path d={b.d} class="bridge__deck-poly" />
-          {isStandard && (
-            <text
-              x={b.labelXY[0]}
-              y={b.labelXY[1]}
-              text-anchor="middle"
-              dominant-baseline="middle"
-              class="bridge__label"
-            >
-              {b.name}
-            </text>
-          )}
-        </g>
-      ))}
-    </g>
-
-    {/* Water labels — set in the negative space between the two coasts.
-        Tejo positioned at lat/lng so it lands in actual water (between
-        Almada and Lisbon), not on top of land. */}
-    {isStandard && (
-      <g class="map-water-labels">
-        <text
-          x={project(-9.105, 38.708)[0]}
-          y={project(-9.105, 38.708)[1]}
-          class="water-label water-label--major"
-          text-anchor="middle"
-        >
-          {waterLabels.tejo}
-        </text>
-        <text x={vbW * 0.04} y={vbH * 0.55} class="water-label" transform={`rotate(-90 ${vbW * 0.04} ${vbH * 0.55})`}>
-          {waterLabels.atlantic}
-        </text>
-        <text x={vbW * 0.55} y={vbH * 0.96} class="water-label">
-          {waterLabels.sado}
-        </text>
-      </g>
-    )}
-
-    {/* Place dot — drawn last so it sits on top */}
-    {placeXY && (
-      <g class="place-marker">
-        <circle
-          cx={placeXY[0]}
-          cy={placeXY[1]}
-          r="14"
-          class="place-marker__halo"
-        />
-        <circle
-          cx={placeXY[0]}
-          cy={placeXY[1]}
-          r="6"
-          class="place-marker__dot"
-        />
-        <circle
-          cx={placeXY[0]}
-          cy={placeXY[1]}
-          r="2.5"
-          class="place-marker__core"
-        />
-      </g>
-    )}
-  </svg>
+  <div class="margem-map__canvas" data-margem-map>
+    <noscript>
+      <p class="margem-map__noscript">
+        {lang === 'en'
+          ? 'Enable JavaScript to view the interactive map of the 9 Margem Sul concelhos.'
+          : 'Ative o JavaScript para ver o mapa interativo dos 9 concelhos da Margem Sul.'}
+      </p>
+    </noscript>
+  </div>
+  <script type="application/json" data-margem-map-config set:html={JSON.stringify(mapData)}></script>
 
   {placeName && (
     <figcaption class="margem-map__caption smallcaps">
       {placeName} · Margem Sul
     </figcaption>
   )}
-
-  {/* Mobile tap callout. Hidden by default, populated + shown by the
-      tap-twice script on touch devices. First tap on a concelho fills
-      this in with its name and a "tap again to open" hint; second tap
-      navigates. */}
-  <div class="margem-map__popup" aria-live="polite" data-empty>
-    <span class="margem-map__popup-name"></span>
-    <span class="margem-map__popup-hint" data-pt="Tocar de novo para abrir →" data-en="Tap again to open →"></span>
-  </div>
 </figure>
 
-<script>
-  // Tap-to-reveal-name pattern on touch devices: first tap on a concelho
-  // populates the popup with the concelho name + a "tap again" hint and
-  // highlights the shape. Second tap navigates. On a different concelho
-  // the selection moves and you still need a second tap. Mouse / pen
-  // clicks navigate immediately — we detect input type per event rather
-  // than per device, so iPad-with-mouse and laptops-with-touch both
-  // behave correctly.
-  (() => {
+<script is:inline define:vars={{ tapAgainHint }}>
+  (function () {
     if (typeof window === 'undefined') return;
-    const lang = document.documentElement.lang?.startsWith('en') ? 'en' : 'pt';
+    if (window.__margemMapInit) {
+      window.__margemMapInit();
+      return;
+    }
 
-    document.querySelectorAll('.margem-map').forEach((map) => {
-      const links = map.querySelectorAll('.concelho-link');
-      const popup = map.querySelector('.margem-map__popup');
-      const popupName = popup?.querySelector('.margem-map__popup-name');
-      const popupHint = popup?.querySelector('.margem-map__popup-hint');
-      if (!popup || !popupName || !popupHint) return;
+    var LEAFLET_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+    var LEAFLET_JS = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+    var TILE_URL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+    var TILE_ATTRIB = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+    var MOBILE_QUERY = '(max-width: 900px)';
 
-      // Track the input type that initiated the current click. pointerdown
-      // fires before click; we read pointerType there and consult it in
-      // the click handler. Default to mouse so JS-triggered or unknown
-      // clicks navigate normally.
-      let lastPointerType = 'mouse';
-      document.addEventListener('pointerdown', (event) => {
-        lastPointerType = event.pointerType || 'mouse';
-      }, true);
-
-      const clearTapped = () => {
-        links.forEach((l) => l.classList.remove('is-tapped'));
-        popup.setAttribute('data-empty', '');
-        popup.removeAttribute('style');
-        popupName.textContent = '';
-      };
-
-      const placePopup = (link) => {
-        // Anchor popup above the tapped concelho's label centroid so it
-        // appears where the eye is, not at the top of the map. Falls
-        // back to top-of-map if the data attrs are missing.
-        const xRaw = link.getAttribute('data-label-x');
-        const yRaw = link.getAttribute('data-label-y');
-        const x = xRaw == null ? null : parseFloat(xRaw);
-        const y = yRaw == null ? null : parseFloat(yRaw);
-        if (x == null || y == null || Number.isNaN(x) || Number.isNaN(y)) {
-          popup.removeAttribute('style');
-          return;
-        }
-        popup.style.left = `${x}%`;
-        // If the concelho sits near the top of the map, anchor the popup
-        // below the centroid instead of above so it doesn't get clipped.
-        if (y < 18) {
-          popup.style.top = `${y}%`;
-          popup.style.transform = 'translate(-50%, 12px)';
-        } else {
-          popup.style.top = `${y}%`;
-          popup.style.transform = 'translate(-50%, calc(-100% - 12px))';
-        }
-      };
-
-      links.forEach((link) => {
-        link.addEventListener('click', (event) => {
-          // Mouse / pen clicks always navigate on first click — no tap-twice.
-          if (lastPointerType !== 'touch') return;
-          if (link.classList.contains('is-tapped') || link.classList.contains('is-current')) {
-            return; // second tap (or tap on current) — let navigation through
-          }
-          event.preventDefault();
-          links.forEach((l) => l.classList.remove('is-tapped'));
-          link.classList.add('is-tapped');
-          // The concelho's name is in its <title> child.
-          const title = link.querySelector('title');
-          popupName.textContent = title ? title.textContent : '';
-          popupHint.textContent = popupHint.dataset[lang] || popupHint.dataset.pt || '';
-          placePopup(link);
-          popup.removeAttribute('data-empty');
+    function ensureLeaflet(cb) {
+      if (typeof L !== 'undefined') { cb(); return; }
+      if (!document.querySelector('link[data-leaflet-css]')) {
+        var css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = LEAFLET_CSS;
+        css.setAttribute('data-leaflet-css', '');
+        document.head.appendChild(css);
+      }
+      var existing = document.querySelector('script[data-leaflet-js]');
+      if (existing) {
+        existing.addEventListener('load', cb);
+        return;
+      }
+      var js = document.createElement('script');
+      js.src = LEAFLET_JS;
+      js.async = true;
+      js.setAttribute('data-leaflet-js', '');
+      js.onload = cb;
+      js.onerror = function () {
+        document.querySelectorAll('[data-margem-map]').forEach(function (el) {
+          el.innerHTML = '<div class="margem-map__error">Failed to load map. Refresh the page.</div>';
         });
+      };
+      document.head.appendChild(js);
+    }
+
+    function initOne(canvas) {
+      if (canvas.__margemMapReady) return;
+      canvas.__margemMapReady = true;
+
+      var cfgEl = canvas.parentElement.querySelector('script[data-margem-map-config]');
+      if (!cfgEl) return;
+      var cfg = JSON.parse(cfgEl.textContent || '{}');
+
+      var map = L.map(canvas, {
+        zoomControl: true,
+        scrollWheelZoom: false,
+        attributionControl: true,
       });
 
-      // Tap outside any concelho clears the highlight + popup.
-      map.addEventListener('click', (event) => {
-        const target = event.target;
-        if (!(target instanceof Element)) return;
-        if (target.closest('.concelho-link')) return;
-        clearTapped();
-      });
-    });
-  })();
+      L.tileLayer(TILE_URL, {
+        attribution: TILE_ATTRIB,
+        subdomains: 'abcd',
+        maxZoom: 18,
+      }).addTo(map);
 
-  // List ↔ map hover sync. Any element with [data-concelho-link] on the
-  // same page lights up the matching concelho on every MargemMap instance
-  // when hovered/focused. Used by the /lugares list to mirror the map.
-  (() => {
-    if (typeof window === 'undefined') return;
-    const apply = (slug, on) => {
-      document.querySelectorAll(`.margem-map .concelho-link[data-concelho-slug="${slug}"]`).forEach((el) => {
-        el.classList.toggle('is-listhover', on);
+      var sharedPopup = null;
+      var openMarker = null;
+      var markers = [];
+
+      function makeIcon(slug) {
+        var isCurrent = slug === cfg.currentSlug;
+        return L.divIcon({
+          className: 'mc-area-pin' + (isCurrent ? ' mc-area-pin--current' : ''),
+          html: '<div class="mc-pin-circle"></div>',
+          iconSize: [24, 24],
+          iconAnchor: [12, 12],
+        });
+      }
+
+      cfg.concelhos.forEach(function (c) {
+        var marker = L.marker([c.lat, c.lng], { icon: makeIcon(c.slug) })
+          .bindTooltip(c.name, {
+            permanent: false,
+            direction: 'top',
+            offset: [0, -8],
+            className: 'mc-pin-tooltip',
+          })
+          .addTo(map);
+
+        marker.on('click', function (e) {
+          L.DomEvent.stopPropagation(e);
+          var isMobile = window.matchMedia(MOBILE_QUERY).matches;
+          var href = cfg.baseHref + '/' + c.slug + '/';
+          if (!isMobile) {
+            window.location.href = href;
+            return;
+          }
+          marker.closeTooltip();
+          if (openMarker === marker) {
+            window.location.href = href;
+            return;
+          }
+          var html = '<a href="' + href + '" class="mc-pin-popup-link">' +
+            c.name + ' <span class="mc-pin-popup-hint">' + tapAgainHint + ' &rarr;</span></a>';
+          if (!sharedPopup) {
+            sharedPopup = L.popup({
+              closeButton: false,
+              offset: [0, -8],
+              className: 'mc-pin-popup',
+              autoClose: true,
+              closeOnClick: true,
+            });
+          }
+          sharedPopup.setLatLng(marker.getLatLng()).setContent(html).openOn(map);
+          openMarker = marker;
+        });
+
+        markers.push(marker);
       });
+
+      map.on('popupclose', function (e) {
+        if (e.popup === sharedPopup) openMarker = null;
+      });
+
+      // Place marker (freguesia/bairro page) — distinct visual, no link.
+      if (cfg.place) {
+        var placeIcon = L.divIcon({
+          className: 'mc-place-pin',
+          html: '<div class="mc-place-pin__halo"></div><div class="mc-place-pin__dot"></div>',
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+        });
+        L.marker([cfg.place.lat, cfg.place.lng], { icon: placeIcon, interactive: false })
+          .bindTooltip(cfg.place.name, {
+            permanent: true,
+            direction: 'top',
+            offset: [0, -10],
+            className: 'mc-place-tooltip',
+          })
+          .addTo(map);
+      }
+
+      // Fit bounds. Include the place marker if present so it's not
+      // off-frame.
+      var bounds = L.featureGroup(markers).getBounds();
+      if (cfg.place) bounds.extend([cfg.place.lat, cfg.place.lng]);
+      map.fitBounds(bounds, { padding: [28, 28] });
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-margem-map]').forEach(initOne);
+    }
+
+    window.__margemMapInit = function () {
+      ensureLeaflet(initAll);
     };
-    document.querySelectorAll('[data-concelho-link]').forEach((item) => {
-      const slug = item.getAttribute('data-concelho-link');
-      if (!slug) return;
-      item.addEventListener('mouseenter', () => apply(slug, true));
-      item.addEventListener('mouseleave', () => apply(slug, false));
-      item.addEventListener('focus', () => apply(slug, true));
-      item.addEventListener('blur', () => apply(slug, false));
-    });
+    window.__margemMapInit();
   })();
 </script>
 
-<style>
+<style is:global>
+  /* ── Map container ── */
   .margem-map {
     margin: 0;
     padding: 0;
-    position: relative;
   }
-  .margem-map__popup {
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 10px 18px;
-    background: var(--color-background);
-    border: 1.5px solid var(--color-accent);
-    border-radius: 999px;
-    box-shadow: 0 6px 20px -8px color-mix(in srgb, var(--color-accent) 70%, transparent);
-    pointer-events: none;
-    z-index: 5;
-    transition: opacity 160ms ease;
-    opacity: 1;
-    max-width: 90%;
+  .margem-map--mini .margem-map__canvas {
+    height: 360px;
+  }
+  .margem-map--standard .margem-map__canvas {
+    height: 540px;
+  }
+  @media (max-width: 600px) {
+    .margem-map--standard .margem-map__canvas {
+      height: 420px;
+    }
+  }
+  .margem-map__canvas {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--mc-teal) 12%, var(--color-background));
+  }
+  .margem-map__noscript,
+  .margem-map__error {
+    padding: 40px;
     text-align: center;
-    white-space: nowrap;
+    color: var(--color-text-secondary);
+    font-size: 15px;
   }
-  .margem-map__popup[data-empty] {
-    opacity: 0;
+
+  /* ── Leaflet overrides — brand chrome ── */
+  .leaflet-control-attribution {
+    font-size: 9px !important;
+    background: color-mix(in srgb, var(--color-background) 88%, transparent) !important;
   }
-  .margem-map__popup-name {
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--color-accent);
-    line-height: 1.1;
+  .leaflet-control-zoom a {
+    background: var(--color-background) !important;
+    color: var(--color-accent) !important;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 28%, transparent) !important;
+    font-weight: 700 !important;
   }
-  .margem-map__popup-hint {
-    font-family: var(--font-display);
-    font-size: 10px;
+  .leaflet-control-zoom a:hover {
+    background: color-mix(in srgb, var(--color-accent) 8%, var(--color-background)) !important;
+    color: var(--color-accent) !important;
+  }
+  .leaflet-container {
+    font-family: var(--font-body) !important;
+    background: color-mix(in srgb, var(--mc-teal) 12%, var(--color-background)) !important;
+  }
+
+  /* ── Concelho pin ── */
+  .mc-area-pin {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .mc-pin-circle {
+    width: 18px;
+    height: 18px;
+    background: var(--color-accent);
+    border: 3px solid var(--color-background);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--color-accent) 38%, transparent);
+    position: relative;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .mc-pin-circle::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--color-background);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .mc-area-pin:hover .mc-pin-circle {
+    transform: scale(1.3);
+    z-index: 1000;
+  }
+  .mc-area-pin--current .mc-pin-circle {
+    transform: scale(1.4);
+    background: var(--mc-teal, var(--color-accent));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 22%, transparent),
+                0 3px 10px color-mix(in srgb, var(--color-accent) 50%, transparent);
+  }
+
+  /* ── Tooltip (hover label) ── */
+  .mc-pin-tooltip {
+    background: var(--color-background) !important;
+    color: var(--color-text) !important;
+    font-family: var(--font-display) !important;
+    font-size: 12px !important;
     letter-spacing: var(--tracking-smallcaps);
     text-transform: uppercase;
+    font-weight: 600 !important;
+    padding: 5px 12px !important;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 18%, transparent) !important;
+    white-space: nowrap;
+  }
+  .mc-pin-tooltip.leaflet-tooltip-top:before {
+    border-top-color: var(--color-background) !important;
+  }
+
+  /* ── Mobile popup (tap-twice) ── */
+  .mc-pin-popup .leaflet-popup-content-wrapper {
+    background: var(--color-background) !important;
+    padding: 0 !important;
+    border-radius: 4px !important;
+    border: 1.5px solid var(--color-accent) !important;
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--color-accent) 30%, transparent) !important;
+  }
+  .mc-pin-popup .leaflet-popup-content {
+    margin: 0 !important;
+    line-height: 1.1 !important;
+  }
+  .mc-pin-popup .leaflet-popup-tip {
+    background: var(--color-background) !important;
+  }
+  .mc-pin-popup-link {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 16px !important;
+    font-family: var(--font-display) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--color-accent) !important;
+    text-decoration: none !important;
+    white-space: nowrap;
+  }
+  .mc-pin-popup-hint {
+    font-size: 10px;
     color: var(--color-text-secondary);
-    line-height: 1.1;
-  }
-  @media (hover: hover) {
-    /* Desktop never shows the popup — hover does the work. */
-    .margem-map__popup { display: none; }
-  }
-  .margem-map--mini {
-    max-width: 360px;
-  }
-  .margem-map--standard {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-  .margem-map svg {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  /* ──────── Water base + land base + concelho borders ──────── */
-  /* The water base is a faint teal wash. The Margem Sul land base is a
-     single unioned shape drawn over the water so the land reads continuously.
-     Individual concelhos are then drawn on top as fill: none — only their
-     borders show, no per-concelho seam can leak teal through. */
-  .water-base {
-    fill: color-mix(in srgb, var(--mc-teal) 32%, var(--color-background));
-  }
-  .land-base {
-    fill: var(--color-background);
-    stroke: color-mix(in srgb, var(--mc-teal) 75%, var(--color-text));
-    stroke-width: 0.6;
-    stroke-linejoin: round;
-    stroke-opacity: 0.7;
-  }
-  .margem-map--standard .land-base {
-    stroke-width: 0.8;
-    stroke-opacity: 0.85;
-  }
-  .concelho {
-    fill: var(--color-background);
-    stroke: var(--color-text);
-    stroke-opacity: 0.25;
-    stroke-width: 0.8;
-    stroke-linejoin: round;
-    transition: fill 200ms ease, stroke-opacity 200ms ease;
-  }
-  .concelho-link {
-    cursor: pointer;
-    outline: none;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .concelho-link:hover .concelho,
-  .concelho-link:focus-visible .concelho,
-  .concelho-link.is-tapped .concelho,
-  .concelho-link.is-listhover .concelho {
-    fill: color-mix(in srgb, var(--color-accent) 22%, var(--color-background));
-    stroke-opacity: 0.7;
-  }
-  .concelho.is-current {
-    fill: color-mix(in srgb, var(--color-accent) 32%, var(--color-background));
-    stroke: var(--color-accent);
-    stroke-opacity: 0.8;
-    stroke-width: 1.4;
-  }
-  .concelho-link.is-current:hover .concelho,
-  .concelho-link.is-current.is-tapped .concelho {
-    fill: color-mix(in srgb, var(--color-accent) 40%, var(--color-background));
-  }
-
-  /* ──────── Concelho labels ──────── */
-  /* Permanently visible — hovering only changes the polygon fill, not
-     the label visibility. paint-order: stroke gives a cream halo around
-     each label so it reads cleanly on any background. */
-  .concelho-label {
-    font-family: var(--font-display);
-    font-size: 11px;
-    letter-spacing: 0.12em;
+    letter-spacing: var(--tracking-smallcaps);
     text-transform: uppercase;
-    fill: var(--color-text);
-    fill-opacity: 0.85;
-    pointer-events: none;
-    paint-order: stroke;
-    stroke: var(--color-background);
-    stroke-width: 3px;
-    stroke-linejoin: round;
-    transition: fill 200ms ease, fill-opacity 200ms ease;
-  }
-  .concelho-link:hover .concelho-label,
-  .concelho-link:focus-visible .concelho-label,
-  .concelho-link.is-tapped .concelho-label,
-  .concelho-link.is-listhover .concelho-label {
-    fill: var(--color-accent);
-    fill-opacity: 1;
-  }
-  .concelho-label.is-current {
-    fill: var(--color-accent);
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .margem-map--standard .concelho-label {
-    font-size: 12px;
-  }
-  .margem-map--standard .concelho-label.is-current {
-    font-size: 14px;
+    margin-top: 2px;
   }
 
-  .context-label {
-    font-family: var(--font-display);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    fill: var(--color-text);
-    fill-opacity: 0.55;
+  /* ── Place marker (freguesia/bairro pin on its overview page) ── */
+  .mc-place-pin {
     pointer-events: none;
   }
-  .margem-map--standard .context-label {
-    font-size: 13px;
-    fill-opacity: 0.7;
+  .mc-place-pin__halo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 28px;
+    height: 28px;
+    background: var(--color-accent);
+    opacity: 0.18;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: mc-place-pulse 2.6s ease-in-out infinite;
   }
-
-  /* ──────── Bridges ──────── */
-  /* Real OSM deck outline polygons. At this map scale a 30 m deck is
-     ~0.3 px wide, so the polygon is given a stroke too — fill + stroke
-     reads as a bridge line while the centerline stays geographically
-     truthful. */
-  .bridge__deck-poly {
-    fill: var(--color-accent);
-    stroke: var(--color-accent);
-    stroke-width: 2;
-    stroke-linejoin: round;
-    stroke-linecap: round;
+  .mc-place-pin__dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background: var(--color-accent);
+    border: 2px solid var(--color-background);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--color-accent) 50%, transparent);
   }
-  .margem-map--standard .bridge__deck-poly {
-    stroke-width: 2.4;
-  }
-  .bridge__label {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    fill: var(--color-accent);
-    fill-opacity: 0.9;
-    paint-order: stroke;
-    stroke: var(--color-background);
-    stroke-width: 3;
-    stroke-linejoin: round;
-    pointer-events: none;
-  }
-
-  /* ──────── Water labels ──────── */
-  .water-label {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 18px;
-    letter-spacing: 0.08em;
-    fill: var(--color-accent);
-    fill-opacity: 0.55;
-    pointer-events: none;
-  }
-  .water-label--major {
-    font-size: 28px;
-    fill-opacity: 0.65;
-  }
-  .anchor-label {
-    font-family: var(--font-display);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    fill: var(--color-text);
-    fill-opacity: 0.4;
-    pointer-events: none;
-  }
-
-  /* ──────── Place marker ──────── */
-  .place-marker__halo {
-    fill: var(--color-accent);
-    fill-opacity: 0.12;
-    animation: place-pulse 2.8s ease-in-out infinite;
-  }
-  .place-marker__dot {
-    fill: var(--color-accent);
-    stroke: var(--color-background);
-    stroke-width: 2;
-  }
-  .place-marker__core {
-    fill: var(--color-background);
-  }
-  @keyframes place-pulse {
-    0%, 100% { transform: scale(1); opacity: 0.55; transform-origin: center; transform-box: fill-box; }
-    50% { transform: scale(1.35); opacity: 0.18; transform-origin: center; transform-box: fill-box; }
+  @keyframes mc-place-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.28; }
+    50%      { transform: translate(-50%, -50%) scale(1.6); opacity: 0.08; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .place-marker__halo { animation: none; }
+    .mc-place-pin__halo { animation: none; }
+  }
+  .mc-place-tooltip {
+    background: var(--color-accent) !important;
+    color: var(--color-background) !important;
+    font-family: var(--font-display) !important;
+    font-size: 11px !important;
+    letter-spacing: var(--tracking-smallcaps);
+    text-transform: uppercase;
+    font-weight: 600 !important;
+    padding: 4px 10px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 30%, transparent) !important;
+  }
+  .mc-place-tooltip.leaflet-tooltip-top:before {
+    border-top-color: var(--color-accent) !important;
   }
 
-  /* ──────── Caption ──────── */
+  /* ── Caption ── */
   .margem-map__caption {
     display: block;
     margin: var(--space-xs) 0 0;
