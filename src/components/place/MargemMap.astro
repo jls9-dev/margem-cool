@@ -152,13 +152,13 @@ const bridges = bridgeData.bridges.map((b) => ({
       })}
     </g>
 
-    {/* Tejo bridges — real OSM geometry. 25 de Abril is the deck-outline
-        polygon (closed); Vasco da Gama is the route centerline (open
-        polyline). Both rendered in brand rust with an italic label. */}
+    {/* Tejo bridges — real OSM deck-outline polygons (man_made=bridge)
+        for both 25 de Abril and Vasco da Gama. Rendered in brand rust
+        with an italic label. */}
     <g class="bridges">
       {bridges.map((b) => (
         <g class="bridge">
-          <path d={b.d} class={b.shape === 'polygon' ? 'bridge__deck-poly' : 'bridge__deck-line'} />
+          <path d={b.d} class="bridge__deck-poly" />
           {isStandard && (
             <text
               x={b.labelXY[0]}
@@ -512,22 +512,18 @@ const bridges = bridgeData.bridges.map((b) => ({
   }
 
   /* ──────── Bridges ──────── */
-  /* 25 de Abril — closed deck outline as a filled polygon. */
+  /* Real OSM deck outline polygons. At this map scale a 30 m deck is
+     ~0.3 px wide, so the polygon is given a stroke too — fill + stroke
+     reads as a bridge line while the centerline stays geographically
+     truthful. */
   .bridge__deck-poly {
     fill: var(--color-accent);
     stroke: var(--color-accent);
-    stroke-width: 0.5;
-    stroke-linejoin: round;
-  }
-  /* Vasco da Gama — full route centerline as a stroked polyline. */
-  .bridge__deck-line {
-    fill: none;
-    stroke: var(--color-accent);
     stroke-width: 2;
-    stroke-linecap: round;
     stroke-linejoin: round;
+    stroke-linecap: round;
   }
-  .margem-map--standard .bridge__deck-line {
+  .margem-map--standard .bridge__deck-poly {
     stroke-width: 2.4;
   }
   .bridge__label {
