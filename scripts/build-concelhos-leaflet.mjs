@@ -85,8 +85,40 @@ function rdp(points, epsilon) {
 }
 
 // ~50 m at this latitude is ≈ 0.00045°. Slightly tighter for crisp
-// coastline detail; the GeoJSON file is still <300 KB.
+// coastline detail on individual concelhos; the GeoJSON file is still
+// <300 KB.
 const EPSILON_DEG = 0.00035;
+
+// The outer perimeter is a brand element, not geography — it should
+// read as a confident designed line, not trace every tiny inlet. ~200m
+// epsilon collapses small coastline noise; then a Chaikin pass rounds
+// the remaining angles so the outline feels drawn, not vectorised.
+const OUTLINE_EPSILON_DEG = 0.0015;
+
+// One pass of Chaikin's corner-cutting algorithm: each edge is
+// replaced by two new vertices at 1/4 and 3/4 along it, so every
+// sharp corner becomes a soft turn. Doubles vertex count per pass.
+function chaikin(ring) {
+  if (ring.length < 4) return ring.slice();
+  const closed = ring[0][0] === ring[ring.length - 1][0]
+              && ring[0][1] === ring[ring.length - 1][1];
+  const work = closed ? ring.slice(0, -1) : ring.slice();
+  const out = [];
+  for (let i = 0; i < work.length; i++) {
+    const p0 = work[i];
+    const p1 = work[(i + 1) % work.length];
+    out.push([
+      0.75 * p0[0] + 0.25 * p1[0],
+      0.75 * p0[1] + 0.25 * p1[1],
+    ]);
+    out.push([
+      0.25 * p0[0] + 0.75 * p1[0],
+      0.25 * p0[1] + 0.75 * p1[1],
+    ]);
+  }
+  if (closed) out.push(out[0]);
+  return out;
+}
 
 function simplifyRings(coords, type) {
   // GeoJSON coords for Polygon: rings[]; for MultiPolygon: polygons[][rings[]]
@@ -186,9 +218,14 @@ async function main() {
     }
     return (maxLng - minLng) * (maxLat - minLat);
   }
+  // Smooth the outer perimeter for a brand-confident line: aggressive
+  // RDP first (collapses tiny salt-flat inlets and dock notches into
+  // straight runs — "include a bit of area without copying every
+  // variation"), then one Chaikin pass to round the remaining
+  // corners. The result has noticeably more flow than the raw union.
   const unioned = unionedRaw
     .filter((poly) => bboxAreaDeg2(poly[0]) >= SLIVER_THRESHOLD_DEG2)
-    .map((poly) => poly.map((ring) => rdp(ring, EPSILON_DEG)));
+    .map((poly) => poly.map((ring) => chaikin(rdp(ring, OUTLINE_EPSILON_DEG))));
   const outlineFeature = {
     type: 'Feature',
     properties: { name: 'Margem Sul' },
