@@ -47,15 +47,15 @@ const baseHref = lang === 'en' ? '/en/places' : '/lugares';
 // concelho's land mass rather than the geometric centroid (which for
 // irregular concelhos drifts to salt flats or exclaves).
 const labelAnchors: Record<string, [number, number]> = {
-  almada:    [38.6600, -9.1800],  // Costa da Caparica side — away from the cluster
-  seixal:    [38.6160, -9.1100],  // Amora area
+  almada:    [38.6450, -9.2050],  // Costa da Caparica — well clear of the cluster
+  seixal:    [38.6050, -9.1100],  // mid-Seixal, south of Amora
   sesimbra:  [38.4500, -9.1100],
   setubal:   [38.5300, -8.8800],
-  palmela:   [38.5950, -8.7900],  // east side of Palmela, clear of Setúbal
-  barreiro:  [38.6620, -9.0650],  // Lavradio side, pulled E away from Seixal
-  moita:     [38.6320, -8.9700],  // mid-Moita, pulled S/E away from Barreiro
-  montijo:   [38.7050, -8.9650],
-  alcochete: [38.7530, -8.9550],
+  palmela:   [38.6050, -8.7700],  // east-central Palmela, well clear of Setúbal
+  barreiro:  [38.6700, -9.0500],  // Lavradio side, pulled NE away from Seixal
+  moita:     [38.6300, -8.9650],  // mid-Moita, pulled SE away from Barreiro
+  montijo:   [38.7050, -8.9550],
+  alcochete: [38.7550, -8.9400],
 };
 
 const mapData = {
@@ -101,7 +101,11 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
 
     var LEAFLET_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
     var LEAFLET_JS = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
-    var TILE_URL = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+    // light_nolabels — same CARTO light tiles but without the
+    // built-in place labels (Lisbon, Setúbal, Sesimbra etc.). We layer
+    // our own concelho labels on top with brand typography; the OSM
+    // tile's labels would duplicate ours.
+    var TILE_URL = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
     var TILE_ATTRIB = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
     var MOBILE_QUERY = '(max-width: 900px)';
 
@@ -176,14 +180,18 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
       // with a clear rust fill. Current concelho is unmistakeable.
       var openSlug = null;
 
+      // Always keep fill: true so setStyle only has to toggle
+      // fillOpacity. Toggling fill: true/false via setStyle leaves the
+      // hover updates inconsistent because Leaflet doesn't re-create
+      // the underlying SVG fill attribute.
       function baseStyle(slug) {
         var isCurrent = slug === cfg.currentSlug;
         return isCurrent
           ? { color: '#B7472A', weight: 2.5, opacity: 1.0,  fillColor: '#B7472A', fillOpacity: 0.30, fill: true }
-          : { color: '#B7472A', weight: 1,   opacity: 0.55, fillColor: '#B7472A', fillOpacity: 0,    fill: false };
+          : { color: '#B7472A', weight: 1.2, opacity: 0.55, fillColor: '#B7472A', fillOpacity: 0,    fill: true };
       }
       function hoverStyle() {
-        return { color: '#B7472A', weight: 2, opacity: 0.95, fillColor: '#B7472A', fillOpacity: 0.22, fill: true };
+        return { color: '#B7472A', weight: 2.2, opacity: 0.95, fillColor: '#B7472A', fillOpacity: 0.24, fill: true };
       }
 
       L.geoJSON(cfg.concelhos, {
@@ -355,25 +363,26 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
     left: 0;
     transform: translate(-50%, -50%);
     font-family: var(--font-display);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--color-text);
     white-space: nowrap;
-    /* Cream halo via layered text-shadow — readable over any tile
-       colour, no boxy background needed. */
+    /* Cream halo via stacked text-shadow — gives the label a confident
+       breath of cream so the type reads cleanly without a boxy
+       backdrop. Stacked so the halo is thick enough at 12px. */
     text-shadow:
-      0 0 3px var(--color-background),
-      0 0 3px var(--color-background),
-      0 0 6px var(--color-background),
+      0 0 4px var(--color-background),
+      0 0 4px var(--color-background),
+      0 0 8px var(--color-background),
+      0 0 8px var(--color-background),
       0 1px 0 var(--color-background);
   }
   .mc-concelho-label--current span {
     color: var(--color-accent);
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.20em;
+    font-size: 13px;
+    letter-spacing: 0.24em;
   }
 
   /* ── Mobile popup (tap-twice on a concelho polygon) ── */
