@@ -51,22 +51,19 @@ async function main() {
   const silPath = silhouette.paths.join(' ');
 
   // ───────── 1. favicon.svg — silhouette filling the square ─────────
-  // Just the shape: tight padding, no separate river curve. The silhouette's
-  // top edge already IS the Tejo coast, so the river is implied by geography.
-  // Reads as a distinctive rust shape at 16px tab size.
-  const silSlot = silhouetteTransform(
-    silhouette.viewBox,
-    6,
-    16,
-    FAVICON_SIZE - 12,
-    FAVICON_SIZE - 32,
-  );
+  // Just the shape: no separate river curve. The silhouette's top edge
+  // already IS the Tejo coast, so the river is implied by geography.
+  //
+  // For maximum tab presence we set the SVG's viewBox to the silhouette's
+  // actual bounding box (not a padded square). The silhouette fills 100%
+  // of the viewBox width; the browser preserves aspect and letterboxes
+  // vertically (the silhouette is ~1.38:1 wider than tall). Net effect:
+  // the rust shape is ~6% larger in the tab than the old padded version.
+  const [vbX, vbY, vbW, vbH] = silhouette.viewBox;
 
-  const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${FAVICON_SIZE} ${FAVICON_SIZE}" role="img" aria-label="Margem Cool">
+  const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vbX} ${vbY} ${vbW} ${vbH}" role="img" aria-label="Margem Cool">
   <title>Margem Cool</title>
-  <g transform="${silSlot.transform}">
-    <path d="${silPath}" fill="${RUST}"/>
-  </g>
+  <path d="${silPath}" fill="${RUST}"/>
 </svg>
 `;
 
