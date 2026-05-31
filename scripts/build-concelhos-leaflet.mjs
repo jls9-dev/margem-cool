@@ -90,10 +90,12 @@ function rdp(points, epsilon) {
 const EPSILON_DEG = 0.00035;
 
 // The outer perimeter is a brand element, not geography — it should
-// read as a confident designed line, not trace every tiny inlet. ~200m
-// epsilon collapses small coastline noise; then a Chaikin pass rounds
-// the remaining angles so the outline feels drawn, not vectorised.
-const OUTLINE_EPSILON_DEG = 0.0015;
+// read as a confident designed line, not trace every tiny inlet. ~300m
+// epsilon collapses small coastline noise (dock peninsulas at Cacilhas
+// / Trafaria, small Costa da Caparica indents); two Chaikin passes
+// then round the remaining angles so the outline feels drawn.
+const OUTLINE_EPSILON_DEG = 0.003;
+const OUTLINE_CHAIKIN_PASSES = 2;
 
 // One pass of Chaikin's corner-cutting algorithm: each edge is
 // replaced by two new vertices at 1/4 and 3/4 along it, so every
@@ -223,9 +225,14 @@ async function main() {
   // straight runs — "include a bit of area without copying every
   // variation"), then one Chaikin pass to round the remaining
   // corners. The result has noticeably more flow than the raw union.
+  function smoothRing(ring) {
+    let r = rdp(ring, OUTLINE_EPSILON_DEG);
+    for (let i = 0; i < OUTLINE_CHAIKIN_PASSES; i++) r = chaikin(r);
+    return r;
+  }
   const unioned = unionedRaw
     .filter((poly) => bboxAreaDeg2(poly[0]) >= SLIVER_THRESHOLD_DEG2)
-    .map((poly) => poly.map((ring) => chaikin(rdp(ring, OUTLINE_EPSILON_DEG))));
+    .map((poly) => poly.map(smoothRing));
   const outlineFeature = {
     type: 'Feature',
     properties: { name: 'Margem Sul' },
