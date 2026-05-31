@@ -41,21 +41,21 @@ const {
 
 const baseHref = lang === 'en' ? '/en/places' : '/lugares';
 
-// Label anchor (lat, lng) per concelho — used as the permanent tooltip
-// position. Hand-set to land on the town centre, not the geometric
-// centroid (Almada centroid sits near Costa da Caparica; Montijo's
-// drifts to the eastern exclave). These match the southbank.pt anchors
-// where they exist.
+// Label anchor (lat, lng) per concelho — hand-tuned to spread the four
+// Tejo-bank towns (Almada / Seixal / Barreiro / Moita) so the labels
+// don't dogpile at the default zoom, and to land each name on its own
+// concelho's land mass rather than the geometric centroid (which for
+// irregular concelhos drifts to salt flats or exclaves).
 const labelAnchors: Record<string, [number, number]> = {
-  almada:    [38.6788, -9.1571],
-  seixal:    [38.6444, -9.1042],
-  sesimbra:  [38.4458, -9.1014],
-  setubal:   [38.5244, -8.8944],
-  palmela:   [38.5694, -8.9028],
-  barreiro:  [38.6594, -9.0744],
-  moita:     [38.6500, -8.9900],
-  montijo:   [38.7100, -8.9700],
-  alcochete: [38.7556, -8.9667],
+  almada:    [38.6600, -9.1800],  // Costa da Caparica side — away from the cluster
+  seixal:    [38.6160, -9.1100],  // Amora area
+  sesimbra:  [38.4500, -9.1100],
+  setubal:   [38.5300, -8.8800],
+  palmela:   [38.5950, -8.7900],  // east side of Palmela, clear of Setúbal
+  barreiro:  [38.6620, -9.0650],  // Lavradio side, pulled E away from Seixal
+  moita:     [38.6320, -8.9700],  // mid-Moita, pulled S/E away from Barreiro
+  montijo:   [38.7050, -8.9650],
+  alcochete: [38.7530, -8.9550],
 };
 
 const mapData = {
@@ -152,34 +152,52 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
         maxZoom: 18,
       }).addTo(map);
 
+      // ── Margem Sul perimeter ───────────────────────────────────
+      // Confident 2.5px teal line, no halo, no fill. Designed maps
+      // don't need haloed outlines; the teal sits clearly over the
+      // CARTO light tiles. Drawn first so the concelho polygons can
+      // be brought to front on hover without sliding under the
+      // perimeter.
+      var outlineLayer = L.geoJSON(cfg.outline, {
+        style: {
+          color: '#2C6B73',
+          weight: 2.5,
+          opacity: 0.85,
+          fill: false,
+          lineJoin: 'round',
+          lineCap: 'round',
+        },
+        interactive: false,
+      }).addTo(map);
+
       // ── Concelho polygons ───────────────────────────────────────
-      // Drawn first so the perimeter outline sits on top of them.
+      // Default state: no fill, just a thin rust border so the OSM
+      // tiles read clearly through the regions. Hover wakes them up
+      // with a clear rust fill. Current concelho is unmistakeable.
       var openSlug = null;
-      var allLayers = {};
 
       function baseStyle(slug) {
         var isCurrent = slug === cfg.currentSlug;
         return isCurrent
-          ? { color: '#B7472A', weight: 2.5, opacity: 0.95, fillColor: '#B7472A', fillOpacity: 0.32 }
-          : { color: '#B7472A', weight: 1.5, opacity: 0.75, fillColor: '#B7472A', fillOpacity: 0.10 };
+          ? { color: '#B7472A', weight: 2.5, opacity: 1.0,  fillColor: '#B7472A', fillOpacity: 0.30, fill: true }
+          : { color: '#B7472A', weight: 1,   opacity: 0.55, fillColor: '#B7472A', fillOpacity: 0,    fill: false };
       }
       function hoverStyle() {
-        return { color: '#B7472A', weight: 2.5, opacity: 1.0, fillColor: '#B7472A', fillOpacity: 0.24 };
+        return { color: '#B7472A', weight: 2, opacity: 0.95, fillColor: '#B7472A', fillOpacity: 0.22, fill: true };
       }
 
-      var concelhoLayer = L.geoJSON(cfg.concelhos, {
+      L.geoJSON(cfg.concelhos, {
         style: function (feature) { return baseStyle(feature.properties.slug); },
         onEachFeature: function (feature, layer) {
           var slug = feature.properties.slug;
           var name = feature.properties.name;
           var href = cfg.baseHref + '/' + slug + '/';
-          allLayers[slug] = layer;
 
+          // Hover. Don't bringToFront — that causes Leaflet to reorder
+          // the SVG and the previous concelho's mouseout fires too
+          // late, leaving polygons stuck looking highlighted.
           layer.on('mouseover', function () {
             if (slug !== cfg.currentSlug) layer.setStyle(hoverStyle());
-            layer.bringToFront();
-            // Keep the perimeter outline visually on top.
-            if (outlineLayer) outlineLayer.bringToFront();
           });
           layer.on('mouseout', function () {
             if (slug !== cfg.currentSlug) layer.setStyle(baseStyle(slug));
@@ -209,41 +227,12 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
         },
       }).addTo(map);
 
-      // ── Margem Sul perimeter ───────────────────────────────────
-      // Single thick teal line, no fill, with a soft white halo so it
-      // pops against the OSM tiles regardless of background colour.
-      var outlineLayer = L.geoJSON(cfg.outline, {
-        style: {
-          color: '#2C6B73',
-          weight: 4.5,
-          opacity: 0.9,
-          fill: false,
-          lineJoin: 'round',
-          lineCap: 'round',
-          // Halo applied via CSS on .leaflet-interactive selectors below;
-          // Leaflet doesn't expose a second-stroke property, so the
-          // halo is a separate, wider pale layer underneath.
-        },
-        interactive: false,
-      });
-      // Halo: pale white layer drawn under the teal outline so it
-      // reads cleanly against any tile colour.
-      L.geoJSON(cfg.outline, {
-        style: {
-          color: '#FFFFFF',
-          weight: 8,
-          opacity: 0.7,
-          fill: false,
-          lineJoin: 'round',
-          lineCap: 'round',
-        },
-        interactive: false,
-      }).addTo(map);
-      outlineLayer.addTo(map);
-
       // ── Concelho labels ────────────────────────────────────────
-      // Permanent tooltips anchored at town centres, with a divIcon
-      // so we control typography fully via CSS.
+      // 1px divIcon so the label width is determined entirely by CSS
+      // (transform: translate(-50%, -50%) on the inner span keeps it
+      // centred on the anchor point). interactive:false plus CSS
+      // pointer-events:none on every descendant so the labels never
+      // intercept polygon hover/click events.
       Object.keys(cfg.labelAnchors).forEach(function (slug) {
         var anchor = cfg.labelAnchors[slug];
         var feat = cfg.concelhos.features.find(function (f) { return f.properties.slug === slug; });
@@ -251,8 +240,8 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
         var labelIcon = L.divIcon({
           className: 'mc-concelho-label' + (slug === cfg.currentSlug ? ' mc-concelho-label--current' : ''),
           html: '<span>' + feat.properties.name + '</span>',
-          iconSize: [120, 18],
-          iconAnchor: [60, 9],
+          iconSize: [1, 1],
+          iconAnchor: [0, 0],
         });
         L.marker(anchor, { icon: labelIcon, interactive: false, keyboard: false })
           .addTo(map);
@@ -347,34 +336,44 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
     background: color-mix(in srgb, var(--mc-teal) 10%, var(--color-background)) !important;
   }
 
-  /* ── Concelho labels (permanent, on-map) ── */
+  /* ── Concelho labels (permanent, on-map) ──
+     Each label is a 1×1px divIcon; the inner span is centred on the
+     anchor with translate(-50%, -50%) so its visual width is its
+     content width, not the icon box. pointer-events:none on every
+     descendant so the labels never block polygon hover/click. */
+  .mc-concelho-label,
+  .mc-concelho-label * {
+    pointer-events: none !important;
+  }
   .mc-concelho-label {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    text-align: center;
+    background: transparent !important;
+    border: 0 !important;
   }
   .mc-concelho-label span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: var(--tracking-smallcaps);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-text);
-    padding: 2px 8px;
-    background: color-mix(in srgb, var(--color-background) 90%, transparent);
-    border-radius: 3px;
-    text-shadow:
-      0 0 4px var(--color-background),
-      0 0 2px var(--color-background);
     white-space: nowrap;
+    /* Cream halo via layered text-shadow — readable over any tile
+       colour, no boxy background needed. */
+    text-shadow:
+      0 0 3px var(--color-background),
+      0 0 3px var(--color-background),
+      0 0 6px var(--color-background),
+      0 1px 0 var(--color-background);
   }
   .mc-concelho-label--current span {
     color: var(--color-accent);
-    background: var(--color-background);
-    box-shadow: 0 1px 4px color-mix(in srgb, var(--color-accent) 30%, transparent);
     font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.20em;
   }
 
   /* ── Mobile popup (tap-twice on a concelho polygon) ── */
