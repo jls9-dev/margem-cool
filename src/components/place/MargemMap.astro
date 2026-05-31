@@ -2,22 +2,26 @@
 /**
  * MargemMap — interactive Leaflet map of the Margem Sul's 9 concelhos.
  *
- * Built the same way southbank.pt/area-guides does it: Leaflet + CARTO
- * light tiles + one marker per region. No hand-drawn SVG, no projection
- * maths, no GeoJSON path tracing — bridges, coastlines, salinas all
- * come from real OSM tiles. The brand colours apply to the markers and
- * the chrome around the map; the geography is OSM's.
+ * Real OSM tiles via Leaflet + CARTO light, with the 9 concelhos
+ * overlaid as clickable polygons in brand rust and the unified Margem
+ * Sul perimeter outlined in brand teal so the whole region reads as
+ * one thing at a glance. No projection maths, no hand-traced geometry,
+ * no bridge control points — the bridges, coastlines and salinas all
+ * come from OSM tiles.
  *
- * Props are unchanged from the previous SVG implementation so this is
- * a drop-in replacement.
+ * Pattern from southbank.pt/area-guides, adapted from pins to polygons
+ * because Margem Cool's regions are large administrative areas where
+ * users expect "click the region" rather than "click the dot".
  *
- * Sizes:
- *   - 'mini' — hero slot use; 360px tall, fits in cards
- *   - 'standard' — feature use on concelho pages and homepage; 540px tall
+ * Data:
+ *   - src/data/geo/concelhos-latlng.json (9 concelho features)
+ *   - src/data/geo/margem-sul-outline.json (unioned perimeter)
+ *   Regenerate via scripts/build-concelhos-leaflet.mjs.
  *
- * Pattern reference: ~/southbank-pt/src/pages/area-guides/index.astro.
  * Cross-project rule: feedback_real_map_not_handdrawn.md.
  */
+import concelhosFC from '../../data/geo/concelhos-latlng.json';
+import outlineFC from '../../data/geo/margem-sul-outline.json';
 
 interface Props {
   size?: 'mini' | 'standard';
@@ -37,28 +41,29 @@ const {
 
 const baseHref = lang === 'en' ? '/en/places' : '/lugares';
 
-// Town-centre lat/lng per concelho — anchors the marker where users
-// associate the concelho name (Almada town, not Almada's geometric
-// centroid which sits west of Costa da Caparica; Montijo town in the
-// western piece, not the eastern exclave centroid).
-const concelhos = [
-  { slug: 'almada',    name: 'Almada',    lat: 38.6788, lng: -9.1571 },
-  { slug: 'seixal',    name: 'Seixal',    lat: 38.6444, lng: -9.1042 },
-  { slug: 'sesimbra',  name: 'Sesimbra',  lat: 38.4458, lng: -9.1014 },
-  { slug: 'setubal',   name: 'Setúbal',   lat: 38.5244, lng: -8.8944 },
-  { slug: 'palmela',   name: 'Palmela',   lat: 38.5694, lng: -8.9028 },
-  { slug: 'barreiro',  name: 'Barreiro',  lat: 38.6594, lng: -9.0744 },
-  { slug: 'moita',     name: 'Moita',     lat: 38.6500, lng: -8.9900 },
-  { slug: 'montijo',   name: 'Montijo',   lat: 38.7100, lng: -8.9700 },
-  { slug: 'alcochete', name: 'Alcochete', lat: 38.7556, lng: -8.9667 },
-];
+// Label anchor (lat, lng) per concelho — used as the permanent tooltip
+// position. Hand-set to land on the town centre, not the geometric
+// centroid (Almada centroid sits near Costa da Caparica; Montijo's
+// drifts to the eastern exclave). These match the southbank.pt anchors
+// where they exist.
+const labelAnchors: Record<string, [number, number]> = {
+  almada:    [38.6788, -9.1571],
+  seixal:    [38.6444, -9.1042],
+  sesimbra:  [38.4458, -9.1014],
+  setubal:   [38.5244, -8.8944],
+  palmela:   [38.5694, -8.9028],
+  barreiro:  [38.6594, -9.0744],
+  moita:     [38.6500, -8.9900],
+  montijo:   [38.7100, -8.9700],
+  alcochete: [38.7556, -8.9667],
+};
 
-// Serialise the data the inline init script needs. Avoids the script
-// having to import anything at runtime.
 const mapData = {
   baseHref,
   currentSlug: concelhoSlug ?? null,
-  concelhos,
+  concelhos: concelhosFC,
+  outline: outlineFC,
+  labelAnchors,
   place: placeCentroid && placeName
     ? { name: placeName, lat: placeCentroid[1], lng: placeCentroid[0] }
     : null,
@@ -147,66 +152,113 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
         maxZoom: 18,
       }).addTo(map);
 
-      var sharedPopup = null;
-      var openMarker = null;
-      var markers = [];
+      // ── Concelho polygons ───────────────────────────────────────
+      // Drawn first so the perimeter outline sits on top of them.
+      var openSlug = null;
+      var allLayers = {};
 
-      function makeIcon(slug) {
+      function baseStyle(slug) {
         var isCurrent = slug === cfg.currentSlug;
-        return L.divIcon({
-          className: 'mc-area-pin' + (isCurrent ? ' mc-area-pin--current' : ''),
-          html: '<div class="mc-pin-circle"></div>',
-          iconSize: [24, 24],
-          iconAnchor: [12, 12],
-        });
+        return isCurrent
+          ? { color: '#B7472A', weight: 2.5, opacity: 0.95, fillColor: '#B7472A', fillOpacity: 0.32 }
+          : { color: '#B7472A', weight: 1.5, opacity: 0.75, fillColor: '#B7472A', fillOpacity: 0.10 };
+      }
+      function hoverStyle() {
+        return { color: '#B7472A', weight: 2.5, opacity: 1.0, fillColor: '#B7472A', fillOpacity: 0.24 };
       }
 
-      cfg.concelhos.forEach(function (c) {
-        var marker = L.marker([c.lat, c.lng], { icon: makeIcon(c.slug) })
-          .bindTooltip(c.name, {
-            permanent: false,
-            direction: 'top',
-            offset: [0, -8],
-            className: 'mc-pin-tooltip',
-          })
-          .addTo(map);
+      var concelhoLayer = L.geoJSON(cfg.concelhos, {
+        style: function (feature) { return baseStyle(feature.properties.slug); },
+        onEachFeature: function (feature, layer) {
+          var slug = feature.properties.slug;
+          var name = feature.properties.name;
+          var href = cfg.baseHref + '/' + slug + '/';
+          allLayers[slug] = layer;
 
-        marker.on('click', function (e) {
-          L.DomEvent.stopPropagation(e);
-          var isMobile = window.matchMedia(MOBILE_QUERY).matches;
-          var href = cfg.baseHref + '/' + c.slug + '/';
-          if (!isMobile) {
-            window.location.href = href;
-            return;
-          }
-          marker.closeTooltip();
-          if (openMarker === marker) {
-            window.location.href = href;
-            return;
-          }
-          var html = '<a href="' + href + '" class="mc-pin-popup-link">' +
-            c.name + ' <span class="mc-pin-popup-hint">' + tapAgainHint + ' &rarr;</span></a>';
-          if (!sharedPopup) {
-            sharedPopup = L.popup({
+          layer.on('mouseover', function () {
+            if (slug !== cfg.currentSlug) layer.setStyle(hoverStyle());
+            layer.bringToFront();
+            // Keep the perimeter outline visually on top.
+            if (outlineLayer) outlineLayer.bringToFront();
+          });
+          layer.on('mouseout', function () {
+            if (slug !== cfg.currentSlug) layer.setStyle(baseStyle(slug));
+          });
+          layer.on('click', function (e) {
+            L.DomEvent.stopPropagation(e);
+            var isMobile = window.matchMedia(MOBILE_QUERY).matches;
+            if (!isMobile) {
+              window.location.href = href;
+              return;
+            }
+            if (openSlug === slug) {
+              window.location.href = href;
+              return;
+            }
+            openSlug = slug;
+            var html = '<a href="' + href + '" class="mc-pin-popup-link">' +
+              name + '<span class="mc-pin-popup-hint">' + tapAgainHint + ' &rarr;</span></a>';
+            L.popup({
               closeButton: false,
-              offset: [0, -8],
               className: 'mc-pin-popup',
               autoClose: true,
               closeOnClick: true,
-            });
-          }
-          sharedPopup.setLatLng(marker.getLatLng()).setContent(html).openOn(map);
-          openMarker = marker;
+              offset: [0, -4],
+            }).setLatLng(e.latlng).setContent(html).openOn(map);
+          });
+        },
+      }).addTo(map);
+
+      // ── Margem Sul perimeter ───────────────────────────────────
+      // Single thick teal line, no fill, with a soft white halo so it
+      // pops against the OSM tiles regardless of background colour.
+      var outlineLayer = L.geoJSON(cfg.outline, {
+        style: {
+          color: '#2C6B73',
+          weight: 4.5,
+          opacity: 0.9,
+          fill: false,
+          lineJoin: 'round',
+          lineCap: 'round',
+          // Halo applied via CSS on .leaflet-interactive selectors below;
+          // Leaflet doesn't expose a second-stroke property, so the
+          // halo is a separate, wider pale layer underneath.
+        },
+        interactive: false,
+      });
+      // Halo: pale white layer drawn under the teal outline so it
+      // reads cleanly against any tile colour.
+      L.geoJSON(cfg.outline, {
+        style: {
+          color: '#FFFFFF',
+          weight: 8,
+          opacity: 0.7,
+          fill: false,
+          lineJoin: 'round',
+          lineCap: 'round',
+        },
+        interactive: false,
+      }).addTo(map);
+      outlineLayer.addTo(map);
+
+      // ── Concelho labels ────────────────────────────────────────
+      // Permanent tooltips anchored at town centres, with a divIcon
+      // so we control typography fully via CSS.
+      Object.keys(cfg.labelAnchors).forEach(function (slug) {
+        var anchor = cfg.labelAnchors[slug];
+        var feat = cfg.concelhos.features.find(function (f) { return f.properties.slug === slug; });
+        if (!feat) return;
+        var labelIcon = L.divIcon({
+          className: 'mc-concelho-label' + (slug === cfg.currentSlug ? ' mc-concelho-label--current' : ''),
+          html: '<span>' + feat.properties.name + '</span>',
+          iconSize: [120, 18],
+          iconAnchor: [60, 9],
         });
-
-        markers.push(marker);
+        L.marker(anchor, { icon: labelIcon, interactive: false, keyboard: false })
+          .addTo(map);
       });
 
-      map.on('popupclose', function (e) {
-        if (e.popup === sharedPopup) openMarker = null;
-      });
-
-      // Place marker (freguesia/bairro page) — distinct visual, no link.
+      // ── Place marker (freguesia / bairro pages) ────────────────
       if (cfg.place) {
         var placeIcon = L.divIcon({
           className: 'mc-place-pin',
@@ -224,11 +276,13 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
           .addTo(map);
       }
 
-      // Fit bounds. Include the place marker if present so it's not
-      // off-frame.
-      var bounds = L.featureGroup(markers).getBounds();
+      map.on('popupclose', function () { openSlug = null; });
+
+      // Fit to the outline bounds (the perimeter, not individual
+      // concelhos) so the whole region is framed consistently.
+      var bounds = outlineLayer.getBounds();
       if (cfg.place) bounds.extend([cfg.place.lat, cfg.place.lng]);
-      map.fitBounds(bounds, { padding: [28, 28] });
+      map.fitBounds(bounds, { padding: [24, 24] });
     }
 
     function initAll() {
@@ -263,7 +317,7 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
     width: 100%;
     border-radius: 4px;
     overflow: hidden;
-    background: color-mix(in srgb, var(--mc-teal) 12%, var(--color-background));
+    background: color-mix(in srgb, var(--mc-teal) 10%, var(--color-background));
   }
   .margem-map__noscript,
   .margem-map__error {
@@ -290,68 +344,40 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
   }
   .leaflet-container {
     font-family: var(--font-body) !important;
-    background: color-mix(in srgb, var(--mc-teal) 12%, var(--color-background)) !important;
+    background: color-mix(in srgb, var(--mc-teal) 10%, var(--color-background)) !important;
   }
 
-  /* ── Concelho pin ── */
-  .mc-area-pin {
+  /* ── Concelho labels (permanent, on-map) ── */
+  .mc-concelho-label {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    pointer-events: none;
+    text-align: center;
   }
-  .mc-pin-circle {
-    width: 18px;
-    height: 18px;
-    background: var(--color-accent);
-    border: 3px solid var(--color-background);
-    border-radius: 50%;
-    box-shadow: 0 2px 6px color-mix(in srgb, var(--color-accent) 38%, transparent);
-    position: relative;
-    transition: transform 0.2s ease, background 0.2s ease;
-  }
-  .mc-pin-circle::after {
-    content: '';
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--color-background);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .mc-area-pin:hover .mc-pin-circle {
-    transform: scale(1.3);
-    z-index: 1000;
-  }
-  .mc-area-pin--current .mc-pin-circle {
-    transform: scale(1.4);
-    background: var(--mc-teal, var(--color-accent));
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 22%, transparent),
-                0 3px 10px color-mix(in srgb, var(--color-accent) 50%, transparent);
-  }
-
-  /* ── Tooltip (hover label) ── */
-  .mc-pin-tooltip {
-    background: var(--color-background) !important;
-    color: var(--color-text) !important;
-    font-family: var(--font-display) !important;
-    font-size: 12px !important;
+  .mc-concelho-label span {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
     letter-spacing: var(--tracking-smallcaps);
     text-transform: uppercase;
-    font-weight: 600 !important;
-    padding: 5px 12px !important;
-    border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent) !important;
-    border-radius: 4px !important;
-    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 18%, transparent) !important;
+    color: var(--color-text);
+    padding: 2px 8px;
+    background: color-mix(in srgb, var(--color-background) 90%, transparent);
+    border-radius: 3px;
+    text-shadow:
+      0 0 4px var(--color-background),
+      0 0 2px var(--color-background);
     white-space: nowrap;
   }
-  .mc-pin-tooltip.leaflet-tooltip-top:before {
-    border-top-color: var(--color-background) !important;
+  .mc-concelho-label--current span {
+    color: var(--color-accent);
+    background: var(--color-background);
+    box-shadow: 0 1px 4px color-mix(in srgb, var(--color-accent) 30%, transparent);
+    font-weight: 700;
   }
 
-  /* ── Mobile popup (tap-twice) ── */
+  /* ── Mobile popup (tap-twice on a concelho polygon) ── */
   .mc-pin-popup .leaflet-popup-content-wrapper {
     background: var(--color-background) !important;
     padding: 0 !important;
@@ -365,6 +391,7 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
   }
   .mc-pin-popup .leaflet-popup-tip {
     background: var(--color-background) !important;
+    border: 1.5px solid var(--color-accent) !important;
   }
   .mc-pin-popup-link {
     display: flex !important;
@@ -379,11 +406,12 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
     white-space: nowrap;
   }
   .mc-pin-popup-hint {
+    display: block;
     font-size: 10px;
     color: var(--color-text-secondary);
     letter-spacing: var(--tracking-smallcaps);
     text-transform: uppercase;
-    margin-top: 2px;
+    margin-top: 3px;
   }
 
   /* ── Place marker (freguesia/bairro pin on its overview page) ── */
@@ -397,7 +425,7 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
     width: 28px;
     height: 28px;
     background: var(--color-accent);
-    opacity: 0.18;
+    opacity: 0.20;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     animation: mc-place-pulse 2.6s ease-in-out infinite;
@@ -406,17 +434,17 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     background: var(--color-accent);
-    border: 2px solid var(--color-background);
+    border: 3px solid var(--color-background);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 2px 6px color-mix(in srgb, var(--color-accent) 50%, transparent);
   }
   @keyframes mc-place-pulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.28; }
-    50%      { transform: translate(-50%, -50%) scale(1.6); opacity: 0.08; }
+    0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.30; }
+    50%      { transform: translate(-50%, -50%) scale(1.7); opacity: 0.05; }
   }
   @media (prefers-reduced-motion: reduce) {
     .mc-place-pin__halo { animation: none; }
