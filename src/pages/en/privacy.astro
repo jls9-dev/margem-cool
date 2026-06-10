@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'PrivacyPolicy',
+  name: 'Privacy · Margem Cool',
+  inLanguage: 'en-GB',
+  url: 'https://margemcool.pt/en/privacy/',
+};
+
+const lastUpdated = '10 June 2026';
+---
+
+<BaseLayout
+  lang="en"
+  title="Privacy · Margem Cool"
+  description="What we record, what we don't, and how to opt out. Short and concrete."
+  alternateUrl="/privacidade/"
+  canonicalPath="/en/privacy/"
+  jsonLd={jsonLd}
+>
+  <article class="legal">
+    <div class="container container--narrow">
+      <header class="legal__head">
+        <p class="legal__kicker smallcaps">Privacy</p>
+        <h1 class="legal__title">What we record, what we don't.</h1>
+        <p class="legal__updated">Last updated: {lastUpdated}</p>
+      </header>
+
+      <div class="legal__body">
+        <p class="legal__lede">
+          Short and concrete — written to be read, not to dodge.
+        </p>
+
+        <h2>Who we are</h2>
+        <p>
+          Margem Cool is a publication about the Margem Sul, written from where
+          we live. When we say "we", that's the editorial team. Email
+          <a href="mailto:info@margemcool.pt">info@margemcool.pt</a>.
+        </p>
+
+        <h2>What we record</h2>
+        <p>
+          We use <strong>Cloudflare Web Analytics</strong> to count visits. It records the
+          page you viewed, the country and city Cloudflare infers from your IP address (the
+          IP itself is not stored), your device type, and the referring site. There are no
+          cookies, no cross-site tracking, and no individual profile — the data is
+          aggregated and anonymous.
+        </p>
+        <p>
+          When you fill in the contact form we record what you wrote (name, email, message)
+          and deliver it to our inbox via Brevo. We keep the message as long as we need it
+          to reply; if no conversation follows, we delete it within 12 months.
+        </p>
+
+        <h2>What we don't use</h2>
+        <p>
+          We do not use Google Analytics, Meta Pixel, Hotjar, session recording, or
+          third-party advertising trackers.
+        </p>
+
+        <h2>Services we use</h2>
+        <ul>
+          <li><strong>Cloudflare Pages</strong> &mdash; hosting</li>
+          <li><strong>Cloudflare Web Analytics</strong> &mdash; cookieless statistics</li>
+          <li><strong>Brevo</strong> &mdash; contact-form delivery</li>
+          <li><strong>Cloudflare Turnstile</strong> &mdash; form bot protection</li>
+        </ul>
+
+        <h2>Legal basis (UK / EU GDPR)</h2>
+        <p>
+          We rely on legitimate interest under Article 6(1)(f) of the GDPR. The processing
+          is minimal, no identifiers are collected, and our interest in understanding what
+          content is useful does not override your rights. The
+          <a href="https://www.cloudflare.com/web-analytics/" target="_blank" rel="noopener">
+          Cloudflare Web Analytics page</a> describes the cookieless, privacy-first design.
+        </p>
+
+        <h2>How to opt out</h2>
+        <p>
+          If you'd rather not be counted, any standard ad-blocker (uBlock Origin, AdGuard)
+          blocks <code>static.cloudflareinsights.com</code> by default — we don't detect
+          or work around the block.
+        </p>
+
+        <h2>Your rights</h2>
+        <p>
+          You have the right to access, correct, delete, object to processing, and to
+          receive your data in a portable format. Email
+          <a href="mailto:info@margemcool.pt">info@margemcool.pt</a> and we'll respond
+          within 30 days.
+        </p>
+
+        <h2>Complaints</h2>
+        <p>
+          If you believe we have mishandled your data, you can complain to the Portuguese
+          data protection authority:
+          <a href="https://www.cnpd.pt" target="_blank" rel="noopener">
+          Comissão Nacional de Proteção de Dados (CNPD)</a>.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <style>
+    .legal { padding: 96px 0 120px; }
+    .container--narrow { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .legal__head { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--line, #d9cdb3); }
+    .legal__kicker { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute, #756a5a); margin: 0 0 12px; font-weight: 600; }
+    .legal__title { font-family: var(--font-serif, 'Fraunces', serif); font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; letter-spacing: -0.025em; margin: 0 0 12px; }
+    .legal__updated { font-size: 14px; color: var(--ink-mute, #756a5a); margin: 0; }
+    .legal__lede { font-size: 17px; color: var(--ink-soft, #3a3329); margin: 0 0 32px; line-height: 1.6; }
+    .legal__body h2 { font-family: var(--font-serif, 'Fraunces', serif); font-weight: 500; font-size: 22px; margin: 36px 0 12px; letter-spacing: -0.01em; }
+    .legal__body p { font-size: 15.5px; color: var(--ink-soft, #3a3329); line-height: 1.65; margin: 0 0 16px; max-width: 62ch; }
+    .legal__body ul { padding-left: 20px; margin: 0 0 16px; }
+    .legal__body li { font-size: 15px; color: var(--ink-soft, #3a3329); line-height: 1.65; margin-bottom: 6px; }
+    .legal__body code { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 13px; background: var(--cream-warm, #f0e6d2); padding: 1px 6px; border-radius: 4px; }
+    .legal__body a { color: var(--terracotta-d, #9a3d22); text-decoration: underline; text-underline-offset: 3px; }
+    .legal__body strong { color: var(--ink, #1f1a14); font-weight: 600; }
+  </style>
+</BaseLayout>

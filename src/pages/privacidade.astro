@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'PrivacyPolicy',
+  name: 'Privacidade · Margem Cool',
+  inLanguage: 'pt-PT',
+  url: 'https://margemcool.pt/privacidade/',
+};
+
+const lastUpdated = '10 de junho de 2026';
+---
+
+<BaseLayout
+  lang="pt"
+  title="Privacidade · Margem Cool"
+  description="O que registamos, o que não registamos, e como recusar. Curto e concreto."
+  alternateUrl="/en/privacy/"
+  canonicalPath="/privacidade/"
+  jsonLd={jsonLd}
+>
+  <article class="legal">
+    <div class="container container--narrow">
+      <header class="legal__head">
+        <p class="legal__kicker smallcaps">Privacidade</p>
+        <h1 class="legal__title">O que registamos, o que não registamos.</h1>
+        <p class="legal__updated">Última atualização: {lastUpdated}</p>
+      </header>
+
+      <div class="legal__body">
+        <p class="legal__lede">
+          Curto e concreto — escrito para ser lido, não para se esquivar.
+        </p>
+
+        <h2>Quem somos</h2>
+        <p>
+          Margem Cool é uma publicação sobre a Margem Sul, escrita de onde vivemos.
+          Quando dizemos &ldquo;nós&rdquo;, somos a equipa editorial. Contacto:
+          <a href="mailto:info@margemcool.pt">info@margemcool.pt</a>.
+        </p>
+
+        <h2>O que registamos</h2>
+        <p>
+          Usamos <strong>Cloudflare Web Analytics</strong> para contar visitas. Regista a
+          página vista, o país e a cidade que a Cloudflare infere a partir do teu endereço IP
+          (o IP em si não é guardado), o tipo de dispositivo e o site de proveniência. Não
+          coloca cookies, não faz seguimento entre sites, e não constrói um perfil
+          individual — os dados são agregados e anónimos.
+        </p>
+        <p>
+          Quando preenches o formulário de contacto, registamos o que escreves nele (nome,
+          email, mensagem) e entregamo-lo ao nosso email através da Brevo. Mantemos a
+          mensagem o tempo necessário para responder; se não chegarmos a falar, apagamos em
+          12 meses.
+        </p>
+
+        <h2>O que não usamos</h2>
+        <p>
+          Não usamos Google Analytics, Meta Pixel, Hotjar, gravação de sessão, nem
+          rastreadores publicitários de terceiros.
+        </p>
+
+        <h2>Serviços que utilizamos</h2>
+        <ul>
+          <li><strong>Cloudflare Pages</strong> &mdash; alojamento do site</li>
+          <li><strong>Cloudflare Web Analytics</strong> &mdash; estatísticas sem cookies</li>
+          <li><strong>Brevo</strong> &mdash; entrega dos formulários de contacto</li>
+          <li><strong>Cloudflare Turnstile</strong> &mdash; proteção contra bots no formulário</li>
+        </ul>
+
+        <h2>Base legal (RGPD)</h2>
+        <p>
+          Baseamo-nos no <strong>interesse legítimo</strong> nos termos do Artigo 6.º(1)(f) do
+          RGPD. O processamento é mínimo, não há identificadores pessoais, e o nosso
+          interesse em perceber que conteúdos são úteis não prevalece sobre os teus direitos.
+          A página oficial do
+          <a href="https://www.cloudflare.com/pt-pt/web-analytics/" target="_blank" rel="noopener">
+          Cloudflare Web Analytics</a> descreve o seu desenho sem cookies.
+        </p>
+
+        <h2>Como recusar</h2>
+        <p>
+          Se preferires não ser contado, qualquer bloqueador de anúncios (uBlock Origin,
+          AdGuard) bloqueia <code>static.cloudflareinsights.com</code> por defeito — não
+          detetamos nem contornamos o bloqueio.
+        </p>
+
+        <h2>Os teus direitos</h2>
+        <p>
+          Tens direito a aceder, corrigir, apagar, opor-te ao processamento, e a obter os
+          teus dados num formato portável. Envia email para
+          <a href="mailto:info@margemcool.pt">info@margemcool.pt</a> e respondemos em 30 dias.
+        </p>
+
+        <h2>Reclamações</h2>
+        <p>
+          Se considerares que tratámos mal os teus dados, podes apresentar queixa à
+          autoridade portuguesa:
+          <a href="https://www.cnpd.pt" target="_blank" rel="noopener">
+          Comissão Nacional de Proteção de Dados (CNPD)</a>.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <style>
+    .legal { padding: 96px 0 120px; }
+    .container--narrow { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .legal__head { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--line, #d9cdb3); }
+    .legal__kicker { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute, #756a5a); margin: 0 0 12px; font-weight: 600; }
+    .legal__title { font-family: var(--font-serif, 'Fraunces', serif); font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; letter-spacing: -0.025em; margin: 0 0 12px; }
+    .legal__updated { font-size: 14px; color: var(--ink-mute, #756a5a); margin: 0; }
+    .legal__lede { font-size: 17px; color: var(--ink-soft, #3a3329); margin: 0 0 32px; line-height: 1.6; }
+    .legal__body h2 { font-family: var(--font-serif, 'Fraunces', serif); font-weight: 500; font-size: 22px; margin: 36px 0 12px; letter-spacing: -0.01em; }
+    .legal__body p { font-size: 15.5px; color: var(--ink-soft, #3a3329); line-height: 1.65; margin: 0 0 16px; max-width: 62ch; }
+    .legal__body ul { padding-left: 20px; margin: 0 0 16px; }
+    .legal__body li { font-size: 15px; color: var(--ink-soft, #3a3329); line-height: 1.65; margin-bottom: 6px; }
+    .legal__body code { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 13px; background: var(--cream-warm, #f0e6d2); padding: 1px 6px; border-radius: 4px; }
+    .legal__body a { color: var(--terracotta-d, #9a3d22); text-decoration: underline; text-underline-offset: 3px; }
+    .legal__body strong { color: var(--ink, #1f1a14); font-weight: 600; }
+  </style>
+</BaseLayout>
