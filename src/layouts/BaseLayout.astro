@@ -2,6 +2,8 @@
 import '../styles/tokens.css';
 import '../styles/base.css';
 
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import WordmarkCompact from '../components/brand/WordmarkCompact.astro';
 import Wordmark from '../components/brand/Wordmark.astro';
 import MargemSulMark from '../components/brand/MargemSulMark.astro';
@@ -17,6 +19,10 @@ interface Props {
   canonicalPath?: string;
   /** Optional Schema.org JSON-LD object to inject as a single script tag. */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** The page's LCP image — emits a <link rel=preload as=image> in <head>. */
+  hero?: ImageMetadata;
+  /** Matches the on-page <Picture> sizes attribute. Default 100vw. */
+  heroSizes?: string;
 }
 
 const {
@@ -26,7 +32,24 @@ const {
   alternateUrl,
   canonicalPath = Astro.url.pathname,
   jsonLd,
+  hero,
+  heroSizes = '100vw',
 } = Astro.props;
+
+// AVIF preload variant for the LCP image so the preload scanner picks it up
+// during HTML parse rather than after <picture> resolution. ~300–700ms LCP
+// improvement over Astro's <Picture> alone. See standards rule
+// images-layout-preload-hero.
+const preloadVariant = hero
+  ? await getImage({
+      src: hero,
+      widths: [480, 720, 960, 1280, 1920],
+      sizes: heroSizes,
+      format: 'avif',
+      quality: 60,
+    })
+  : null;
+const preloadHref = preloadVariant?.srcSet.values[0]?.url ?? preloadVariant?.src;
 
 const nav = PRIMARY_NAV[lang];
 const footerNav = FOOTER_NAV[lang];
@@ -57,6 +80,18 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
         <link rel="alternate" hreflang={htmlLang(lang)} href={canonical} />
         <link rel="alternate" hreflang="x-default" href={lang === 'pt' ? canonical : alternate} />
       </>
+    )}
+
+    {preloadVariant && (
+      <link
+        rel="preload"
+        as="image"
+        type="image/avif"
+        href={preloadHref}
+        imagesrcset={preloadVariant.srcSet.attribute}
+        imagesizes={heroSizes}
+        fetchpriority="high"
+      />
     )}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
