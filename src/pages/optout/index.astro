@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  lang="pt"
+  title="Excluir das estatísticas · Margem Cool"
+  description="Excluir este browser das estatísticas do margemcool.pt."
+  alternateUrl="/en/optout/"
+  canonicalPath="/optout/"
+  noindex={true}
+>
+  <main class="container container--narrow" style="padding: 4rem 0;">
+    <h1 id="ok-title" style="display:none">Excluído das estatísticas do margemcool.pt</h1>
+    <h1 id="setting-title">A definir o cookie de exclusão…</h1>
+    <p id="setting-msg">
+      A definir um cookie para o Cloudflare Zaraz não disparar a tag de estatísticas nas tuas visitas.
+      Aplica-se a partir da próxima página.
+    </p>
+    <p id="ok-msg" style="display:none">
+      As tuas visitas ao margemcool.pt a partir <strong>deste browser, neste dispositivo</strong>
+      deixam de ser contadas no Cloudflare Web Analytics. O cookie dura 2 anos.
+      Repete o procedimento em cada browser e dispositivo que usares, e novamente
+      se limpares os cookies.
+    </p>
+    <p id="fail-msg" style="display:none">
+      O teu browser bloqueou o cookie (modo privado, proteção estrita, etc.).
+      Tenta noutro browser, ou no mesmo browser sem modo privado.
+    </p>
+    <p style="margin-top: 1.5rem;">
+      <a href="/">← Voltar ao início</a>
+    </p>
+  </main>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    var twoYears = 60 * 60 * 24 * 365 * 2;
+    document.cookie = 'spandera-staff=1; Path=/; Max-Age=' + twoYears + '; SameSite=Lax; Secure';
+    var set = document.cookie.split(';').some(function (c) { return c.trim().indexOf('spandera-staff=1') === 0; });
+    if (set) {
+      document.getElementById('setting-title').style.display = 'none';
+      document.getElementById('setting-msg').style.display = 'none';
+      document.getElementById('ok-title').style.display = '';
+      document.getElementById('ok-msg').style.display = '';
+    } else {
+      document.getElementById('setting-title').textContent = 'Não foi possível definir o cookie';
+      document.getElementById('setting-msg').style.display = 'none';
+      document.getElementById('fail-msg').style.display = '';
+    }
+  })();
+</script>
