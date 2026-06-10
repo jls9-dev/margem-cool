@@ -1,9 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Wordmark from '../components/brand/Wordmark.astro';
 import MargemMap from '../components/place/MargemMap.astro';
 import { concelhos } from '../utils/place-hierarchy';
+import heroCristoRei from '../assets/hero-cristo-rei.jpg';
 
 const allPlaces = await getCollection('places');
 const concelhoList = concelhos(allPlaces);
@@ -49,17 +51,16 @@ const jsonLd = {
 >
   {/* ─────────── Hero ─────────── */}
   <section class="home-hero" aria-label="Margem Cool">
-    <picture class="home-hero__bg">
-      <source media="(min-width: 720px)" srcset="/images/home/hero-cristo-rei.webp" type="image/webp" />
-      <source media="(min-width: 720px)" srcset="/images/home/hero-cristo-rei.jpg" />
-      <source srcset="/images/home/hero-cristo-rei-mobile.webp" type="image/webp" />
-      <img
-        src="/images/home/hero-cristo-rei-mobile.jpg"
-        alt="Cristo Rei sobre Almada, com a Ponte 25 de Abril e o Tejo ao fundo, ao pôr-do-sol."
-        loading="eager"
-        fetchpriority="high"
-      />
-    </picture>
+    <Picture
+      src={heroCristoRei}
+      formats={['avif', 'webp']}
+      widths={[480, 720, 960, 1280, 1920]}
+      sizes="100vw"
+      alt="Cristo Rei sobre Almada, com a Ponte 25 de Abril e o Tejo ao fundo, ao pôr-do-sol."
+      loading="eager"
+      fetchpriority="high"
+      pictureAttributes={{ class: 'home-hero__bg' }}
+    />
     <div class="home-hero__veil"></div>
     <div class="home-hero__content">
       <div class="home-hero__mark">
