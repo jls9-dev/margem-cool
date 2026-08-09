@@ -1,0 +1,6 @@
+# Sitemap: @astrojs/sitemap generates /sitemap-index.xml + /sitemap-0.xml.
+# Serve the conventional /sitemap.xml and bare /sitemap from the index (200, not a
+# redirect hop) so anything looking for either finds it. Lisbon Property and South
+# Bank do the same — Search Console holds stale bare-/sitemap submissions on both.
+/sitemap.xml        /sitemap-index.xml  200
+/sitemap            /sitemap-index.xml  200
