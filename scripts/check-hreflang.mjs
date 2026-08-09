@@ -11,9 +11,25 @@
 // every page for the wrong reason, finding no "pt" alternate to compare and checking nothing.
 //
 // Run after `npm run build`:  node scripts/check-hreflang.mjs
-import { readFileSync, globSync } from 'node:fs';
 
-const files = globSync('dist/**/index.html');
+import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
+
+// A hand-rolled walk rather than globSync: globSync only exists in Node 22+, and
+// Cloudflare Pages builds this repo on the Node version in .node-version — 20 for
+// Margem Cool. The gate passed locally and failed the deploy, which is worse than
+// no gate at all, because the site then stops shipping. This works on any Node.
+function htmlFiles(dir) {
+  const out = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...htmlFiles(full));
+    else if (entry.name === 'index.html') out.push(full);
+  }
+  return out;
+}
+
+const files = htmlFiles('dist');
 const problems = [];
 let checked = 0;
 
