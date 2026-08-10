@@ -30,6 +30,9 @@ import { buildPlaceJsonLd } from '../utils/schema-org';
 import { SITE_URL, type Lang } from '../utils/i18n';
 import { isIndexableStatus } from '../utils/indexable.mjs';
 import { optionalPlaceImage } from '../utils/place-images';
+import { publishable } from '../utils/guides';
+import GuideList from '../components/place/GuideList.astro';
+import { getCollection } from 'astro:content';
 
 type Place = CollectionEntry<'places'>;
 
@@ -58,8 +61,8 @@ const COPY = {
     childrenTitleOther: 'Áreas dentro',
     childrenCta: 'Explorar →',
     galleryKicker: 'Em imagens',
-    placeholderKicker: 'Em construção',
-    placeholderBody: 'Esta página está em desenvolvimento. Em breve com conteúdo completo.',
+    guidesKicker: 'Guias',
+    guidesTitle: (name: string) => `Guias que cobrem ${name}`,
     faqKicker: 'Perguntas frequentes',
     faqTitle: 'Perguntas comuns',
     ctaKicker: 'Margem Cool',
@@ -85,8 +88,8 @@ const COPY = {
     childrenTitleOther: 'Areas within',
     childrenCta: 'Explore →',
     galleryKicker: 'In pictures',
-    placeholderKicker: 'Under construction',
-    placeholderBody: 'This page is being developed. Fuller content is coming soon.',
+    guidesKicker: 'Guides',
+    guidesTitle: (name: string) => `Guides covering ${name}`,
     faqKicker: 'Common questions',
     faqTitle: 'Frequently asked',
     ctaKicker: 'Margem Cool',
@@ -125,6 +128,14 @@ const heroPhoto = heroImage && {
   credit: place.data.hero_image_credit,
 };
 const gallery = place.data.gallery;
+
+// Guides that name this place, or an ancestor of it. A page we have not
+// written yet is still the right landing spot for someone arriving from the
+// map — it should hand them what we do have on the area rather than apologise.
+const placeKeys = new Set([place.slug, ...ancestors.map((a) => a.slug)]);
+const relatedGuides = publishable(await getCollection('articles'))
+  .filter((a) => a.data.language === lang)
+  .filter((a) => (a.data.place_slugs ?? []).some((sl) => placeKeys.has(sl)));
 const bodyHtml = langData.body
   ? await marked.parse(langData.body, { async: true })
   : null;
@@ -296,16 +307,17 @@ function formatDate(d: Date, l: Lang): string {
         <div class="place-body__inner" set:html={bodyHtml} />
       </div>
     </article>
-  ) : isPlaceholder ? (
-    <section class="place-placeholder">
-      <div class="container">
-        <div class="place-placeholder__inner">
-          <p class="place-placeholder__kicker smallcaps">{copy.placeholderKicker}</p>
-          <p>{copy.placeholderBody}</p>
-        </div>
+  ) : null}
+
+  {relatedGuides.length > 0 && (
+    <section class="place-guides">
+      <div class="container container--wide">
+        <p class="place-guides__kicker smallcaps">{copy.guidesKicker}</p>
+        <h2 class="place-guides__title">{copy.guidesTitle(displayName)}</h2>
+        <GuideList lang={lang} guides={relatedGuides} showPillar />
       </div>
     </section>
-  ) : null}
+  )}
 
   <TransportOptions
     kicker={transportCopy.kicker}
@@ -389,6 +401,28 @@ function formatDate(d: Date, l: Lang): string {
   .place-timeline-wrap__inner {
     max-width: var(--content-column);
     margin: 0 auto;
+  }
+
+  .place-guides {
+    padding: var(--space-2xl) 0;
+    background: color-mix(in srgb, var(--mc-charcoal) 6%, var(--mc-cream));
+  }
+  @media (prefers-color-scheme: dark) {
+    .place-guides { background: color-mix(in srgb, var(--mc-cream) 6%, var(--mc-charcoal)); }
+  }
+  .place-guides__kicker {
+    max-width: var(--wide-section);
+    margin: 0 auto var(--space-xs);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .place-guides__title {
+    max-width: var(--wide-section);
+    margin: 0 auto var(--space-lg);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
   }
 
   .place-body {
