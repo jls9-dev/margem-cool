@@ -295,7 +295,34 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
     window.__margemMapInit = function () {
       ensureLeaflet(initAll);
     };
-    window.__margemMapInit();
+
+    // Wait until the map is near the viewport before loading Leaflet or a single
+    // tile. It used to start the moment the page parsed, so on the homepage — where
+    // the map sits well below the fold — CARTO tiles at 40KB+ each competed with
+    // the hero image for bandwidth during first paint. That cost about 5 points of
+    // mobile score for pixels nobody had scrolled to yet.
+    //
+    // The map itself is unchanged: real tiles, same behaviour, just started later.
+    // Falls back to loading immediately where IntersectionObserver is missing, and
+    // the 400px margin means it is ready before it comes into view.
+    (function deferUntilVisible() {
+      var targets = document.querySelectorAll('[data-margem-map]');
+      if (!targets.length) return;
+      if (!('IntersectionObserver' in window)) { window.__margemMapInit(); return; }
+
+      var started = false;
+      var io = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (!entries[i].isIntersecting || started) continue;
+          started = true;
+          io.disconnect();
+          window.__margemMapInit();
+          return;
+        }
+      }, { rootMargin: '400px' });
+
+      targets.forEach(function (t) { io.observe(t); });
+    })();
   })();
 </script>
 
