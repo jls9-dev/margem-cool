@@ -21,8 +21,11 @@ const { variant = 'open', size = 64, ariaLabel = 'Margem Cool' } = Astro.props;
 const contained = variant === 'contained';
 const VB = 100;
 
-const letterColor = contained ? 'var(--mc-cream, #F5F1E8)' : 'var(--mc-charcoal, #1F2328)';
-const accentColor = contained ? 'var(--mc-cream, #F5F1E8)' : 'var(--mc-rust, #B85C38)';
+// The open variant sits on the page background, so it takes the semantic
+// roles and flips with the page in dark mode. The contained variant carries
+// its own teal disc and stays cream on it in both modes.
+const letterColor = contained ? 'var(--mc-cream, #F5F1E8)' : 'var(--color-text, #1F2328)';
+const accentColor = contained ? 'var(--mc-cream, #F5F1E8)' : 'var(--color-accent, #B85C38)';
 const fillColor = contained ? 'var(--mc-teal, #0F5C5D)' : 'transparent';
 ---
 
