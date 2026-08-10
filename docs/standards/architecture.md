@@ -884,4 +884,27 @@ For Phase 1 and Phase 2, the publication is strictly PT/EN. Other languages are 
 
 ---
 
+## 13. What gets offered to search
+
+A page earns its place in Google's index by having content on it. Everything else is `noindex, follow` and absent from the sitemap — crawlable, so the tag is actually seen, but not offered as a search result.
+
+**Why this matters more here than on most sites.** The site map was seeded in Phase 0: 50 places × 2 languages, plus 12 pillar stubs. Almost all of it is still a sixty-word stub. Submitting ~130 URLs of which 98% are stubs is the textbook thin-content signal, and it arrives at exactly the moment Google is forming a view of a new domain. Being small and real beats being large and empty.
+
+**The rule**, in `src/utils/indexable.mjs`, the single source for both the markup and the sitemap:
+
+| Page | Indexed when |
+|---|---|
+| Place page, per language | that language's `page_status` is not `placeholder` |
+| Pillar landing page | its path is removed from `PILLAR_STUB_PATHS` |
+| `/optout/`, `/en/optout/` | never — staff utility, not a search result |
+| Everything else | always |
+
+**Each language is judged on its own.** A place written in Portuguese and not yet in English ranks in Portuguese alone. The hreflang pair is only advertised when both halves are indexable — an alternate pointing at a noindexed page is a contradiction Google resolves by discarding the cluster.
+
+**Flipping a page live is one edit.** Change `page_status` off `placeholder` and the noindex tag disappears, the sitemap entry appears, and the hreflang pair reconnects if the other language is also ready. The weekly automation routine needs no separate step for this.
+
+**The build proves it.** `scripts/check-noindex.mjs` reads the built HTML and the built sitemap and fails if they disagree in either direction — a page marked noindex that got submitted, or an indexable page that got dropped. Two mechanisms decide indexability at different points in the build; this is what stops them drifting.
+
+---
+
 *This document is the canonical architecture reference for Margem Cool. When code and this document disagree, the document is wrong or the code is wrong — investigate and update one of them.*

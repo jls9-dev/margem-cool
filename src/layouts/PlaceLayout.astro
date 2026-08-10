@@ -26,6 +26,7 @@ import MargemMap from '../components/place/MargemMap.astro';
 
 import { buildPlaceJsonLd } from '../utils/schema-org';
 import { SITE_URL, type Lang } from '../utils/i18n';
+import { isIndexableStatus } from '../utils/indexable.mjs';
 
 type Place = CollectionEntry<'places'>;
 
@@ -149,9 +150,16 @@ const segments = ancestorPathSegments(place, ancestors);
 const canonicalPath = lang === 'pt'
   ? `/lugares/${segments.join('/')}/`
   : `/en/places/${segments.join('/')}/`;
-const alternatePath = lang === 'pt'
-  ? `/en/places/${segments.join('/')}/`
-  : `/lugares/${segments.join('/')}/`;
+// The hreflang pair is only advertised when both halves are indexable. Each
+// language is judged on its own status, so a place written in Portuguese and
+// not yet in English ranks in Portuguese alone rather than dragging an empty
+// English page into the cluster with it.
+const otherStatus = place.data[lang === 'pt' ? 'en' : 'pt'].page_status;
+const alternatePath = !isIndexableStatus(otherStatus)
+  ? undefined
+  : lang === 'pt'
+    ? `/en/places/${segments.join('/')}/`
+    : `/lugares/${segments.join('/')}/`;
 const canonicalUrl = new URL(canonicalPath, SITE_URL).toString();
 
 // Breadcrumb (visual)
@@ -224,6 +232,7 @@ function formatDate(d: Date, l: Lang): string {
   alternateUrl={alternatePath}
   canonicalPath={canonicalPath}
   jsonLd={jsonLd}
+  noindex={isPlaceholder}
 >
   <Breadcrumb ariaLabel={copy.breadcrumbLabel} items={breadcrumbItems} />
 

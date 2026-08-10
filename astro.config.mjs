@@ -1,7 +1,15 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+import { noindexPaths } from './src/utils/indexable.mjs';
+
 const SITE = 'https://margemcool.pt';
+
+// Placeholder place pages and the unwritten pillar stubs carry robots noindex,
+// so submitting them would be asking Google to crawl URLs we've told it to
+// ignore. Same rule module the layouts use; check-noindex.mjs proves the two
+// stayed in step after every build.
+const NOINDEX = noindexPaths();
 
 export default defineConfig({
   site: SITE,
@@ -18,6 +26,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      filter: (url) => !NOINDEX.has(new URL(url).pathname),
       i18n: {
         defaultLocale: 'pt',
         locales: {

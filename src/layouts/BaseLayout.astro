@@ -23,6 +23,13 @@ interface Props {
   hero?: ImageMetadata;
   /** Matches the on-page <Picture> sizes attribute. Default 100vw. */
   heroSizes?: string;
+  /**
+   * Keep this page out of the search index. Emits robots noindex and drops the
+   * hreflang cluster — a page Google is told to ignore has no business
+   * advertising alternates. Pages excluded here must also be excluded from the
+   * sitemap; scripts/check-noindex.mjs gates the build on the two agreeing.
+   */
+  noindex?: boolean;
 }
 
 const {
@@ -34,6 +41,7 @@ const {
   jsonLd,
   hero,
   heroSizes = '100vw',
+  noindex = false,
 } = Astro.props;
 
 // AVIF preload variant for the LCP image so the preload scanner picks it up
@@ -55,7 +63,7 @@ const nav = PRIMARY_NAV[lang];
 const footerNav = FOOTER_NAV[lang];
 const otherLang: Lang = lang === 'pt' ? 'en' : 'pt';
 const canonical = new URL(canonicalPath, SITE_URL).toString();
-const alternate = alternateUrl
+const alternate = !noindex && alternateUrl
   ? new URL(alternateUrl, SITE_URL).toString()
   : undefined;
 
@@ -72,6 +80,8 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
 
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+
+    {noindex && <meta name="robots" content="noindex, follow" />}
 
     <link rel="canonical" href={canonical} />
     {alternate && (
