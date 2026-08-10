@@ -311,6 +311,16 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
       if (!('IntersectionObserver' in window)) { window.__margemMapInit(); return; }
 
       var started = false;
+
+      // Observe only once the page has finished loading. On a phone the homepage
+      // map sits within the 400px margin of the initial viewport, so the observer
+      // fired straight away and the tiles still raced the hero image — the very
+      // thing this defers. Waiting for `load` means the hero has already been
+      // fetched, and the map is still ready long before anyone reaches it.
+      function observe() {
+        targets.forEach(function (t) { io.observe(t); });
+      }
+
       var io = new IntersectionObserver(function (entries) {
         for (var i = 0; i < entries.length; i++) {
           if (!entries[i].isIntersecting || started) continue;
@@ -321,7 +331,8 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
         }
       }, { rootMargin: '400px' });
 
-      targets.forEach(function (t) { io.observe(t); });
+      if (document.readyState === 'complete') observe();
+      else window.addEventListener('load', observe, { once: true });
     })();
   })();
 </script>
