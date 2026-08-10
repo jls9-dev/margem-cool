@@ -1,0 +1,248 @@
+---
+/**
+ * PillarLayout — the top-level pages in the menu.
+ *
+ * These were stubs reading "Em construção" for months, which is the worst
+ * thing a menu item can do: it takes the reader somewhere and gives them
+ * nothing. A pillar page has three jobs, in this order —
+ *
+ *   1. Answer the question in its own right. Somebody searching "praias da
+ *      Margem Sul" wants a list of beaches, not a manifesto about our pillars.
+ *   2. Send the reader onward, to the guides and places underneath it.
+ *   3. Be worth ranking for the pillar term itself.
+ *
+ * Content comes from src/data/pillars.ts. The guide list is derived from the
+ * articles filed under this pillar, so publishing a guide updates its pillar
+ * page without anyone remembering to.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { marked } from 'marked';
+
+import BaseLayout from './BaseLayout.astro';
+import GuideHero from '../components/place/GuideHero.astro';
+import QuickFacts from '../components/place/QuickFacts.astro';
+import FAQ from '../components/place/FAQ.astro';
+import CTA from '../components/place/CTA.astro';
+import PlacePhoto from '../components/place/PlacePhoto.astro';
+import GuideList from '../components/place/GuideList.astro';
+import RiverDivider from '../components/place/RiverDivider.astro';
+
+import { SITE_URL, type Lang } from '../utils/i18n';
+import { optionalPlaceImage } from '../utils/place-images';
+import type { PillarContent } from '../data/pillars';
+
+interface Props {
+  lang: Lang;
+  content: PillarContent;
+  guides: CollectionEntry<'articles'>[];
+  canonicalPath: string;
+  alternateUrl?: string;
+}
+const { lang, content: c, guides, canonicalPath, alternateUrl } = Astro.props;
+
+const COPY = {
+  pt: {
+    guidesKicker: 'Guias',
+    guidesTitle: 'Guias deste pilar',
+    highlightsKicker: 'Por onde começar',
+    faqKicker: 'Perguntas frequentes',
+    faqTitle: 'Perguntas comuns',
+    ctaKicker: 'Margem Cool',
+    ctaTitle: 'Falta aqui alguma coisa?',
+    ctaBody: 'Se conheces algo que devíamos cobrir, escreve-nos. Estas páginas crescem com quem cá vive.',
+    ctaButton: 'Escrever para a Margem Cool →',
+    ctaHref: '/contacto/',
+    soon: 'Estamos a escrever os guias deste pilar. Entretanto, começa por aqui.',
+  },
+  en: {
+    guidesKicker: 'Guides',
+    guidesTitle: 'Guides in this pillar',
+    highlightsKicker: 'Where to start',
+    faqKicker: 'Common questions',
+    faqTitle: 'Frequently asked',
+    ctaKicker: 'Margem Cool',
+    ctaTitle: 'Is something missing here?',
+    ctaBody: 'If you know something we should be covering, write to us. These pages grow with the people who live here.',
+    ctaButton: 'Write to Margem Cool →',
+    ctaHref: '/en/contact/',
+    soon: 'We are writing the guides for this pillar. In the meantime, start here.',
+  },
+} as const;
+const copy = COPY[lang];
+
+const hero = optionalPlaceImage(c.heroImage);
+const introHtml = await marked.parse(c.intro, { async: true });
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: c.title,
+    description: c.metaDescription,
+    inLanguage: lang === 'pt' ? 'pt-PT' : 'en',
+    url: new URL(canonicalPath, SITE_URL).toString(),
+    ...(hero && { image: new URL(hero.src, SITE_URL).toString() }),
+  },
+  ...(c.faqs?.length ? [{
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: c.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  }] : []),
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={c.metaTitle}
+  description={c.metaDescription}
+  alternateUrl={alternateUrl}
+  canonicalPath={canonicalPath}
+  jsonLd={jsonLd}
+>
+  <GuideHero kicker="Margem Cool" title={c.title} dek={c.dek} updatedLabel={c.kicker} />
+
+  {hero && (
+    <div class="container container--wide">
+      <PlacePhoto
+        image={hero}
+        alt={c.heroAlt ?? ''}
+        caption={c.heroCaption}
+        credit={c.heroCredit}
+        lead
+      />
+    </div>
+  )}
+
+  <QuickFacts facts={c.facts} />
+
+  <article class="pillar-intro">
+    <div class="container">
+      <div class="pillar-intro__inner" set:html={introHtml} />
+    </div>
+  </article>
+
+  {c.highlights && c.highlights.length > 0 && (
+    <section class="pillar-highlights">
+      <div class="container container--wide">
+        <p class="pillar-highlights__kicker smallcaps">{copy.highlightsKicker}</p>
+        <div class="pillar-highlights__grid">
+          {c.highlights.map((h) => (
+            <a class="pillar-highlight" href={h.href}>
+              <p class="pillar-highlight__meta smallcaps">{h.meta}</p>
+              <h3 class="pillar-highlight__title">{h.title}</h3>
+              <p class="pillar-highlight__blurb">{h.blurb}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <RiverDivider />
+
+  <section class="pillar-guides">
+    <div class="container container--wide">
+      <p class="pillar-guides__kicker smallcaps">{copy.guidesKicker}</p>
+      <h2 class="pillar-guides__title">{copy.guidesTitle}</h2>
+      {guides.length > 0
+        ? <GuideList lang={lang} guides={guides} />
+        : <p class="pillar-guides__soon">{copy.soon}</p>}
+    </div>
+  </section>
+
+  <FAQ kicker={copy.faqKicker} title={copy.faqTitle} items={c.faqs} />
+
+  <CTA
+    kicker={copy.ctaKicker}
+    title={copy.ctaTitle}
+    body={copy.ctaBody}
+    buttonLabel={copy.ctaButton}
+    buttonHref={copy.ctaHref}
+  />
+</BaseLayout>
+
+<style>
+  .pillar-intro { padding: var(--space-xl) 0 var(--space-lg); }
+  .pillar-intro__inner { max-width: var(--content-column); margin: 0 auto; }
+
+  .pillar-highlights {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+  .pillar-highlights__kicker {
+    max-width: var(--wide-section);
+    margin: 0 auto var(--space-lg);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .pillar-highlights__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-md);
+  }
+  .pillar-highlight {
+    display: block;
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+    background: var(--color-background);
+    border: 1px solid var(--color-rule);
+    border-left: 2px solid var(--color-accent);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+  }
+  .pillar-highlight:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(31, 35, 40, 0.10);
+  }
+  .pillar-highlight__meta {
+    margin: 0 0 var(--space-xs);
+    color: var(--color-text-secondary);
+    font-size: var(--type-caption);
+  }
+  .pillar-highlight__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h3);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-xs);
+  }
+  .pillar-highlight__blurb {
+    font-family: var(--font-body);
+    font-size: var(--type-small);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .pillar-guides {
+    padding: var(--space-2xl) 0;
+    background: color-mix(in srgb, var(--mc-charcoal) 6%, var(--mc-cream));
+  }
+  @media (prefers-color-scheme: dark) {
+    .pillar-guides { background: color-mix(in srgb, var(--mc-cream) 6%, var(--mc-charcoal)); }
+  }
+  .pillar-guides__kicker {
+    max-width: var(--wide-section);
+    margin: 0 auto var(--space-xs);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .pillar-guides__title {
+    max-width: var(--wide-section);
+    margin: 0 auto var(--space-lg);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h2);
+    line-height: var(--leading-headline);
+  }
+  .pillar-guides__soon {
+    max-width: var(--content-column);
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+</style>

@@ -1,36 +1,16 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import GuideList from '../../components/place/GuideList.astro';
+import PillarLayout from '../../layouts/PillarLayout.astro';
 import { publishable } from '../../utils/guides';
-import PillarStub from '../../components/layout/PillarStub.astro';
+import { PILLARS } from '../../data/pillars';
 
 const guides = publishable(await getCollection('articles'))
   .filter((a) => a.data.language === 'pt' && a.data.pillar === 'dormir');
 ---
-<BaseLayout
+<PillarLayout
   lang="pt"
-  title="Dormir · Margem Cool"
-  description="Hotéis, pousadas, agroturismo, guesthouses, quintas com quartos — onde dormir na Margem Sul."
-  alternateUrl="/en/where-to-stay/"
+  content={PILLARS.pt.dormir}
+  guides={guides}
   canonicalPath="/dormir/"
-  noindex={guides.length === 0}
->
-  {guides.length > 0 ? (
-    <section class="pillar-guides">
-      <div class="container container--wide">
-        <GuideList lang="pt" guides={guides} />
-      </div>
-    </section>
-  ) : (
-  <PillarStub
-      lang="pt"
-      title="Dormir"
-      dek="Hotéis, pousadas, agroturismo, guesthouses, quintas com quartos — onde dormir na Margem Sul."
-    />
-  )}
-</BaseLayout>
-
-<style>
-  .pillar-guides { padding: var(--space-xl) 0 var(--space-2xl); }
-</style>
+  alternateUrl="/en/where-to-stay/"
+/>

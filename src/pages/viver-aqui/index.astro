@@ -1,36 +1,16 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import GuideList from '../../components/place/GuideList.astro';
+import PillarLayout from '../../layouts/PillarLayout.astro';
 import { publishable } from '../../utils/guides';
-import PillarStub from '../../components/layout/PillarStub.astro';
+import { PILLARS } from '../../data/pillars';
 
 const guides = publishable(await getCollection('articles'))
   .filter((a) => a.data.language === 'pt' && a.data.pillar === 'viver_aqui');
 ---
-<BaseLayout
+<PillarLayout
   lang="pt"
-  title="Viver Aqui · Margem Cool"
-  description="Burocracia, escolas, saúde, transportes, comércio, jardins, vida prática — viver na Margem Sul."
-  alternateUrl="/en/living-here/"
+  content={PILLARS.pt.viver_aqui}
+  guides={guides}
   canonicalPath="/viver-aqui/"
-  noindex={guides.length === 0}
->
-  {guides.length > 0 ? (
-    <section class="pillar-guides">
-      <div class="container container--wide">
-        <GuideList lang="pt" guides={guides} />
-      </div>
-    </section>
-  ) : (
-  <PillarStub
-      lang="pt"
-      title="Viver Aqui"
-      dek="Burocracia, escolas, saúde, transportes, comércio, jardins, vida prática — viver na Margem Sul."
-    />
-  )}
-</BaseLayout>
-
-<style>
-  .pillar-guides { padding: var(--space-xl) 0 var(--space-2xl); }
-</style>
+  alternateUrl="/en/living-here/"
+/>

@@ -18,7 +18,7 @@ import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
 
-import { PILLAR_PATH, GUIDES_INDEX } from './pillars.mjs';
+import { GUIDES_INDEX } from './pillars.mjs';
 
 const PLACES_DIR = fileURLToPath(new URL('../content/places/', import.meta.url));
 const ARTICLES_DIR = fileURLToPath(new URL('../content/articles/', import.meta.url));
@@ -36,25 +36,23 @@ export function isIndexableStatus(status) {
 export const NEVER_INDEXED_PATHS = ['/optout/', '/en/optout/'];
 
 /**
- * Pillar landing pages and guide indexes are worth indexing exactly when they
- * have something on them. Derived from the articles on disk rather than kept
- * as a hand-maintained list — the hand-maintained version drifted the first
- * time a pillar gained a guide, and the build gate caught it.
+ * Which languages have at least one publishable guide.
+ *
+ * The pillar pages used to be gated on this too, back when a pillar with no
+ * guide rendered an "Em construção" stub. They now carry their own hero,
+ * facts, prose, highlights and questions, so a pillar is a real page whether
+ * or not a guide has been filed under it, and it is always indexable. Only
+ * the guides index itself still depends on having something to list.
  */
-function guideCoverage() {
-  const pillarsWithGuides = { pt: new Set(), en: new Set() };
-  const langsWithGuides = new Set();
+function langsWithGuides() {
+  const langs = new Set();
   let files = [];
-  try { files = markdownFilesIn(ARTICLES_DIR); } catch { return { pillarsWithGuides, langsWithGuides }; }
+  try { files = markdownFilesIn(ARTICLES_DIR); } catch { return langs; }
   for (const file of files) {
     const data = frontmatterOf(file);
-    if (data.draft) continue;
-    const lang = data.language;
-    if (!pillarsWithGuides[lang]) continue;
-    pillarsWithGuides[lang].add(data.pillar);
-    langsWithGuides.add(lang);
+    if (!data.draft) langs.add(data.language);
   }
-  return { pillarsWithGuides, langsWithGuides };
+  return langs;
 }
 
 function markdownFilesIn(dir) {
@@ -88,13 +86,9 @@ export function placePath(slug, lang) {
 export function noindexPaths() {
   const paths = new Set(NEVER_INDEXED_PATHS);
 
-  const { pillarsWithGuides, langsWithGuides } = guideCoverage();
+  const withGuides = langsWithGuides();
   for (const lang of ['pt', 'en']) {
-    for (const [pillar, path] of Object.entries(PILLAR_PATH[lang])) {
-      if (!pillarsWithGuides[lang].has(pillar)) paths.add(path);
-    }
-    if (!langsWithGuides.has(lang)) paths.add(GUIDES_INDEX[lang]);
-    else paths.delete(GUIDES_INDEX[lang]);
+    if (!withGuides.has(lang)) paths.add(GUIDES_INDEX[lang]);
   }
 
   for (const file of markdownFilesIn(PLACES_DIR)) {
