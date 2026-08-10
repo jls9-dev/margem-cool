@@ -118,8 +118,80 @@ pt:
     E a distância engana. A vila parece perto de Lisboa no mapa, mas a estrada é de serra e não há comboio — conta quarenta e cinco minutos a uma hora, e mais em Agosto ao domingo à tarde.
 
 en:
-  short_description: "A coastal concelho between the Arrábida and the ocean, with a fishing town and a mountain range."
-  page_status: placeholder
+  short_description: "A fishing town with its own auction, a sheltered beach and a castle above. The concelho runs from Lagoa de Albufeira to Cabo Espichel."
+  page_status: developed
+  meta_title: "Sesimbra — town, beaches, castle and Cabo Espichel"
+  meta_description: "A guide to Sesimbra: the fishing town, the castle, the beaches, Lagoa de Albufeira, Cabo Espichel and how to get there."
+  facts:
+    - value: "52,384"
+      label: "Inhabitants (2021)"
+    - value: "195 km²"
+      label: "Area of the concelho"
+    - value: "Lota"
+      label: "Its own fleet and fish auction"
+    - value: "Espichel"
+      label: "The end of the peninsula"
+  faqs:
+    - question: "What is there to do in Sesimbra?"
+      answer: "The town and its sheltered beach, the castle above with a view over the bay, Cabo Espichel at the western end, Lagoa de Albufeira to the north, and the Arrábida beaches over the hills. Eating fish is half the programme."
+    - question: "How do you get to Sesimbra?"
+      answer: "By car, about 45 minutes to an hour from Lisbon over the Ponte 25 de Abril and the A2. There is no train. Carris Metropolitana runs buses, less frequently outside summer."
+    - question: "Is the beach at Sesimbra any good?"
+      answer: "It is one of the few sheltered beaches on the Portuguese Atlantic coast — the hills cut the swell, so the water is calmer and warmer than at Caparica. It fills early in August."
+    - question: "What do you eat in Sesimbra?"
+      answer: "Fish, and whatever came in that day — the town has its own auction and the menu follows the fleet. Don't decide before you arrive."
+    - question: "Which are the beaches of Sesimbra?"
+      answer: "In the bay, Praia do Ouro and Praia da Califórnia. Hidden under the cliff to the west, the Praia do Ribeiro do Cavalo. North of the town, Lagoa de Albufeira, Praia do Meco, Alfarim, Bicas and Moinho de Baixo."
+    - question: "Is it worth going up to the castle?"
+      answer: "Yes, and it is free. It gives the view of the town, the bay and the open sea. Go late in the day, when the light is on the white houses."
+  transport_options:
+    - mode: "Car"
+      duration: "45–60 min"
+      detail: "Ponte 25 de Abril and the A2. Parking in the town in August is difficult — there are car parks above the houses."
+    - mode: "Bus"
+      duration: "Variable frequency"
+      detail: "Carris Metropolitana from Lisbon and the rest of the Margem Sul. Much less frequent outside the bathing season."
+  body: |
+    Sesimbra lives off the sea in a way almost no town in the region still does. It has its own fish auction, its own fleet and a bay sheltered behind the hills, and that organises everything else — what you eat, when things open, and why the town is where it is.
+
+    The concelho is larger than the town suggests. It runs from **Lagoa de Albufeira** in the north to **Cabo Espichel** in the west, with the Serra da Arrábida closing it off to the east. Nearly two hundred square kilometres for fifty-odd thousand people, and most of it is scrub, pine and cliff.
+
+    ## The town
+
+    White houses stacked against the slope, a sheltered beach directly in front, and the **Castelo de Sesimbra** above — Moorish in origin, rebuilt after the Reconquest. The climb gives the view everyone photographs: the town below, the bay, and the open sea beyond it.
+
+    The town beach is one of the few sheltered beaches on the Portuguese Atlantic coast — the hills cut the swell and the water is calmer than at Caparica, half an hour away.
+
+    ## What to see
+
+    Besides the castle and Cabo Espichel: the **Fortaleza de Santiago** on the seafront, built in the seventeenth century to defend the bay and now open to visitors; the **Museu Marítimo de Sesimbra**, on the history of the local fishery; and the small **municipal market**, a morning affair where the auction's fish arrives.
+
+    At Cabo Espichel, the **Santuário de Nossa Senhora do Cabo Espichel** — the pilgrimage church with its two wings of pilgrim houses — has [its own guide](/en/guides/cabo-espichel/).
+
+    ## Beaches
+
+    In the **bay of Sesimbra**, Praia do Ouro and Praia da Califórnia, sheltered by the hills and right in front of the houses.
+
+    To the west, hidden beneath the cliff, the **Praia do Ribeiro do Cavalo** — clear water, reachable only on foot down a steep path or by boat from the town. The most photographed in the concelho and the hardest to reach.
+
+    To the north, **Lagoa de Albufeira** and the Lagoa Pequena, then the Atlantic ribbon: **Praia do Meco**, **Alfarim**, **Praia das Bicas** and **Moinho de Baixo**. Open sea here, with real swell and a naturist tradition along several stretches.
+
+    ## Where to eat
+
+    Sesimbra has its own auction, and that decides everything. In the town, by the beach, the fish and shellfish restaurants change their menu with what the fleet brought in — the right move is to ask what there is rather than choose from the card. At Portinho da Arrábida and Meco, smaller and more seasonal places, some open only in summer.
+
+    Ask what came in today. In a town with an auction, the place that answers that well is the right place.
+
+    ## Festas
+
+    The **Festas em Honra do Senhor Jesus das Chagas**, in early **May**, are the town's own — a procession involving the fishing community, an arraial and bull-running. The **Carnaval de Sesimbra**, in **February**, is the other moment of the year.
+
+    ## The honest part
+
+    Sesimbra in August is a different town. The population multiplies, parking becomes a sport, and the town beach fills in the morning. Out of season it is small and quiet, with a good deal shut.
+
+    And the distance deceives. The town looks close to Lisbon on a map, but the road is a hill road and there is no train — allow forty-five minutes to an hour, and more on an August Sunday afternoon.
+
 last_updated: 2026-08-10
 draft: false
 ---

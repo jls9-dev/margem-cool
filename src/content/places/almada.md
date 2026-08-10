@@ -106,8 +106,84 @@ pt:
     E a Costa da Caparica em Agosto é a praia de três milhões de pessoas. A areia absorve; os acessos não.
 
 en:
-  short_description: "A concelho on the south bank of the Tejo, opposite Lisbon, running from Cristo Rei to the Costa da Caparica."
-  page_status: placeholder
+  short_description: "The concelho closest to Lisbon: ten minutes by boat from Cacilhas to Cais do Sodré, Cristo Rei on the clifftop and fifteen kilometres of Atlantic beach."
+  page_status: developed
+  meta_title: "Almada — Cacilhas, Cristo Rei and the Costa da Caparica"
+  meta_description: "A guide to Almada: Cacilhas and the ferry to Lisbon, Cristo Rei, the Costa da Caparica, the Metro Sul do Tejo and how to cross the river."
+  facts:
+    - value: "177,238"
+      label: "Inhabitants (2021)"
+    - value: "10 min"
+      label: "Cacilhas to Cais do Sodré"
+    - value: "70 km²"
+      label: "Area of the concelho"
+    - value: "15 km"
+      label: "Of sand at Caparica"
+  faqs:
+    - question: "How do you get from Lisbon to Almada?"
+      answer: "By boat from Cais do Sodré to Cacilhas, about 10 minutes, at €2.00 or €1.60 with zapping. By train on the Fertagus, with a station at Pragal. By car over the Ponte 25 de Abril."
+    - question: "What is there to see in Almada?"
+      answer: "Cristo Rei and the view over Lisbon, Cacilhas and its run of marisqueiras, the Cais do Ginjal, Almada Velha on the clifftop, and the Costa da Caparica on the Atlantic side."
+    - question: "Is Almada a good place to live?"
+      answer: "It is the concelho where you least feel you are on the other side — a short crossing, its own services, a hospital and a university. In exchange it is the most expensive in the region and the gap to Lisbon prices has narrowed considerably."
+    - question: "What does the ferry to Lisbon cost?"
+      answer: "€2.00 on a single ticket and €1.60 paying with zapping on a navegante card. The crossing takes about 10 minutes."
+    - question: "Where are Almada's beaches?"
+      answer: "To the west, on the Costa da Caparica — a continuous ribbon of about 15 kilometres running from the town down to Fonte da Telha, beneath the fossil cliff."
+    - question: "Where do you eat in Almada?"
+      answer: "Two places above all. The Cacilhas waterfront, with marisqueiras by the ferry terminal and Lisbon across the water. And the Costa da Caparica, with grilled fish and beach concessions along the sand."
+  transport_options:
+    - mode: "Ferry"
+      duration: "10 min"
+      price: "€2.00"
+      detail: "Cacilhas–Cais do Sodré with Transtejo Soflusa. €1.60 with zapping. The fastest link from the Margem Sul into Lisbon."
+    - mode: "Train"
+      duration: "~10 min"
+      detail: "Fertagus from Roma-Areeiro or Sete Rios to Pragal, crossing the Ponte 25 de Abril."
+    - mode: "Metro Sul do Tejo"
+      detail: "Running since 2008, linking Cacilhas to Pragal, Cova da Piedade, Almada and Corroios."
+    - mode: "Car"
+      duration: "15–25 min"
+      detail: "Ponte 25 de Abril. Bridge traffic is the variable — northbound in the morning, southbound at the end of the day."
+  body: |
+    Almada is the concelho closest to Lisbon and the most visited in the Margem Sul, and the two facts are connected. It is ten minutes by boat between Cacilhas and Cais do Sodré — faster than crossing Lisbon by metro.
+
+    It is also the densest: a hundred and seventy-seven thousand people in seventy square kilometres, more than two and a half thousand per square kilometre. This is not countryside with a view of the city. It is city.
+
+    ## Three Almadas
+
+    **The riverside.** Cacilhas, the ferry terminal, the run of marisqueiras and the Cais do Ginjal stretching east beneath the cliff. It has [its own guide](/en/places/almada/almada-cova-da-piedade-pragal-e-cacilhas/cacilhas/).
+
+    **The high town.** Almada Velha on the clifftop, reached by the Elevador da Boca do Vento, and **Cristo Rei** with its arms open towards the city across the water. What almost nobody says is that entering the grounds and the viewpoint is free — you pay only to go up. It has [a guide](/en/guides/cristo-rei-almada/).
+
+    **The Atlantic side.** West of everything, the **Costa da Caparica**: fifteen kilometres of straight sand under the fossil cliff, from the town down to Fonte da Telha. It is metropolitan Lisbon's beach, and it has [a guide](/en/guides/praias-da-costa-da-caparica/).
+
+    ## Crossing
+
+    Four ways, and the choice shapes the day. The **boat** from Cacilhas to Cais do Sodré, ten minutes, €2.00 single and €1.60 with zapping. The **train** on the Fertagus over the Ponte 25 de Abril, with a station at Pragal. The **bridge** by car. And the **Metro Sul do Tejo**, which since 2008 has linked Cacilhas to the rest of the concelho.
+
+    ## Where to eat
+
+    Two concentrations, and they are nothing like each other. The **Cacilhas waterfront** is marisqueiras one after another by the ferry terminal and along the Cais do Ginjal, with Lisbon across the water. The **Costa da Caparica** is grilled fish and beach restaurants along fifteen kilometres of sand, with prices falling as you move away from the town.
+
+    Look for the room that is full at lunchtime on a weekday. In Cacilhas, be wary of menus with photographs and five languages; a few metres away are places where the terminal staff eat.
+
+    ## Festas
+
+    June is the month, with the santos populares arraiais and the **marchas populares** going through the freguesias. Through the summer each freguesia has its own, and Costa da Caparica adds a beach calendar. The regional picture is in the [summer festas guide](/guias/festas-de-verao-margem-sul/).
+
+    ## Living here
+
+    Almada is where you least feel you are on the other side of the river. There is the Hospital Garcia de Orta, health centres across the freguesias, a university, a municipal theatre and real shopping, and the crossing is short enough not to organise your life around.
+
+    That has a price: it is the most expensive concelho in the region, and the gap to Lisbon has narrowed sharply over the past decade.
+
+    ## The honest part
+
+    The waterfront has been halfway for decades. The Lisnave closure in 2000 left the Margueira empty, the Cais do Ginjal is still awaiting rehabilitation, and successive plans have been announced and postponed. Sections of the riverside walk open and close depending on the year.
+
+    And the Costa da Caparica in August is the beach of three million people. The sand absorbs them; the access roads do not.
+
 last_updated: 2026-08-10
 draft: false
 ---

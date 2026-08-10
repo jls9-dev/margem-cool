@@ -95,8 +95,72 @@ pt:
     E tem a coisa que a Margem Sul industrial tem e a turística não: um sítio que sabe o que foi.
 
 en:
-  short_description: "A riverside concelho, a former industrial city, the ferry terminal for Terreiro do Paço."
-  page_status: placeholder
+  short_description: "The industrial heart of the south bank. The CUF's city, with a boat to Terreiro do Paço and a working-class identity it does not disguise."
+  page_status: developed
+  meta_title: "Barreiro — the CUF city and the boat to Lisbon"
+  meta_description: "A guide to Barreiro: the CUF industrial legacy, the crossing to Terreiro do Paço, the waterfront, the August festas and what living here is like."
+  facts:
+    - value: "78,345"
+      label: "Inhabitants (2021)"
+    - value: "36 km²"
+      label: "Area of the concelho"
+    - value: "€2.95"
+      label: "Boat to Terreiro do Paço"
+    - value: "14–23 Aug"
+      label: "Festas do Barreiro 2026"
+  faqs:
+    - question: "How do you get from Barreiro to Lisbon?"
+      answer: "By boat to Terreiro do Paço, €2.95 single — one of the oldest and busiest crossings on the estuary. By car, over the Vasco da Gama or the 25 de Abril."
+    - question: "What was the CUF in Barreiro?"
+      answer: "The Companhia União Fabril built a chemical complex here that worked as a city within the city — factories, workers' housing, a school, a hospital and a sports club all belonging to the same company. It is the origin of modern Barreiro."
+    - question: "When are the Festas do Barreiro?"
+      answer: "The Festas do Barreiro em Honra de Nossa Senhora do Rosário run from 14 to 23 August 2026, over ten days around the Largo Nossa Senhora do Rosário, with a procession by land and by sea, several stages, tasquinhas and craft stalls."
+    - question: "Is Barreiro worth visiting?"
+      answer: "It is not a weekend destination and has no beach or monumental old town. It has a strong industrial identity, a recovered waterfront, and one of the best daily crossings on the estuary."
+    - question: "Is Barreiro cheap to live in?"
+      answer: "It remains among the more affordable concelhos in the Margem Sul, with a good ferry link to Lisbon — one reason it has attracted people priced out of Almada and Seixal."
+  transport_options:
+    - mode: "Ferry"
+      price: "€2.95"
+      detail: "Barreiro–Terreiro do Paço with Transtejo Soflusa. River and rail terminals in the same building."
+    - mode: "Train"
+      detail: "Linha do Sado and regional services from the Barreiro terminal."
+    - mode: "Car"
+      duration: "30–40 min"
+      detail: "Vasco da Gama via the Montijo side, or the 25 de Abril and the A2."
+  body: |
+    Barreiro was for decades the industrial heart of the south bank. The **CUF** — Companhia União Fabril — built a chemical complex here that was, at its scale, a city inside the city: factories, workers' housing, a school, a hospital, a football ground, all belonging to the same company.
+
+    That history explains today's Barreiro more than anything else. It is the densest concelho in the Margem Sul after Almada — seventy-eight thousand people in thirty-six square kilometres — and the most plainly working-class in origin.
+
+    ## The crossing
+
+    Barreiro has one of the oldest and busiest river links on the estuary: the boat to **Terreiro do Paço**, €2.95 single. For a long time it was also the railhead for the south of the country — anyone travelling to the Algarve by train began by taking the boat from Terreiro do Paço.
+
+    That left Barreiro with a river and rail terminal out of proportion to its size, and it still serves.
+
+    ## The Festas do Barreiro
+
+    The **Festas do Barreiro em Honra de Nossa Senhora do Rosário** are the concelho's big festa, and in 2026 they run from **14 to 23 August**. Ten days.
+
+    What sets them apart from any other festa in the region is the **procession by land and by sea**. The image goes out over both — in a city defined by its relationship with the Tagus, the procession takes the route the city always took.
+
+    The ground is arranged around the **Largo Nossa Senhora do Rosário**, with several stages, tasquinhas and craft stalls.
+
+    ## Where to eat
+
+    Barreiro eats like a working city: well, cheaply and without ceremony. The **pastelarias** are a local institution — the density of cafés and pastry shops surprises newcomers, inherited from a city where factory shifts set the day. The neighbourhood restaurants serve the people who work here and the prices show it. At lunch, look for the handwritten dish of the day.
+
+    ## What it is becoming
+
+    Converting the industrial zone has been the concelho's subject for twenty years: hectares of former chemical complex awaiting a purpose, with successive plans announced. What has actually been done is more modest and more real — a recovered waterfront, parks, and a local cultural life with weight of its own.
+
+    ## The honest part
+
+    Barreiro is not a weekend destination and does not pretend to be. No beach, no hills, no monumental historic centre. What it has is a strong identity, prices that remain among the most accessible in the region, and a crossing to Lisbon that is one of the better daily journeys available anywhere.
+
+    And it has the thing industrial Margem Sul has and the touristic version does not: somewhere that knows what it was.
+
 verify:
   - claim: "Festas do Barreiro em Honra de Nossa Senhora do Rosário, de 14 a 23 de Agosto de 2026"
     source: "https://www.cm-barreiro.pt/conhecer/turismo/lazer-entretenimento/eventos/festas-do-barreiro/festas-do-barreiro-2026/"

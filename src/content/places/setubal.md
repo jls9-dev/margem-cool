@@ -151,8 +151,87 @@ pt:
     E a Arrábida, em Agosto, é vítima do seu próprio sucesso. As restrições de acesso existem porque a serra recebe muito mais gente do que a geografia comporta. Setembro, depois do dia 15, é o melhor mês do ano aqui — água ainda quente, trânsito livre, uma fracção das pessoas.
 
 en:
-  short_description: "The district capital, beside the Sado estuary, between the Arrábida range and the Tróia peninsula."
-  page_status: placeholder
+  short_description: "A real city at the mouth of the Sado, between the estuary and the Arrábida hills. District capital, with a fish auction, a market, hill beaches and choco frito."
+  page_status: developed
+  meta_title: "Setúbal — the city, the Arrábida and the Sado"
+  meta_description: "A guide to Setúbal: the city itself, the Arrábida beaches, the Mercado do Livramento, choco frito, the Sado dolphins and how to get there."
+  facts:
+    - value: "123,496"
+      label: "Inhabitants (2021)"
+    - value: "230 km²"
+      label: "Area of the concelho"
+    - value: "Arrábida"
+      label: "Natural park to the west"
+    - value: "Choco frito"
+      label: "The city's dish"
+  faqs:
+    - question: "Is Setúbal worth visiting?"
+      answer: "Yes, and for different reasons than Lisbon. It is a working Portuguese city with a market, a fish auction and a historic centre, and it has the Arrábida beaches and a resident dolphin population on its doorstep. It is not a postcard destination — it is somewhere people live."
+    - question: "How do you get from Lisbon to Setúbal?"
+      answer: "By train on the Linha do Sul, or by car over the Ponte 25 de Abril and the A2. Allow about 50 minutes either way. The Fertagus does not serve Setúbal."
+    - question: "What do you eat in Setúbal?"
+      answer: "Choco frito before anything else. Then fish and shellfish from the Sado, bought at the Mercado do Livramento in the morning and cooked in the restaurants around it. And moscatel de Setúbal, kept for the end of the meal."
+    - question: "Which beaches are in Setúbal?"
+      answer: "The Arrábida ones — Figueirinha, Galapos, Galapinhos, Portinho, Creiro — and Albarquel, effectively in the city. Between 4 June and 15 September car access is restricted daily from 7am to 8pm."
+    - question: "Are there dolphins in the Sado?"
+      answer: "Yes, a resident population of bottlenose dolphins that lives in the estuary all year rather than passing through. Boats run from the marina to see them."
+    - question: "Where do you find restaurants in Setúbal?"
+      answer: "Along the Avenida Luísa Todi and in the historic centre, where most of the houses serving choco frito are. The waterfront has marisqueiras facing the Sado, and the streets around the Mercado do Livramento hold the places that buy there each morning."
+  transport_options:
+    - mode: "Train"
+      duration: "~50 min"
+      detail: "Linha do Sul from Lisbon. The Fertagus does not reach Setúbal."
+    - mode: "Car"
+      duration: "~50 min"
+      detail: "Ponte 25 de Abril and the A2. Paid parking in the centre and along the waterfront."
+    - mode: "Ferry to Tróia"
+      duration: "~20 min"
+      detail: "From the city waterfront across to the Tróia sandspit, for foot passengers and cars."
+  body: |
+    Setúbal is not a Lisbon suburb. It is a city with a life of its own — district capital, with a port, a fish auction, a polytechnic and a historic centre that depends on nobody. It sits fifty minutes from the capital and behaves as though it were two hundred.
+
+    The geography explains almost everything. The city is wedged between two large things: the **Sado estuary** to the south, with the Tróia sandspit across the water, and the **Serra da Arrábida** to the west, which falls straight into the sea. Between them runs a working waterfront — fishing boats, ferries to Tróia, the smell of the auction in the morning.
+
+    ## What the city eats
+
+    Setúbal is the capital of **choco frito** and takes the matter seriously. Dozens of places cook it and the argument about who does it best is a decades-old local pastime. It has [its own guide](/en/guides/choco-frito/).
+
+    The supply comes from the **Mercado do Livramento**, the 1930 municipal market with tile panels from the thirties and forties, where the city's restaurants buy fish in the morning. Closed Mondays; a morning operation. Also [guided](/en/guides/mercado-do-livramento/).
+
+    ## What to see
+
+    The **Igreja do Convento de Jesus** is the architectural reason to come: the first work of Manueline Gothic, designed by **Diogo Boitaca** — who went on to begin the Jerónimos — with columns of Arrábida stone twisted like rope. The **Museu de Arqueologia e Etnografia** stands beside it.
+
+    The **Castelo de São Filipe** dominates the city from the west, built in the sixteenth century to guard the mouth of the river Sado. From the top you see the city, the estuary and the Tróia spit.
+
+    The **Museu do Trabalho Michel Giacometti** occupies a former cannery and tells the city's industrial story — Setúbal was, for decades, a world capital of tinned sardines.
+
+    By the water, the **Parque Urbano de Albarquel** and the **Praia de Albarquel** are the city's riverside walk, on the way to the hills. The **Troino** is the old fishing quarter, narrow streets and low houses between the avenue and the hill.
+
+    ## Bocage
+
+    **Manuel Maria Barbosa du Bocage** was born in Setúbal in 1765 and is the city's best-known son — satirical poet, bohemian, imprisoned by the Inquisition, later a founding figure of Portuguese romanticism. The central square is **Praça de Bocage**, with his statue in the middle, and it is where the city meets.
+
+    Worth knowing before arranging to meet anyone in Setúbal: when someone says "at Bocage", that is where.
+
+    ## The Arrábida
+
+    Half the concelho is hills. The Parque Natural da Arrábida takes the western strip and with it the best beaches in the region — Figueirinha, Galapos, Galapinhos, Portinho — coves of still, clear water facing south, sheltered from the Atlantic swell.
+
+    From 4 June to 15 September car access is restricted every day from 7am to 8pm. That is the most useful thing anyone can tell you about the Arrábida in August, and it is in the [beaches guide](/en/guides/praias-da-arrabida/).
+
+    ## The Sado
+
+    The estuary is a nature reserve with a **resident population of bottlenose dolphins** — they live there year round rather than passing through. Boats run from the marina.
+
+    Across the water lies **Tróia**, reachable by ferry from the city. Different concelho, different district, but for practical purposes it is the beach opposite.
+
+    ## The honest part
+
+    The city's waterfront is a working port, not a postcard marina — there are cranes, containers and an active container terminal to the east. Anyone arriving expecting Cascais is disappointed; anyone arriving expecting a Portuguese city that works is not.
+
+    And the Arrábida in August is a victim of its own success. The access restrictions exist because the hills take far more people than the geography holds. September, after the 15th, is the best month of the year here.
+
 last_updated: 2026-08-10
 draft: false
 ---

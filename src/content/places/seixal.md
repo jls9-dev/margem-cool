@@ -114,8 +114,80 @@ pt:
     O rio também não é praia. A baía é bonita de olhar e não é para tomar banho; para isso atravessa-se o concelho até à costa atlântica.
 
 en:
-  short_description: "A concelho south of the Tejo, known for the Seixal bay and the Fernão Ferro hinterland."
-  page_status: placeholder
+  short_description: "A bay concelho with its own boat to Lisbon, an industrial past converted into an ecomuseum, and the Aroeira pine woods to the south."
+  page_status: developed
+  meta_title: "Seixal — the bay, the ecomuseum and the crossing to Lisbon"
+  meta_description: "A guide to Seixal: the bay, the old Mundet cork works and the ecomuseum, the Corroios tide mill, the boat to Cais do Sodré and Festa do Avante."
+  facts:
+    - value: "166,507"
+      label: "Inhabitants (2021)"
+    - value: "25 min"
+      label: "Boat to Cais do Sodré"
+    - value: "€2.85"
+      label: "Single ferry ticket"
+    - value: "Ecomuseum"
+      label: "Industry turned museum"
+  faqs:
+    - question: "How do you get from Seixal to Lisbon?"
+      answer: "By boat from the Seixal river terminal to Cais do Sodré, about 25 minutes, at €2.85. Or by train on the Fertagus, with stations at Corroios and Foros de Amora."
+    - question: "What is there to see in Seixal?"
+      answer: "The bay and the town waterfront, the Ecomuseu Municipal across its several sites, the Corroios tide mill which still grinds with the tide, and the Aroeira pine woods to the south."
+    - question: "Can you swim in the Seixal bay?"
+      answer: "It is not a beach. The bay is an inlet of the Tagus, good to look at and to walk beside, but for swimming you cross the concelho to the Atlantic coast around Fonte da Telha."
+    - question: "Where is Festa do Avante held?"
+      answer: "At Quinta da Atalaia in Amora, in the Seixal concelho. It is the region's largest annual event, on the first weekend of September."
+    - question: "Which are the freguesias of Seixal?"
+      answer: "Four: Amora, Corroios, Fernão Ferro, and the union of Seixal, Arrentela and Aldeia de Paio Pires. Corroios and Amora hold most of the concelho's 166,000 people."
+  transport_options:
+    - mode: "Ferry"
+      duration: "~25 min"
+      price: "€2.85"
+      detail: "Seixal river terminal to Cais do Sodré with Transtejo Soflusa. You enter Lisbon across the bay."
+    - mode: "Train"
+      duration: "~20 min"
+      detail: "Fertagus with stations at Corroios and Foros de Amora, crossing the Ponte 25 de Abril."
+    - mode: "Car"
+      duration: "25–35 min"
+      detail: "Ponte 25 de Abril and the A2, Seixal exits."
+  body: |
+    Seixal organises itself around a bay. It is an inlet of the Tagus so enclosed that it reads as a lake, with the north bank showing at the far end and Lisbon visible across the water — and it gives the concelho both its shape and its best argument.
+
+    With a hundred and sixty-six thousand people it is the second most populous in the Margem Sul. Much of that growth is recent: Corroios, Amora, Fernão Ferro and Paio Pires expanded after the bridge, and are still expanding.
+
+    ## The bay and what industry left
+
+    Seixal was a place of cork, glass and shipbuilding. The old **Mundet** works, once among the largest cork factories in the world, still occupies the town waterfront and is now part of the **Ecomuseu Municipal**, which spreads across several sites — including the **Corroios tide mill**, which ground with the tide and still works.
+
+    That is the concelho's mark: it did not erase its industry, it converted it.
+
+    ## What to see
+
+    The ecomuseum's sites are the reason to come: the tide mill, the **Núcleo Naval** with traditional Tagus craft, the Mundet on the waterfront, and the Quinta da Trindade. The town waterfront and the **Amora riverside park** are the obvious walk, bay on one side and Lisbon at the far end.
+
+    ## The crossing
+
+    Seixal has its own boat to Cais do Sodré, about twenty-five minutes, at €2.85. It is longer than the Cacilhas crossing and better looking — you leave through the bay with the shore opening on both sides.
+
+    To the north the **Fertagus** serves Corroios and Foros de Amora over the Ponte 25 de Abril. Between them, the concelho has more ways across the river than almost any other.
+
+    ## The pines and the coast
+
+    To the south, the concelho backs onto the **Aroeira pine woods** and the low-density band running down to Fonte da Telha — Belverde, Verdizela, Aroeira. Houses with gardens, pine trees, and Atlantic beach fifteen minutes away by car. It is another world from Corroios, and it is the same concelho.
+
+    ## Where to eat
+
+    Three zones. The **town**, by the bay, with places facing the water — the best-looking lunch in the concelho. **Amora and Corroios**, where most people live, with neighbourhood cooking: tascas, cervejarias, churrasqueiras. And the **south**, near the pines, more scattered and more of a weekend proposition.
+
+    ## Festas
+
+    The **Festa do Avante** is the largest event in the concelho and the region, on the first weekend of September at Quinta da Atalaia in Amora — it has [its own guide](/en/guides/festa-do-avante-2026/). In June, the santos populares arraiais run across the concelho, with Corroios among the biggest.
+
+    ## The honest part
+
+    Seixal grew fast and it shows. There are neighbourhoods built quickly, without a centre or a square, and the town of Seixal — which has both — sits at one end of the concelho rather than in the middle.
+
+    The river is not a beach either. The bay is fine to look at and not for swimming; for that you cross to the Atlantic side.
+
 last_updated: 2026-08-10
 draft: false
 ---
