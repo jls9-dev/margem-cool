@@ -83,11 +83,17 @@ pt:
 
     ## O que visitar em Sesimbra
 
-    Além do castelo e do Cabo Espichel: o **Forte de Santiago**, na frente de mar da vila, construído no século XVII para defender a baía e hoje aberto a visitas; e o **mercado municipal**, pequeno e de manhã, onde chega o peixe da lota.
+    Além do castelo e do Cabo Espichel: a **Fortaleza de Santiago**, na frente de mar da vila, construída no século XVII para defender a baía e hoje aberta a visitas; o **Museu Marítimo de Sesimbra**, com a história da pesca local; e o **mercado municipal**, pequeno e de manhã, onde chega o peixe da lota.
+
+    No Cabo Espichel, o **Santuário de Nossa Senhora do Cabo Espichel** — a igreja de romaria com as duas alas de casas dos romeiros — tem [guia próprio](/guias/cabo-espichel/).
 
     ## Praias
 
-    As praias do concelho vão da vila — a Praia do Ouro e a Praia da Califórnia, abrigadas pela serra — à Lagoa de Albufeira a norte e ao Meco. Do outro lado da serra ficam as da Arrábida. Há guias para a [Lagoa de Albufeira](/guias/lagoa-de-albufeira/), para as [praias da Arrábida](/guias/praias-da-arrabida/) e para o [Cabo Espichel](/guias/cabo-espichel/).
+    Na **baía de Sesimbra**, a Praia do Ouro e a Praia da Califórnia, abrigadas pela serra e mesmo à frente do casario.
+
+    A poente, escondida sob a arriba, a **Praia do Ribeiro do Cavalo** — água transparente e acesso só a pé por trilho íngreme ou de barco a partir da vila. É a mais fotografada do concelho e a menos fácil de alcançar.
+
+    A norte, a **Lagoa de Albufeira** e a **Lagoa Pequena**, e depois o cordão de areia atlântica: **Praia do Meco**, **Alfarim**, **Praia das Bicas** e o **Moinho de Baixo**. Aqui é mar aberto, com ondulação a sério e tradição naturista em vários troços. Do outro lado da serra ficam as da Arrábida. Há guias para a [Lagoa de Albufeira](/guias/lagoa-de-albufeira/), para as [praias da Arrábida](/guias/praias-da-arrabida/) e para o [Cabo Espichel](/guias/cabo-espichel/).
 
     ## Onde fica
 

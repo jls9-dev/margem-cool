@@ -88,7 +88,7 @@ pt:
 
     **A avenida Luísa Todi e o centro histórico** concentram a maior parte das casas, muitas delas a fazer choco frito como prato principal. É aqui que se come o prato da cidade.
 
-    **A frente ribeirinha e a doca** têm marisqueiras viradas ao Sado.
+    **A frente ribeirinha e a doca** têm marisqueiras viradas ao rio Sado, e é daqui que saem os passeios de barco para ver os golfinhos e para atravessar à foz.
 
     **À volta do Mercado do Livramento** ficam as casas que se abastecem ali de manhã — a carta do dia sai do que houve na banca.
 
@@ -96,7 +96,33 @@ pt:
 
     ## O que visitar em Setúbal
 
-    Além do mercado e da Arrábida: a **Igreja de Jesus**, primeira obra do gótico manuelino; o **Forte de São Filipe** sobre a cidade, com vista para o estuário; o **Museu do Trabalho Michel Giacometti**, instalado numa antiga fábrica de conservas; e os **miradouros** da estrada da serra, a caminho do Portinho.
+    A **Igreja do Convento de Jesus** é a razão arquitectónica para vir: primeira obra do gótico manuelino, projectada por **Diogo Boitaca** — o mesmo que começou os Jerónimos — com colunas em corda torcida de pedra da Arrábida. Ao lado fica o **Museu de Arqueologia e Etnografia**.
+
+    O **Castelo de São Filipe**, também dito Forte de São Filipe, domina a cidade a poente, construído no século XVI para guardar a foz do rio Sado. Do alto vê-se a cidade, o estuário e a restinga de Tróia.
+
+    O **Museu do Trabalho Michel Giacometti** ocupa uma antiga fábrica de conservas e conta a história industrial da cidade — que foi, durante décadas, capital mundial da conserva de sardinha.
+
+    Junto à água, o **Parque Urbano de Albarquel** e a **Praia de Albarquel** são o passeio ribeirinho da cidade, a caminho da serra.
+
+    O bairro do **Troino** é o antigo bairro piscatório, entre a avenida e a colina — ruas estreitas, casario baixo, e a origem da relação de Setúbal com o mar.
+
+    ## Bocage
+
+    **Manuel Maria Barbosa du Bocage** nasceu em Setúbal em 1765 e é o filho mais conhecido da cidade — poeta satírico, boémio, preso pela Inquisição, e depois figura fundadora do romantismo português. A praça central chama-se **Praça de Bocage**, com a sua estátua no meio, e é o ponto onde a cidade se encontra.
+
+    Convém saber isto antes de marcar um encontro em Setúbal: quando alguém diz "no Bocage", é ali.
+
+    ## História, em resumo
+
+    Setúbal recebeu foral em 1249, sob a alçada da **Ordem de Santiago**, que dominou boa parte da península a partir de Palmela. A vila cresceu com o sal e com a pesca, e o **porto de Setúbal** — que continua a trabalhar, com terminal de contentores a nascente — foi sempre a razão de tudo.
+
+    No século XX a cidade tornou-se capital da **indústria conserveira**, com dezenas de fábricas a transformar sardinha para exportação. O Museu do Trabalho ocupa uma delas. Quando a indústria caiu, deixou a cidade com o porto, a lota e um centro que teve de se reinventar sem perder o que era.
+
+    ## Cetóbriga e o que veio antes
+
+    Do outro lado do estuário, em Tróia, ficam as ruínas romanas por vezes identificadas com **Cetóbriga** — um complexo de salga de peixe e produção de garum que abastecia o império. A indústria conserveira de Setúbal, dois mil anos depois, fez exactamente a mesma coisa com a mesma matéria-prima.
+
+    É a continuidade mais longa da região: peixe salgado no mesmo estuário desde o século I.
 
     ## Onde fica
 
