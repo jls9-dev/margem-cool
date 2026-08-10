@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import GuideList from '../../components/place/GuideList.astro';
+import { publishable } from '../../utils/guides';
 import PillarStub from '../../components/layout/PillarStub.astro';
+
+const guides = publishable(await getCollection('articles'))
+  .filter((a) => a.data.language === 'pt' && a.data.pillar === 'lugares_bairros');
 ---
 <BaseLayout
   lang="pt"
@@ -8,11 +14,23 @@ import PillarStub from '../../components/layout/PillarStub.astro';
   description="Concelhos, freguesias e bairros da Margem Sul — a espinha geográfica e editorial da publicação."
   alternateUrl="/en/places-and-neighbourhoods/"
   canonicalPath="/lugares-e-bairros/"
-  noindex
+  noindex={guides.length === 0}
 >
+  {guides.length > 0 ? (
+    <section class="pillar-guides">
+      <div class="container container--wide">
+        <GuideList lang="pt" guides={guides} />
+      </div>
+    </section>
+  ) : (
   <PillarStub
-    lang="pt"
-    title="Lugares & Bairros"
-    dek="Concelhos, freguesias e bairros. A espinha geográfica e editorial da publicação."
-  />
+      lang="pt"
+      title="Lugares & Bairros"
+      dek="Concelhos, freguesias e bairros. A espinha geográfica e editorial da publicação."
+    />
+  )}
 </BaseLayout>
+
+<style>
+  .pillar-guides { padding: var(--space-xl) 0 var(--space-2xl); }
+</style>

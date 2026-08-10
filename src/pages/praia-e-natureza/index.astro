@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import GuideList from '../../components/place/GuideList.astro';
+import { publishable } from '../../utils/guides';
 import PillarStub from '../../components/layout/PillarStub.astro';
+
+const guides = publishable(await getCollection('articles'))
+  .filter((a) => a.data.language === 'pt' && a.data.pillar === 'praia_natureza');
 ---
 <BaseLayout
   lang="pt"
@@ -8,11 +14,23 @@ import PillarStub from '../../components/layout/PillarStub.astro';
   description="Praias, Arrábida, caminhadas, surf, locais de banho, o rio — o ar livre na Margem Sul."
   alternateUrl="/en/beach-and-outdoors/"
   canonicalPath="/praia-e-natureza/"
-  noindex
+  noindex={guides.length === 0}
 >
+  {guides.length > 0 ? (
+    <section class="pillar-guides">
+      <div class="container container--wide">
+        <GuideList lang="pt" guides={guides} />
+      </div>
+    </section>
+  ) : (
   <PillarStub
-    lang="pt"
-    title="Praia & Natureza"
-    dek="Praias, Arrábida, caminhadas, surf, locais de banho, o rio — o ar livre na Margem Sul."
-  />
+      lang="pt"
+      title="Praia & Natureza"
+      dek="Praias, Arrábida, caminhadas, surf, locais de banho, o rio — o ar livre na Margem Sul."
+    />
+  )}
 </BaseLayout>
+
+<style>
+  .pillar-guides { padding: var(--space-xl) 0 var(--space-2xl); }
+</style>

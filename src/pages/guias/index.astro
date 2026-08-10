@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideHero from '../../components/place/GuideHero.astro';
+import GuideList from '../../components/place/GuideList.astro';
+import BackLink from '../../components/place/BackLink.astro';
+import { publishable } from '../../utils/guides';
+
+const guides = publishable(await getCollection('articles')).filter((a) => a.data.language === 'pt');
+const hasEn = publishable(await getCollection('articles')).some((a) => a.data.language === 'en');
+---
+<BaseLayout
+  lang="pt"
+  title="Guias · Margem Cool"
+  description="Guias práticos da Margem Sul: festas, monumentos, mercados, praias e onde comer, concelho a concelho."
+  alternateUrl={hasEn ? '/en/guides/' : undefined}
+  canonicalPath="/guias/"
+  noindex={guides.length === 0}
+>
+  <GuideHero
+    kicker="Margem Cool"
+    title="Guias"
+    dek="O que abre, quanto custa, como se chega e se vale a pena. Guias práticos da Margem Sul."
+    updatedLabel={`${guides.length} guias`}
+  />
+  <section class="guides-index">
+    <div class="container container--wide">
+      <GuideList lang="pt" guides={guides} showPillar />
+    </div>
+  </section>
+  <BackLink label="← Voltar ao início" href="/" />
+</BaseLayout>
+<style>
+  .guides-index { padding: var(--space-xl) 0 var(--space-2xl); }
+</style>

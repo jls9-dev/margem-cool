@@ -1,0 +1,24 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import GuideLayout from '../../../layouts/GuideLayout.astro';
+import { guideSlug, publishable } from '../../../utils/guides';
+
+export const getStaticPaths = (async () => {
+  const all = publishable(await getCollection('articles'));
+  const mine = all.filter((a) => a.data.language === 'en');
+  const otherSlugs = new Set(all.filter((a) => a.data.language === 'pt').map(guideSlug));
+  return mine.map((article) => {
+    const slug = guideSlug(article);
+    return {
+      params: { slug },
+      // Only advertise the Portuguese alternate when it actually exists and is
+      // publishable — the same rule the place pages follow.
+      props: { article, alternatePath: otherSlugs.has(slug) ? `/guias/${slug}/` : undefined },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { article, alternatePath } = Astro.props;
+---
+<GuideLayout article={article} alternatePath={alternatePath} />

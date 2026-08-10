@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import GuideList from '../../../components/place/GuideList.astro';
+import { publishable } from '../../../utils/guides';
 import PillarStub from '../../../components/layout/PillarStub.astro';
+
+const guides = publishable(await getCollection('articles'))
+  .filter((a) => a.data.language === 'en' && a.data.pillar === 'cultura_agenda');
 ---
 <BaseLayout
   lang="en"
@@ -8,11 +14,23 @@ import PillarStub from '../../../components/layout/PillarStub.astro';
   description="Festas, feiras, concerts, exhibitions, colectividades, processions — the recurring cultural life of the Margem Sul."
   alternateUrl="/cultura-e-agenda/"
   canonicalPath="/en/culture-and-whats-on/"
-  noindex
+  noindex={guides.length === 0}
 >
+  {guides.length > 0 ? (
+    <section class="pillar-guides">
+      <div class="container container--wide">
+        <GuideList lang="en" guides={guides} />
+      </div>
+    </section>
+  ) : (
   <PillarStub
-    lang="en"
-    title="Culture & What’s On"
-    dek="Festas, feiras, concerts, exhibitions, colectividades, processions — the recurring cultural life of the Margem Sul."
-  />
+      lang="en"
+      title="Culture & What’s On"
+      dek="Festas, feiras, concerts, exhibitions, colectividades, processions — the recurring cultural life of the Margem Sul."
+    />
+  )}
 </BaseLayout>
+
+<style>
+  .pillar-guides { padding: var(--space-xl) 0 var(--space-2xl); }
+</style>

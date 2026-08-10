@@ -420,6 +420,46 @@ const articleSchema = z.object({
   featured: z.boolean().default(false),
 
   tags: z.array(z.string()).optional(),
+
+  // Structured blocks, shared with place pages. A guide is not a wall of
+  // prose — the same reasoning applies as in page-patterns.md: a chronology
+  // wants a timeline, a list of restaurants wants cards, key numbers want
+  // numerals. All optional; each component hides itself when absent.
+  facts: z.array(placeFact).optional(),
+  faqs: z.array(placeFaq).optional(),
+  timeline: z.array(z.object({
+    year: z.string(),
+    label: z.string().optional(),
+    body: z.string(),
+  })).optional(),
+  eateries: z.array(z.object({
+    name: z.string(),
+    cuisine: z.string().optional(),
+    description: z.string(),
+    price_range: z.string().optional(),
+    location: z.string().optional(),
+    signature: z.string().optional(),
+    emphasis: z.boolean().optional(),
+  })).optional(),
+  transport_options: z.array(z.object({
+    mode: z.string(),
+    duration: z.string().optional(),
+    price: z.string().optional(),
+    detail: z.string(),
+  })).optional(),
+
+  // Photos, by key into src/assets/places/ — same resolver as place pages.
+  // hero_image, hero_image_caption and hero_image_credit are declared above.
+  hero_image_alt: z.string().optional(),
+  gallery: z.array(z.object({
+    src: z.string(),
+    alt: z.string(),
+    caption: z.string().optional(),
+    credit: z.string().optional(),
+  })).optional(),
+
+  /** Where this guide sits in the pillar's guide list. Lower shows first. */
+  order: z.number().optional(),
 });
 
 /* -------------------------------------------------------------------------

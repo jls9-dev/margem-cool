@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import GuideList from '../../components/place/GuideList.astro';
+import { publishable } from '../../utils/guides';
 import PillarStub from '../../components/layout/PillarStub.astro';
+
+const guides = publishable(await getCollection('articles'))
+  .filter((a) => a.data.language === 'pt' && a.data.pillar === 'comer_beber');
 ---
 <BaseLayout
   lang="pt"
@@ -8,11 +14,23 @@ import PillarStub from '../../components/layout/PillarStub.astro';
   description="Restaurantes, tascas, pastelarias, padarias, mercados — onde e o que comer e beber na Margem Sul."
   alternateUrl="/en/eat-and-drink/"
   canonicalPath="/comer-e-beber/"
-  noindex
+  noindex={guides.length === 0}
 >
+  {guides.length > 0 ? (
+    <section class="pillar-guides">
+      <div class="container container--wide">
+        <GuideList lang="pt" guides={guides} />
+      </div>
+    </section>
+  ) : (
   <PillarStub
-    lang="pt"
-    title="Comer & Beber"
-    dek="Tascas, restaurantes, pastelarias, padarias, mercados — onde e o que comer e beber na Margem Sul."
-  />
+      lang="pt"
+      title="Comer & Beber"
+      dek="Tascas, restaurantes, pastelarias, padarias, mercados — onde e o que comer e beber na Margem Sul."
+    />
+  )}
 </BaseLayout>
+
+<style>
+  .pillar-guides { padding: var(--space-xl) 0 var(--space-2xl); }
+</style>

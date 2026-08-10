@@ -18,7 +18,10 @@ import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
 
+import { PILLAR_PATH, GUIDES_INDEX } from './pillars.mjs';
+
 const PLACES_DIR = fileURLToPath(new URL('../content/places/', import.meta.url));
+const ARTICLES_DIR = fileURLToPath(new URL('../content/articles/', import.meta.url));
 
 /** Statuses that mean "there is something here worth ranking". */
 export function isIndexableStatus(status) {
@@ -33,24 +36,26 @@ export function isIndexableStatus(status) {
 export const NEVER_INDEXED_PATHS = ['/optout/', '/en/optout/'];
 
 /**
- * Pillar landing pages still rendering the "Em construção" stub. These are the
- * highest-value URLs on the site once written, so they are listed by hand —
- * deleting a path from here is the deliberate act of saying a pillar is live.
+ * Pillar landing pages and guide indexes are worth indexing exactly when they
+ * have something on them. Derived from the articles on disk rather than kept
+ * as a hand-maintained list — the hand-maintained version drifted the first
+ * time a pillar gained a guide, and the build gate caught it.
  */
-export const PILLAR_STUB_PATHS = [
-  '/comer-e-beber/',
-  '/cultura-e-agenda/',
-  '/dormir/',
-  '/lugares-e-bairros/',
-  '/praia-e-natureza/',
-  '/viver-aqui/',
-  '/en/eat-and-drink/',
-  '/en/culture-and-whats-on/',
-  '/en/where-to-stay/',
-  '/en/places-and-neighbourhoods/',
-  '/en/beach-and-outdoors/',
-  '/en/living-here/',
-];
+function guideCoverage() {
+  const pillarsWithGuides = { pt: new Set(), en: new Set() };
+  const langsWithGuides = new Set();
+  let files = [];
+  try { files = markdownFilesIn(ARTICLES_DIR); } catch { return { pillarsWithGuides, langsWithGuides }; }
+  for (const file of files) {
+    const data = frontmatterOf(file);
+    if (data.draft) continue;
+    const lang = data.language;
+    if (!pillarsWithGuides[lang]) continue;
+    pillarsWithGuides[lang].add(data.pillar);
+    langsWithGuides.add(lang);
+  }
+  return { pillarsWithGuides, langsWithGuides };
+}
 
 function markdownFilesIn(dir) {
   const out = [];
@@ -81,7 +86,16 @@ export function placePath(slug, lang) {
  * yet in English belongs in the Portuguese index only.
  */
 export function noindexPaths() {
-  const paths = new Set([...NEVER_INDEXED_PATHS, ...PILLAR_STUB_PATHS]);
+  const paths = new Set(NEVER_INDEXED_PATHS);
+
+  const { pillarsWithGuides, langsWithGuides } = guideCoverage();
+  for (const lang of ['pt', 'en']) {
+    for (const [pillar, path] of Object.entries(PILLAR_PATH[lang])) {
+      if (!pillarsWithGuides[lang].has(pillar)) paths.add(path);
+    }
+    if (!langsWithGuides.has(lang)) paths.add(GUIDES_INDEX[lang]);
+    else paths.delete(GUIDES_INDEX[lang]);
+  }
 
   for (const file of markdownFilesIn(PLACES_DIR)) {
     const slug = relative(PLACES_DIR, file).split(sep).join('/').replace(/\.md$/, '');

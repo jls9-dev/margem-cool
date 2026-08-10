@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GuideHero from '../../../components/place/GuideHero.astro';
+import GuideList from '../../../components/place/GuideList.astro';
+import BackLink from '../../../components/place/BackLink.astro';
+import { publishable } from '../../../utils/guides';
+
+const guides = publishable(await getCollection('articles')).filter((a) => a.data.language === 'en');
+const hasPt = publishable(await getCollection('articles')).some((a) => a.data.language === 'pt');
+---
+<BaseLayout
+  lang="en"
+  title="Guides · Margem Cool"
+  description="Practical guides to the Margem Sul: festas, landmarks, markets, beaches and where to eat, concelho by concelho."
+  alternateUrl={hasPt ? '/guias/' : undefined}
+  canonicalPath="/en/guides/"
+  noindex={guides.length === 0}
+>
+  <GuideHero
+    kicker="Margem Cool"
+    title="Guides"
+    dek="What opens, what it costs, how to get there and whether it is worth it. Practical guides to the Margem Sul."
+    updatedLabel={`${guides.length} guides`}
+  />
+  <section class="guides-index">
+    <div class="container container--wide">
+      <GuideList lang="en" guides={guides} showPillar />
+    </div>
+  </section>
+  <BackLink label="← Back to the home page" href="/en/" />
+</BaseLayout>
+<style>
+  .guides-index { padding: var(--space-xl) 0 var(--space-2xl); }
+</style>

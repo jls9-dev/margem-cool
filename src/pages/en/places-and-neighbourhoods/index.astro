@@ -1,6 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import GuideList from '../../../components/place/GuideList.astro';
+import { publishable } from '../../../utils/guides';
 import PillarStub from '../../../components/layout/PillarStub.astro';
+
+const guides = publishable(await getCollection('articles'))
+  .filter((a) => a.data.language === 'en' && a.data.pillar === 'lugares_bairros');
 ---
 <BaseLayout
   lang="en"
@@ -8,11 +14,23 @@ import PillarStub from '../../../components/layout/PillarStub.astro';
   description="Concelhos, freguesias and bairros of the Margem Sul — the geographic and editorial spine of the publication."
   alternateUrl="/lugares-e-bairros/"
   canonicalPath="/en/places-and-neighbourhoods/"
-  noindex
+  noindex={guides.length === 0}
 >
+  {guides.length > 0 ? (
+    <section class="pillar-guides">
+      <div class="container container--wide">
+        <GuideList lang="en" guides={guides} />
+      </div>
+    </section>
+  ) : (
   <PillarStub
-    lang="en"
-    title="Places & Neighbourhoods"
-    dek="Concelhos, freguesias and bairros. The geographic and editorial spine of the publication."
-  />
+      lang="en"
+      title="Places & Neighbourhoods"
+      dek="Concelhos, freguesias and bairros. The geographic and editorial spine of the publication."
+    />
+  )}
 </BaseLayout>
+
+<style>
+  .pillar-guides { padding: var(--space-xl) 0 var(--space-2xl); }
+</style>

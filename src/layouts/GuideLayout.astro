@@ -1,0 +1,251 @@
+---
+/**
+ * GuideLayout — a guide page: the festas, the landmarks, the markets, the
+ * dishes, the "where to eat in X" round-ups.
+ *
+ * Place pages answer "tell me about this place". Guides answer a question
+ * someone actually typed. They share the component set deliberately — the
+ * reader shouldn't have to learn a second layout, and a chronology wants a
+ * timeline whether it sits on a place page or a guide.
+ *
+ * Unlike places, an article is one file per language (the `articles`
+ * collection carries `language`), so this layout takes one entry and renders
+ * it in that entry's language.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { marked } from 'marked';
+
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/place/Breadcrumb.astro';
+import GuideHero from '../components/place/GuideHero.astro';
+import QuickFacts from '../components/place/QuickFacts.astro';
+import FAQ from '../components/place/FAQ.astro';
+import CTA from '../components/place/CTA.astro';
+import BackLink from '../components/place/BackLink.astro';
+import Timeline from '../components/place/Timeline.astro';
+import TransportOptions from '../components/place/TransportOptions.astro';
+import EateryGrid from '../components/place/EateryGrid.astro';
+import PlacePhoto from '../components/place/PlacePhoto.astro';
+
+import { SITE_URL, type Lang } from '../utils/i18n';
+import { optionalPlaceImage, placeImage } from '../utils/place-images';
+import { PILLAR_PATH, PILLAR_LABEL, guidePath } from '../utils/guides';
+
+type Article = CollectionEntry<'articles'>;
+
+interface Props {
+  article: Article;
+  /** The other language's equivalent, when one exists and is publishable. */
+  alternatePath?: string;
+}
+const { article, alternatePath } = Astro.props;
+const d = article.data;
+const lang = d.language as Lang;
+
+const COPY = {
+  pt: {
+    breadcrumbLabel: 'Caminho',
+    root: { href: '/guias/', label: 'Guias' },
+    updated: (x: Date) => `Atualizado · ${fmt(x, 'pt')}`,
+    timeline: { kicker: 'Cronologia', title: 'Os marcos' },
+    transport: { kicker: 'Como chegar', title: 'Como chegar', subtitle: 'As opções, o tempo de viagem e o preço.' },
+    eateries: { kicker: 'Comer e beber', title: 'Onde comer', subtitle: 'Restaurantes, tascas, marisqueiras.' },
+    faqKicker: 'Perguntas frequentes',
+    faqTitle: 'Perguntas comuns',
+    ctaKicker: 'Margem Cool',
+    ctaTitle: 'Sabes de algo que devíamos saber?',
+    ctaBody: 'Correcções, sugestões, coisas que nos escaparam — escreve-nos.',
+    ctaButton: 'Escrever para a Margem Cool →',
+    ctaHref: '/contacto/',
+    back: '← Todos os guias',
+    backHref: '/guias/',
+  },
+  en: {
+    breadcrumbLabel: 'Breadcrumb',
+    root: { href: '/en/guides/', label: 'Guides' },
+    updated: (x: Date) => `Updated · ${fmt(x, 'en')}`,
+    timeline: { kicker: 'Timeline', title: 'Key dates' },
+    transport: { kicker: 'Getting there', title: 'How to get there', subtitle: 'The options, the duration, the cost.' },
+    eateries: { kicker: 'Eat and drink', title: 'Where to eat', subtitle: 'Restaurants, tascas, marisqueiras.' },
+    faqKicker: 'Common questions',
+    faqTitle: 'Frequently asked',
+    ctaKicker: 'Margem Cool',
+    ctaTitle: 'Know something we should know?',
+    ctaBody: 'Corrections, suggestions, things we missed — write to us.',
+    ctaButton: 'Write to Margem Cool →',
+    ctaHref: '/en/contact/',
+    back: '← All guides',
+    backHref: '/en/guides/',
+  },
+} as const;
+const copy = COPY[lang];
+
+function fmt(date: Date, l: Lang) {
+  return new Intl.DateTimeFormat(l === 'pt' ? 'pt-PT' : 'en-GB',
+    { year: 'numeric', month: 'long' }).format(date);
+}
+
+const lastUpdated = d.last_updated instanceof Date ? d.last_updated : new Date(d.last_updated);
+const canonicalPath = guidePath(article);
+
+const hero = optionalPlaceImage(d.hero_image);
+const bodyHtml = await marked.parse(article.body ?? '', { async: true });
+
+const pillarHref = PILLAR_PATH[lang][d.pillar];
+const pillarLabel = PILLAR_LABEL[lang][d.pillar];
+
+const breadcrumbItems = [
+  copy.root,
+  ...(pillarHref ? [{ href: pillarHref, label: pillarLabel }] : []),
+  { label: d.title },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: d.title,
+    description: d.meta_description ?? d.dek,
+    inLanguage: lang === 'pt' ? 'pt-PT' : 'en',
+    datePublished: (d.published instanceof Date ? d.published : new Date(d.published)).toISOString(),
+    dateModified: lastUpdated.toISOString(),
+    author: { '@type': 'Organization', name: d.author },
+    publisher: { '@type': 'Organization', name: 'Margem Cool', url: SITE_URL },
+    mainEntityOfPage: new URL(canonicalPath, SITE_URL).toString(),
+    ...(hero && { image: new URL(hero.src, SITE_URL).toString() }),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbItems.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: b.label,
+      ...(('href' in b && b.href) ? { item: new URL(b.href, SITE_URL).toString() } : {}),
+    })),
+  },
+  ...(d.faqs?.length ? [{
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: d.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  }] : []),
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={d.meta_title ?? `${d.title} · Margem Cool`}
+  description={d.meta_description ?? d.dek}
+  alternateUrl={alternatePath}
+  canonicalPath={canonicalPath}
+  jsonLd={jsonLd}
+>
+  <Breadcrumb ariaLabel={copy.breadcrumbLabel} items={breadcrumbItems} />
+
+  <GuideHero
+    kicker={pillarLabel}
+    title={d.title}
+    dek={d.dek ?? ''}
+    updatedLabel={copy.updated(lastUpdated)}
+  />
+
+  {hero && (
+    <div class="container container--wide">
+      <PlacePhoto
+        image={hero}
+        alt={d.hero_image_alt ?? ''}
+        caption={d.hero_image_caption}
+        credit={d.hero_image_credit}
+        lead
+      />
+    </div>
+  )}
+
+  <QuickFacts facts={d.facts} />
+
+  {bodyHtml && (
+    <article class="guide-body">
+      <div class="container">
+        <div class="guide-body__inner" set:html={bodyHtml} />
+      </div>
+    </article>
+  )}
+
+  <TransportOptions
+    kicker={copy.transport.kicker}
+    title={copy.transport.title}
+    subtitle={copy.transport.subtitle}
+    options={d.transport_options}
+  />
+
+  {d.gallery && d.gallery.length > 0 && (
+    <section class="guide-gallery">
+      <div class="container container--wide">
+        {d.gallery.map((g) => (
+          <PlacePhoto image={placeImage(g.src)} alt={g.alt} caption={g.caption} credit={g.credit} />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <EateryGrid
+    kicker={copy.eateries.kicker}
+    title={copy.eateries.title}
+    subtitle={copy.eateries.subtitle}
+    items={d.eateries}
+  />
+
+  {d.timeline && d.timeline.length > 0 && (
+    <section class="guide-timeline">
+      <div class="container">
+        <div class="guide-timeline__inner">
+          <Timeline kicker={copy.timeline.kicker} title={copy.timeline.title} entries={d.timeline} />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <FAQ kicker={copy.faqKicker} title={copy.faqTitle} items={d.faqs} />
+
+  <CTA
+    kicker={copy.ctaKicker}
+    title={copy.ctaTitle}
+    body={copy.ctaBody}
+    buttonLabel={copy.ctaButton}
+    buttonHref={copy.ctaHref}
+  />
+
+  <BackLink label={copy.back} href={copy.backHref} />
+</BaseLayout>
+
+<style>
+  .guide-body {
+    padding: var(--space-xl) 0 var(--space-2xl);
+  }
+  .guide-body__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+  .guide-gallery {
+    padding: 0 0 var(--space-xl);
+  }
+  .guide-timeline {
+    padding: var(--space-2xl) 0;
+    background: color-mix(in srgb, var(--mc-cream) 70%, var(--mc-cool-grey) 10%);
+    border-top: 1px solid color-mix(in srgb, var(--mc-cool-grey) 35%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--mc-cool-grey) 35%, transparent);
+  }
+  @media (prefers-color-scheme: dark) {
+    .guide-timeline {
+      background: color-mix(in srgb, var(--mc-charcoal) 80%, var(--mc-cool-grey-dark) 15%);
+    }
+  }
+  .guide-timeline__inner {
+    max-width: var(--content-column);
+    margin: 0 auto;
+  }
+</style>

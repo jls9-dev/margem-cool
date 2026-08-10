@@ -1,0 +1,112 @@
+---
+/**
+ * GuideList — guides as cards, used on the guides index and on each pillar
+ * page. A pillar page with guides under it stops being a stub and becomes the
+ * hub it was always meant to be.
+ */
+import { Picture } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { optionalPlaceImage } from '../../utils/place-images';
+import { guidePath, PILLAR_LABEL } from '../../utils/guides';
+import type { Lang } from '../../utils/i18n';
+
+interface Props {
+  lang: Lang;
+  guides: CollectionEntry<'articles'>[];
+  /** Show the pillar name on each card — wanted on the index, not on a pillar. */
+  showPillar?: boolean;
+}
+const { lang, guides, showPillar = false } = Astro.props;
+
+const items = guides
+  .slice()
+  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99) || a.data.title.localeCompare(b.data.title))
+  .map((g) => ({
+    href: guidePath(g),
+    title: g.data.title,
+    dek: g.data.dek,
+    pillar: PILLAR_LABEL[lang][g.data.pillar],
+    image: optionalPlaceImage(g.data.hero_image),
+    alt: g.data.hero_image_alt ?? '',
+  }));
+---
+
+{items.length > 0 && (
+  <div class="guide-list">
+    {items.map((g) => (
+      <a class="guide-card" href={g.href}>
+        {g.image && (
+          <div class="guide-card__media">
+            <Picture
+              src={g.image}
+              alt={g.alt}
+              widths={[320, 480, 720]}
+              sizes="(max-width: 720px) 100vw, 360px"
+              formats={['avif', 'webp']}
+              quality={60}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
+        <div class="guide-card__text">
+          {showPillar && <p class="guide-card__pillar smallcaps">{g.pillar}</p>}
+          <h3 class="guide-card__title">{g.title}</h3>
+          {g.dek && <p class="guide-card__dek">{g.dek}</p>}
+        </div>
+      </a>
+    ))}
+  </div>
+)}
+
+<style>
+  .guide-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    max-width: var(--wide-section);
+    margin: 0 auto;
+  }
+  .guide-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-rule);
+    border-top: 2px solid var(--color-accent);
+    background: var(--color-background);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+  }
+  .guide-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(31, 35, 40, 0.10);
+  }
+  .guide-card__media :global(img) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+  .guide-card__text {
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+  }
+  .guide-card__pillar {
+    margin: 0 0 var(--space-xs);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+  .guide-card__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--type-h3);
+    line-height: var(--leading-headline);
+    margin: 0 0 var(--space-xs);
+  }
+  .guide-card__dek {
+    font-family: var(--font-body);
+    font-size: var(--type-small);
+    line-height: var(--leading-body);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+</style>
