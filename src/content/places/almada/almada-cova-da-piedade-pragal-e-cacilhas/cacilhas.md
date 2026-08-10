@@ -12,7 +12,7 @@ hero_image_alt_pt: "Pontão industrial em ruínas no Cais do Ginjal, com pescado
 hero_image_alt_en: "A derelict industrial pier on the Cais do Ginjal, anglers along its edge, the Ponte 25 de Abril emerging from fog behind."
 hero_image_caption_pt: "O Cais do Ginjal a meio caminho entre porto de trabalho e frente ribeirinha acabada — o estado em que está há décadas."
 hero_image_caption_en: "The Cais do Ginjal, halfway between working port and finished waterfront — the state it has been in for decades."
-hero_image_credit: "James Lumley-Savile"
+hero_image_credit: "Margem Cool"
 
 gallery:
   - src: "cacilhas-ponto-final"
@@ -20,19 +20,19 @@ gallery:
     alt_en: "Ponto Final's yellow tables and chairs on the quay edge, the Ponte 25 de Abril and Lisbon across the water."
     caption_pt: "O Ponto Final ocupa o rés-do-chão de um armazém em ruína. As mesas ficam à beira do cais, sem grades."
     caption_en: "Ponto Final occupies the ground floor of a ruined warehouse. The tables sit at the quay edge, with no railing."
-    credit: "James Lumley-Savile"
+    credit: "Margem Cool"
   - src: "cacilhas-atira-te-ao-rio"
     alt_pt: "Esplanada do Atira-te ao Rio, edifício caiado de branco com caixilhos e mobiliário verde-água, areia em frente."
     alt_en: "The terrace at Atira-te ao Rio — a whitewashed building with mint-green frames and furniture, sand in front."
     caption_pt: "O Atira-te ao Rio, com o Elevador da Boca do Vento no cimo da arriba por trás."
     caption_en: "Atira-te ao Rio, with the Elevador da Boca do Vento on the clifftop behind."
-    credit: "James Lumley-Savile"
+    credit: "Margem Cool"
   - src: "cacilhas-almada-velha"
     alt_pt: "Telhados de Almada Velha ao anoitecer, com torre sineira e edifícios devolutos sobre a arriba."
     alt_en: "The rooftops of Almada Velha at dusk, a bell tower and empty buildings along the clifftop."
     caption_pt: "Almada Velha, no cimo da arriba — cinco minutos a pé do topo do elevador."
     caption_en: "Almada Velha along the clifftop — five minutes' walk from the top of the elevator."
-    credit: "James Lumley-Savile"
+    credit: "Margem Cool"
 
 featured_links:
   - href: "/lugares/almada/"

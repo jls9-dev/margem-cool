@@ -13,7 +13,7 @@ meta_description: "Guia do Santuário Nacional de Cristo Rei: horários, preços
 hero_image: "cristo-rei-sunset"
 hero_image_alt: "Silhueta do Cristo Rei contra nuvens alaranjadas ao pôr do sol, sobre a arriba de Almada."
 hero_image_caption: "O Cristo Rei visto de baixo, ao fim da tarde. A estátua tem 28 metros; o pórtico que a sustenta tem 75."
-hero_image_credit: "James Lumley-Savile"
+hero_image_credit: "Margem Cool"
 facts:
   - value: "110 m"
     label: "Altura total do monumento"

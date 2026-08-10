@@ -14,7 +14,7 @@ meta_description: "A guide to the Santuário Nacional de Cristo Rei: opening hou
 hero_image: "cristo-rei-sunset"
 hero_image_alt: "The silhouette of Cristo Rei against orange sunset cloud, on the clifftop at Almada."
 hero_image_caption: "Cristo Rei from below, late in the day. The statue is 28 metres; the portico holding it up is 75."
-hero_image_credit: "James Lumley-Savile"
+hero_image_credit: "Margem Cool"
 facts:
   - value: "110 m"
     label: "Total height of the monument"

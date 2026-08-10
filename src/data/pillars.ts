@@ -28,7 +28,7 @@ export interface PillarContent {
   faqs?: PillarFaq[];
 }
 
-const CREDIT = 'James Lumley-Savile';
+const CREDIT = 'Margem Cool';
 
 export const PILLARS: Record<'pt' | 'en', Record<string, PillarContent>> = {
   pt: {
@@ -111,8 +111,8 @@ Pelo meio ficam a Lagoa de Albufeira, onde a laguna encontra o mar, e Sesimbra, 
       metaTitle: 'Cultura e festas na Margem Sul — a agenda',
       metaDescription: 'Festas populares, romarias, feiras e festivais na Margem Sul: o calendário de verão, a Festa do Avante, as Vindimas de Palmela e as festas de freguesia.',
       heroImage: 'pillar-cultura-teatro',
-      heroAlt: 'Concerto no Teatro Municipal Joaquim Benite, em Almada.',
-      heroCaption: 'Teatro Municipal Joaquim Benite, Almada. A programação cultural da região não é só festa de rua.',
+      heroAlt: 'Mazgani em concerto no Teatro Municipal Joaquim Benite, em Almada.',
+      heroCaption: 'Mazgani no Teatro Municipal Joaquim Benite, em Almada. A programação cultural da região não é só festa de rua.',
       heroCredit: CREDIT,
       facts: [
         { value: 'Mai–Set', label: 'A época das festas' },
@@ -324,8 +324,8 @@ Between them sit the Lagoa de Albufeira, where a lagoon meets the sea, and Sesim
       metaTitle: "Culture and festas in the Margem Sul — what's on",
       metaDescription: 'Popular festas, romarias, fairs and festivals in the Margem Sul: the summer calendar, Festa do Avante, the Palmela grape harvest and the parish festas.',
       heroImage: 'pillar-cultura-teatro',
-      heroAlt: 'A concert at the Teatro Municipal Joaquim Benite in Almada.',
-      heroCaption: 'Teatro Municipal Joaquim Benite, Almada. The region’s cultural programme is not only street festas.',
+      heroAlt: 'Mazgani performing at the Teatro Municipal Joaquim Benite in Almada.',
+      heroCaption: 'Mazgani at the Teatro Municipal Joaquim Benite, Almada. The region’s cultural programme is not only street festas.',
       heroCredit: CREDIT,
       facts: [
         { value: 'May–Sep', label: 'The festa season' },

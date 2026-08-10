@@ -11,7 +11,7 @@ place_slugs: ["almada", "seixal", "sesimbra", "setubal", "palmela", "barreiro", 
 hero_image: "festa-do-avante-palco-2025"
 hero_image_alt: "Palco iluminado a azul numa festa de verão na Margem Sul, com a multidão em silhueta."
 hero_image_caption: "Palco principal da Festa do Avante, no Seixal — a maior das festas de verão da região, e a única com bilhete."
-hero_image_credit: "James Lumley-Savile"
+hero_image_credit: "Margem Cool"
 meta_title: "Festas de verão na Margem Sul — o calendário"
 meta_description: "As festas, romarias e feiras de verão da Margem Sul, concelho a concelho: Sesimbra, Setúbal, Palmela, Seixal, Moita, Alcochete e Almada."
 facts:
