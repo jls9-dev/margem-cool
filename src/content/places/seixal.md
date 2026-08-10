@@ -35,6 +35,10 @@ pt:
       answer: "Tem duas opções muito diferentes no mesmo concelho: o norte urbano e bem servido de transportes, com Corroios e Amora, e o sul de baixa densidade junto ao pinhal, com casa e jardim mas dependente de carro."
     - question: "Onde comer no Seixal?"
       answer: "Na vila do Seixal, junto à baía, com casas viradas à água — é a zona mais bonita para almoçar. Em Amora e Corroios há restauração de bairro, tascas e churrasqueiras. E no sul do concelho, junto ao pinhal, casas mais dispersas e mais de fim de semana."
+    - question: "O que visitar no Seixal?"
+      answer: "O Ecomuseu Municipal e os seus núcleos — o Moinho de Maré de Corroios que ainda mói com a maré, o Núcleo Naval com embarcações do Tejo, a antiga fábrica Mundet na frente ribeirinha e a Quinta da Trindade. E a frente ribeirinha da vila e o parque de Amora."
+    - question: "Quais são as freguesias do Seixal?"
+      answer: "Quatro: Amora, Corroios, Fernão Ferro, e a união de Seixal, Arrentela e Aldeia de Paio Pires. Corroios e Amora concentram a maior parte dos 166 mil habitantes do concelho."
   transport_options:
     - mode: "Barco"
       duration: "~25 min"
@@ -86,6 +90,22 @@ pt:
     ## Onde fica
 
     O concelho ocupa a margem sul da baía do Seixal, uma reentrância do Tejo entre Almada e o Barreiro, e estende-se para sul até ao pinhal. O mapa no topo da página situa-o dentro da região.
+
+    ## O que visitar no Seixal
+
+    O **Ecomuseu Municipal** é o motivo principal, e está espalhado por vários núcleos: o **Moinho de Maré de Corroios**, que ainda mói com a maré; o **Núcleo Naval**, com embarcações tradicionais do Tejo; a antiga **Mundet**, na frente ribeirinha da vila; e a **Quinta da Trindade**.
+
+    A frente ribeirinha do Seixal e o **parque ribeirinho de Amora** são o passeio óbvio, com a baía de um lado e Lisboa ao fundo.
+
+    ## Festas
+
+    A **Festa do Avante** é o maior acontecimento do concelho e da região, no primeiro fim de semana de Setembro, na Quinta da Atalaia em Amora — tem [guia próprio](/guias/festa-do-avante-2026/). Em **Junho**, as festas de freguesia e os arraiais dos santos populares acontecem por todo o concelho, com **Corroios** a ter das maiores.
+
+    ## Freguesias e população
+
+    Cento e sessenta e seis mil habitantes distribuídos por quatro freguesias: Amora, Corroios, Fernão Ferro, e Seixal, Arrentela e Aldeia de Paio Pires. Corroios e Amora concentram a maior parte da população; Fernão Ferro é a mais dispersa, já no pinhal.
+
+    A economia do concelho foi corticeira, vidreira e naval — a Mundet e a Siderurgia Nacional — e é hoje sobretudo serviços, comércio e logística.
 
     ## A parte honesta
 

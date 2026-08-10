@@ -26,6 +26,8 @@ pt:
       answer: "Continua a ser dos concelhos mais acessíveis da Margem Sul, com boa ligação fluvial a Lisboa. É uma das razões pelas quais tem atraído quem foi empurrado para fora de Almada e do Seixal."
     - question: "Onde comer no Barreiro?"
       answer: "Restaurantes de bairro com prato do dia, a preços que refletem uma cidade operária. As pastelarias são uma instituição local — a densidade de cafés e pastelarias é herança dos turnos das fábricas. E a frente ribeirinha tem casas com vista para o Tejo."
+    - question: "Quais são as freguesias do Barreiro?"
+      answer: "Quatro: Barreiro e Lavradio, Alto do Seixalinho, Santo André e Verderena, Palhais e Coina, e Santo António da Charneca. As três primeiras são urbanas e contíguas; Palhais e Coina ainda têm campo."
   transport_options:
     - mode: "Barco"
       price: "2,95€"
@@ -65,6 +67,16 @@ pt:
     ## Onde fica
 
     O Barreiro ocupa uma península dentro do estuário, entre o Seixal e a Moita, virado a Lisboa através da parte larga do Tejo. O mapa no topo da página situa-o na região.
+
+    ## Festas e vida cultural
+
+    O Barreiro tem uma vida associativa densa — herança das colectividades operárias — e as festas de freguesia acontecem ao longo do verão, com o **Lavradio**, a **Verderena** e **Santo António da Charneca** a terem as suas. Os arraiais dos santos populares, em **Junho**, são o momento mais visível do ano.
+
+    O calendário completo das festas da região está no [guia das festas de verão](/guias/festas-de-verao-margem-sul/).
+
+    ## Freguesias
+
+    Quatro: Barreiro e Lavradio, Alto do Seixalinho, Santo André e Verderena, Palhais e Coina, e Santo António da Charneca. As três primeiras são urbanas e contíguas; Palhais e Coina, a sul, ainda têm campo.
 
     ## A parte honesta
 

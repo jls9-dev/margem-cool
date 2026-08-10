@@ -30,6 +30,12 @@ pt:
       answer: "Na vila, junto à água, há casas de peixe e marisco do Tejo com esplanada virada a Lisboa. No Samouco e em São Francisco a restauração é mais pequena e local. Há também uma tradição forte de carne, por influência ribatejana."
     - question: "Há praias em Alcochete?"
       answer: "Há praias fluviais no estuário, de água calma e sujeitas à maré — locais e sossegadas, e muito diferentes das praias atlânticas do outro lado da península."
+    - question: "Quais são as festas de Alcochete?"
+      answer: "As Festas do Barrete Verde e das Salinas, em Agosto. Mantêm uma tradição tauromáquica e campina forte, com largadas pelas ruas e desfile de campinos."
+    - question: "Quais são os pratos típicos de Alcochete?"
+      answer: "Do rio, a enguia e o peixe do Tejo. Do lado da terra, carne de gado bravo e pratos de tacho, por influência ribatejana. E o sal das salinas do Samouco."
+    - question: "Quais são as freguesias de Alcochete?"
+      answer: "Três: Alcochete, Samouco e São Francisco. Todas ribeirinhas, com o sapal e as salinas a ocupar a maior parte do território."
   transport_options:
     - mode: "Carro"
       duration: "~25 min"
@@ -76,6 +82,18 @@ pt:
     ## Onde fica
 
     Alcochete ocupa a margem oriental do Tejo, no ponto onde a Ponte Vasco da Gama aterra, com a maior parte do território em sapal e salina. O mapa no topo da página mostra o concelho na região.
+
+    ## Festas de Alcochete
+
+    As **Festas do Barrete Verde e das Salinas**, em **Agosto**, são a festa grande do concelho. Mantêm uma tradição tauromáquica e campina forte — largadas pelas ruas, desfile de campinos, e o barrete verde que dá nome à festa.
+
+    ## Pratos típicos
+
+    Alcochete come do estuário e do campo ribatejano ao lado. Do rio vêm a **enguia** e o peixe do Tejo; do lado da terra, **carne de gado bravo** e pratos de tacho. O **sal** das salinas do Samouco é o produto do concelho.
+
+    ## Freguesias
+
+    Três: Alcochete, Samouco e São Francisco. Todas ribeirinhas, todas pequenas, com o sapal e as salinas a ocupar a maior parte do território entre elas.
 
     ## A parte honesta
 

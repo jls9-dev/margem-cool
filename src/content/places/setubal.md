@@ -39,6 +39,10 @@ pt:
       answer: "Na avenida Luísa Todi e no centro histórico está a maior parte das casas, muitas a fazer choco frito como prato principal. A frente ribeirinha tem marisqueiras viradas ao Sado, e à volta do Mercado do Livramento ficam as casas que se abastecem ali de manhã."
     - question: "O que fazer em Setúbal?"
       answer: "O Mercado do Livramento de manhã, as praias da Arrábida, a observação de golfinhos no Sado, a Igreja de Jesus e o gótico manuelino, o Forte de São Filipe com vista sobre o estuário, e o Museu do Trabalho Michel Giacometti numa antiga fábrica de conservas."
+    - question: "Como é morar em Setúbal?"
+      answer: "O custo de vida é sensivelmente mais baixo do que em Lisboa e em Almada, e o clima é ameno, protegido dos ventos de norte pela serra. A contrapartida é a distância — cerca de 50 minutos a Lisboa, sem Fertagus."
+    - question: "Quais são as festas de Setúbal?"
+      answer: "A Feira de Sant'Iago, em Julho, é o grande acontecimento anual — recinto próprio, concertos, tasquinhas e divertimentos ao longo de várias semanas. Em Junho há arraiais dos santos populares pelas freguesias."
   transport_options:
     - mode: "Comboio"
       duration: "~50 min"
@@ -97,6 +101,22 @@ pt:
     ## Onde fica
 
     Setúbal ocupa a faixa sul da península, entre a serra da Arrábida a poente e o estuário do Sado a nascente. O mapa no topo da página mostra o concelho na região.
+
+    ## Festas de Setúbal
+
+    A **Feira de Sant'Iago**, em **Julho**, é o grande acontecimento anual da cidade — recinto próprio, concertos, tasquinhas, artesanato e divertimentos, ao longo de várias semanas.
+
+    Em **Junho**, os arraiais dos santos populares acontecem pelas freguesias, e Azeitão tem o seu próprio calendário ligado ao vinho e ao queijo.
+
+    ## Morar em Setúbal
+
+    O custo de vida é sensivelmente mais baixo do que em Lisboa e do que em Almada, e essa é uma das razões pelas quais a cidade tem recebido gente de fora do distrito. O clima é ameno, protegido dos ventos de norte pela serra, com verões quentes e secos e invernos suaves.
+
+    A contrapartida é a distância: cerca de cinquenta minutos a Lisboa, sem Fertagus, o que faz de Setúbal uma escolha para quem trabalha localmente ou aceita a viagem.
+
+    ## Freguesias
+
+    Seis: Setúbal (São Julião, Nossa Senhora da Anunciada e Santa Maria da Graça), São Sebastião, Azeitão (São Lourenço e São Simão), Gâmbia-Pontes-Alto da Guerra, e Sado. Azeitão, a poente, é o outro Setúbal — vinha, queijo e quintas.
 
     ## A parte honesta
 

@@ -35,6 +35,8 @@ pt:
       answer: "A oeste, na Costa da Caparica — um cordão contínuo de cerca de 15 quilómetros que vai da cidade até à Fonte da Telha, sob a arriba fóssil."
     - question: "Onde comer em Almada?"
       answer: "Em dois sítios sobretudo. A marginal de Cacilhas, com marisqueiras a fio junto ao terminal do ferry e vista para Lisboa. E a Costa da Caparica, com peixe grelhado e apoios de praia ao longo do areal. Fora disso, Almada é uma cidade densa com restaurante de bairro quase em toda a parte."
+    - question: "Quais são as freguesias de Almada?"
+      answer: "Cinco: Almada, Cova da Piedade, Pragal e Cacilhas; Caparica e Trafaria; Charneca de Caparica e Sobreda; Costa da Caparica; e Laranjeiro e Feijó."
   transport_options:
     - mode: "Barco"
       duration: "10 min"
@@ -86,6 +88,16 @@ pt:
     ## Onde fica
 
     Almada ocupa a ponta noroeste da península de Setúbal, entre o Tejo a norte e o Atlântico a poente. O mapa no topo desta página mostra o concelho dentro da região; para o detalhe das freguesias, as áreas dentro estão listadas abaixo.
+
+    ## Festas de Almada
+
+    Junho é o mês das festas em Almada, com os arraiais dos santos populares e as **marchas populares** a percorrerem as freguesias. É o momento em que a cidade sai à rua.
+
+    Ao longo do verão, cada freguesia tem a sua festa, e a Costa da Caparica acrescenta o seu próprio calendário de praia. O panorama completo está no [guia das festas de verão](/guias/festas-de-verao-margem-sul/).
+
+    ## Freguesias
+
+    Cinco: Almada, Cova da Piedade, Pragal e Cacilhas; Caparica e Trafaria; Charneca de Caparica e Sobreda; Costa da Caparica; e Laranjeiro e Feijó. A primeira contém a frente ribeirinha e a cidade histórica; a Costa da Caparica é a face atlântica.
 
     ## A parte honesta
 

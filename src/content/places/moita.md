@@ -26,6 +26,10 @@ pt:
       answer: "A freguesia mais povoada do concelho e uma das mais densas da região. Cresceu a partir dos anos sessenta com a industrialização do Barreiro ao lado e tem identidade urbana própria."
     - question: "Onde comer na Moita?"
       answer: "Junto à frente ribeirinha, na Moita e em Alhos Vedros, há casas viradas ao Tejo com peixe e marisco do estuário. Na Baixa da Banheira a restauração é de bairro — tascas, churrasqueiras e prato do dia, a preços honestos."
+    - question: "Quando são as Festas da Moita?"
+      answer: "As Festas em Honra de Nossa Senhora da Boa Viagem realizam-se em Setembro, na vila da Moita, e duram cerca de dez dias. Incluem procissão, bênção das embarcações típicas do Tejo, a Noite do Fragateiro com marchas populares, e largadas de touros."
+    - question: "Quais são as freguesias da Moita?"
+      answer: "Moita, Alhos Vedros, Baixa da Banheira e Vale da Amoreira, Gaio-Rosário e Sarilhos Pequenos, e Sarilhos Grandes. Alhos Vedros é a povoação mais antiga do concelho."
   transport_options:
     - mode: "Comboio"
       detail: "Linha do Sado, servindo o concelho e ligando ao Barreiro e a Setúbal."
@@ -68,6 +72,20 @@ pt:
 
     A Moita ocupa a margem do Tejo entre o Barreiro e o Montijo, num troço de estuário largo virado a Lisboa. O mapa no topo da página situa-a na região.
 
+    ## As Festas da Moita
+
+    As **Festas em Honra de Nossa Senhora da Boa Viagem** são a maior festa do concelho e acontecem em **Setembro**, na vila. Duram cerca de dez dias.
+
+    O que as distingue é a ligação ao rio. A procissão religiosa é seguida da **bênção das embarcações típicas do Tejo** — as mesmas fragatas e varinos que fizeram o concelho — e há uma **Noite do Fragateiro** com desfile de marchas populares pelas ruas da vila.
+
+    Há também tradição tauromáquica forte, com largadas de touros, e palcos com espectáculos diários.
+
+    ## História e património
+
+    A Moita cresceu como porto fluvial. Foi daqui, e de Alhos Vedros, que saíram durante séculos o sal, o vinho e a mercadoria que abasteciam Lisboa do outro lado da água, transportados por fragatas e varinos.
+
+    **Alhos Vedros** é a povoação mais antiga do concelho, com igreja matriz medieval e pelourinho. As restantes freguesias — Moita, Baixa da Banheira e Vale da Amoreira, Gaio-Rosário e Sarilhos Pequenos — estendem-se ao longo da margem.
+
     ## A parte honesta
 
     Não vamos fingir que a Moita é um destino. Não há um dia a passar aqui que não seja melhor passado noutro concelho da região.
@@ -77,6 +95,11 @@ pt:
 en:
   short_description: "A riverside concelho east of Barreiro, between the Tejo, salt pans and tidal mills."
   page_status: placeholder
+verify:
+  - claim: "Festas em Honra de Nossa Senhora da Boa Viagem, em Setembro, na Moita"
+    source: "https://www.cm-moita.pt/viver/informacao-municipal/noticia/estao-de-volta-as-festas-da-moita-em-honra-a-nossa-senhora-da-boa-viagem"
+    checked: 2026-08-10
+    note: "As datas exactas mudam de ano para ano. Reler em Julho."
 last_updated: 2026-08-10
 draft: false
 ---

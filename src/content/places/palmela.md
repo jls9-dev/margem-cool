@@ -35,6 +35,12 @@ pt:
       answer: "Em Setembro, na vila de Palmela, com bênção das uvas e cortejo. Fecham a época de festas da Margem Sul."
     - question: "Onde comer em Palmela?"
       answer: "Na vila, à volta do castelo, ficam as casas mais viradas a visitantes, incluindo a pousada no convento dentro das muralhas. Espalhadas pelo concelho há adegas e quintas com restaurante próprio. Em Pinhal Novo a restauração é de bairro."
+    - question: "O que visitar em Palmela?"
+      answer: "O castelo, com o convento da Ordem de Santiago dentro das muralhas e vista sobre meia península. A Igreja de São Pedro, com azulejaria setecentista. E as adegas do concelho, ao longo da rota do vinho."
+    - question: "Quais são as festas de Palmela?"
+      answer: "As Festas das Vindimas, em Setembro, com bênção das uvas, pisa, cortejo e largadas de touros. Em Junho há festas de freguesia na Quinta do Anjo e em Pinhal Novo."
+    - question: "Quais são as freguesias de Palmela?"
+      answer: "Palmela, Pinhal Novo, Poceirão e Marateca, e Quinta do Anjo. Pinhal Novo tem mais habitantes do que a vila sede."
   transport_options:
     - mode: "Comboio"
       detail: "Linhas do Sul e do Sado, com Pinhal Novo como nó de cruzamento e estação também na vila de Palmela."
@@ -77,6 +83,22 @@ pt:
     ## Onde fica
 
     Palmela é o maior concelho da Margem Sul em área, ocupando o centro da península entre Setúbal, o Montijo e a Moita. O mapa no topo da página mostra a sua extensão em relação aos vizinhos.
+
+    ## O que visitar em Palmela
+
+    O **castelo** é a atracção principal — fortificação mourisca entregue depois à Ordem de Santiago, com convento dentro das muralhas, hoje pousada, e vista sobre meia península. A **Igreja de São Pedro**, na vila, tem azulejaria do século XVIII.
+
+    Fora da vila, o concelho é vinha: **adegas visitáveis** e uma rota do vinho que atravessa o território, com o moscatel e o castelão como referências.
+
+    ## Festas de Palmela
+
+    As **Festas das Vindimas**, em **Setembro**, são a festa grande — bênção das uvas, pisa, cortejo e largadas de touros. Fecham o ciclo agrícola e a época de festas da região.
+
+    Em **Junho**, a Quinta do Anjo e Pinhal Novo têm as suas festas de freguesia; da Quinta do Anjo parte também uma das procissões que sobem à Atalaia, no Montijo, todos os Agostos.
+
+    ## Freguesias
+
+    Quatro: Palmela, Pinhal Novo, Poceirão e Marateca, e Quinta do Anjo. Pinhal Novo tem mais habitantes do que a vila sede.
 
     ## A parte honesta
 

@@ -37,6 +37,10 @@ pt:
       answer: "Na vila, junto à praia, ficam as casas de peixe e marisco, com carta a mudar conforme o que a frota trouxe. No Portinho da Arrábida e no Meco há casas mais pequenas e sazonais. Pergunta sempre o que entrou nesse dia."
     - question: "Quais são as praias de Sesimbra?"
       answer: "A praia da vila — também chamada Praia do Ouro no troço nascente e Praia da Califórnia a poente — abrigada pela serra. A norte, a Lagoa de Albufeira, com laguna e mar aberto. E o Meco. Do outro lado da serra ficam as praias da Arrábida — Figueirinha, Galapos, Galapinhos e Portinho."
+    - question: "Quais são as festas de Sesimbra?"
+      answer: "As Festas em Honra do Senhor Jesus das Chagas, no início de Maio, com procissão que envolve a comunidade piscatória. E o Carnaval de Sesimbra, em Fevereiro, com corso pela vila."
+    - question: "Quais são as freguesias de Sesimbra?"
+      answer: "Três: Sesimbra (Castelo), Sesimbra (Santiago) e Quinta do Conde. A Quinta do Conde, a norte do concelho, é a mais populosa."
   transport_options:
     - mode: "Carro"
       duration: "45–60 min"
@@ -88,6 +92,18 @@ pt:
     ## Onde fica
 
     Sesimbra ocupa a ponta sudoeste da península, entre a serra da Arrábida e o Atlântico, com o Cabo Espichel no extremo. O mapa no topo da página situa o concelho.
+
+    ## Festas de Sesimbra
+
+    As **Festas em Honra do Senhor Jesus das Chagas**, no início de **Maio**, são a festa da vila — procissão que envolve a comunidade piscatória, arraial e largadas. É a festa de Sesimbra, não uma festa em Sesimbra, e a diferença nota-se.
+
+    O **Carnaval de Sesimbra** é o outro momento do ano, em **Fevereiro**, com corso e desfile pela vila.
+
+    Da **Azóia**, no concelho, parte todos os Agostos uma das cinco procissões que sobem à Atalaia, no Montijo — a romaria mais antiga do sul do país.
+
+    ## Freguesias
+
+    Três: Sesimbra (Castelo), Sesimbra (Santiago) e Quinta do Conde. As duas primeiras dividem a vila e a serra; a Quinta do Conde, a norte, é uma povoação de crescimento recente e a mais populosa do concelho.
 
     ## A parte honesta
 

@@ -28,6 +28,10 @@ pt:
       answer: "Na cidade e na frente ribeirinha, peixe e marisco do estuário. No interior — Canha, Pegões, Santo Isidro — come-se alentejano: carne, caça na época e pratos de tacho. São duas cozinhas diferentes a meia hora uma da outra."
     - question: "O que é a ecopista do Montijo?"
       answer: "Um percurso sobre um antigo traçado ferroviário que atravessa o concelho. É a forma mais fácil de ver o interior a pé ou de bicicleta."
+    - question: "Quais são as festas do Montijo?"
+      answer: "As Festas em Honra de Nossa Senhora da Atalaia, em Agosto, são a maior romaria do concelho e uma das mais antigas do sul do país — a tradição remonta a 1507. Convergem sobre a Atalaia cinco procissões vindas de Palmela, de Sesimbra e do próprio concelho. Na cidade, as Festas Populares de São Pedro realizam-se desde 1951."
+    - question: "Quais são as freguesias do Montijo?"
+      answer: "Montijo e Afonsoeiro, Atalaia e Alto Estanqueiro-Jardia, Canha, Pegões, e Santo Isidro de Pegões. As primeiras são estuário e cidade; as últimas são montado e agricultura."
   transport_options:
     - mode: "Barco"
       duration: "~30 min"
@@ -77,6 +81,18 @@ pt:
 
     O Montijo ocupa a margem oriental do estuário, no ponto onde este é mais largo, e estende-se para dentro até ao limite do Alentejo. O mapa no topo da página mostra a sua extensão.
 
+    ## As festas do Montijo
+
+    As **Festas em Honra de Nossa Senhora da Atalaia**, em **Agosto**, são a maior romaria do concelho e uma das mais antigas do sul do país. A tradição remonta a **1507**, a uma promessa feita durante uma peste em Lisboa.
+
+    O que a torna diferente é que ainda hoje convergem sobre a Atalaia **cinco procissões** vindas de fora: da Quinta do Anjo, da Carregueira e de Olhos d'Água, no concelho de Palmela; da Azóia, em Sesimbra; e da Jardia, no próprio Montijo. É uma festa que atravessa concelhos.
+
+    Na cidade, as **Festas Populares de São Pedro** realizam-se desde 1951 e são a festa de rua do Montijo.
+
+    ## Freguesias
+
+    O concelho divide-se entre a cidade e o interior: Montijo e Afonsoeiro, Atalaia e Alto Estanqueiro-Jardia, Canha, Pegões, e Santo Isidro de Pegões. A diferença entre as primeiras e as últimas é a diferença entre estuário e montado.
+
     ## A parte honesta
 
     O Montijo é dos concelhos menos visitados da Margem Sul e não tem uma razão óbvia para uma visita de um dia. Não tem praia oceânica, castelo, nem serra.
@@ -86,6 +102,11 @@ pt:
 en:
   short_description: "An eastern concelho running from the Tejo to the Alentejo plains, with rural Canha and Pegões."
   page_status: placeholder
+verify:
+  - claim: "Festas de Nossa Senhora da Atalaia, em Agosto, romaria com origem em 1507"
+    source: "https://www.mun-montijo.pt/poi-34/festas-de-nossa-senhora-da-atalaia"
+    checked: 2026-08-10
+    note: "As datas exactas mudam de ano para ano. Reler em Junho."
 last_updated: 2026-08-10
 draft: false
 ---
