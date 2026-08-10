@@ -10,10 +10,19 @@ last_updated: 2026-08-10
 place_slugs: ["seixal", "seixal/amora"]
 meta_title: "Festa do Avante 2026 — datas, EP e como chegar"
 meta_description: "Festa do Avante 2026 na Quinta da Atalaia, Seixal: 4 a 6 de Setembro, entrada permanente 35€, horários e como chegar de barco e comboio."
-hero_image: "amora-by-the-bay"
-hero_image_alt: "A baía do Seixal em Amora, com o Tejo e a margem norte ao fundo."
-hero_image_caption: "Amora, na baía do Seixal. A Quinta da Atalaia fica a poucos minutos daqui, para o interior."
+hero_image: "festa-do-avante-palco"
+hero_image_alt: "O palco principal da Festa do Avante à noite, com bandeiras vermelhas, fumo e uma multidão em frente."
+hero_image_caption: "O palco principal na noite de sábado, na edição de 2024. As bandeiras e o fumo são metade do cenário."
 hero_image_credit: "James Lumley-Savile"
+gallery:
+  - src: "festa-do-avante-palco-2025"
+    alt: "Uma banda em palco sob luz azul na Festa do Avante, com a multidão em silhueta em primeiro plano."
+    caption: "O mesmo palco na edição de 2025, ao domingo à noite. O recinto é permanente e a estrutura é a mesma todos os anos."
+    credit: "James Lumley-Savile"
+  - src: "amora-by-the-bay"
+    alt: "A baía do Seixal em Amora, com o Tejo e a margem norte ao fundo."
+    caption: "Amora, na baía do Seixal. A Quinta da Atalaia fica a poucos minutos daqui, para o interior."
+    credit: "James Lumley-Savile"
 facts:
   - value: "4–6 Set"
     label: "Datas em 2026"

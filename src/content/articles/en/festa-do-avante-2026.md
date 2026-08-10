@@ -11,10 +11,19 @@ last_updated: 2026-08-10
 place_slugs: ["seixal", "seixal/amora"]
 meta_title: "Festa do Avante 2026 — dates, tickets and getting there"
 meta_description: "Festa do Avante 2026 at Quinta da Atalaia, Seixal: 4–6 September, €35 entrance pass, opening hours and how to arrive by ferry or train."
-hero_image: "amora-by-the-bay"
-hero_image_alt: "The Seixal bay at Amora, with the Tagus and the north bank beyond."
-hero_image_caption: "Amora, on the Seixal bay. Quinta da Atalaia sits a few minutes inland from here."
+hero_image: "festa-do-avante-palco"
+hero_image_alt: "The main stage at Festa do Avante at night, with red flags, smoke and a crowd in front of it."
+hero_image_caption: "The main stage on the Saturday night of the 2024 edition. The flags and the smoke are half the set."
 hero_image_credit: "James Lumley-Savile"
+gallery:
+  - src: "festa-do-avante-palco-2025"
+    alt: "A band on stage under blue light at Festa do Avante, the crowd in silhouette in the foreground."
+    caption: "The same stage in 2025, on the Sunday night. The site is permanent and the structure is the same every year."
+    credit: "James Lumley-Savile"
+  - src: "amora-by-the-bay"
+    alt: "The Seixal bay at Amora, with the Tagus and the north bank beyond."
+    caption: "Amora, on the Seixal bay. Quinta da Atalaia sits a few minutes inland from here."
+    credit: "James Lumley-Savile"
 facts:
   - value: "4–6 Sep"
     label: "Dates in 2026"
