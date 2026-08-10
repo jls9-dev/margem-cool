@@ -24,6 +24,10 @@ pt:
       answer: "Agricultura a sério. Canha, Pegões e Santo Isidro são vinha, pinhal e montado, e parecem-se mais com o Alentejo do que com a Área Metropolitana de Lisboa."
     - question: "Vale a pena visitar o Montijo?"
       answer: "Não tem praia oceânica, castelo nem serra, e é dos concelhos menos visitados da região. Tem estuário, agricultura real, preços acessíveis e uma travessia bonita — que é uma lista feita para quem cá vive, não para quem passa um dia."
+    - question: "Onde comer no Montijo?"
+      answer: "Na cidade e na frente ribeirinha, peixe e marisco do estuário. No interior — Canha, Pegões, Santo Isidro — come-se alentejano: carne, caça na época e pratos de tacho. São duas cozinhas diferentes a meia hora uma da outra."
+    - question: "O que é a ecopista do Montijo?"
+      answer: "Um percurso sobre um antigo traçado ferroviário que atravessa o concelho. É a forma mais fácil de ver o interior a pé ou de bicicleta."
   transport_options:
     - mode: "Barco"
       duration: "~30 min"
@@ -54,6 +58,24 @@ pt:
     O concelho viveu duas décadas com a hipótese de receber um aeroporto: a Base Aérea nº 6 seria convertida em terminal civil, com tudo o que isso traria. A decisão foi entretanto tomada noutro sentido e o projecto do Montijo caiu.
 
     Vale a pena mencioná-lo porque moldou o concelho — investimento adiado, expectativa, especulação — e porque quem procura informação sobre o Montijo ainda tropeça nisso.
+
+    ## Onde comer no Montijo
+
+    Duas cozinhas no mesmo concelho, e não se parecem.
+
+    **Na cidade e na frente ribeirinha**, os restaurantes servem peixe e marisco do estuário, com casas viradas à água.
+
+    **No interior** — Canha, Pegões, Santo Isidro — come-se alentejano: carne, caça na época, pratos de tacho e vinho da região. É a cozinha do montado e não a do rio.
+
+    **Como escolher:** decide primeiro qual dos dois concelhos queres. São meia hora de carro um do outro e não têm nada em comum à mesa.
+
+    ## Ar livre
+
+    A **ecopista do Montijo**, sobre um antigo traçado ferroviário, atravessa o concelho e é a forma mais fácil de ver o interior a pé ou de bicicleta.
+
+    ## Onde fica
+
+    O Montijo ocupa a margem oriental do estuário, no ponto onde este é mais largo, e estende-se para dentro até ao limite do Alentejo. O mapa no topo da página mostra a sua extensão.
 
     ## A parte honesta
 

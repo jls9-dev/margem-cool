@@ -33,6 +33,10 @@ pt:
       answer: "Peixe fresco, e o que houver nesse dia — a vila tem lota própria e a carta acompanha o que a frota trouxe. Não decidas antes de chegar."
     - question: "Vale a pena subir ao castelo?"
       answer: "Sim, e é gratuito. Dá a vista da vila, da baía e do mar aberto. Vai ao fim da tarde, quando a luz bate no casario branco."
+    - question: "Onde comer em Sesimbra?"
+      answer: "Na vila, junto à praia, ficam as casas de peixe e marisco, com carta a mudar conforme o que a frota trouxe. No Portinho da Arrábida e no Meco há casas mais pequenas e sazonais. Pergunta sempre o que entrou nesse dia."
+    - question: "Quais são as praias de Sesimbra?"
+      answer: "A praia da vila — também chamada Praia do Ouro no troço nascente e Praia da Califórnia a poente — abrigada pela serra. A norte, a Lagoa de Albufeira, com laguna e mar aberto. E o Meco. Do outro lado da serra ficam as praias da Arrábida — Figueirinha, Galapos, Galapinhos e Portinho."
   transport_options:
     - mode: "Carro"
       duration: "45–60 min"
@@ -62,6 +66,28 @@ pt:
     ## O que se come
 
     Peixe, e peixe que chegou nesse dia. A vantagem de ter lota é essa — a carta muda com o que a frota trouxe. Não vale a pena decidir antes de chegar.
+
+    ## Onde comer em Sesimbra
+
+    Sesimbra tem lota própria, e isso decide tudo.
+
+    **Na vila, junto à praia**, ficam os restaurantes de peixe e marisco — a carta muda com o que a frota trouxe nesse dia, e a resposta certa é perguntar o que há em vez de escolher da ementa.
+
+    **No Portinho da Arrábida e no Meco**, casas mais pequenas e mais sazonais, algumas abertas só no verão.
+
+    **Como escolher:** pergunta o que entrou hoje. Numa vila com lota, a casa que responde bem a essa pergunta é a casa certa; a que não responde está a servir congelado como toda a gente.
+
+    ## O que visitar em Sesimbra
+
+    Além do castelo e do Cabo Espichel: o **Forte de Santiago**, na frente de mar da vila, construído no século XVII para defender a baía e hoje aberto a visitas; e o **mercado municipal**, pequeno e de manhã, onde chega o peixe da lota.
+
+    ## Praias
+
+    As praias do concelho vão da vila — a Praia do Ouro e a Praia da Califórnia, abrigadas pela serra — à Lagoa de Albufeira a norte e ao Meco. Do outro lado da serra ficam as da Arrábida. Há guias para a [Lagoa de Albufeira](/guias/lagoa-de-albufeira/), para as [praias da Arrábida](/guias/praias-da-arrabida/) e para o [Cabo Espichel](/guias/cabo-espichel/).
+
+    ## Onde fica
+
+    Sesimbra ocupa a ponta sudoeste da península, entre a serra da Arrábida e o Atlântico, com o Cabo Espichel no extremo. O mapa no topo da página situa o concelho.
 
     ## A parte honesta
 

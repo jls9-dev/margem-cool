@@ -33,6 +33,8 @@ pt:
       answer: "Na Quinta da Atalaia, em Amora, no concelho do Seixal. É o maior acontecimento anual da região, no primeiro fim de semana de Setembro."
     - question: "O Seixal é bom para viver?"
       answer: "Tem duas opções muito diferentes no mesmo concelho: o norte urbano e bem servido de transportes, com Corroios e Amora, e o sul de baixa densidade junto ao pinhal, com casa e jardim mas dependente de carro."
+    - question: "Onde comer no Seixal?"
+      answer: "Na vila do Seixal, junto à baía, com casas viradas à água — é a zona mais bonita para almoçar. Em Amora e Corroios há restauração de bairro, tascas e churrasqueiras. E no sul do concelho, junto ao pinhal, casas mais dispersas e mais de fim de semana."
   transport_options:
     - mode: "Barco"
       duration: "~25 min"
@@ -68,6 +70,22 @@ pt:
     ## A Festa do Avante
 
     O maior acontecimento anual da Margem Sul acontece aqui, na **Quinta da Atalaia**, em Amora, no primeiro fim de semana de Setembro. Tem [guia próprio](/guias/festa-do-avante-2026/).
+
+    ## Onde comer no Seixal
+
+    Os restaurantes do Seixal concentram-se em três zonas distintas.
+
+    **A vila do Seixal**, junto à baía, com casas viradas à água e a frente ribeirinha recuperada — o sítio mais bonito do concelho para almoçar.
+
+    **Amora e Corroios**, onde vive a maior parte das pessoas, com restauração de bairro: tascas, cervejarias, churrasqueiras e pastelarias que servem quem cá mora.
+
+    **O sul do concelho**, junto ao pinhal da Aroeira e a caminho da costa, com casas mais dispersas e mais viradas a fins de semana.
+
+    **Como escolher:** no Seixal, como em todo o estuário, o marisco é bom quando é comprado nesse dia. A sala cheia à uma da tarde num dia de semana continua a ser o sinal mais fiável.
+
+    ## Onde fica
+
+    O concelho ocupa a margem sul da baía do Seixal, uma reentrância do Tejo entre Almada e o Barreiro, e estende-se para sul até ao pinhal. O mapa no topo da página situa-o dentro da região.
 
     ## A parte honesta
 

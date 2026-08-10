@@ -33,6 +33,8 @@ pt:
       answer: "Palmela é a vila sede, no alto, com o castelo. Pinhal Novo fica a norte, é maior em população, e é o nó ferroviário do concelho. Cresceu com o comboio."
     - question: "Quando são as Festas das Vindimas?"
       answer: "Em Setembro, na vila de Palmela, com bênção das uvas e cortejo. Fecham a época de festas da Margem Sul."
+    - question: "Onde comer em Palmela?"
+      answer: "Na vila, à volta do castelo, ficam as casas mais viradas a visitantes, incluindo a pousada no convento dentro das muralhas. Espalhadas pelo concelho há adegas e quintas com restaurante próprio. Em Pinhal Novo a restauração é de bairro."
   transport_options:
     - mode: "Comboio"
       detail: "Linhas do Sul e do Sado, com Pinhal Novo como nó de cruzamento e estação também na vila de Palmela."
@@ -59,6 +61,22 @@ pt:
     ## Pinhal Novo
 
     O outro Palmela. A norte da vila, **Pinhal Novo** é uma vila maior do que a sede do concelho, nó ferroviário onde se cruzam as linhas do Sul e do Sado, e o sítio onde vive boa parte da população. Cresceu com o comboio e continua a crescer.
+
+    ## Onde comer em Palmela
+
+    Palmela come do campo. É o concelho da vinha e do montado, e isso está na mesa.
+
+    **Na vila**, à volta do castelo, ficam as casas mais viradas a quem visita — incluindo a pousada instalada no convento dentro das muralhas.
+
+    **Nas adegas e quintas** espalhadas pelo concelho, muitas com restaurante próprio e refeição harmonizada com o vinho da casa.
+
+    **Em Pinhal Novo**, que tem mais gente do que a vila, a restauração é de bairro e de todos os dias.
+
+    **Como escolher:** em Palmela, o vinho é o ponto de partida e não o acompanhamento. Uma casa que sabe explicar a carta de vinhos da região costuma saber o resto.
+
+    ## Onde fica
+
+    Palmela é o maior concelho da Margem Sul em área, ocupando o centro da península entre Setúbal, o Montijo e a Moita. O mapa no topo da página mostra a sua extensão em relação aos vizinhos.
 
     ## A parte honesta
 

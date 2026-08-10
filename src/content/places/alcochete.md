@@ -26,6 +26,10 @@ pt:
       answer: "Sim, à saída da Ponte Vasco da Gama, a poucos quilómetros da vila. É a razão pela qual muita gente conhece o nome sem nunca ter visto Alcochete."
     - question: "Como se chega a Alcochete?"
       answer: "De carro pela Ponte Vasco da Gama, cerca de 25 minutos de Lisboa. Há carreiras rodoviárias, mas o concelho é grande e disperso e o carro facilita muito."
+    - question: "Onde comer em Alcochete?"
+      answer: "Na vila, junto à água, há casas de peixe e marisco do Tejo com esplanada virada a Lisboa. No Samouco e em São Francisco a restauração é mais pequena e local. Há também uma tradição forte de carne, por influência ribatejana."
+    - question: "Há praias em Alcochete?"
+      answer: "Há praias fluviais no estuário, de água calma e sujeitas à maré — locais e sossegadas, e muito diferentes das praias atlânticas do outro lado da península."
   transport_options:
     - mode: "Carro"
       duration: "~25 min"
@@ -52,6 +56,26 @@ pt:
     ## O Freeport
 
     À saída da ponte fica um dos maiores centros de retalho outlet da Península Ibérica. É a razão pela qual muita gente conhece o nome Alcochete sem ter visto a vila — e é, em boa verdade, um mundo à parte a três quilómetros dela.
+
+    ## Onde comer em Alcochete
+
+    Alcochete come do estuário e da tradição ribatejana que lhe fica ao lado.
+
+    **Na vila, junto à água**, ficam os restaurantes de peixe e marisco do Tejo, várias com esplanada virada a Lisboa através da parte larga do estuário.
+
+    **No Samouco e em São Francisco**, restauração mais pequena e mais local.
+
+    Há uma tradição forte de **carne** por influência ribatejana — o concelho é terra de gado bravo e de tauromaquia, e isso está na mesa tanto quanto o peixe.
+
+    **Como escolher:** ao almoço, na vila, procura a esplanada onde estão a comer pessoas que não trouxeram máquina fotográfica.
+
+    ## Praias
+
+    Alcochete tem praias fluviais no estuário, de água calma e maré, muito diferentes das atlânticas do outro lado da península. São locais e sossegadas, e não substituem a Caparica.
+
+    ## Onde fica
+
+    Alcochete ocupa a margem oriental do Tejo, no ponto onde a Ponte Vasco da Gama aterra, com a maior parte do território em sapal e salina. O mapa no topo da página mostra o concelho na região.
 
     ## A parte honesta
 

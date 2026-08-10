@@ -24,6 +24,8 @@ pt:
       answer: "Como destino de um dia, há concelhos melhores na região. O que a Moita tem é uma frente ribeirinha, uma relação antiga com o Tejo que se perdeu noutros pontos do estuário, e preços acessíveis."
     - question: "O que é a Baixa da Banheira?"
       answer: "A freguesia mais povoada do concelho e uma das mais densas da região. Cresceu a partir dos anos sessenta com a industrialização do Barreiro ao lado e tem identidade urbana própria."
+    - question: "Onde comer na Moita?"
+      answer: "Junto à frente ribeirinha, na Moita e em Alhos Vedros, há casas viradas ao Tejo com peixe e marisco do estuário. Na Baixa da Banheira a restauração é de bairro — tascas, churrasqueiras e prato do dia, a preços honestos."
   transport_options:
     - mode: "Comboio"
       detail: "Linha do Sado, servindo o concelho e ligando ao Barreiro e a Setúbal."
@@ -51,6 +53,20 @@ pt:
     ## Atravessar
 
     A Moita não tem barco próprio. Atravessa-se pelo Barreiro ao lado, ou de comboio pela linha do Sado, ou de carro pelas pontes. É uma das razões pelas quais o concelho é mais barato do que os vizinhos.
+
+    ## Onde comer na Moita
+
+    A Moita come de rio e de bairro.
+
+    **Junto à frente ribeirinha**, na Moita e em Alhos Vedros, há casas viradas ao Tejo, com peixe e marisco do estuário.
+
+    **Na Baixa da Banheira**, a freguesia mais povoada, a restauração é de bairro e de todos os dias — tascas, churrasqueiras, casas de prato do dia.
+
+    **Como escolher:** este é um concelho onde os restaurantes existem para quem cá vive, o que significa preços honestos e pouca encenação. O prato do dia é quase sempre a melhor escolha.
+
+    ## Onde fica
+
+    A Moita ocupa a margem do Tejo entre o Barreiro e o Montijo, num troço de estuário largo virado a Lisboa. O mapa no topo da página situa-a na região.
 
     ## A parte honesta
 

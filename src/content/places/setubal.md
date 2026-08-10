@@ -35,6 +35,10 @@ pt:
       answer: "Sim, uma população residente de roazes que vive no estuário o ano inteiro. Há embarcações que saem da marina para observação."
     - question: "Setúbal é um bom sítio para viver?"
       answer: "Para quem quer uma cidade com serviços próprios e não um dormitório, sim. Tem hospital, politécnico, teatro e centro histórico. A contrapartida é a distância a Lisboa — cerca de 50 minutos, sem Fertagus."
+    - question: "Onde comer em Setúbal?"
+      answer: "Na avenida Luísa Todi e no centro histórico está a maior parte das casas, muitas a fazer choco frito como prato principal. A frente ribeirinha tem marisqueiras viradas ao Sado, e à volta do Mercado do Livramento ficam as casas que se abastecem ali de manhã."
+    - question: "O que fazer em Setúbal?"
+      answer: "O Mercado do Livramento de manhã, as praias da Arrábida, a observação de golfinhos no Sado, a Igreja de Jesus e o gótico manuelino, o Forte de São Filipe com vista sobre o estuário, e o Museu do Trabalho Michel Giacometti numa antiga fábrica de conservas."
   transport_options:
     - mode: "Comboio"
       duration: "~50 min"
@@ -73,6 +77,26 @@ pt:
     Setúbal tem o que uma cidade tem: hospital, tribunal, politécnico, teatro, um centro histórico com ruas pedonais. Isso torna-a diferente do resto da Margem Sul, onde muita coisa depende de atravessar o rio.
 
     O preço é a distância. A Fertagus não chega aqui — vem-se de comboio pela linha do Sul ou de carro pela A2, e Lisboa fica a cerca de cinquenta minutos. Quem trabalha na capital e vive em Setúbal fez essa escolha de propósito.
+
+    ## Onde comer em Setúbal
+
+    Setúbal tem mais restaurantes por habitante do que qualquer outro concelho da região, e a razão é a lota.
+
+    **A avenida Luísa Todi e o centro histórico** concentram a maior parte das casas, muitas delas a fazer choco frito como prato principal. É aqui que se come o prato da cidade.
+
+    **A frente ribeirinha e a doca** têm marisqueiras viradas ao Sado.
+
+    **À volta do Mercado do Livramento** ficam as casas que se abastecem ali de manhã — a carta do dia sai do que houve na banca.
+
+    **Como escolher:** casas onde o choco frito é o prato e não uma linha entre trinta; fritura na altura; sala cheia de setubalenses à hora de almoço. Os [critérios completos estão no guia do choco frito](/guias/choco-frito/).
+
+    ## O que visitar em Setúbal
+
+    Além do mercado e da Arrábida: a **Igreja de Jesus**, primeira obra do gótico manuelino; o **Forte de São Filipe** sobre a cidade, com vista para o estuário; o **Museu do Trabalho Michel Giacometti**, instalado numa antiga fábrica de conservas; e os **miradouros** da estrada da serra, a caminho do Portinho.
+
+    ## Onde fica
+
+    Setúbal ocupa a faixa sul da península, entre a serra da Arrábida a poente e o estuário do Sado a nascente. O mapa no topo da página mostra o concelho na região.
 
     ## A parte honesta
 

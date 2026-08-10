@@ -33,6 +33,8 @@ pt:
       answer: "2,00€ em bilhete simples e 1,60€ pagando com zapping num cartão navegante. A travessia demora cerca de 10 minutos."
     - question: "Onde ficam as praias de Almada?"
       answer: "A oeste, na Costa da Caparica — um cordão contínuo de cerca de 15 quilómetros que vai da cidade até à Fonte da Telha, sob a arriba fóssil."
+    - question: "Onde comer em Almada?"
+      answer: "Em dois sítios sobretudo. A marginal de Cacilhas, com marisqueiras a fio junto ao terminal do ferry e vista para Lisboa. E a Costa da Caparica, com peixe grelhado e apoios de praia ao longo do areal. Fora disso, Almada é uma cidade densa com restaurante de bairro quase em toda a parte."
   transport_options:
     - mode: "Barco"
       duration: "10 min"
@@ -65,9 +67,25 @@ pt:
 
     ## Viver aqui
 
-    Almada é o sítio da Margem Sul onde menos se sente que se está do outro lado. Há hospital, universidade, teatro municipal, comércio, e a travessia é curta o suficiente para não organizar a vida à volta dela.
+    Almada é o sítio da Margem Sul onde menos se sente que se está do outro lado. Há o Hospital Garcia de Orta, centros de saúde em várias freguesias, universidade, teatro municipal e comércio, e a travessia é curta o suficiente para não organizar a vida à volta dela.
 
     Isso tem preço: é o concelho mais caro da região e a diferença para Lisboa estreitou muito na última década.
+
+    ## Onde comer em Almada
+
+    A concentração de restaurantes está em dois sítios, e são muito diferentes um do outro.
+
+    **A marginal de Cacilhas** é marisqueiras a fio junto ao terminal do ferry e ao longo do Cais do Ginjal, com Lisboa do outro lado da água. É onde vai quem quer marisco com vista. O [guia de Cacilhas](/lugares/almada/almada-cova-da-piedade-pragal-e-cacilhas/cacilhas/) diz qual escolher e porquê.
+
+    **A Costa da Caparica** é peixe grelhado e apoios de praia ao longo dos quinze quilómetros de areia, com o preço a descer à medida que te afastas da cidade.
+
+    Fora destes dois, Almada é uma cidade densa com restaurante de bairro em quase toda a parte — tascas, cervejarias e casas de pequeno-almoço que servem quem cá vive e não quem cá passa.
+
+    **Como escolher:** procura a sala cheia à hora de almoço num dia de semana. Em Cacilhas, desconfia das cartas com fotografias e cinco idiomas; a poucos metros há casas onde almoçam os funcionários do terminal.
+
+    ## Onde fica
+
+    Almada ocupa a ponta noroeste da península de Setúbal, entre o Tejo a norte e o Atlântico a poente. O mapa no topo desta página mostra o concelho dentro da região; para o detalhe das freguesias, as áreas dentro estão listadas abaixo.
 
     ## A parte honesta
 

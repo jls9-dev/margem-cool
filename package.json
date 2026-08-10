@@ -18,7 +18,8 @@
     "fares": "node scripts/fetch-ferry-fares.mjs",
     "facts": "node scripts/check-facts.mjs",
     "next": "node scripts/next-up.mjs",
-    "queue": "node scripts/publish-queue.mjs"
+    "queue": "node scripts/publish-queue.mjs",
+    "seo:coverage": "node scripts/seo-coverage.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.0",

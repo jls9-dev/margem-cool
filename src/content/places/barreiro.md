@@ -24,6 +24,8 @@ pt:
       answer: "Não é um destino de fim de semana e não tem praia nem centro histórico monumental. Tem uma identidade industrial forte, frente ribeirinha recuperada e uma das melhores travessias diárias do estuário."
     - question: "O Barreiro é barato para viver?"
       answer: "Continua a ser dos concelhos mais acessíveis da Margem Sul, com boa ligação fluvial a Lisboa. É uma das razões pelas quais tem atraído quem foi empurrado para fora de Almada e do Seixal."
+    - question: "Onde comer no Barreiro?"
+      answer: "Restaurantes de bairro com prato do dia, a preços que refletem uma cidade operária. As pastelarias são uma instituição local — a densidade de cafés e pastelarias é herança dos turnos das fábricas. E a frente ribeirinha tem casas com vista para o Tejo."
   transport_options:
     - mode: "Barco"
       price: "2,95€"
@@ -47,6 +49,22 @@ pt:
     ## O que se está a tornar
 
     A reconversão da zona industrial é o assunto do concelho há vinte anos: hectares de antigo complexo químico à espera de um destino, com planos sucessivos anunciados. Entretanto, o que se fez foi mais modesto e mais real — frente ribeirinha recuperada, parques, e uma vida cultural local com peso próprio.
+
+    ## Onde comer no Barreiro
+
+    O Barreiro come como uma cidade operária: bem, barato e sem cerimónia.
+
+    **As pastelarias** são uma instituição local — o Barreiro tem uma densidade de pastelarias e cafés que surpreende quem chega, herança de uma cidade onde os turnos das fábricas organizavam o dia e o café era o ponto de encontro entre eles.
+
+    **Os restaurantes de bairro** — tascas, cervejarias, casas de pratos do dia — servem quem cá trabalha, e os preços refletem isso.
+
+    **A frente ribeirinha** recuperada tem casas com vista para o Tejo e para Lisboa do outro lado.
+
+    **Como escolher:** ao almoço, procura o prato do dia escrito à mão. É o indicador mais fiável que existe nesta cidade.
+
+    ## Onde fica
+
+    O Barreiro ocupa uma península dentro do estuário, entre o Seixal e a Moita, virado a Lisboa através da parte larga do Tejo. O mapa no topo da página situa-o na região.
 
     ## A parte honesta
 
