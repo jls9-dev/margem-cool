@@ -1,7 +1,7 @@
 // NeuronWriter API client for Margem Cool.
 //
 // All endpoints are POST under https://app.neuronwriter.com/neuron-api/0.5/writer
-// Auth via X-API-KEY header (read from ~/.claude/projects/.../secrets/neuronwriter.key).
+// Auth via X-API-KEY header (read from ~/.claude/projects/.../secrets/neuronwriter.txt).
 //
 // Endpoints used here:
 //   /list-projects     — enumerate projects in the account
@@ -19,7 +19,7 @@ import { homedir } from 'node:os';
 import { join } from 'node:path';
 
 const BASE_URL = 'https://app.neuronwriter.com/neuron-api/0.5/writer';
-const KEY_PATH = join(homedir(), '.claude/projects/-Users-jameslumley-savile/secrets/neuronwriter.key');
+const KEY_PATH = join(homedir(), '.claude/projects/-Users-jameslumley-savile/secrets/neuronwriter.txt');
 
 let cachedKey = null;
 async function getApiKey() {
