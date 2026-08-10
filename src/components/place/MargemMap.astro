@@ -342,6 +342,14 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
   .margem-map {
     margin: 0;
     padding: 0;
+    /* Leaflet stacks its own furniture up to z-index 1000 — panes at 400,
+       controls at 800, the corner containers at 1000 — and with no stacking
+       context of its own the map's controls climbed over the sticky header.
+       Isolating here caps everything Leaflet does below the page chrome,
+       without having to out-bid a third-party library's numbers. */
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
   }
   .margem-map--mini .margem-map__canvas {
     height: 360px;

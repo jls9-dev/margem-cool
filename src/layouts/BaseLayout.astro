@@ -270,7 +270,11 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
       .site-header {
         position: sticky;
         top: 0;
-        z-index: 50;
+        /* Above anything a component or third-party embed is likely to use.
+           Leaflet goes to 1000 on its own; the header is site chrome and
+           always wins. Embeds should also isolate themselves — see
+           MargemMap — so this is the second line of defence, not the first. */
+        z-index: 1100;
         padding: 14px 0;
         background: color-mix(in srgb, var(--color-background) 92%, transparent);
         backdrop-filter: saturate(140%) blur(8px);
