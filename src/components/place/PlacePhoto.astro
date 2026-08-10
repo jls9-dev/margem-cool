@@ -26,13 +26,18 @@ interface Props {
 }
 const { image, alt, caption, credit, lead = false } = Astro.props;
 
-const sizes = lead
+// A portrait photo run to the full wide-section swallows the whole first
+// screen — the Cristo Rei hero was 1,400px tall before this. Portrait leads
+// take the reading column instead, which keeps them tall-but-sane without
+// cropping the subject out of the frame.
+const portrait = image.height > image.width;
+const sizes = lead && !portrait
   ? '(max-width: 1140px) 100vw, 1140px'
   : '(max-width: 800px) 100vw, 800px';
-const widths = lead ? [480, 720, 960, 1280, 1600, 2000] : [480, 720, 960, 1280];
+const widths = lead && !portrait ? [480, 720, 960, 1280, 1600, 2000] : [480, 720, 960, 1280];
 ---
 
-<figure class:list={['place-photo', lead && 'place-photo--lead']}>
+<figure class:list={['place-photo', lead && 'place-photo--lead', lead && portrait && 'place-photo--portrait']}>
   <Picture
     src={image}
     alt={alt}
@@ -69,6 +74,11 @@ const widths = lead ? [480, 720, 960, 1280, 1600, 2000] : [480, 720, 960, 1280];
     max-width: var(--wide-section);
     margin-inline: auto;
     margin-bottom: var(--space-2xl);
+  }
+
+  /* Must follow --lead: same specificity, so the later rule wins. */
+  .place-photo--portrait {
+    max-width: var(--content-column);
   }
 
   .place-photo__caption {
