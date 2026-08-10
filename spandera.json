@@ -1,0 +1,16 @@
+{
+  "name": "Margem Cool",
+  "slug": "margem-cool",
+  "siteType": "Content",
+  "status": "live",
+  "domain": "margemcool.pt",
+  "repo": "jls9-dev/margem-cool",
+  "hosting": "cloudflare-pages:margem-cool",
+  "owner": "Spandera",
+  "docs": {
+    "brand": "brand/guidelines.md",
+    "overview": "overview.md",
+    "highlights": "docs/highlights.md"
+  },
+  "updated": "2026-08-10"
+}

@@ -7,8 +7,10 @@ name: Weekly routine
 #                matters most: the biggest risk to this site is not publishing
 #                too slowly, it is that what is already published quietly stops
 #                being true.
-#   write-next — works out what should be written next, ordered by when a page
-#                needs to exist rather than by how big the term is.
+# Queue proposals are NOT here. Spandera's autopilot already generates them
+# monthly for every brand, and a second generator writing the same file would
+# have overwritten it. `npm run next` remains as a local view; the seasonality
+# ranking it introduced belongs in autopilot, not in one brand's workflow.
 #
 # Neither track publishes prose. Track one may commit a fare change, because
 # that is a number read from an operator's own table with no judgement in it.
@@ -94,51 +96,4 @@ jobs:
               title: `Facts to re-check — ${new Date().toISOString().slice(0, 10)}`,
               body,
               labels: ['routine', 'facts'],
-            });
-
-  write-next:
-    name: What to write next
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Check the kill switch
-        id: gate
-        run: echo "on=$(jq -r '.writeNext' routine.json)" >> "$GITHUB_OUTPUT"
-
-      - run: npm ci
-        if: steps.gate.outputs.on == 'true'
-
-      - name: Build the queue
-        if: steps.gate.outputs.on == 'true'
-        run: npm run next 2>&1 | tee queue.log
-
-      - name: Post the queue
-        if: steps.gate.outputs.on == 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const queue = fs.readFileSync('queue.log', 'utf8');
-            const body = [
-              'What the site should write this week, ordered by when each page needs to exist.',
-              '',
-              'A page takes months to rank, so the deadline is the peak month minus four.',
-              'Terms swinging less than 3× across the year have no deadline and fill the gaps.',
-              '',
-              '```', queue.trim(), '```',
-              '',
-              'Workflow: `docs/processes/place-page-workflow.md`. Gate: `docs/processes/content-quality-checklist.md`.',
-              'Portuguese first — that is where the demand is.',
-            ].join('\n');
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `Write next — week of ${new Date().toISOString().slice(0, 10)}`,
-              body,
-              labels: ['routine', 'content'],
             });

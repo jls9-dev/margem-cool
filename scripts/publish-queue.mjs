@@ -5,12 +5,13 @@
  *   npm run queue                 # print it
  *   npm run queue -- --write      # write it into the Spandera repo
  *
- * Spandera Studio is the portfolio's operating layer: it already holds the
- * keyword universe, the Search Console feed and a publish queue for every
- * brand, and the ops console reads them. Margem Cool's queue there is empty,
- * so the site has been deciding what to write on its own while the console
- * shows nothing. This closes that gap — the queue this repo computes becomes
- * the queue the console displays, alongside every other brand.
+ * MANUAL USE ONLY — do not schedule this.
+ *
+ * Spandera's autopilot generates queue proposals monthly for every brand and
+ * writes the same file. Running both on a schedule means whichever fires last
+ * wins, silently. This stays as a way to seed or inspect the queue by hand
+ * while the seasonality ranking is moved into autopilot, where every brand
+ * gets it rather than this one.
  *
  * Two kinds of item, from two different signals:
  *
