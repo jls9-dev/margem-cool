@@ -107,8 +107,69 @@ pt:
     E o concelho vive uma tensão que se vê na paisagem: logística e armazéns a instalarem-se ao longo dos eixos rodoviários, vinha a recuar em alguns pontos. É o preço de estar a meia hora de Lisboa com terreno disponível.
 
 en:
-  short_description: "A concelho with a medieval castle, the Marateca plain and the Arrábida vineyards."
-  page_status: placeholder
+  short_description: "The largest concelho in the region by area: vines, a castle above the town, and Pinhal Novo as the rail junction. Country of moscatel and castelão."
+  page_status: developed
+  meta_title: "Palmela — castle, wine and Pinhal Novo"
+  meta_description: "A guide to Palmela: the castle and the town, the wine route and moscatel, the grape harvest festival, and Pinhal Novo as rail junction."
+  facts:
+    - value: "68,852"
+      label: "Inhabitants (2021)"
+    - value: "465 km²"
+      label: "The largest in the Margem Sul"
+    - value: "148/km²"
+      label: "Density — this is countryside"
+    - value: "Vindimas"
+      label: "The town's festa, in September"
+  faqs:
+    - question: "What is there to visit in Palmela?"
+      answer: "The castle above the town, with a Order of Santiago convent inside the walls, now a pousada, and a view over half the peninsula. The Igreja de São Pedro with its eighteenth-century tiles. And the wineries along the wine route."
+    - question: "Is Palmela known for wine?"
+      answer: "Yes. It is a significant protected designation — castelão reds above all — and much of the moscatel de Setúbal is grown here and in Azeitão."
+    - question: "How do you get to Palmela?"
+      answer: "By train on the Linha do Sul and Linha do Sado, with Pinhal Novo as the main junction. By car, about 40 minutes from Lisbon. Away from the rail corridor a car is close to essential."
+    - question: "What is the difference between Palmela and Pinhal Novo?"
+      answer: "Palmela is the hilltop town with the castle and the seat of the concelho. Pinhal Novo is to the north, larger in population, and the rail junction. It grew with the railway."
+    - question: "Where do you eat in Palmela?"
+      answer: "In the town, around the castle, are the places most oriented to visitors, including the pousada in the convent. Across the concelho there are wineries and quintas with their own restaurants. In Pinhal Novo the cooking is everyday and local."
+  transport_options:
+    - mode: "Train"
+      detail: "Linha do Sul and Linha do Sado, with Pinhal Novo as the junction and a station at Palmela itself."
+    - mode: "Car"
+      duration: "~40 min"
+      detail: "Ponte 25 de Abril and the A2. For the wineries and the hills it is the only practical way."
+  body: |
+    Palmela is the largest concelho in the Margem Sul by area — four hundred and sixty-five square kilometres, twice Setúbal — and the least dense after Alcochete. A hundred and forty-eight people per square kilometre. This is countryside.
+
+    What you see crossing it is vines. Palmela is one of the country's significant wine designations and the landscape is made of it: vineyard, pine and plain, with the Serra da Arrábida closing the south.
+
+    ## The town and the castle
+
+    The town sits on a spur with the **castle** above it — a Moorish fortification later given to the Order of Santiago, with a convent inside the walls that is now a pousada. The view covers half the peninsula: the hills, the plain, the Sado and, on a clear day, Lisbon.
+
+    The white town hall in front, with the castle behind, is the image that stands for the concelho. In the town, the **Igreja de São Pedro** carries eighteenth-century tilework.
+
+    ## The wine
+
+    Palmela is **castelão** red and it is moscatel — the grape behind moscatel de Setúbal is grown largely here and in Azeitão. There are wineries to visit and a wine route crossing the concelho.
+
+    The **Festas das Vindimas**, in September, are the town's festa: blessing of the grapes, treading, a procession and bull-running. They close the agricultural year and the region's festa season at the same time.
+
+    ## Pinhal Novo
+
+    The other Palmela. North of the town, **Pinhal Novo** is larger than the seat of the concelho, a rail junction where the Linha do Sul and Linha do Sado cross, and where much of the population lives. It grew with the railway and is still growing.
+
+    ## Where to eat
+
+    Palmela eats off the land. In the town, around the castle, the places most oriented to visitors. Across the concelho, wineries and quintas with their own restaurants and meals matched to the house wine. In Pinhal Novo, everyday neighbourhood cooking.
+
+    Here the wine is the starting point rather than the accompaniment. A place that can explain the region's wine list usually knows the rest.
+
+    ## The honest part
+
+    Palmela is large and dispersed, and hard without a car. The train serves Pinhal Novo well and the town reasonably; everything else — the wineries, the quintas, the hills — assumes you are driving.
+
+    And the concelho lives a tension you can see in the landscape: logistics and warehousing arriving along the road corridors, vineyard retreating in places. That is the price of being half an hour from Lisbon with land available.
+
 last_updated: 2026-08-10
 draft: false
 ---

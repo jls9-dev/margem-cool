@@ -100,8 +100,77 @@ pt:
     O que tem é um estuário enorme, agricultura real, preços acessíveis e uma travessia bonita. Para quem lá vive, a lista está pela ordem certa.
 
 en:
-  short_description: "An eastern concelho running from the Tejo to the Alentejo plains, with rural Canha and Pegões."
-  page_status: placeholder
+  short_description: "On the eastern shore of the estuary, with a boat to Cais do Sodré and an agricultural interior stretching towards the Alentejo."
+  page_status: developed
+  meta_title: "Montijo — the estuary, the crossing and the farming interior"
+  meta_description: "A guide to Montijo: the town and waterfront, the boat to Lisbon, the interior at Canha and Pegões, and the airport that was not built."
+  facts:
+    - value: "55,682"
+      label: "Inhabitants (2021)"
+    - value: "349 km²"
+      label: "Area of the concelho"
+    - value: "€3.25"
+      label: "Boat to Cais do Sodré"
+    - value: "Vasco da Gama"
+      label: "The bridge that serves it"
+  faqs:
+    - question: "How do you get from Montijo to Lisbon?"
+      answer: "By boat to Cais do Sodré at €3.25 — the longest of the four crossings, because it crosses the wide part of the estuary. By car, over the Ponte Vasco da Gama, which lands alongside."
+    - question: "Will the Montijo airport be built?"
+      answer: "No. The concelho spent two decades with the possibility of Air Base No. 6 being converted into a civil airport, but the decision went elsewhere and the project fell. It shaped the concelho through expectation and still turns up in searches."
+    - question: "What is in the interior of the concelho?"
+      answer: "Serious agriculture. Canha, Pegões and Santo Isidro are vineyard, pine and montado, and look more like the Alentejo than like metropolitan Lisbon."
+    - question: "What are the festas of Montijo?"
+      answer: "The Festas em Honra de Nossa Senhora da Atalaia, in August, are the concelho's largest romaria and one of the oldest in the south — the tradition goes back to 1507. Five processions still converge on Atalaia from Palmela, Sesimbra and Montijo itself. In the town, the Festas Populares de São Pedro have run since 1951."
+    - question: "Where do you eat in Montijo?"
+      answer: "In the town and on the waterfront, fish and shellfish from the estuary. In the interior — Canha, Pegões, Santo Isidro — it is Alentejan: meat, game in season and slow-cooked dishes. Two different kitchens half an hour apart."
+  transport_options:
+    - mode: "Ferry"
+      duration: "~30 min"
+      price: "€3.25"
+      detail: "Montijo–Cais do Sodré with Transtejo Soflusa, across the wide part of the estuary."
+    - mode: "Car"
+      duration: "~30 min"
+      detail: "Ponte Vasco da Gama, which lands beside the concelho. The most direct road link to Lisbon."
+  body: |
+    Montijo sits where the Tagus estuary stops looking like a river and starts looking like an inland sea. It is on the eastern shore, facing Lisbon across a stretch of water far wider than the one separating Cacilhas from Cais do Sodré — which is why the crossing from here takes half an hour rather than ten minutes.
+
+    It is the second largest concelho in the region by area — three hundred and forty-nine square kilometres — and one of the least dense. Fifty-five thousand people, most of them in the town, the rest scattered across rural freguesias reaching towards the Alentejo: Canha, Pegões, Santo Isidro.
+
+    ## Two halves
+
+    **The town**, by the river, with the ferry terminal and a waterfront that is the best part of the concelho.
+
+    **The interior**, which is serious agriculture. Pegões and Canha are vineyard, pine and montado, and are closer to the Alentejo than to Lisbon in everything but distance.
+
+    ## The crossing
+
+    Boat from Montijo to Cais do Sodré at €3.25 — the most expensive and longest of the four, and the one that crosses the most open water. By car, access is over the **Ponte Vasco da Gama**, which lands next door.
+
+    That combination — bridge to the north, boat to the west — left Montijo better connected to Lisbon than the geography would suggest.
+
+    ## The festas
+
+    The **Festas em Honra de Nossa Senhora da Atalaia**, in **August**, are the concelho's largest romaria and one of the oldest in southern Portugal. The tradition goes back to **1507**, to a vow made during a plague in Lisbon.
+
+    What makes it unusual is that five processions still converge on Atalaia from outside: from Quinta do Anjo, Carregueira and Olhos d'Água in Palmela; from Azóia in Sesimbra; and from Jardia in Montijo itself. It is a festa that crosses concelhos.
+
+    In the town, the **Festas Populares de São Pedro** have run since 1951.
+
+    ## Where to eat
+
+    Two kitchens, and they are not alike. In the town and on the waterfront, fish and shellfish from the estuary. In the interior, Alentejan cooking: meat, game in season, slow-cooked dishes and regional wine. Decide which of the two concelhos you want first — they are half an hour apart and have nothing in common at the table.
+
+    ## Outdoors
+
+    The **ecopista do Montijo**, on a former railway alignment, crosses the concelho and is the easiest way to see the interior on foot or by bike.
+
+    ## The honest part
+
+    Montijo is among the least visited concelhos in the Margem Sul and has no obvious reason for a day trip. No ocean beach, no castle, no hills.
+
+    What it has is an enormous estuary, real agriculture, accessible prices and a good-looking crossing. For the people who live there, that list is in the right order.
+
 verify:
   - claim: "Festas de Nossa Senhora da Atalaia, em Agosto, romaria com origem em 1507"
     source: "https://www.mun-montijo.pt/poi-34/festas-de-nossa-senhora-da-atalaia"

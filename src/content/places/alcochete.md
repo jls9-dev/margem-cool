@@ -102,8 +102,71 @@ pt:
     E há uma tensão real entre as duas coisas que aqui existem — uma reserva natural de importância europeia e a infra-estrutura pesada que a ponte trouxe. Convivem, mas não se ignoram.
 
 en:
-  short_description: "The smallest concelho, on the east bank of the Tejo, the Vasco da Gama bridge and the estuary reserve."
-  page_status: placeholder
+  short_description: "The least populated concelho in the region: salt marsh, salt pans and the Tagus Estuary Nature Reserve, where the Vasco da Gama bridge lands."
+  page_status: developed
+  meta_title: "Alcochete — salt pans, estuary reserve and the town"
+  meta_description: "A guide to Alcochete: the Tagus Estuary Nature Reserve, the Samouco salt pans, the riverside town, the August festas and the Freeport."
+  facts:
+    - value: "19,143"
+      label: "Inhabitants (2021)"
+    - value: "128 km²"
+      label: "Area, mostly salt marsh"
+    - value: "Reserve"
+      label: "Tagus Estuary"
+    - value: "August"
+      label: "Barrete Verde e Salinas"
+  faqs:
+    - question: "What is there to see in Alcochete?"
+      answer: "The Tagus Estuary Nature Reserve and its migratory birds, the Samouco salt pans, and the riverside town facing Lisbon across the wide part of the estuary."
+    - question: "Are there flamingos at Alcochete?"
+      answer: "Yes. The Tagus Estuary Nature Reserve is one of Europe's most important wetlands and takes tens of thousands of migratory birds, flamingos included, about twenty minutes from Lisbon."
+    - question: "When are the Alcochete festas?"
+      answer: "The Festas do Barrete Verde e das Salinas take place in August. They are the concelho's big festa and keep a strong bull-running and campino tradition, with runs through the streets."
+    - question: "Is the Freeport in Alcochete?"
+      answer: "Yes, at the foot of the Ponte Vasco da Gama, a few kilometres from the town. It is why many people know the name without ever having seen Alcochete."
+    - question: "Where do you eat in Alcochete?"
+      answer: "In the town by the water there are fish and shellfish restaurants with terraces facing Lisbon. At Samouco and São Francisco the cooking is smaller and more local. There is also a strong meat tradition, by Ribatejo influence."
+  transport_options:
+    - mode: "Car"
+      duration: "~25 min"
+      detail: "Ponte Vasco da Gama, which lands in the concelho. The practical way to arrive and to move around."
+    - mode: "Bus"
+      detail: "Services from Lisbon and the rest of the eastern shore. Limited frequency outside peak hours."
+  body: |
+    Alcochete is the least populated concelho in the Margem Sul — nineteen thousand people — and one of the largest in area. It sits on the eastern shore of the Tagus, where the Ponte Vasco da Gama comes down, and most of its territory is salt marsh, salt pan and reserve.
+
+    ## The salt pans and the estuary
+
+    The **Tagus Estuary Nature Reserve** covers much of the concelho. It is one of Europe's most important wetlands and the place where tens of thousands of migratory birds stop — flamingos included, in numbers that surprise anyone not expecting them twenty minutes from Lisbon.
+
+    The **Samouco salt pans**, between the town and the bridge, still produce salt and are part of that landscape: shallow pans, white pyramids, and light that changes by the hour.
+
+    This is Alcochete's argument, and it has nothing to do with the rest of the region.
+
+    ## The town
+
+    Small, riverside, facing the water, with a front looking straight at Lisbon across the wide part of the estuary. Alcochete was a fishing and salt town, and also a royal hunting reserve — **Manuel I was born here**.
+
+    It keeps a strong bullfighting tradition, with the **Festas do Barrete Verde e das Salinas** in **August**, the concelho's big festa, involving bull-running through the streets and a parade of campinos.
+
+    ## Where to eat
+
+    Alcochete eats from the estuary and from the Ribatejo tradition next door. In the town by the water, fish and shellfish from the Tagus, several with terraces facing Lisbon. At Samouco and São Francisco, smaller and more local. From the land side, **beef from fighting stock** and slow-cooked dishes — the concelho is bull country, and that is on the table as much as the fish. From the river, eel. And the salt from the Samouco pans is the concelho's own product.
+
+    ## The Freeport
+
+    At the foot of the bridge sits one of the largest outlet retail centres on the Iberian Peninsula. It is why many people know the name Alcochete without having seen the town — and it is, honestly, a world apart three kilometres away.
+
+    ## Beaches
+
+    Alcochete has river beaches on the estuary, calm and tidal, very different from the Atlantic ones on the other side of the peninsula. They are local and quiet, and they do not replace Caparica.
+
+    ## The honest part
+
+    Alcochete is small and quiet, and outside the August festas there is not a great deal happening. Without a car it is limited: there are buses, but the concelho is large and dispersed.
+
+    And there is a real tension between the two things that exist here — a nature reserve of European importance and the heavy infrastructure the bridge brought. They coexist, but they do not ignore each other.
+
 last_updated: 2026-08-10
 draft: false
 ---
