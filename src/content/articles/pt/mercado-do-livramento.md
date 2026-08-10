@@ -25,7 +25,7 @@ facts:
     label: "Entrada"
 faqs:
   - question: "Qual é o horário do Mercado do Livramento?"
-    answer: "De terça a domingo, das 7h00 às 14h00. Encerra às segundas-feiras. Fecha ainda em alguns feriados ao longo do ano — 1 de Janeiro, 25 de Abril, 1 de Maio, 15 de Setembro e 25 de Dezembro."
+    answer: "Encerra às segundas-feiras. Nos restantes dias funciona de manhã — abre por volta das 7h e fecha à hora de almoço, com as fontes disponíveis a coincidirem em 7h-14h. Fecha ainda em alguns feriados ao longo do ano. Se a tua ida depende da hora exacta, confirma na página do mercado."
   - question: "O Mercado do Livramento abre à segunda-feira?"
     answer: "Não. Segunda é o dia de encerramento semanal. É o erro mais comum de quem vai a Setúbal de propósito para o ver."
   - question: "A que horas se deve ir ao mercado?"
@@ -43,6 +43,11 @@ transport_options:
   - mode: "Carro"
     duration: "~45 min de Lisboa"
     detail: "Ponte 25 de Abril e A2. Há estacionamento pago na zona da avenida, que de manhã, em dia de mercado, está disputado."
+verify:
+  - claim: "Encerra à segunda-feira; funciona de manhã, de terça a domingo"
+    source: "https://www.facebook.com/MercadoLivramento/"
+    checked: 2026-08-10
+    note: "A câmara não publica os horários numa página legível por máquina — várias fontes secundárias dão 7h-14h e coincidem, mas nenhuma primária o confirma. Confirmar presencialmente ou pela página do mercado antes de afirmar horas exactas."
 order: 1
 draft: false
 nw_query_pt: "a09e3861f8b80b3b"
@@ -54,11 +59,11 @@ Antes de mais, o essencial, porque é aqui que a maior parte das pessoas se enga
 
 ## Horários
 
-**Terça a domingo, das 7h00 às 14h00. Encerra à segunda-feira.**
+**Encerra à segunda-feira.** Nos outros dias é um mercado de manhã: abre cedo, por volta das sete, e fecha à hora de almoço. Fecha ainda em alguns feriados ao longo do ano.
 
-Fecha ainda em alguns feriados: 1 de Janeiro, 25 de Abril, 1 de Maio, 15 de Setembro e 25 de Dezembro.
+Duas consequências práticas. A primeira: se planeaste a ida a Setúbal para uma segunda-feira, o mercado não entra no programa. A segunda: **vai de manhã, e cedo**. A banca de peixe é uma operação da manhã — ao início da tarde já se está a desmontar. Chegar depois das treze é chegar ao fim.
 
-Duas consequências práticas. A primeira: se planeaste a ida a Setúbal para uma segunda-feira, o mercado não entra no programa. A segunda: **vai de manhã**. O mercado abre às 7h e a banca de peixe funciona de manhã — ao início da tarde já se está a desmontar. Chegar às 13h30 é chegar ao fim.
+Uma nota honesta sobre as horas: as fontes que publicam o horário do Livramento coincidem em terça a domingo, das 7h às 14h, mas a câmara não o publica numa página que possamos reler. Se a tua ida depende de meia hora, confirma na página do mercado antes de sair de casa.
 
 ## O peixe
 

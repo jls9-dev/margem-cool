@@ -1,0 +1,144 @@
+name: Weekly routine
+
+# Two tracks, both read-only against the site.
+#
+#   keep-true  — re-checks every perishable fact we have published against its
+#                source, and refreshes the ferry fares. This runs first and
+#                matters most: the biggest risk to this site is not publishing
+#                too slowly, it is that what is already published quietly stops
+#                being true.
+#   write-next — works out what should be written next, ordered by when a page
+#                needs to exist rather than by how big the term is.
+#
+# Neither track publishes prose. Track one may commit a fare change, because
+# that is a number read from an operator's own table with no judgement in it.
+# Everything else lands in an issue for a human.
+#
+# Kill switches live in routine.json at the repo root.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Mondays, 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  keep-true:
+    name: Keep true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Check the kill switch
+        id: gate
+        run: echo "on=$(jq -r '.keepTrue' routine.json)" >> "$GITHUB_OUTPUT"
+
+      - run: npm ci
+        if: steps.gate.outputs.on == 'true'
+
+      - name: Refresh the ferry fares
+        if: steps.gate.outputs.on == 'true'
+        run: npm run fares
+        continue-on-error: true
+
+      - name: Commit any fare change
+        if: steps.gate.outputs.on == 'true'
+        run: |
+          if git diff --quiet src/data/ferry-fares.json; then
+            echo "Fares unchanged."
+          else
+            git config user.name  "margem-cool routine"
+            git config user.email "hello@margemcool.pt"
+            git add src/data/ferry-fares.json
+            git commit -m "Ferry fares changed at the operator
+
+          Read from Transtejo Soflusa's own tariff table by the weekly routine.
+          Pages quoting a fare should be re-read — check-facts flags them."
+            git push
+          fi
+
+      - name: Check every published fact against its source
+        if: steps.gate.outputs.on == 'true'
+        id: facts
+        run: |
+          set +e
+          npm run facts 2>&1 | tee facts.log
+          echo "drift=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: Open an issue when a source has moved
+        if: steps.gate.outputs.on == 'true' && steps.facts.outputs.drift != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const log = fs.readFileSync('facts.log', 'utf8');
+            const body = [
+              'The weekly fact check found published claims that no longer match their source.',
+              '',
+              'Read each source, correct the page, and bump `checked:` in its `verify:` block.',
+              'A flag is not proof the page is wrong — the source may simply have been reworded.',
+              '',
+              '```', log.trim(), '```',
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Facts to re-check — ${new Date().toISOString().slice(0, 10)}`,
+              body,
+              labels: ['routine', 'facts'],
+            });
+
+  write-next:
+    name: What to write next
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Check the kill switch
+        id: gate
+        run: echo "on=$(jq -r '.writeNext' routine.json)" >> "$GITHUB_OUTPUT"
+
+      - run: npm ci
+        if: steps.gate.outputs.on == 'true'
+
+      - name: Build the queue
+        if: steps.gate.outputs.on == 'true'
+        run: npm run next 2>&1 | tee queue.log
+
+      - name: Post the queue
+        if: steps.gate.outputs.on == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const queue = fs.readFileSync('queue.log', 'utf8');
+            const body = [
+              'What the site should write this week, ordered by when each page needs to exist.',
+              '',
+              'A page takes months to rank, so the deadline is the peak month minus four.',
+              'Terms swinging less than 3× across the year have no deadline and fill the gaps.',
+              '',
+              '```', queue.trim(), '```',
+              '',
+              'Workflow: `docs/processes/place-page-workflow.md`. Gate: `docs/processes/content-quality-checklist.md`.',
+              'Portuguese first — that is where the demand is.',
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Write next — week of ${new Date().toISOString().slice(0, 10)}`,
+              body,
+              labels: ['routine', 'content'],
+            });

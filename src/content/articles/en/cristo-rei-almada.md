@@ -61,6 +61,10 @@ transport_options:
   - mode: "On foot from Almada Velha"
     duration: "~20 min"
     detail: "From the top of the Elevador da Boca do Vento, walk up through Almada Velha to the sanctuary. It's uphill, and it's the route with the views along the way."
+verify:
+  - claim: "Ticket 10€ from age 13, 3€ for ages 8 to 12, parking 2€"
+    source: "https://cristorei.pt/visitas/bilheteira/"
+    checked: 2026-08-10
 order: 1
 draft: false
 nw_query_en: "c27b564448d26770"

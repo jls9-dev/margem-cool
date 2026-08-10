@@ -33,8 +33,8 @@ Margem Cool is a **useful content site about the Margem Sul**. The brand voice (
 
 - **Push and deploy without reserve through ~2026-06-25.** No real visitors yet — every change goes straight to `main` and Cloudflare auto-deploys. Don't ask "shall I push?". See `project_margem_cool_free_deploy.md` in the global memory.
 - **The build must pass before pushing.** `npm run build` runs schema and cross-reference validation. Broken builds are not "live without reserve", they're broken.
-- **Portuguese ships; Lucia reviews, she doesn't gate.** The original rule held new Portuguese as `draft: true` until she cleared it. That was written before we knew the demand for this region is almost entirely Portuguese-language — held literally it meant the pages targeting all of our audience could never publish. James confirmed on 2026-08-10 that Lucia is happy with the Portuguese shipped so far (twelve guides and six pillar pages). Write Portuguese, publish it, and let her review in batches rather than blocking each page on her.
-- **Draft and discuss in English first, translate to Portuguese after.** James's English is stronger than his Portuguese. Show him EN copy for review; PT comes once EN is locked. See `feedback_english_first_then_translate.md`.
+- **Publish first, review after. Work as if it's good.** James, 2026-08-10: *"we put the stuff live, Lucia will check it but we put live first, and work as if it's all good."* Portuguese is never held as `draft: true` waiting for review. Lucia checks what is already live and raises corrections; we fix them and carry the lesson forward. Nothing waits on her.
+- **Portuguese first on Margem Cool — this repo is the exception to the portfolio rule.** `feedback_english_first_then_translate.md` says draft English first so James can review. That is right for LP and SBRE and wrong here: essentially all the search demand for this region is Portuguese-language on google.pt. Writing English first for Portuguese keywords is how Cacilhas and Belverde ended up fully written in English with placeholder Portuguese. Draft PT, then the English edition.
 
 ## Hard-won lessons
 

@@ -82,6 +82,31 @@ const month = z.enum([
 
 const pageStatus = z.enum(['placeholder', 'thin', 'developed', 'comprehensive']);
 
+/* -------------------------------------------------------------------------
+ * Verifiable claims
+ *
+ * Any page stating a fact that can go stale — an opening time, a fare, a
+ * festival date, an access rule — declares where it came from. The weekly
+ * fact check re-fetches each source and reports when the page and the source
+ * stop agreeing.
+ *
+ * This exists because the biggest risk to this site is not writing too
+ * slowly, it is that what we have already written quietly stops being true.
+ * The Transpraia beach train has not run since 2019 and guides across the
+ * internet still describe it as operating; that is the failure mode.
+ * ------------------------------------------------------------------------- */
+
+const verifiableClaim = z.object({
+  /** The claim as the page states it. Numbers, times and dates in it are what gets checked. */
+  claim: z.string(),
+  /** The page we read it from. Must be the primary source, not an aggregator. */
+  source: z.string().url(),
+  /** When a human or the routine last confirmed it against that source. */
+  checked: z.date(),
+  /** Optional note for the next person — e.g. "rules are reissued each spring". */
+  note: z.string().optional(),
+});
+
 const placeFact = z.object({
   value: z.string(),     // e.g. "26,000", "5 min", "Ferry", "UNESCO"
   label: z.string(),     // e.g. "Habitantes", "Ferry para Lisboa"
@@ -206,6 +231,9 @@ const placeSchema = z.object({
   last_updated: z.date(),
   last_visited: z.date().optional(),
   draft: z.boolean().default(false),
+
+  /** Facts on this page that can go stale. See the note on verifiableClaim. */
+  verify: z.array(verifiableClaim).optional(),
 
   // NW query IDs for scoring back via the SEO CLI
   nw_query_pt: z.string().optional(),
@@ -457,6 +485,9 @@ const articleSchema = z.object({
     caption: z.string().optional(),
     credit: z.string().optional(),
   })).optional(),
+
+  /** Facts on this page that can go stale. See the note on verifiableClaim. */
+  verify: z.array(verifiableClaim).optional(),
 
   /** Where this guide sits in the pillar's guide list. Lower shows first. */
   order: z.number().optional(),

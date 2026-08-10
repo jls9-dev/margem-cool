@@ -51,6 +51,14 @@ transport_options:
   - mode: "Carro"
     price: "5€ / 3€"
     detail: "Só fora do horário de condicionamento, ou até ao parque do Creiro, que tem cerca de 140 lugares e enche cedo. Quando o parque enche, a estrada fecha."
+verify:
+  - claim: "Arrábida sem Carros: 4 de Junho a 15 de Setembro, das 07h00 às 20h00"
+    source: "https://www.mun-setubal.pt/arrabida-sem-carros/"
+    checked: 2026-08-10
+    note: "O programa é reemitido todos os anos, com datas novas. Reler na primavera."
+  - claim: "Parque do Creiro: 5€ até às 13h00, 3€ a partir daí"
+    source: "https://www.mun-setubal.pt/arrabida-sem-carros/"
+    checked: 2026-08-10
 order: 1
 draft: false
 ---

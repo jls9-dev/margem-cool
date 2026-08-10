@@ -69,6 +69,11 @@ transport_options:
     detail: "Ponte 25 de Abril and the A2, Seixal exits. There is parking near the site, but it fills early on the Saturday."
   - mode: "Camping"
     detail: "The site has a campsite with advance registration, closing on 3 September, the same day as the cheaper entrance pass."
+verify:
+  - claim: "Festa do Avante 2026: 4, 5 and 6 September, entrance pass 35€ until 3 September"
+    source: "https://www.festadoavante.pcp.pt/"
+    checked: 2026-08-10
+    note: "Dates and price change every year. Re-read in June."
 order: 1
 draft: false
 nw_query_en: "31355449bc1e807f"

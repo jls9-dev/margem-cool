@@ -1,0 +1,5 @@
+{
+  "_comment": "Kill switches for the weekly routine. Set a track to false and it stops at the next run, no code change and no deploy needed. Per the automation principle, every routine has one.",
+  "keepTrue": true,
+  "writeNext": true
+}

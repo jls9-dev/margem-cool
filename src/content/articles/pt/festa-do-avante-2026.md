@@ -68,6 +68,11 @@ transport_options:
     detail: "Ponte 25 de Abril e A2, saídas do Seixal. Há estacionamento junto ao recinto, mas enche cedo no sábado."
   - mode: "Campismo"
     detail: "O recinto tem parque de campismo com inscrição antecipada, que fecha a 3 de Setembro, no mesmo dia que a EP mais barata."
+verify:
+  - claim: "Festa do Avante 2026: 4, 5 e 6 de Setembro, entrada permanente 35€ até 3 de Setembro"
+    source: "https://www.festadoavante.pcp.pt/"
+    checked: 2026-08-10
+    note: "Datas e preço mudam todos os anos. Reler em Junho."
 order: 1
 draft: false
 nw_query_pt: "31355449bc1e807f"

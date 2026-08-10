@@ -60,6 +60,10 @@ transport_options:
   - mode: "A pé desde Almada Velha"
     duration: "~20 min"
     detail: "Do topo do Elevador da Boca do Vento sobe-se pela Almada Velha até ao santuário. É a pé, é a subir, e é o caminho com mais vistas pelo meio."
+verify:
+  - claim: "Bilhete 10€ a partir dos 13 anos, 3€ dos 8 aos 12, estacionamento 2€"
+    source: "https://cristorei.pt/visitas/bilheteira/"
+    checked: 2026-08-10
 order: 1
 draft: false
 nw_query_pt: "c27b564448d26770"

@@ -52,6 +52,14 @@ transport_options:
   - mode: "Car"
     price: "€5 / €3"
     detail: "Only outside the restricted hours, or as far as the Creiro car park, which holds around 140 cars and fills early. When it fills, the road closes."
+verify:
+  - claim: "Arrábida sem Carros: 4 June to 15 September, 07h00 to 20h00"
+    source: "https://www.mun-setubal.pt/arrabida-sem-carros/"
+    checked: 2026-08-10
+    note: "Reissued each year with new dates. Re-read in spring."
+  - claim: "Creiro car park: 5€ before 13h00, 3€ after"
+    source: "https://www.mun-setubal.pt/arrabida-sem-carros/"
+    checked: 2026-08-10
 order: 1
 draft: false
 ---
