@@ -72,6 +72,17 @@ Before writing a single line: re-read [`brand.md`](../standards/brand.md) §4. T
 
 Apply the colour policy from [`../standards/colour-policy.md`](../standards/colour-policy.md): tone change = content type. Don't introduce ad-hoc tones.
 
+### Phase 5b — Find the photographs
+
+A place page without a photograph of the place is not finished, however good the prose.
+
+1. **Check James's own library first.** `project_southbank_photos.md` in global memory catalogues every labelled shot in `~/Documents/south bank photos/`, by location. It covers far more of the Margem Sul than people assume — Cacilhas alone had five usable frames including two of the restaurants the page lists. His own photos need no licence and prove we have actually been there.
+2. **Otherwise find a licensed one.** Wikimedia Commons categories (`Category:<place>`) are curated and carry explicit licences — most Margem Sul concelhos have 50–500 files. Geosearch is noisier and needs more judgement. Record the attribution the licence requires in `hero_image_credit` or the gallery item's `credit`.
+3. **Prepare it**: `npm run photo -- "<source file>" <key>` — resizes to 2400px, applies EXIF rotation, strips metadata, writes `src/assets/places/<key>.jpg`.
+4. **Reference it by key** in frontmatter: `hero_image: "<key>"` plus alt and caption in both languages, or as a `gallery` entry. Astro generates the responsive AVIF/WebP variants at build.
+
+The hero opens the page under the title; the gallery becomes the "In pictures" strip after the prose. Two or three gallery photos is the useful number.
+
 ### Phase 6 — Translate to Portuguese
 
 The English locks the structure. The Portuguese is a translation, not an independent draft. Translate the frontmatter fields (facts labels, faq questions/answers, timeline body, transport options, eateries) and the body in turn. Mark `pt.page_status: placeholder` until Lucia has reviewed; promote to `thin` or `developed` when she clears it.

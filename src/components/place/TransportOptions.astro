@@ -25,7 +25,7 @@ if (options.length === 0) return null;
 ---
 
 <section class="transport" aria-labelledby="transport-h">
-  <div class="container">
+  <div class="container container--wide">
     <div class="transport__inner">
       <header class="transport__header">
         <p class="transport__kicker smallcaps">{kicker}</p>
@@ -133,6 +133,8 @@ if (options.length === 0) return null;
     color: var(--color-text);
     letter-spacing: -0.02em;
   }
+  /* One short value. Anything longer belongs in the detail text — two fares
+     side by side here overran the card. */
   .transport__price {
     font-weight: 500;
     font-size: var(--type-h3);

@@ -85,7 +85,19 @@ The four operating principles must hold for this page.
 - [ ] **No layout glitches** at common scroll positions.
 - [ ] **Tonal palette consistent** with `colour-policy.md`. No ad-hoc tones added.
 
-## 10. Honest gut check
+## 10. Evidence, photographs and judgement
+
+Added 2026-08-10 after reviewing the Cacilhas and Belverde pilots. Both passed every check above and were still recognisably desk research. These are the checks that would have caught it.
+
+- [ ] **The page has photographs.** At least one for any page above `placeholder`. A place page with no picture of the place fails the brand promise before a word is read. Source order: James's own library (catalogued in `project_southbank_photos.md` — check it before assuming we have nothing), then a properly licensed photo with attribution. Prepare with `npm run photo -- <source> <key>`; reference by key.
+- [ ] **Every photo has alt, caption and credit.** Alt describes it for someone who can't see it; the caption says what the reader is looking at; the credit names who took it. All three, both languages for alt and caption.
+- [ ] **No sources named in the body copy.** Never "according to Wikipedia", "the Junta's page doesn't say", "sources disagree about". Where we looked is our business; the reader wants the answer or an honest "this isn't settled". Naming a source in prose is the clearest tell that a page was written at a desk.
+- [ ] **No precise number we haven't verified.** Dish prices, opening hours and phone numbers go stale within months and are the fastest thing for a local reader to disprove. Use the price band (€–€€€€) and name the dish instead. A precise figure is allowed only when it comes from a source we can re-read on a schedule — the ferry fares in `src/data/ferry-fares.json` (`npm run fares`) are the model: fetched from the operator, stamped with the date checked.
+- [ ] **No stale third-party accolades.** "Time Out readers' Best Restaurant 2018" is not a recommendation in 2026. If we're citing someone else's award, it has to be current and it has to matter.
+- [ ] **The page makes a recommendation.** A list of ten restaurants with no view on which to choose is a directory, not a guide, and fails Principle 3 outright. Somewhere the page must say which one, for whom, and why — framed on grounds we can defend (location, queue, what it's for), never on an experience we haven't had.
+- [ ] **First-person claims are true.** We say "we ate there" only if someone did. A photograph proves we stood there, not that we ordered. Where a claim needs a visit we haven't made, write around it or flag it to James as needing verification.
+
+## 11. Honest gut check
 
 - [ ] **Would I read this if I didn't have to?** Honest answer. If "no" the page isn't done — find what's making it skimmable and fix that before shipping.
 - [ ] **Does the page feel Margem Cool?** Brand promise is in the name. Walls of cream prose with no visual rhythm are an immediate fail (per `project_margem_cool_must_be_cool.md`).

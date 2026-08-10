@@ -23,10 +23,13 @@ import RiverDivider from '../components/place/RiverDivider.astro';
 import TransportOptions from '../components/place/TransportOptions.astro';
 import EateryGrid from '../components/place/EateryGrid.astro';
 import MargemMap from '../components/place/MargemMap.astro';
+import PlacePhoto from '../components/place/PlacePhoto.astro';
+import PhotoStrip from '../components/place/PhotoStrip.astro';
 
 import { buildPlaceJsonLd } from '../utils/schema-org';
 import { SITE_URL, type Lang } from '../utils/i18n';
 import { isIndexableStatus } from '../utils/indexable.mjs';
+import { optionalPlaceImage } from '../utils/place-images';
 
 type Place = CollectionEntry<'places'>;
 
@@ -54,6 +57,7 @@ const COPY = {
     childrenTitleConcelho: 'Freguesias do concelho',
     childrenTitleOther: 'Áreas dentro',
     childrenCta: 'Explorar →',
+    galleryKicker: 'Em imagens',
     placeholderKicker: 'Em construção',
     placeholderBody: 'Esta página está em desenvolvimento. Em breve com conteúdo completo.',
     faqKicker: 'Perguntas frequentes',
@@ -80,6 +84,7 @@ const COPY = {
     childrenTitleConcelho: 'Freguesias of the concelho',
     childrenTitleOther: 'Areas within',
     childrenCta: 'Explore →',
+    galleryKicker: 'In pictures',
     placeholderKicker: 'Under construction',
     placeholderBody: 'This page is being developed. Fuller content is coming soon.',
     faqKicker: 'Common questions',
@@ -108,6 +113,18 @@ const timeline = langData.timeline;
 const transportOptions = langData.transport_options;
 const eateries = langData.eateries;
 const isPlaceholder = langData.page_status === 'placeholder';
+
+// Photographs. The hero opens the page under the title; the gallery sits after
+// the prose. Both are language-neutral assets with per-language alt and
+// caption, so a place photographed once serves both editions.
+const heroImage = optionalPlaceImage(place.data.hero_image);
+const heroPhoto = heroImage && {
+  image: heroImage,
+  alt: (lang === 'pt' ? place.data.hero_image_alt_pt : place.data.hero_image_alt_en) ?? '',
+  caption: lang === 'pt' ? place.data.hero_image_caption_pt : place.data.hero_image_caption_en,
+  credit: place.data.hero_image_credit,
+};
+const gallery = place.data.gallery;
 const bodyHtml = langData.body
   ? await marked.parse(langData.body, { async: true })
   : null;
@@ -259,6 +276,18 @@ function formatDate(d: Date, l: Lang): string {
     })()}
   </GuideHero>
 
+  {heroPhoto && (
+    <div class="container container--wide">
+      <PlacePhoto
+        image={heroPhoto.image}
+        alt={heroPhoto.alt}
+        caption={heroPhoto.caption}
+        credit={heroPhoto.credit}
+        lead
+      />
+    </div>
+  )}
+
   <QuickFacts facts={facts} />
 
   {bodyHtml ? (
@@ -284,6 +313,10 @@ function formatDate(d: Date, l: Lang): string {
     subtitle={transportCopy.subtitle}
     options={transportOptions}
   />
+
+  {gallery && gallery.length > 0 && (
+    <PhotoStrip lang={lang} kicker={copy.galleryKicker} items={gallery} />
+  )}
 
   <EateryGrid
     kicker={eateryCopy.kicker}

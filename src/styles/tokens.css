@@ -24,7 +24,34 @@
   --color-brand: var(--mc-teal);
   --color-accent: var(--mc-rust);
   --color-rule: rgba(31, 35, 40, 0.12);
+}
 
+/*
+ * Dark mode.
+ *
+ * The dark palette variants above were declared and then never wired up: the
+ * semantic roles stayed light in every context. Meanwhile five components
+ * (TransportOptions, EateryGrid, FAQ, Callout, Section) each painted their own
+ * charcoal background under prefers-color-scheme: dark. The result on any
+ * dark-preference device was charcoal text on a charcoal ground — those
+ * sections were unreadable on every place page we have.
+ *
+ * Flipping the roles here is what those components always assumed had already
+ * happened. Secondary text uses the lighter grey rather than --mc-cool-grey-dark,
+ * which is too close to the background to clear 4.5:1 against it.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--mc-charcoal);
+    --color-text: var(--mc-cream);
+    --color-text-secondary: var(--mc-cool-grey);
+    --color-brand: var(--mc-teal-dark);
+    --color-accent: var(--mc-rust-dark);
+    --color-rule: rgba(245, 241, 232, 0.16);
+  }
+}
+
+:root {
   /* Typography */
   --font-display: 'Outfit Variable', system-ui, -apple-system, sans-serif;
   --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;

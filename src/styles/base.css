@@ -95,6 +95,22 @@ img, svg, video { max-width: 100%; height: auto; display: block; }
   .container { padding: 0 clamp(var(--page-margin-mobile), calc((100vw - var(--content-column)) / 2), 240px); }
 }
 
+/* The wide tier.
+ *
+ * .container clamps its inner width to the reading column, which is right for
+ * prose and wrong for everything that isn't. Components which declare
+ * max-width: var(--wide-section) — the facts strip, the grids, the photos —
+ * were all silently capped at reading width by the container wrapping them, so
+ * the wide tier existed in the stylesheets and never on the page. Grids that
+ * should have run four across wrapped to three-and-one.
+ *
+ * Anything whose inner element asks for --wide-section wants this container.
+ */
+.container--wide {
+  max-width: var(--wide-section);
+  padding-inline: var(--page-margin-mobile);
+}
+
 .content-column {
   max-width: var(--content-column);
   margin-left: auto;

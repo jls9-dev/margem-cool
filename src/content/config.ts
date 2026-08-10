@@ -92,10 +92,17 @@ const placeFaq = z.object({
   answer: z.string(),
 });
 
+// Photos are named by key, resolving to src/assets/places/<key>.jpg via
+// src/utils/place-images.ts. Never a path — place files sit at four different
+// depths in the tree and relative paths would differ per page.
 const placeGalleryItem = z.object({
-  src: z.string(),                 // path under /public/images/places/...
+  src: z.string(),
   alt_pt: z.string(),
   alt_en: z.string(),
+  // What the reader is looking at. Different from alt, which describes the
+  // image for someone who can't see it.
+  caption_pt: z.string().optional(),
+  caption_en: z.string().optional(),
   credit: z.string().optional(),
 });
 
@@ -123,10 +130,14 @@ const placeSchema = z.object({
   population: z.number().optional(),
   population_year: z.number().optional(),
 
-  // Shared assets — language-neutral, with bilingual alt text where needed
-  hero_image: z.string().optional(),               // path under /public/images/places/...
+  // Shared assets — language-neutral, with bilingual alt text where needed.
+  // hero_image is a key into src/assets/places/, not a path. See the note on
+  // placeGalleryItem above.
+  hero_image: z.string().optional(),
   hero_image_alt_pt: z.string().optional(),
   hero_image_alt_en: z.string().optional(),
+  hero_image_caption_pt: z.string().optional(),
+  hero_image_caption_en: z.string().optional(),
   hero_image_credit: z.string().optional(),
 
   gallery: z.array(placeGalleryItem).optional(),

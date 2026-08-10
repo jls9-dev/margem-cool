@@ -1,0 +1,43 @@
+{
+  "source": "https://ttsl.pt/passageiros/tarifario/",
+  "operator": "Transtejo Soflusa",
+  "currency": "EUR",
+  "checked": "2026-08-10",
+  "routes": {
+    "barreiro-terreiro-do-paco": {
+      "name": "Ligação Barreiro - Terreiro do Paço",
+      "fares": {
+        "single": 2.95,
+        "zapping": 2.95
+      }
+    },
+    "cacilhas-cais-do-sodre": {
+      "name": "Ligação Cacilhas - Cais do Sodré",
+      "fares": {
+        "single": 2,
+        "zapping": 1.6
+      }
+    },
+    "trafaria-porto-brandao-belem": {
+      "name": "Ligação Trafaria - Porto Brandão - Belém",
+      "fares": {
+        "single": 1.5,
+        "zapping": 1.5
+      }
+    },
+    "montijo-cais-do-sodre": {
+      "name": "Ligação Montijo - Cais do Sodré",
+      "fares": {
+        "single": 3.25,
+        "zapping": 3.25
+      }
+    },
+    "seixal-cais-do-sodre": {
+      "name": "Ligação Seixal - Cais do Sodré",
+      "fares": {
+        "single": 2.85,
+        "zapping": 2.85
+      }
+    }
+  }
+}

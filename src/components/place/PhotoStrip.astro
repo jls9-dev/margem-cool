@@ -1,0 +1,125 @@
+---
+/**
+ * PhotoStrip — the place's gallery, as a row of captioned photographs.
+ *
+ * Sits between the body prose and the questions, where a reader who has read
+ * the page wants to see the place. Two or three photos is the useful number;
+ * the grid handles more but a place page is not a photo album.
+ *
+ * Landscape and portrait originals mix freely — each photo keeps its own
+ * aspect ratio rather than being cropped to a common shape, because the crop
+ * is usually what makes a set of photographs look like stock.
+ */
+import { Picture } from 'astro:assets';
+import { placeImage } from '../../utils/place-images';
+import type { Lang } from '../../utils/i18n';
+
+interface GalleryItem {
+  src: string;
+  alt_pt: string;
+  alt_en: string;
+  caption_pt?: string;
+  caption_en?: string;
+  credit?: string;
+}
+
+interface Props {
+  lang: Lang;
+  kicker: string;
+  items: GalleryItem[];
+}
+const { lang, kicker, items } = Astro.props;
+
+const photos = items.map((item) => ({
+  image: placeImage(item.src),
+  alt: lang === 'pt' ? item.alt_pt : item.alt_en,
+  caption: lang === 'pt' ? item.caption_pt : item.caption_en,
+  credit: item.credit,
+}));
+---
+
+<section class="photo-strip">
+  <div class="container container--wide">
+    <p class="photo-strip__kicker smallcaps">{kicker}</p>
+    <div class="photo-strip__grid" data-count={photos.length}>
+      {photos.map((photo) => (
+        <figure class="photo-strip__item">
+          <Picture
+            src={photo.image}
+            alt={photo.alt}
+            widths={[400, 600, 900, 1200]}
+            sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
+            formats={['avif', 'webp']}
+            quality={62}
+            loading="lazy"
+            decoding="async"
+          />
+          {(photo.caption || photo.credit) && (
+            <figcaption>
+              {photo.caption}
+              {photo.credit && <span class="photo-strip__credit smallcaps">{photo.credit}</span>}
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Sandstone — the tone the eat-and-drink grid uses, because a photo strip is
+     the same kind of "look at the place" content. No new tone introduced. */
+  .photo-strip {
+    background: color-mix(in srgb, var(--mc-charcoal) 6%, var(--mc-cream));
+    padding: var(--space-2xl) 0;
+  }
+  @media (prefers-color-scheme: dark) {
+    .photo-strip {
+      background: color-mix(in srgb, var(--mc-cream) 6%, var(--mc-charcoal));
+    }
+  }
+
+  .photo-strip__kicker {
+    max-width: var(--wide-section);
+    margin: 0 auto var(--space-lg);
+    color: var(--color-accent);
+    font-size: var(--type-caption);
+  }
+
+  .photo-strip__grid {
+    max-width: var(--wide-section);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-lg);
+    align-items: start;
+  }
+  .photo-strip__grid[data-count='2'] {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  .photo-strip__item {
+    margin: 0;
+  }
+  .photo-strip__item :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 2px 14px 2px 14px;
+  }
+
+  .photo-strip__item figcaption {
+    margin-top: var(--space-sm);
+    padding-left: var(--space-sm);
+    border-left: 2px solid var(--color-accent);
+    font-family: var(--font-display);
+    font-size: var(--type-caption);
+    line-height: 1.45;
+    color: var(--color-text-secondary);
+  }
+  .photo-strip__credit {
+    display: block;
+    margin-top: 4px;
+    opacity: 0.7;
+  }
+</style>

@@ -7,6 +7,33 @@ parent_slug: "almada/almada-cova-da-piedade-pragal-e-cacilhas"
 geo:
   centroid: [-9.1499, 38.6873]
 
+hero_image: "cacilhas-ginjal"
+hero_image_alt_pt: "Pontão industrial em ruínas no Cais do Ginjal, com pescadores à linha e a Ponte 25 de Abril a emergir do nevoeiro."
+hero_image_alt_en: "A derelict industrial pier on the Cais do Ginjal, anglers along its edge, the Ponte 25 de Abril emerging from fog behind."
+hero_image_caption_pt: "O Cais do Ginjal a meio caminho entre porto de trabalho e frente ribeirinha acabada — o estado em que está há décadas."
+hero_image_caption_en: "The Cais do Ginjal, halfway between working port and finished waterfront — the state it has been in for decades."
+hero_image_credit: "James Lumley-Savile"
+
+gallery:
+  - src: "cacilhas-ponto-final"
+    alt_pt: "Mesas e cadeiras amarelas do Ponto Final sobre o cais, com a Ponte 25 de Abril e Lisboa do outro lado do rio."
+    alt_en: "Ponto Final's yellow tables and chairs on the quay edge, the Ponte 25 de Abril and Lisbon across the water."
+    caption_pt: "O Ponto Final ocupa o rés-do-chão de um armazém em ruína. As mesas ficam à beira do cais, sem grades."
+    caption_en: "Ponto Final occupies the ground floor of a ruined warehouse. The tables sit at the quay edge, with no railing."
+    credit: "James Lumley-Savile"
+  - src: "cacilhas-atira-te-ao-rio"
+    alt_pt: "Esplanada do Atira-te ao Rio, edifício caiado de branco com caixilhos e mobiliário verde-água, areia em frente."
+    alt_en: "The terrace at Atira-te ao Rio — a whitewashed building with mint-green frames and furniture, sand in front."
+    caption_pt: "O Atira-te ao Rio, com o Elevador da Boca do Vento no cimo da arriba por trás."
+    caption_en: "Atira-te ao Rio, with the Elevador da Boca do Vento on the clifftop behind."
+    credit: "James Lumley-Savile"
+  - src: "cacilhas-almada-velha"
+    alt_pt: "Telhados de Almada Velha ao anoitecer, com torre sineira e edifícios devolutos sobre a arriba."
+    alt_en: "The rooftops of Almada Velha at dusk, a bell tower and empty buildings along the clifftop."
+    caption_pt: "Almada Velha, no cimo da arriba — cinco minutos a pé do topo do elevador."
+    caption_en: "Almada Velha along the clifftop — five minutes' walk from the top of the elevator."
+    credit: "James Lumley-Savile"
+
 featured_links:
   - href: "/lugares/almada/"
     name_pt: "Almada"
@@ -171,7 +198,7 @@ en:
       label: "Parish church rebuilt"
   faqs:
     - question: "How do I get to Cacilhas?"
-      answer: "Take the Transtejo Soflusa ferry from Cais do Sodré. The crossing takes about 10 minutes. Peak weekday departures run every 5–15 minutes; off-peak is less frequent. A single ticket costs €2.00 (2026 tariff). You can also drive over the Ponte 25 de Abril (exit Almada) or take the Fertagus train with a connection at Pragal."
+      answer: "Take the Transtejo Soflusa ferry from Cais do Sodré. The crossing takes about 10 minutes. Peak weekday departures run every 5–15 minutes; off-peak is less frequent. A single ticket is €2.00, but paying with zapping on a navegante card brings it to €1.60 — worth doing if you'll cross more than once. You can also drive over the Ponte 25 de Abril (exit Almada) or take the Fertagus train with a connection at Pragal."
     - question: "How long does the ferry to Cacilhas take?"
       answer: "About 10 minutes for the crossing. Door-to-door from central Lisbon, allow 25–30 minutes including walks to the terminals."
     - question: "What does the name 'Cacilhas' mean?"
@@ -179,7 +206,7 @@ en:
     - question: "What's there to do in Cacilhas?"
       answer: "The Cais do Ginjal waterfront walk, the Elevador da Boca do Vento up to Almada Velha, the views from the Cristo Rei, the Quinta do Almaraz archaeological site, and the marisco restaurants near the ferry. The Fragata D. Fernando II e Glória, anchored at Cacilhas, is the only surviving sailing vessel of the former Portuguese State of India."
     - question: "Where do I eat in Cacilhas?"
-      answer: "Ponto Final on the Cais do Ginjal is the most-photographed restaurant on the south bank. Around the ferry terminal and along the waterfront you'll find Atira-te ao Rio (shellfish and meat, open nearly 30 years) and O Farol (shellfish, clams à Bulhão Pato around €15). Rua Cândido dos Reis has the Mercado de Cacilhas with seven restaurants across various cuisines, open since 2019."
+      answer: "The riverside strip is the reason most people come. Ponto Final, twenty minutes' walk east along the Cais do Ginjal, is the most-photographed restaurant on the south bank and the one that fills first. Nearer the terminal, Atira-te ao Rio and O Farol serve the same river and the same shellfish with far less of a pilgrimage attached. Away from the water, Rua Cândido dos Reis has the Mercado de Cacilhas — seven kitchens under one roof, open since 2019 — and a row of smaller places either side of it."
     - question: "Is Cacilhas a freguesia?"
       answer: "Cacilhas was a standalone freguesia from 1985 to 2013. Since the 2013 administrative reform it has been part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. Locally it's still treated as its own place."
     - question: "What concelho is Cacilhas in?"
@@ -220,7 +247,7 @@ en:
     - mode: "Ferry"
       duration: "10 min"
       price: "€2.00"
-      detail: "Transtejo Soflusa from Cais do Sodré. Peak weekdays every 5–15 minutes; off-peak less frequent. First ferry around 00:05; last around 23:33."
+      detail: "Transtejo Soflusa from Cais do Sodré, running from before dawn until after midnight. Peak weekdays every 5–15 minutes; off-peak less frequent. Paying with zapping on a navegante card brings the crossing to €1.60. Check the current timetable before a late crossing — it changes with the season."
     - mode: "Car"
       duration: "15–25 min"
       detail: "Over the Ponte 25 de Abril, exit at Almada, descend to the river. Parking near the ferry terminal is paid and limited."
@@ -238,7 +265,7 @@ en:
       description: "The most-photographed restaurant on the south bank — tables literally over the river on the Cais do Ginjal, near the Elevador da Boca do Vento."
       location: "Cais do Ginjal"
       price_range: "€€€"
-      signature: "Monkfish rice c. €40 · grilled gilt-head c. €15"
+      signature: "Arroz de tamboril · whatever was landed, grilled"
       emphasis: true
     - name: "Atira-te ao Rio"
       cuisine: "Shellfish and meat"
@@ -250,7 +277,7 @@ en:
       description: "Another landmark on the riverside strip. Shellfish specialist — lobster, prawns, crab, santola."
       location: "Riverside"
       price_range: "€€"
-      signature: "Clams Bulhão Pato c. €15.40 · platters from €35"
+      signature: "Ameijoas à Bulhão Pato · shellfish by weight"
     - name: "Mercado de Cacilhas"
       cuisine: "Multiple cuisines"
       description: "Seven restaurants (Japanese, Greek, Italian, Brazilian), one bar and two escape rooms in 400 m². Open since November 2019."
@@ -263,17 +290,17 @@ en:
       price_range: "€"
     - name: "Estaminé 1955"
       cuisine: "Hamburgers"
-      description: "Time Out readers' Best Restaurant 2018. Vegetarian options."
+      description: "Burgers done properly, with vegetarian versions that aren't an afterthought."
       location: "Cacilhas centre"
       price_range: "€"
     - name: "Máfia das Pizzas"
       cuisine: "Pizza"
-      description: "Rustic pizzas from about €10.40; prosciutto from €11.50."
+      description: "Rustic pizzas, thin and blistered, eaten at pavement tables."
       location: "Cacilhas centre"
       price_range: "€"
     - name: "Meating Steakhouse"
       cuisine: "Steak"
-      description: "Meat-focused. Chuletón for two around €59; steak-and-lobster combo also €59."
+      description: "Meat, and a short list of it. Chuletón for two is the order."
       location: "Cacilhas centre"
       price_range: "€€€"
     - name: "Meia Volta de Úrano"
@@ -295,7 +322,7 @@ en:
 
     ## The name
 
-    The origin of the name *Cacilhas* isn't fully settled in the scholarship. Some traditional theories tie it to the Arabic *al-qasr* (the fortified place), reflecting the area's Moorish-period administrative role; others trace it to the verb *caçar* (to hunt). The name appears in its current form in medieval documents, but neither Wikipedia nor the official Junta de Freguesia history page commits to a definitive etymology. Treat anyone who tells you they know for certain with some scepticism.
+    The origin of the name Cacilhas isn't settled. Some traditional theories tie it to the Arabic al-qasr, the fortified place, reflecting the area's role under Moorish administration; others trace it to the verb caçar, to hunt. The name appears in its current form in medieval documents. No source we can find closes the question, including the Junta de Freguesia's own history. Treat anyone who tells you they know for certain with some scepticism.
 
     ## What to see and do
 
@@ -322,6 +349,16 @@ en:
     ### Fragata D. Fernando II e Glória
 
     The 19th-century sailing frigate, anchored permanently at Cacilhas, is the only surviving sailing vessel of the former Portuguese State of India. Built at the Damão royal shipyard in India. Open to visit as a museum ship.
+
+    ## Which riverside restaurant
+
+    The strip along the water is what Cacilhas is known for, and the choice between its restaurants is really a choice about how much walking and waiting you want to do.
+
+    **Ponto Final** is the famous one, and the fame is earned by the setting rather than by anything on the plate: tables on the bare edge of the quay, no railing, the river a foot below you and Lisbon directly opposite. It is twenty minutes' walk east along the Ginjal from the ferry, it does not take bookings for the outside tables, and by one o'clock on a Sunday the queue is long. Go on a weekday, go early, and accept that you are paying for the position.
+
+    **Atira-te ao Rio** and **O Farol**, both near the terminal, sit on the same river and cook the same shellfish with none of the pilgrimage. If what you want is ameijoas and a view of the bridge rather than a photograph of your table, start here — it is the choice most people who cross regularly end up making.
+
+    Away from the water the calculation changes completely. **Mercado de Cacilhas** on Rua Cândido dos Reis is where you go when the group can't agree, and **Meia Volta de Úrano** — bar, bookshop and small gallery, open until two — is the one worth knowing about after dinner.
 
     ## Living here
 

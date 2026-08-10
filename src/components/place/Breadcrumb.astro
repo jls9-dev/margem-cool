@@ -15,7 +15,7 @@ const { ariaLabel, items } = Astro.props;
 ---
 
 <nav class="place-breadcrumb" aria-label={ariaLabel}>
-  <div class="container">
+  <div class="container container--wide">
     <ol class="place-breadcrumb__list">
       {items.map((c, i) => (
         <li class="place-breadcrumb__item">

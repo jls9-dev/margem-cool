@@ -14,6 +14,7 @@
 import type { CollectionEntry } from 'astro:content';
 import type { Lang } from './i18n';
 import { SITE_URL } from './i18n';
+import { placeImage } from './place-images';
 
 type Place = CollectionEntry<'places'>;
 
@@ -122,7 +123,11 @@ function placeEntity({
   }
 
   if (place.data.hero_image) {
-    obj.image = new URL(place.data.hero_image, SITE_URL).toString();
+    // hero_image is a key into src/assets/places/, and Astro rewrites those to
+    // hashed, content-addressed paths at build time. Resolve through the same
+    // helper the page uses so the structured data points at the file actually
+    // served rather than a path that never existed.
+    obj.image = new URL(placeImage(place.data.hero_image).src, SITE_URL).toString();
   }
 
   return obj;
@@ -206,7 +211,11 @@ function articleEntity({
   };
 
   if (place.data.hero_image) {
-    obj.image = new URL(place.data.hero_image, SITE_URL).toString();
+    // hero_image is a key into src/assets/places/, and Astro rewrites those to
+    // hashed, content-addressed paths at build time. Resolve through the same
+    // helper the page uses so the structured data points at the file actually
+    // served rather than a path that never existed.
+    obj.image = new URL(placeImage(place.data.hero_image).src, SITE_URL).toString();
   }
 
   return obj;

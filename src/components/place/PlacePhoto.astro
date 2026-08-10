@@ -1,0 +1,111 @@
+---
+/**
+ * PlacePhoto — a photograph with its caption and credit.
+ *
+ * Used for the opening photo on a place page and for photos set between body
+ * sections. Sits on the page's own cream canvas rather than introducing a tone
+ * of its own: a photograph is not a new content type, it's part of whatever
+ * section it illustrates (see docs/standards/colour-policy.md).
+ *
+ * The credit line is not optional decoration. Every photo on the site is
+ * either James's own or licensed from someone who asked to be named, and the
+ * component makes the second case impossible to forget.
+ */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  /** Shown beneath the photo. Say what's in it, not what it makes you feel. */
+  caption?: string;
+  /** "James Lumley-Savile" for our own, or the licence holder's attribution. */
+  credit?: string;
+  /** Opening photo of a page — gets the wider column and eager loading. */
+  lead?: boolean;
+}
+const { image, alt, caption, credit, lead = false } = Astro.props;
+
+const sizes = lead
+  ? '(max-width: 1140px) 100vw, 1140px'
+  : '(max-width: 800px) 100vw, 800px';
+const widths = lead ? [480, 720, 960, 1280, 1600, 2000] : [480, 720, 960, 1280];
+---
+
+<figure class:list={['place-photo', lead && 'place-photo--lead']}>
+  <Picture
+    src={image}
+    alt={alt}
+    widths={widths}
+    sizes={sizes}
+    formats={['avif', 'webp']}
+    quality={62}
+    loading={lead ? 'eager' : 'lazy'}
+    fetchpriority={lead ? 'high' : 'auto'}
+    decoding={lead ? 'sync' : 'async'}
+  />
+  {(caption || credit) && (
+    <figcaption class="place-photo__caption">
+      {caption && <span class="place-photo__text">{caption}</span>}
+      {credit && <span class="place-photo__credit smallcaps">{credit}</span>}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .place-photo {
+    margin: 0 0 var(--space-xl);
+  }
+  .place-photo :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* The river curve from the wordmark, reduced to a corner. Brand at
+       component scale rather than only in the chrome. */
+    border-radius: 2px 14px 2px 14px;
+  }
+
+  .place-photo--lead {
+    max-width: var(--wide-section);
+    margin-inline: auto;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .place-photo__caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-md);
+    margin-top: var(--space-sm);
+    padding-left: var(--space-sm);
+    border-left: 2px solid var(--color-accent);
+    font-family: var(--font-display);
+    font-size: var(--type-caption);
+    color: var(--color-text-secondary);
+  }
+  .place-photo__text {
+    flex: 1 1 16rem;
+    line-height: 1.45;
+  }
+  .place-photo__credit {
+    color: var(--color-text-secondary);
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .place-photo--lead {
+      /* Break the page margin — a lead photo earns the full width of a phone. */
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+    }
+    .place-photo--lead :global(img) {
+      border-radius: 0;
+    }
+    .place-photo--lead .place-photo__caption {
+      margin-inline: var(--page-margin-mobile);
+    }
+  }
+</style>
