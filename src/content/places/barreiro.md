@@ -26,6 +26,10 @@ pt:
       answer: "Continua a ser dos concelhos mais acessíveis da Margem Sul, com boa ligação fluvial a Lisboa. É uma das razões pelas quais tem atraído quem foi empurrado para fora de Almada e do Seixal."
     - question: "Onde comer no Barreiro?"
       answer: "Restaurantes de bairro com prato do dia, a preços que refletem uma cidade operária. As pastelarias são uma instituição local — a densidade de cafés e pastelarias é herança dos turnos das fábricas. E a frente ribeirinha tem casas com vista para o Tejo."
+    - question: "Quando são as Festas do Barreiro?"
+      answer: "As Festas do Barreiro em Honra de Nossa Senhora do Rosário decorrem de 14 a 23 de Agosto de 2026, ao longo de dez dias, à volta do Largo Nossa Senhora do Rosário. Incluem procissão marítima e terrestre, vários palcos com concertos, tasquinhas e artesanato."
+    - question: "O que tem de especial a festa do Barreiro?"
+      answer: "A procissão marítima e terrestre. A imagem de Nossa Senhora do Rosário sai por terra e por água — o que, numa cidade construída sobre a relação com o Tejo, é o gesto que a define."
     - question: "Quais são as freguesias do Barreiro?"
       answer: "Quatro: Barreiro e Lavradio, Alto do Seixalinho, Santo André e Verderena, Palhais e Coina, e Santo António da Charneca. As três primeiras são urbanas e contíguas; Palhais e Coina ainda têm campo."
   transport_options:
@@ -68,11 +72,17 @@ pt:
 
     O Barreiro ocupa uma península dentro do estuário, entre o Seixal e a Moita, virado a Lisboa através da parte larga do Tejo. O mapa no topo da página situa-o na região.
 
-    ## Festas e vida cultural
+    ## As Festas do Barreiro
 
-    O Barreiro tem uma vida associativa densa — herança das colectividades operárias — e as festas de freguesia acontecem ao longo do verão, com o **Lavradio**, a **Verderena** e **Santo António da Charneca** a terem as suas. Os arraiais dos santos populares, em **Junho**, são o momento mais visível do ano.
+    As **Festas do Barreiro em Honra de Nossa Senhora do Rosário** são a festa grande do concelho e, em 2026, decorrem de **14 a 23 de Agosto**. Dez dias.
 
-    O calendário completo das festas da região está no [guia das festas de verão](/guias/festas-de-verao-margem-sul/).
+    O que as distingue de qualquer outra festa da região é a **procissão marítima e terrestre**. A imagem sai por terra e por água — numa cidade que se define pela relação com o Tejo, a procissão faz o mesmo percurso que a cidade sempre fez.
+
+    O recinto organiza-se à volta do **Largo Nossa Senhora do Rosário** e tem vários palcos: o **Palco das Marés**, que recebe os cabeças de cartaz, o **Palco da Juventude**, e o **Palco dos Bares**, com animação ao longo dos dez dias. Há tasquinhas, artesanato e o Moinho Lounge, junto ao Moinho de Maré Pequeno.
+
+    Em 2026 o cartaz inclui **Bárbara Bandeira**, a 23 de Agosto, e a **Festa M80**, a 22.
+
+    Fora de Agosto, o Barreiro tem uma vida associativa densa — herança das colectividades operárias — e as festas de freguesia acontecem ao longo do verão, no Lavradio, na Verderena e em Santo António da Charneca. O calendário da região está no [guia das festas de verão](/guias/festas-de-verao-margem-sul/).
 
     ## Freguesias
 
@@ -87,6 +97,11 @@ pt:
 en:
   short_description: "A riverside concelho, a former industrial city, the ferry terminal for Terreiro do Paço."
   page_status: placeholder
+verify:
+  - claim: "Festas do Barreiro em Honra de Nossa Senhora do Rosário, de 14 a 23 de Agosto de 2026"
+    source: "https://www.cm-barreiro.pt/conhecer/turismo/lazer-entretenimento/eventos/festas-do-barreiro/festas-do-barreiro-2026/"
+    checked: 2026-08-11
+    note: "A câmara publica a página do ano em Agosto. Reler em Julho para as datas seguintes."
 last_updated: 2026-08-10
 draft: false
 ---
