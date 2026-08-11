@@ -20,10 +20,6 @@ gallery:
     alt: "A band on stage under blue light at Festa do Avante, the crowd in silhouette in the foreground."
     caption: "The same stage in 2025, on the Sunday night. The site is permanent and the structure is the same every year."
     credit: "Margem Cool"
-  - src: "amora-by-the-bay"
-    alt: "The Seixal bay at Amora, with the Tagus and the north bank beyond."
-    caption: "Amora, on the Seixal bay. Quinta da Atalaia sits a few minutes inland from here."
-    credit: "Margem Cool"
 facts:
   - value: "4–6 Sep"
     label: "Dates in 2026"

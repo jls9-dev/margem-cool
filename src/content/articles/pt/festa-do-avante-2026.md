@@ -19,10 +19,6 @@ gallery:
     alt: "Uma banda em palco sob luz azul na Festa do Avante, com a multidão em silhueta em primeiro plano."
     caption: "O mesmo palco na edição de 2025, ao domingo à noite. O recinto é permanente e a estrutura é a mesma todos os anos."
     credit: "Margem Cool"
-  - src: "amora-by-the-bay"
-    alt: "A baía do Seixal em Amora, com o Tejo e a margem norte ao fundo."
-    caption: "Amora, na baía do Seixal. A Quinta da Atalaia fica a poucos minutos daqui, para o interior."
-    credit: "Margem Cool"
 facts:
   - value: "4–6 Set"
     label: "Datas em 2026"
