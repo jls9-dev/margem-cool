@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/check-hreflang.mjs && node scripts/check-noindex.mjs",
+    "build": "astro build && node scripts/check-hreflang.mjs && node scripts/check-noindex.mjs && node scripts/build-llms.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "seo": "node scripts/seo/cli.mjs",
