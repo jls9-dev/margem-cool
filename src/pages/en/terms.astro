@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Terms of use · Margem Cool',
+  inLanguage: 'en',
+  url: 'https://margemcool.pt/en/terms/',
+};
+
+const lastUpdated = '11 August 2026';
+---
+
+<BaseLayout
+  lang="en"
+  title="Terms of use · Margem Cool"
+  description="The rules for using margemcool.pt, in plain English: what you may do with what is here, and what it does not promise."
+  alternateUrl="/termos/"
+  canonicalPath="/en/terms/"
+  jsonLd={jsonLd}
+>
+  <article class="legal">
+    <div class="container container--narrow">
+      <header class="legal__head">
+        <p class="legal__kicker smallcaps">Terms</p>
+        <h1 class="legal__title">The rules, in plain English.</h1>
+        <p class="legal__updated">Last updated: {lastUpdated}</p>
+      </header>
+
+      <div class="legal__body">
+        <p class="legal__lede">
+          Short, because there is not much to say.
+        </p>
+
+        <h2>Who we are</h2>
+        <p>
+          Margem Cool is a publication about the Margem Sul, written from where we live. Contact:
+          <a href="mailto:info@margemcool.pt">info@margemcool.pt</a>.
+        </p>
+
+        <h2>Using the site</h2>
+        <p>
+          Read, quote and link to us freely — that is what it is for. We only ask that you don't try
+          to break or overload the site, or copy it wholesale in a way that degrades it for everyone
+          else.
+        </p>
+        <p>
+          The words, design and photographs are ours unless credited otherwise. Quote us with
+          attribution and a link; don't republish whole pages as your own, or use the content
+          commercially without asking us first.
+        </p>
+
+        <h2>What we write is a view, not a service</h2>
+        <p>
+          Guides and recommendations — beaches, restaurants, walks, places to live — are our reading
+          of it at the time of writing. Things change: a restaurant closes, an opening time moves, a
+          beach loses its lifeguard. <strong>Always check before you travel</strong>, especially
+          anything touching safety, tides, access and opening hours.
+        </p>
+        <p>
+          Nothing here is legal, tax, property or medical advice for your particular situation.
+        </p>
+
+        <h2>Partnerships and links</h2>
+        <p>
+          Where something is paid for or comes from a partnership, we say so on the page itself.
+          Everything else is our own choice, with nothing in return. We link to other people's sites
+          where it helps — we don't control them and aren't responsible for what they say.
+        </p>
+
+        <h2>No guarantees</h2>
+        <p>
+          The site is provided “as is”. We work to keep it accurate and available, but we can't
+          promise it is free of errors or never goes down. To the extent the law allows, we are not
+          liable for losses arising from using — or being unable to use — the site.
+        </p>
+
+        <h2>Your data</h2>
+        <p>
+          What we record and how we handle it is in the
+          <a href="/en/privacy/">privacy notice</a>.
+        </p>
+
+        <h2>Changes and governing law</h2>
+        <p>
+          We may update these terms; the date above changes when we do. Portuguese law applies, and
+          the Portuguese courts have jurisdiction.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <style>
+    .legal { padding: 96px 0 120px; }
+    .container--narrow { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .legal__head { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--line, #d9cdb3); }
+    .legal__kicker { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute, #756a5a); margin: 0 0 12px; font-weight: 600; }
+    .legal__title { font-family: var(--font-serif, 'Fraunces', serif); font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; letter-spacing: -0.025em; margin: 0 0 12px; }
+    .legal__updated { font-size: 14px; color: var(--ink-mute, #756a5a); margin: 0; }
+    .legal__lede { font-size: 17px; color: var(--ink-soft, #3a3329); margin: 0 0 32px; line-height: 1.6; }
+    .legal__body h2 { font-family: var(--font-serif, 'Fraunces', serif); font-weight: 500; font-size: 22px; margin: 36px 0 12px; letter-spacing: -0.01em; }
+    .legal__body p { font-size: 15.5px; color: var(--ink-soft, #3a3329); line-height: 1.65; margin: 0 0 16px; max-width: 62ch; }
+    .legal__body a { color: var(--terracotta-d, #9a3d22); text-decoration: underline; text-underline-offset: 3px; }
+    .legal__body strong { color: var(--ink, #1f1a14); font-weight: 600; }
+  </style>
+</BaseLayout>
