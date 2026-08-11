@@ -69,6 +69,7 @@ const mapData = {
   currentSlug: concelhoSlug ?? null,
   concelhos: concelhosFC,
   outline: outlineFC,
+  size,
   labelAnchors,
   place: placeCentroid && placeName
     ? { name: placeName, lat: placeCentroid[1], lng: placeCentroid[0] }
@@ -247,7 +248,14 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
       // centred on the anchor point). interactive:false plus CSS
       // pointer-events:none on every descendant so the labels never
       // intercept polygon hover/click events.
+      // On the mini map only the current concelho is labelled. Nine labels
+      // at this size collided into nonsense — "ALCOCHETENTIJO",
+      // "SEIXPALMELA", Almada overrun by Moita. The mini map answers "where
+      // is this place in the region", and one label answers it; the rest was
+      // noise pretending to be information. The standard map on /lugares/ is
+      // large enough to carry all nine and still does.
       Object.keys(cfg.labelAnchors).forEach(function (slug) {
+        if (cfg.size === 'mini' && slug !== cfg.currentSlug) return;
         var anchor = cfg.labelAnchors[slug];
         var feat = cfg.concelhos.features.find(function (f) { return f.properties.slug === slug; });
         if (!feat) return;
@@ -352,7 +360,14 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
     isolation: isolate;
   }
   .margem-map--mini .margem-map__canvas {
-    height: 360px;
+    /* The Margem Sul is wider than it is tall. A fixed 360px height in a
+       narrow column gave a portrait box, so the region fitted small in the
+       middle with dead grey above and below. Matching the container to the
+       shape of the thing it contains lets the region fill it. */
+    aspect-ratio: 5 / 4;
+    height: auto;
+    min-height: 220px;
+    max-height: 320px;
   }
   .margem-map--standard .margem-map__canvas {
     height: 540px;
@@ -408,6 +423,10 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
   .mc-concelho-label {
     background: transparent !important;
     border: 0 !important;
+  }
+  .margem-map--mini .mc-concelho-label span {
+    font-size: 11px;
+    letter-spacing: 0.14em;
   }
   .mc-concelho-label span {
     position: absolute;
