@@ -48,6 +48,7 @@ Disallow: /
 # ----- Everything else (search + AI live retrieval) — allowed -----
 
 User-agent: *
+Content-Signal: search=yes,ai-input=yes,ai-train=no
 Allow: /
 
 Sitemap: https://margemcool.pt/sitemap-index.xml
