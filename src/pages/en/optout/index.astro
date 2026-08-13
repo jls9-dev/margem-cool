@@ -35,7 +35,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       var BRANDS = [["belverdedartsclub.com","Belverde Darts Club"],["bitsapp.co","BITS"],["frigilianaguide.com","Frigiliana Guide"],["infinitedarts.com","Infinite Darts"],["lisbonproperty.pt","Lisbon Property"],["margemcool.pt","Margem Cool"],["parts.fm","Parts"],["shrigurugita.com","Shri Guru Gita"],["southbank.pt","South Bank Real Estate"],["spandera.studio","Spandera Studio"],["truthwithoutborderspress.com","Truth Without Borders Press"]];
       var HOST = "margemcool.pt";
       var NAME = "Margem Cool";
-      var T = {"failTitle":"Could not set the cookie","failMsg":"This browser blocked it — usually private mode or strict tracking protection. Try again in a normal window, or use a different browser.","failChain":"The run has stopped here. Skip this one and carry on:","note":"The cookie lasts 2 years. Safari on iPhone deletes it after 7 days without a visit, so repeat the run there now and then."};
+      var T = {"back":"Back to %s →","failTitle":"Could not set the cookie","failMsg":"This browser blocked it — usually private mode or strict tracking protection. Try again in a normal window, or use a different browser.","failChain":"The run has stopped here. Skip this one and carry on:","note":"The cookie lasts 2 years. Safari on iPhone deletes it after 7 days without a visit, so repeat the run there now and then."};
 
       // JSDoc, not TypeScript: this script is is:inline, so it ships to the
       // browser exactly as written and must stay valid JS. The annotations are
@@ -65,9 +65,28 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         .map(function (s) { return s.trim().toLowerCase(); })
         .filter(function (s) { return s && nameOf[s] && s !== HOST; });
 
+      // Where the run started, so the last page can hand the browser back
+      // instead of stranding it on whichever brand happened to be last. Only
+      // our own domains are accepted: an unchecked ?return= is an open redirect.
+      var backTo = (function () {
+        var raw = params.get('return');
+        if (!raw) return null;
+        try {
+          var u = new URL(raw);
+          var h = u.hostname.replace(/^www\./, '');
+          return (u.protocol === 'https:' && nameOf[h]) ? u.href : null;
+        } catch (e) { return null; }
+      })();
+      /** @param {string} href */
+      var backName = function (href) {
+        try { return nameOf[new URL(href).hostname.replace(/^www\./, '')] || ''; }
+        catch (e) { return ''; }
+      };
+
       /** @param {string[]} list */
       var hop = function (list) {
-        return 'https://' + list[0] + '/optout/?chain=' + encodeURIComponent(list.slice(1).join(','));
+        return 'https://' + list[0] + '/optout/?chain=' + encodeURIComponent(list.slice(1).join(','))
+          + (backTo ? '&return=' + encodeURIComponent(backTo) : '');
       };
 
       /** @param {string} href @param {string} label */
@@ -111,6 +130,15 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       if (inChain) {
         text('ox-title', "✓ All %t brands — this browser is finished".replace('%t', String(TOTAL)));
         text('ox-msg', "None of our sites will count visits from this browser. Every other browser and device you use still needs its own run — your phone is separate from your laptop, and Chrome is separate from Safari on the same machine.");
+        if (backTo) {
+          // Copied out of the closure: inside a callback backTo is string|null
+          // again, and one of the eleven repos runs astro check with strict on.
+          var dest = backTo;
+          action(dest, (T.back || 'Back to %s →').replace('%s', backName(dest)));
+          // Long enough to read the confirmation, short enough to stay hands-free.
+          setTimeout(function () { location.replace(dest); }, 2500);
+        }
+
         return;
       }
 
