@@ -32,7 +32,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       // Every brand's opt-out page carries this same list. The chain handed in
       // by ?chain= is filtered against it, so a crafted link can only ever
       // bounce between our own domains — never off-site.
-      var BRANDS = [["belverdedartsclub.com","Belverde Darts Club"],["bitsapp.co","BITS"],["frigilianaguide.com","Frigiliana Guide"],["infinitedarts.com","Infinite Darts"],["lisbonproperty.pt","Lisbon Property"],["margemcool.pt","Margem Cool"],["parts.fm","Parts"],["shrigurugita.com","Shri Guru Gita"],["southbank.pt","South Bank Real Estate"],["spandera.studio","Spandera Studio"],["truthwithoutborderspress.com","Truth Without Borders Press"]];
+      // Private brands are NOT in this list and never link to the others.
+      // A shared list here is a disclosure: it ties every brand to every
+      // other one in shipped HTML, which for a pen name defeats the whole
+      // point of the pen name. Private brands opt out standalone.
+      var BRANDS = [["bitsapp.co","BITS"],["frigilianaguide.com","Frigiliana Guide"],["infinitedarts.com","Infinite Darts"],["lisbonproperty.pt","Lisbon Property"],["margemcool.pt","Margem Cool"],["parts.fm","Parts"],["southbank.pt","South Bank Real Estate"],["spandera.studio","Spandera Studio"]];
       var HOST = "margemcool.pt";
       var NAME = "Margem Cool";
       var T = {"back":"Back to %s →","failTitle":"Could not set the cookie","failMsg":"This browser blocked it — usually private mode or strict tracking protection. Try again in a normal window, or use a different browser.","failChain":"The run has stopped here. Skip this one and carry on:","note":"The cookie lasts 2 years. Safari on iPhone deletes it after 7 days without a visit, so repeat the run there now and then."};
@@ -145,6 +149,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       // Landed here directly — one brand only. Offer the full run.
       var rest = BRANDS.map(function (b) { return b[0]; }).filter(function (h) { return h !== HOST; });
       text('ox-title', "✓ %s — this browser is opted out".replace('%s', NAME));
+      if (!rest.length) {
+        text('ox-msg', "Every other browser and device you use still needs its own run — your phone is separate from your laptop, and Chrome is separate from Safari on the same machine.");
+        show('ox-action', false);
+        return;
+      }
       text('ox-msg', "That covers %s only. The other %r brands each need their own cookie, because a cookie cannot be shared across domains.".replace('%s', NAME).replace('%r', String(rest.length)));
       action(hop(rest), "Opt out of all %t brands in this browser →".replace('%t', String(TOTAL)));
     })();

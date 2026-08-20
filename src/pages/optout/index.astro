@@ -32,7 +32,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       // Every brand's opt-out page carries this same list. The chain handed in
       // by ?chain= is filtered against it, so a crafted link can only ever
       // bounce between our own domains — never off-site.
-      var BRANDS = [["belverdedartsclub.com","Belverde Darts Club"],["bitsapp.co","BITS"],["frigilianaguide.com","Frigiliana Guide"],["infinitedarts.com","Infinite Darts"],["lisbonproperty.pt","Lisbon Property"],["margemcool.pt","Margem Cool"],["parts.fm","Parts"],["shrigurugita.com","Shri Guru Gita"],["southbank.pt","South Bank Real Estate"],["spandera.studio","Spandera Studio"],["truthwithoutborderspress.com","Truth Without Borders Press"]];
+      // Private brands are NOT in this list and never link to the others.
+      // A shared list here is a disclosure: it ties every brand to every
+      // other one in shipped HTML, which for a pen name defeats the whole
+      // point of the pen name. Private brands opt out standalone.
+      var BRANDS = [["bitsapp.co","BITS"],["frigilianaguide.com","Frigiliana Guide"],["infinitedarts.com","Infinite Darts"],["lisbonproperty.pt","Lisbon Property"],["margemcool.pt","Margem Cool"],["parts.fm","Parts"],["southbank.pt","South Bank Real Estate"],["spandera.studio","Spandera Studio"]];
       var HOST = "margemcool.pt";
       var NAME = "Margem Cool";
       var T = {"back":"Voltar a %s →","failTitle":"Não foi possível definir o cookie","failMsg":"Este browser bloqueou-o — normalmente modo privado ou proteção de rastreio estrita. Tenta numa janela normal, ou noutro browser.","failChain":"A sequência parou aqui. Salta este e continua:","note":"O cookie dura 2 anos. O Safari no iPhone apaga-o ao fim de 7 dias sem visitas, por isso repete a passagem de vez em quando."};
@@ -145,6 +149,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       // Landed here directly — one brand only. Offer the full run.
       var rest = BRANDS.map(function (b) { return b[0]; }).filter(function (h) { return h !== HOST; });
       text('ox-title', "✓ %s — este browser está excluído".replace('%s', NAME));
+      if (!rest.length) {
+        text('ox-msg', "Cada outro browser e dispositivo que utilizar precisa da sua própria execução — o telemóvel é separado do portátil, e o Chrome é separado do Safari na mesma máquina.");
+        show('ox-action', false);
+        return;
+      }
       text('ox-msg', "Isto cobre apenas %s. As outras %r marcas precisam cada uma do seu cookie, porque um cookie não passa de um domínio para outro.".replace('%s', NAME).replace('%r', String(rest.length)));
       action(hop(rest), "Excluir das %t marcas neste browser →".replace('%t', String(TOTAL)));
     })();
