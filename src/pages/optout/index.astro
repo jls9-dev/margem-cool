@@ -1,5 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Standalone by design. This page names no other site and links to none.
+// The previous version shipped a hardcoded list of every domain in the network
+// so the browser could be walked across all of them in one run; that list was
+// readable by anyone who opened the page source, which is a disclosure, not a
+// convenience. The one-run version now lives behind Cloudflare Access in the
+// operations console, which is the only place that holds the list.
+//
+// The cookie name is deliberately generic for the same reason: a name carrying
+// the network's name would identify the network in devtools and in this source,
+// which ships verbatim.
 ---
 <BaseLayout
   lang="pt"
@@ -16,12 +27,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <p id="ox-msg" style="margin:0 0 1.5rem">A definir um cookie em margemcool.pt para as tuas visitas deixarem de contar.</p>
 
-    <p id="ox-progress" style="display:none;margin:0 0 1.5rem;font-variant-numeric:tabular-nums"></p>
-
-    <p id="ox-action" style="display:none;margin:0 0 1.5rem">
-      <a id="ox-action-link" href="/" style="display:inline-block;padding:.6rem 1rem;border:1px solid currentColor;text-decoration:none"></a>
-    </p>
-
     <p id="ox-note" style="display:none;margin:0 0 2rem;opacity:.7;font-size:.9375rem"></p>
 
     <p style="margin:0"><a href="/">← Voltar a Margem Cool</a></p>
@@ -29,21 +34,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <script is:inline>
     (function () {
-      // Every brand's opt-out page carries this same list. The chain handed in
-      // by ?chain= is filtered against it, so a crafted link can only ever
-      // bounce between our own domains — never off-site.
-      // Private brands are NOT in this list and never link to the others.
-      // A shared list here is a disclosure: it ties every brand to every
-      // other one in shipped HTML, which for a pen name defeats the whole
-      // point of the pen name. Private brands opt out standalone.
-      var BRANDS = [["bitsapp.co","BITS"],["frigilianaguide.com","Frigiliana Guide"],["infinitedarts.com","Infinite Darts"],["lisbonproperty.pt","Lisbon Property"],["margemcool.pt","Margem Cool"],["parts.fm","Parts"],["southbank.pt","South Bank Real Estate"],["spandera.studio","Spandera Studio"]];
-      var HOST = "margemcool.pt";
-      var NAME = "Margem Cool";
-      var T = {"back":"Voltar a %s →","failTitle":"Não foi possível definir o cookie","failMsg":"Este browser bloqueou-o — normalmente modo privado ou proteção de rastreio estrita. Tenta numa janela normal, ou noutro browser.","failChain":"A sequência parou aqui. Salta este e continua:","note":"O cookie dura 2 anos. O Safari no iPhone apaga-o ao fim de 7 dias sem visitas, por isso repete a passagem de vez em quando."};
-
-      // JSDoc, not TypeScript: this script is is:inline, so it ships to the
-      // browser exactly as written and must stay valid JS. The annotations are
-      // here because one of the eleven repos runs astro check with strict on.
+      // One cookie, this domain, nothing else.
+      // JSDoc, not TypeScript: this script is is:inline and ships to the browser
+      // exactly as written, so it must stay valid JS. The annotations are here
+      // because one of these repos runs astro check with strict on.
       /** @param {string} id */
       var $ = function (id) { return document.getElementById(id); };
       /** @param {string} id @param {string} s */
@@ -51,111 +45,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       /** @param {string} id @param {boolean} on */
       var show = function (id, on) { var e = $(id); if (e) e.style.display = on ? '' : 'none'; };
 
-      var TOTAL = BRANDS.length;
-      /** @type {Record<string, string>} */
-      var nameOf = {};
-      BRANDS.forEach(function (b) { nameOf[b[0]] = b[1]; });
-
       // Set, then read back. Never claim an opt-out that did not take.
       var twoYears = 60 * 60 * 24 * 365 * 2;
-      document.cookie = 'spandera-staff=1; Path=/; Max-Age=' + twoYears + '; SameSite=Lax; Secure';
+      document.cookie = 'analytics-optout=1; Path=/; Max-Age=' + twoYears + '; SameSite=Lax; Secure';
       var ok = document.cookie.split(';').some(function (c) {
-        return c.trim().indexOf('spandera-staff=1') === 0;
+        return c.trim().indexOf('analytics-optout=1') === 0;
       });
 
-      var params = new URLSearchParams(location.search);
-      var inChain = params.has('chain');
-      var chain = (params.get('chain') || '').split(',')
-        .map(function (s) { return s.trim().toLowerCase(); })
-        .filter(function (s) { return s && nameOf[s] && s !== HOST; });
-
-      // Where the run started, so the last page can hand the browser back
-      // instead of stranding it on whichever brand happened to be last. Only
-      // our own domains are accepted: an unchecked ?return= is an open redirect.
-      var backTo = (function () {
-        var raw = params.get('return');
-        if (!raw) return null;
-        try {
-          var u = new URL(raw);
-          var h = u.hostname.replace(/^www\./, '');
-          return (u.protocol === 'https:' && nameOf[h]) ? u.href : null;
-        } catch (e) { return null; }
-      })();
-      /** @param {string} href */
-      var backName = function (href) {
-        try { return nameOf[new URL(href).hostname.replace(/^www\./, '')] || ''; }
-        catch (e) { return ''; }
-      };
-
-      /** @param {string[]} list */
-      var hop = function (list) {
-        return 'https://' + list[0] + '/optout/?chain=' + encodeURIComponent(list.slice(1).join(','))
-          + (backTo ? '&return=' + encodeURIComponent(backTo) : '');
-      };
-
-      /** @param {string} href @param {string} label */
-      var action = function (href, label) {
-        var a = /** @type {HTMLAnchorElement|null} */ ($('ox-action-link'));
-        if (!a) return;
-        a.href = href;
-        a.textContent = label;
-        show('ox-action', true);
-      };
-
       show('ox-note', true);
-      text('ox-note', T.note);
+      text('ox-note', 'O cookie dura 2 anos. O Safari no iPhone apaga-o ao fim de 7 dias sem visitas, por isso volta cá de vez em quando.');
 
       if (!ok) {
-        text('ox-title', T.failTitle);
-        text('ox-msg', T.failMsg);
-        if (chain.length) {
-          text('ox-progress', T.failChain);
-          show('ox-progress', true);
-          action(hop(chain), "Continuar para %s →".replace('%s', nameOf[chain[0]]));
-        }
+        text('ox-title', 'Não foi possível definir o cookie');
+        text('ox-msg', 'Este browser bloqueou-o — normalmente modo privado ou proteção de rastreio estrita. Tenta numa janela normal, ou noutro browser.');
         return;
       }
 
-      if (inChain && chain.length) {
-        var done = TOTAL - chain.length;
-        var nextName = nameOf[chain[0]];
-        text('ox-title', "✓ %s — excluído".replace('%s', NAME));
-        text('ox-msg', '');
-        show('ox-msg', false);
-        text('ox-progress', "%d de %t feitas neste browser. A ir para %n…"
-          .replace('%d', String(done)).replace('%t', String(TOTAL)).replace('%n', nextName));
-        show('ox-progress', true);
-        action(hop(chain), "Continuar para %s →".replace('%s', nextName));
-        // replace() so the back button does not walk back through the run.
-        setTimeout(function () { location.replace(hop(chain)); }, 550);
-        return;
-      }
-
-      if (inChain) {
-        text('ox-title', "✓ Todas as %t marcas — este browser está pronto".replace('%t', String(TOTAL)));
-        text('ox-msg', "Nenhum dos nossos sites vai contar visitas deste browser. Cada outro browser e dispositivo que uses precisa da sua própria passagem — o telemóvel é separado do portátil, e o Chrome é separado do Safari na mesma máquina.");
-        if (backTo) {
-          // Copied out of the closure: inside a callback backTo is string|null
-          // again, and one of the eleven repos runs astro check with strict on.
-          var dest = backTo;
-          action(dest, (T.back || 'Back to %s →').replace('%s', backName(dest)));
-          // Long enough to read the confirmation, short enough to stay hands-free.
-          setTimeout(function () { location.replace(dest); }, 2500);
-        }
-
-        return;
-      }
-
-      // Landed here directly — one brand only. Offer the full run.
-      var rest = BRANDS.map(function (b) { return b[0]; }).filter(function (h) { return h !== HOST; });
-      text('ox-title', "✓ %s — este browser está excluído".replace('%s', NAME));
-      if (!rest.length) {
-        text('ox-msg', "Cada outro browser e dispositivo que utilizar precisa da sua própria execução — o telemóvel é separado do portátil, e o Chrome é separado do Safari na mesma máquina.");
-        show('ox-action', false);
-        return;
-      }
-      text('ox-msg', "Isto cobre apenas %s. As outras %r marcas precisam cada uma do seu cookie, porque um cookie não passa de um domínio para outro.".replace('%s', NAME).replace('%r', String(rest.length)));
-      action(hop(rest), "Excluir das %t marcas neste browser →".replace('%t', String(TOTAL)));
+      text('ox-title', '✓ Margem Cool — este browser está excluído');
+      text('ox-msg', 'Cada browser e cada dispositivo que usas precisa da sua própria visita a esta página: o telemóvel é separado do portátil, e o Chrome é separado do Safari na mesma máquina.');
     })();
   </script>
 </BaseLayout>
