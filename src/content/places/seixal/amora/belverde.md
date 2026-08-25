@@ -26,7 +26,7 @@ featured_links:
 
 pt:
   short_description: "Belverde, localidade residencial no concelho de Seixal entre os pinhais e a costa, partilhada entre Amora e Corroios. Quieta, verde, a 30 minutos de Lisboa."
-  page_status: placeholder
+  page_status: developed
   meta_title: "Belverde — Localidade Residencial entre Pinhais no Seixal"
   meta_description: "Belverde, no concelho de Seixal: onde fica, como chegar, quem lá vive, e como é viver entre os pinhais a sul de Lisboa."
   facts:
@@ -77,9 +77,52 @@ pt:
       duration: "+ a pé / autocarro"
       detail: "Estação Fertagus de Corroios a c. 10 minutos de carro. Mais prática se se vai apenas a Lisboa."
   body: |
-    A versão portuguesa desta página está em tradução. Em breve estará disponível com o conteúdo completo.
+    Belverde fica a sul do concelho do Seixal, na faixa de pinhal, campo de golfe e habitação de baixa densidade que se estende entre Amora e a costa atlântica em Fonte da Telha. Não é uma vila, não é uma aldeia, e não chega a ser bairro no sentido urbano — é uma localidade, um aglomerado sobretudo de moradias e casas geminadas construídas entre os pinheiros a partir dos anos 70. Vivem ali cerca de 3400 pessoas. Umas vieram pela proximidade à praia, outras pelas escolas e pelo espaço, outras herdaram a casa de uma geração que a construiu.
 
-    Por agora, vê a versão em inglês para o texto integral, ou usa as secções acima — perguntas frequentes, cronologia e formas de chegar.
+    A localidade estende-se por duas freguesias — Amora e Corroios — e por isso, administrativamente, Belverde não pertence inteiramente a nenhuma. A fronteira atravessa-a sem mudar nada visível. Na prática (correio, escolas, recolha de lixo, serviços de junta) usa-se a freguesia em que se está.
+
+    Não há centro. Nem largo, nem igreja de largo, nem rua principal com comércio, nem mercado coberto. As lojas e serviços concentram-se ao longo da estrada principal, e a maioria dos moradores faz as compras em Amora ou numa das freguesias vizinhas. O carácter do lugar é residencial, sossegado, verde — e é essa combinação que traz a maioria das pessoas até aqui.
+
+    ## O pinhal e a costa
+
+    A geografia de Belverde é a razão para a conhecer. A oeste, o Pinhal da Aroeira — uma faixa de pinhal marítimo que corre para sul, do concelho do Seixal até às arribas da Caparica e de Fonte da Telha. O pinhal percorre-se a pé e de bicicleta e, nos sítios certos, com cães e crianças, sem pagar nada. Muda de carácter com as estações — agulhas de pinheiro no chão, o vento na copa a trazer o sal da costa a poucos quilómetros.
+
+    A sul, Fonte da Telha e a faixa da Praia da Aroeira, já dentro do sistema da Costa da Caparica — costa atlântica aberta, surf, areia, parapente a descolar das arribas dos Capuchos. Quinze minutos de carro desde a porta de casa em Belverde.
+
+    A Lagoa Bela Verde é o espelho de água da própria localidade — um pequeno lago que tira a cor à vegetação em redor. Alguns acessos são privados, outros abertos; convém verificar antes de ir.
+
+    E o Aroeira Golf Resort ocupa o pinhal no extremo oeste — dois campos de campeonato traçados entre os pinheiros, com o Atlântico visível de alguns buracos.
+
+    ## O nome
+
+    Belverde lê-se à letra — bel verde, o belo verde. A referência é quase de certeza ao pinhal em redor. Nenhuma fonte académica fecha a questão da etimologia, mas a leitura à superfície é consistente com a forma como o nome aparece em registos dos séculos XIX e XX.
+
+    O território pertenceu historicamente ao termo do Conde da Cunha — título nobiliárquico criado por D. José I a 15 de março de 1760 e concedido a António Álvares da Cunha, que mais tarde serviu como vice-rei do Brasil entre 1763 e 1767. Até ao século XIX, passar pela zona implicava pagar um pequeno foro.
+
+    ## Uma breve história
+
+    Belverde, como localidade, é recente. Até meados do século XX, a zona era o interior de pinhal do concelho do Seixal — pouco povoada, agrícola, com o legado do foro do título da Cunha ainda presente nos nomes dos lugares. A grande expansão residencial começa nos anos 70, à medida que a área metropolitana de Lisboa cresce para sul do Tejo, e a Ponte 25 de Abril (aberta em 1966) e as estradas cada vez melhores na Margem Sul tornam viável o trajeto diário até Lisboa.
+
+    O padrão de loteamento em moradia que produziu a maior parte do que existe hoje — casas isoladas em lotes ajardinados, muitas vezes com piscina, muitas vezes como segunda habitação a partir dos anos 80 e 90 — é o que dá a Belverde o carácter que tem agora. A construção mais recente continuou nos anos 2000 e 2010, mas o desenho urbano de base não mudou: baixa altura, baixa densidade, o jardim a comandar.
+
+    ## Viver aqui
+
+    Belverde é um lugar que se escolhe por razões específicas. A maioria dos moradores trabalha em Almada, no centro do Seixal, ou desloca-se para Lisboa. A escolha em relação ao centro de Amora ou a Corroios é a escolha entre espaço e sossego, e proximidade a pé de tudo.
+
+    - **Escolas** fazem parte da rede do concelho do Seixal. Várias escolas públicas de língua portuguesa servem as freguesias vizinhas; as opções internacionais ficam em Almada ou do outro lado do rio, em Lisboa.
+    - **Saúde** — acesso a centro de saúde pelas redes de Amora e Corroios; acesso hospitalar no Hospital Garcia de Orta, em Almada (cerca de 25 minutos), ou no mais pequeno Hospital do Mar.
+    - **Compras** — comércio básico ao longo da estrada principal; para um supermercado completo vai-se ao centro de Amora, a Corroios ou ao núcleo comercial da Aroeira. O Almada Forum fica a uns 25 minutos.
+    - **Estacionamento** não é problema. A maioria das casas tem lugar próprio; o estacionamento na rua é livre.
+
+    As contrapartidas são práticas: as comodidades a pé são limitadas, os restaurantes ligam-se sobretudo ao hotel ou às freguesias vizinhas, e mover-se sem carro implica autocarro ou um salto de 10 minutos até à estação de Corroios primeiro. São essas as condições. Quem as quer — pinhal, jardim, espaço para respirar, praia perto — aceita-as de bom grado.
+
+    ## A parte honesta
+
+    Belverde é um subúrbio de moradias da Margem Sul, de uma certa geração. Funciona para quem funciona — espaço extra, acesso ao pinhal, praia ao alcance, preços mais baixos do que em Lisboa urbana — e não finge ser mais do que isso. Não há centro histórico para descobrir. A lagoa e o pinhal são os bens comuns; o resto são jardins privados.
+
+    A pressão do crescimento é real. Os preços dos imóveis subiram na última década e continuam a subir. O risco de incêndio no pinhal em redor é uma preocupação genuína no verão — o planeamento de proteção civil pesa aqui de um modo que não pesa no centro de Almada.
+
+    Mas os pinheiros fazem o trabalho deles. Num dia limpo, com o vento certo, sente-se o Atlântico a partir do alpendre.
 
 en:
   short_description: "Belverde, a residential locality in Seixal concelho between pine forest and coast, shared by the freguesias of Amora and Corroios. Quiet, green, 30 minutes from Lisbon."
@@ -181,7 +224,7 @@ en:
 
     But the pines do their job. On a clear day with the right wind you can smell the Atlantic from the porch.
 
-last_updated: 2026-05-29
+last_updated: 2026-08-25
 nw_query_pt: "b9ae892dac793479"
 nw_query_en: "d545917001d9291b"
 draft: false
