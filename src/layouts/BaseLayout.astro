@@ -133,7 +133,15 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
       // …and it honours the analytics-optout cookie itself. The zone rules that excluded staff
       // browsers worked by suppressing INJECTION, which a written-in tag would bypass — so the tag
       // only loads when the cookie is absent, and /optout keeps meaning what it says.
-      if (!/analytics-optout/.test(document.cookie)) {
+      // BOTH cookie names, because the browsers that matter most hold the OLD one.
+      // The opt-out cookie was renamed analytics-optout on 23 Aug 2026 with a
+      // two-year grace for the legacy spandera-staff cookie — the zone rules
+      // honour both. This gate checked only the new name, so every device opted
+      // out before the rename was silently counted again. Caught 25 Aug by the
+      // real-browser check (verify-staff-exclusion.mjs), which tests both names
+      // for exactly this reason. Drop the legacy half when the 2026 cookies
+      // expire, August 2028 — and drop it from the zone rules the same day.
+      if (!/analytics-optout|spandera-staff/.test(document.cookie)) {
         var s = document.createElement('script');
         s.defer = true;
         s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
