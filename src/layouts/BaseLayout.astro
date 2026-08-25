@@ -123,6 +123,24 @@ const copyrightLabel = `© ${new Date().getFullYear()} Margem Cool`;
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}
+
+    <!-- Cloudflare Web Analytics — cookieless visit counts, no identifiers, nothing stored in the
+         browser. The tag is written in rather than left to edge auto-injection, which skips EU
+         visitors and cached responses, so local traffic went uncounted (measured 25 Aug 2026) —
+         and for a site about the Margem Sul, local traffic is the readership. Cloudflare injects
+         nothing when a tag is already present, so this stays exactly one mechanism. -->
+    <script is:inline>
+      // …and it honours the analytics-optout cookie itself. The zone rules that excluded staff
+      // browsers worked by suppressing INJECTION, which a written-in tag would bypass — so the tag
+      // only loads when the cookie is absent, and /optout keeps meaning what it says.
+      if (!/analytics-optout/.test(document.cookie)) {
+        var s = document.createElement('script');
+        s.defer = true;
+        s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+        s.setAttribute('data-cf-beacon', '{"token": "a7d559c1471b4e998381ddd22107aad5"}');
+        document.head.appendChild(s);
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">{lang === 'pt' ? 'Saltar para o conteúdo' : 'Skip to content'}</a>
