@@ -27,8 +27,8 @@ featured_links:
 pt:
   short_description: "Belverde, localidade residencial no concelho de Seixal entre os pinhais e a costa, partilhada entre Amora e Corroios. Quieta, verde, a 30 minutos de Lisboa."
   page_status: developed
-  meta_title: "Belverde — Localidade Residencial entre Pinhais no Seixal"
-  meta_description: "Belverde, no concelho de Seixal: onde fica, como chegar, quem lá vive, e como é viver entre os pinhais a sul de Lisboa."
+  meta_title: "Belverde, Seixal — Localidade, Pinhal e o Hotel Evidência"
+  meta_description: "Belverde, no concelho de Seixal: onde fica, como chegar, quem lá vive, o hotel Evidência Belverde, e como é viver entre os pinhais a sul de Lisboa."
   facts:
     - value: "3 416"
       label: "Habitantes (2021)"
@@ -53,6 +53,8 @@ pt:
       answer: "Belverde é residencial — não tem centro nem comércio histórico. Os pontos de atração ficam à volta: o Pinhal da Aroeira a oeste, as praias de Fonte da Telha e da Aroeira a sul (15 minutos de carro), a Lagoa Bela Verde, e os campos de golfe do Aroeira Golf Resort."
     - question: "Belverde é uma boa zona para viver?"
       answer: "Para quem quer espaço, sossego, jardim e proximidade aos pinhais e à costa, sim. Para quem prefere comércio local, restaurantes a poucos passos ou ambiente urbano, há melhores opções mais a norte do concelho (Amora centro, Corroios) ou em Almada."
+    - question: "Há hotel em Belverde?"
+      answer: "Sim — o Evidência Belverde, um hotel de 4 estrelas junto ao pinhal, com spa (piscinas interior e exterior, tratamentos) e restaurante aberto também a quem não fica hospedado. É a única unidade hoteleira de Amora; para reservas, preços e horários de check-in, o site do próprio hotel é a fonte a consultar."
   timeline:
     - year: "1760"
       label: "Conde da Cunha"
@@ -93,6 +95,10 @@ pt:
 
     E o Aroeira Golf Resort ocupa o pinhal no extremo oeste — dois campos de campeonato traçados entre os pinheiros, com o Atlântico visível de alguns buracos.
 
+    ## Onde ficar
+
+    Para quem visita em vez de viver cá, há um hotel em Belverde: o Evidência Belverde, um 4 estrelas encostado ao pinhal, com spa (piscina interior e exterior, tratamentos) e um restaurante aberto também a quem não fica hospedado. É a única unidade hoteleira de Amora — quem procura outra oferta vai a Almada ou à Costa da Caparica. Para preços, disponibilidade e horários de check-in, a fonte é o site do próprio hotel; mudam com a época e não os fixamos aqui.
+
     ## O nome
 
     Belverde lê-se à letra — bel verde, o belo verde. A referência é quase de certeza ao pinhal em redor. Nenhuma fonte académica fecha a questão da etimologia, mas a leitura à superfície é consistente com a forma como o nome aparece em registos dos séculos XIX e XX.
@@ -127,8 +133,8 @@ pt:
 en:
   short_description: "Belverde, a residential locality in Seixal concelho between pine forest and coast, shared by the freguesias of Amora and Corroios. Quiet, green, 30 minutes from Lisbon."
   page_status: developed
-  meta_title: "Belverde — A Residential Locality Among the Pines, Seixal"
-  meta_description: "Belverde, in Seixal concelho: where it is, how to get there, who lives there, and what life is like among the pines south of Lisbon."
+  meta_title: "Belverde, Seixal — The Locality, the Pinhal and the Hotel"
+  meta_description: "Belverde, in Seixal concelho: where it is, how to get there, who lives there, the Evidência Belverde hotel, and what life is like among the pines south of Lisbon."
   facts:
     - value: "3,416"
       label: "Residents (2021)"
@@ -153,6 +159,8 @@ en:
       answer: "Belverde is residential — there's no town centre, no historic core. The attractions are around it: the Pinhal da Aroeira pine forest to the west, the beaches of Fonte da Telha and Aroeira to the south (15 minutes by car), the Bela Verde lagoon, and the Aroeira Golf Resort."
     - question: "Is Belverde a good place to live?"
       answer: "For people who want space, quiet, a garden, and proximity to pines and coast — yes. For people who prefer local shops, walkable restaurants or an urban feel, the north of the concelho (Amora centre, Corroios) or Almada are better fits."
+    - question: "Is there a hotel in Belverde?"
+      answer: "Yes — Evidência Belverde, a four-star hotel at the edge of the pinhal, with a spa (indoor and outdoor pools, treatments) and a restaurant that also takes non-guests. It's the only hotel in Amora; for bookings, prices and check-in times, the hotel's own site is the one to check."
   timeline:
     - year: "1760"
       label: "Conde da Cunha"
@@ -193,6 +201,10 @@ en:
 
     And the **Aroeira Golf Resort** sits in the pinhal at the western edge — two championship courses laid out among the pines, with the Atlantic visible from a few of the holes.
 
+    ## Where to stay
+
+    For visitors rather than residents, there's one hotel in Belverde: Evidência Belverde, a four-star property at the edge of the pinhal, with a spa — indoor and outdoor pools, treatments — and a restaurant that takes non-guests too. It's the only hotel in Amora; anyone after other options goes to Almada or the Costa da Caparica. For prices, availability and check-in times, the hotel's own site is the source to check — they move with the season and we don't fix them here.
+
     ## The name
 
     *Belverde* reads literally — *bel verde*, "the beautiful green". The reference is almost certainly to the surrounding pinhal. The Wikipedia entry doesn't commit to an etymology, and no academic source closes the question, but the surface reading is consistent with how the name appears in 19th and 20th century records.
@@ -224,7 +236,7 @@ en:
 
     But the pines do their job. On a clear day with the right wind you can smell the Atlantic from the porch.
 
-last_updated: 2026-08-25
+last_updated: 2026-08-27
 nw_query_pt: "b9ae892dac793479"
 nw_query_en: "d545917001d9291b"
 draft: false
