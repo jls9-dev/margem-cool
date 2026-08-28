@@ -108,12 +108,12 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
 
     var LEAFLET_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
     var LEAFLET_JS = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
-    // light_nolabels — same CARTO light tiles but without the
-    // built-in place labels (Lisbon, Setúbal, Sesimbra etc.). We layer
-    // our own concelho labels on top with brand typography; the OSM
-    // tile's labels would duplicate ours.
-    var TILE_URL = 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
-    var TILE_ATTRIB = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+    // Esri light grey canvas base — no place labels (we layer our own
+    // concelho labels with brand typography; a labelled tile set would
+    // duplicate them) and no API key, unlike CARTO which now watermarks
+    // keyless requests. Note Esri's path order is {z}/{y}/{x}.
+    var TILE_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+    var TILE_ATTRIB = '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; Esri';
     var MOBILE_QUERY = '(max-width: 900px)';
 
     function ensureLeaflet(cb) {
@@ -159,8 +159,7 @@ const tapAgainHint = lang === 'en' ? 'Tap again to open' : 'Tocar de novo para a
 
       L.tileLayer(TILE_URL, {
         attribution: TILE_ATTRIB,
-        subdomains: 'abcd',
-        maxZoom: 18,
+        maxZoom: 16,
       }).addTo(map);
 
       // ── Margem Sul perimeter ───────────────────────────────────
