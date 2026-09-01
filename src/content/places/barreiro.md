@@ -95,7 +95,7 @@ pt:
     E tem a coisa que a Margem Sul industrial tem e a turística não: um sítio que sabe o que foi.
 
 en:
-  short_description: "The industrial heart of the south bank. The CUF's city, with a boat to Terreiro do Paço and a working-class identity it does not disguise."
+  short_description: "The industrial heart of the Margem Sul. The CUF's city, with a boat to Terreiro do Paço and a working-class identity it does not disguise."
   page_status: developed
   meta_title: "Barreiro — the CUF city and the boat to Lisbon"
   meta_description: "A guide to Barreiro: the CUF industrial legacy, the crossing to Terreiro do Paço, the waterfront, the August festas and what living here is like."
@@ -129,7 +129,7 @@ en:
       duration: "30–40 min"
       detail: "Vasco da Gama via the Montijo side, or the 25 de Abril and the A2."
   body: |
-    Barreiro was for decades the industrial heart of the south bank. The **CUF** — Companhia União Fabril — built a chemical complex here that was, at its scale, a city inside the city: factories, workers' housing, a school, a hospital, a football ground, all belonging to the same company.
+    Barreiro was for decades the industrial heart of the Margem Sul. The **CUF** — Companhia União Fabril — built a chemical complex here that was, at its scale, a city inside the city: factories, workers' housing, a school, a hospital, a football ground, all belonging to the same company.
 
     That history explains today's Barreiro more than anything else. It is the densest concelho in the Margem Sul after Almada — seventy-eight thousand people in thirty-six square kilometres — and the most plainly working-class in origin.
 

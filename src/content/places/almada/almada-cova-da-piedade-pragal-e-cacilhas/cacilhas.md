@@ -48,7 +48,7 @@ featured_links:
 
 pt:
   short_description: "Cacilhas, na margem sul do Tejo em frente a Lisboa, ligada por ferry desde 1836. O passeio do Cais do Ginjal, as marisqueiras junto ao terminal, e camadas de história desde os romanos."
-  page_status: placeholder
+  page_status: developed
   meta_title: "Cacilhas — A Margem Sul em Frente a Lisboa"
   meta_description: "Cacilhas, em frente a Lisboa pelo Tejo: como chegar, o que fazer, onde comer, e a história desde os romanos até hoje."
   facts:
@@ -178,14 +178,71 @@ pt:
       location: "Cais do Ginjal"
       price_range: "€"
   body: |
-    A versão portuguesa desta página está em tradução. Em breve estará disponível com o conteúdo completo.
+    Cacilhas fica na Margem Sul do Tejo, em frente ao centro de Lisboa, a dez minutos de ferry do Cais do Sodré. É o extremo sul de uma das travessias fluviais mais antigas de Portugal — regulamentada pela primeira vez em 1284, mecanizada com os cacilheiros a vapor em 1836, e hoje operada pela Transtejo Soflusa com uma mistura de embarcações convencionais e elétricas.
 
-    Por agora, vê a versão em inglês para o texto integral, ou usa as secções acima — perguntas frequentes, cronologia, formas de chegar e onde comer.
+    Administrativamente, Cacilhas foi freguesia autónoma entre 1985 e 2013. Desde então faz parte da União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. O aglomerado ocupa pouco menos de um quilómetro quadrado na margem do rio, por baixo da arriba de Almada Velha, com cerca de 9000 habitantes (estimativa de 2017).
+
+    Andar por Cacilhas não pede transporte. Do ferry ao Cais do Ginjal, a leste, ou até Almada Velha pelo cimo, a oeste, são vinte minutos de ponta a ponta.
+
+    ## O nome
+
+    A origem do nome Cacilhas não está esclarecida. Algumas hipóteses tradicionais ligam-no ao árabe al-qasr, o lugar fortificado, um eco do papel da zona sob administração muçulmana; outras ligam-no ao verbo caçar. O nome já aparece com a forma atual em documentos medievais. Nenhuma fonte que encontrámos fecha a questão — nem sequer o historial da própria Junta de Freguesia. Convém alguma desconfiança perante quem diga saber ao certo.
+
+    ## O que ver e fazer
+
+    ### O passeio ribeirinho e o Cais do Ginjal
+
+    A partir do terminal do ferry, vira a leste (à esquerda, de costas para o interior e de frente para o rio). O passeio segue o antigo cais industrial ao longo da margem, passa pelos armazéns devolutos e chega, a cerca de 20 minutos a pé, ao Ponto Final. É um dos troços ribeirinhos mais fotografados da área metropolitana. As condições variam de ano para ano — alguns troços têm sido fechados por segurança enquanto os planos de requalificação avançam aos solavancos — por isso convém confirmar localmente antes de ir.
+
+    ### Elevador da Boca do Vento
+
+    Um elevador vertical que sobe do nível do rio até Almada Velha, no cimo da arriba. Do topo entra-se nas ruas de calçada da vila antiga, com vista de volta sobre o rio para Lisboa.
+
+    ### Cristo Rei e Almada Velha
+
+    Almada Velha fica na mesma linha de cume do Cristo Rei — a estátua de betão que domina o rio a partir da Margem Sul. Do topo do Elevador da Boca do Vento, uma curta caminhada pela vila antiga leva ao santuário do Cristo Rei. O miradouro na base da estátua dá um dos panoramas mais amplos sobre Lisboa que há a partir de um único ponto.
+
+    ### Quinta do Almaraz
+
+    O sítio arqueológico no alto sobre Cacilhas. Vestígios da Idade do Ferro pré-romana e fragmentos de cetárias de época romana. O acesso ao local é geralmente livre a pé; visitas formais e acompanhadas coordenam-se através da Câmara Municipal de Almada.
+
+    ### Igreja de Nossa Senhora do Bom Sucesso
+
+    A igreja paroquial pós-1755, na Praceta Cândido dos Reis, o largo central da Cacilhas antiga. Reconstruída em 1759 depois do terramoto. A procissão de 1 de novembro é a principal festa religiosa da zona.
+
+    ### Fragata D. Fernando II e Glória
+
+    A fragata à vela do século XIX, ancorada de forma permanente em Cacilhas, é a única embarcação à vela sobrevivente do antigo Estado Português da Índia. Foi construída no estaleiro real de Damão, na Índia. Visitável como navio-museu.
+
+    ## Qual marisqueira escolher
+
+    A faixa junto à água é aquilo por que Cacilhas é conhecida, e a escolha entre as suas marisqueiras é, na prática, uma escolha sobre quanto caminho e quanta espera estás disposto a aceitar.
+
+    O **Ponto Final** é o mais conhecido, e a fama vem mais do sítio do que do prato: mesas na berma nua do cais, sem grades, o rio a um palmo e Lisboa mesmo em frente. Fica a vinte minutos a pé para leste ao longo do Ginjal a partir do ferry, não reserva as mesas de fora, e à uma da tarde de um domingo a fila já é longa. Vai num dia de semana, vai cedo, e aceita que estás a pagar pelo lugar.
+
+    O **Atira-te ao Rio** e o **Farol**, os dois perto do terminal, estão sobre o mesmo rio e cozinham o mesmo marisco sem a peregrinação. Se o que queres são ameijoas e vista para a ponte em vez de uma fotografia da tua mesa, começa por aqui — é a escolha da maioria de quem atravessa com regularidade.
+
+    Longe da água a conta muda por completo. O **Mercado de Cacilhas**, na Rua Cândido dos Reis, é para quando o grupo não se entende sobre o que comer, e a **Meia Volta de Úrano** — bar, livraria e pequena galeria, aberta até às 2h — é a que vale a pena conhecer depois do jantar.
+
+    ## Viver aqui
+
+    Para quem mora cá, Cacilhas junta acesso ao rio, ligação rápida a Lisboa e um ritmo mais calmo do que a margem norte. A ligação de ferry ao Cais do Sodré é fiável; muitos residentes trabalham no centro de Lisboa e viajam todos os dias. O terminal do Metro Sul do Tejo, aberto em 2008, dá ligação ao resto de Almada e ao lado sul da área metropolitana.
+
+    - **Escolas** fazem parte da rede do concelho de Almada. Várias escolas públicas de língua portuguesa servem a zona; a opção internacional mais próxima fica do outro lado do rio, em Lisboa.
+    - **Saúde** — Centro de Saúde na Cova da Piedade, acesso hospitalar no Hospital Garcia de Orta, no centro de Almada.
+    - **Compras** — pequeno comércio e um mercado junto ao ferry, com supermercados completos nas freguesias vizinhas. O Almada Forum fica a dez minutos de autocarro.
+    - **Estacionamento** é escasso junto à frente ribeirinha; os residentes estacionam tipicamente mais acima na colina ou nas freguesias em redor.
+
+    ## A parte honesta
+
+    A frente ribeirinha de Cacilhas está em transição há décadas. O fecho da Lisnave em 2000, os planos de requalificação do Cais do Ginjal que avançam e recuam, e o reaproveitamento mais lento do que se esperava dos edifícios industriais antigos deixaram partes da margem num estado pouco comum — nem porto de trabalho nem frente ribeirinha acabada. O que se atravessava livremente no ano passado pode estar vedado este ano, e vice-versa.
+
+    Mas a geometria de base — uma arriba sobre um rio em frente a uma cidade conhecida, com as camadas de uma unidade romana de salga de peixe, uma travessia fluvial medieval, uma fronteira industrial do século XIX e um bairro operário do século XXI, todas ainda legíveis — produz momentos que não se têm do outro lado. A travessia continua a funcionar. A vista de volta para Lisboa continua a ser a melhor vista de volta para Lisboa que se consegue de qualquer sítio.
 
 en:
-  short_description: "Cacilhas, on the south bank of the Tagus opposite Lisbon, connected by ferry since 1836. The Cais do Ginjal walk, the marisco strip near the terminal, and history layered from the Romans onward."
+  short_description: "Cacilhas, in the Margem Sul opposite Lisbon, connected by ferry since 1836. The Cais do Ginjal walk, the marisco strip near the terminal, and history layered from the Romans onward."
   page_status: developed
-  meta_title: "Cacilhas — The South Bank Across from Lisbon"
+  meta_title: "Cacilhas — The Margem Sul Across from Lisbon"
   meta_description: "Cacilhas, opposite Lisbon by ferry: how to get there, what to do, where to eat, and the history from Roman times forward."
   facts:
     - value: "10 min"
@@ -206,11 +263,11 @@ en:
     - question: "What's there to do in Cacilhas?"
       answer: "The Cais do Ginjal waterfront walk, the Elevador da Boca do Vento up to Almada Velha, the views from the Cristo Rei, the Quinta do Almaraz archaeological site, and the marisco restaurants near the ferry. The Fragata D. Fernando II e Glória, anchored at Cacilhas, is the only surviving sailing vessel of the former Portuguese State of India."
     - question: "Where do I eat in Cacilhas?"
-      answer: "The riverside strip is the reason most people come. Ponto Final, twenty minutes' walk east along the Cais do Ginjal, is the most-photographed restaurant on the south bank and the one that fills first. Nearer the terminal, Atira-te ao Rio and O Farol serve the same river and the same shellfish with far less of a pilgrimage attached. Away from the water, Rua Cândido dos Reis has the Mercado de Cacilhas — seven kitchens under one roof, open since 2019 — and a row of smaller places either side of it."
+      answer: "The riverside strip is the reason most people come. Ponto Final, twenty minutes' walk east along the Cais do Ginjal, is the most-photographed restaurant in the Margem Sul and the one that fills first. Nearer the terminal, Atira-te ao Rio and O Farol serve the same river and the same shellfish with far less of a pilgrimage attached. Away from the water, Rua Cândido dos Reis has the Mercado de Cacilhas — seven kitchens under one roof, open since 2019 — and a row of smaller places either side of it."
     - question: "Is Cacilhas a freguesia?"
       answer: "Cacilhas was a standalone freguesia from 1985 to 2013. Since the 2013 administrative reform it has been part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. Locally it's still treated as its own place."
     - question: "What concelho is Cacilhas in?"
-      answer: "Cacilhas is in the concelho of Almada, on the south bank of the Tagus. Almada is one of the nine concelhos of the Margem Sul (Setúbal Peninsula) that make up the south side of the Lisbon metropolitan area."
+      answer: "Cacilhas is in the concelho of Almada. Almada is one of the nine concelhos that make up the Margem Sul (Setúbal Peninsula), the south side of the Lisbon metropolitan area, across the river from the capital."
   timeline:
     - year: "c. 3000 BC"
       label: "Neolithic"
@@ -262,7 +319,7 @@ en:
   eateries:
     - name: "Ponto Final"
       cuisine: "Marisco · with a view"
-      description: "The most-photographed restaurant on the south bank — tables literally over the river on the Cais do Ginjal, near the Elevador da Boca do Vento."
+      description: "The most-photographed restaurant in the Margem Sul — tables literally over the river on the Cais do Ginjal, near the Elevador da Boca do Vento."
       location: "Cais do Ginjal"
       price_range: "€€€"
       signature: "Arroz de tamboril · whatever was landed, grilled"
@@ -314,7 +371,7 @@ en:
       location: "Cais do Ginjal"
       price_range: "€"
   body: |
-    Cacilhas sits on the south bank of the Tagus directly opposite central Lisbon, ten minutes by ferry from Cais do Sodré. It is the southern terminus of one of the oldest scheduled river crossings in Portugal — first regulated in 1284, mechanised with steam *cacilheiros* in 1836, and run today by Transtejo Soflusa with a mix of conventional and electric vessels.
+    Cacilhas sits in the Margem Sul, directly opposite central Lisbon, ten minutes by ferry from Cais do Sodré. It is the southern terminus of one of the oldest scheduled river crossings in Portugal — first regulated in 1284, mechanised with steam *cacilheiros* in 1836, and run today by Transtejo Soflusa with a mix of conventional and electric vessels.
 
     Administratively, Cacilhas was a standalone freguesia from 1985 to 2013. Since then it has formed part of the União das Freguesias de Almada, Cova da Piedade, Pragal e Cacilhas. The settlement occupies just under one square kilometre on the riverbank below the cliff of Almada Velha, with about 9,000 residents as of 2017.
 
@@ -328,7 +385,7 @@ en:
 
     ### The riverfront walk and Cais do Ginjal
 
-    From the ferry terminal, turn east (left as you face the river from inland). The walk follows the old industrial cais along the south bank, passing the abandoned warehouses and arriving, about 20 minutes' walk along, at Ponto Final. The walk is one of the most photographed stretches of waterfront in the metropolitan area. Conditions vary year to year — sections have intermittently been closed for safety while redevelopment plans go through their cycles, so check locally before going.
+    From the ferry terminal, turn east (left as you face the river from inland). The walk follows the old industrial cais along the riverfront, passing the abandoned warehouses and arriving, about 20 minutes' walk along, at Ponto Final. The walk is one of the most photographed stretches of waterfront in the metropolitan area. Conditions vary year to year — sections have intermittently been closed for safety while redevelopment plans go through their cycles, so check locally before going.
 
     ### Elevador da Boca do Vento
 
@@ -336,7 +393,7 @@ en:
 
     ### Cristo Rei and Almada Velha
 
-    Almada Velha sits on the same ridge as the Cristo Rei statue — the giant concrete Christ figure that overlooks the river from the south bank. A short walk from the top of the Elevador da Boca do Vento takes you through the old town to the Cristo Rei sanctuary. The viewing platform at the base of the statue gives one of the broadest panoramas of Lisbon from any single vantage point.
+    Almada Velha sits on the same ridge as the Cristo Rei statue — the giant concrete Christ figure that overlooks the river from the Margem Sul. A short walk from the top of the Elevador da Boca do Vento takes you through the old town to the Cristo Rei sanctuary. The viewing platform at the base of the statue gives one of the broadest panoramas of Lisbon from any single vantage point.
 
     ### Quinta do Almaraz
 
@@ -375,7 +432,7 @@ en:
 
     But the basic geometry — a cliff above a river opposite a famous city, with the layers of a Roman fish-processing site, a medieval river crossing, a 19th-century industrial frontier and a 21st-century working-class neighbourhood all still legible — produces moments you don't get on the other side. The crossing still works. The view back at Lisbon is still the best view back at Lisbon you can get from anywhere.
 
-last_updated: 2026-05-29
+last_updated: 2026-09-01
 nw_query_pt: "f47f511cd090ec57"
 nw_query_en: "e707aadea7a3f908"
 draft: false

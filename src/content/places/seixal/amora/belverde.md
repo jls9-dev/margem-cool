@@ -22,7 +22,7 @@ featured_links:
     name_pt: "Seixal"
     name_en: "Seixal"
     description_pt: "O concelho de Seixal, na Margem Sul do Tejo, onde Belverde se insere."
-    description_en: "The concelho of Seixal, on the south bank of the Tagus, where Belverde sits."
+    description_en: "The concelho of Seixal, in the Margem Sul, where Belverde sits."
 
 pt:
   short_description: "Belverde, localidade residencial no concelho de Seixal entre os pinhais e a costa, partilhada entre Amora e Corroios. Quieta, verde, a 30 minutos de Lisboa."
@@ -146,7 +146,7 @@ en:
       label: "Main residential build-out"
   faqs:
     - question: "Where is Belverde?"
-      answer: "Belverde is in the Seixal concelho, on the south bank of the Tagus. The locality is shared between the freguesias of Amora and Corroios, in the southern part of the concelho, between the Pinhal da Aroeira and the coast. About 30 minutes by car from central Lisbon over the Ponte 25 de Abril."
+      answer: "Belverde is in the Seixal concelho, in the Margem Sul. The locality is shared between the freguesias of Amora and Corroios, in the southern part of the concelho, between the Pinhal da Aroeira and the coast. About 30 minutes by car from central Lisbon over the Ponte 25 de Abril."
     - question: "Is Belverde a freguesia?"
       answer: "No. Belverde is a locality — a residential cluster — split between the freguesias of Amora and Corroios. Both freguesias are part of the Seixal concelho."
     - question: "How many people live in Belverde?"
