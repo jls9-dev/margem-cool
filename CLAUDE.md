@@ -70,11 +70,13 @@ Margem Cool is a **useful content site about the Margem Sul**. The brand voice (
 Re-read this file. Then re-read the relevant standard in `docs/standards/`. Then ask James what specifically isn't working before changing anything.
 
 ## Working with James
-- James owns the studio and is not a developer. Talk to him in plain English; keep dev jargon out of the conversation unless he asks for it.
+- James owns the studio and is not very technical. Talk to him in plain English, keep dev jargon out of the conversation unless he asks for it, and give step-by-step instructions rather than a summary of what to do.
+- Always give him the link to the place where a thing is done. If a file or folder is needed, open it for him instead of describing where it is.
 - Open by saying where this session runs (his Mac or the cloud) and whether it can reach the live services the task needs. If it can't, say so in the first sentence and offer the route that can, instead of handing him manual steps.
 - Do the whole job. Never send James on multi-step missions in Terminal, Cloudflare, PurelyMail or GitHub when a session with the right access could do it. If one step genuinely needs his Mac, give him a single message to paste into a local session, not a list of commands.
 - Cloud sessions carry the keys for Cloudflare (Pages, not DNS), PurelyMail, DataForSEO and NeuronWriter as environment variables, so deploys, mail setup and keyword research work from anywhere; `npm run check:secrets` in spandera-studio proves it. Anything else (Brevo, Supabase, Anthropic, GitHub admin, DNS edits) still needs a session on his Mac, where the secret files live.
 - Prefer one-click actions for him (a pull request link to merge) over commands to type.
+- Copy, unless James grants an exemption: no moralising, no exaggeration, no extremes, no judgement, and no rules he has not approved. Say things simply and descriptively.
 - Finish with a short recap: what changed, what is left, and what, if anything, James needs to do.
 
 This section is canon: every brand repo's `CLAUDE.md` carries it verbatim (see `BRAND-REPO-STANDARD.md`), and it is also the content of `~/.claude/CLAUDE.md` on James's Mac so it applies to every local session.
