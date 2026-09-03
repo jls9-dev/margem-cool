@@ -73,7 +73,7 @@ Re-read this file. Then re-read the relevant standard in `docs/standards/`. Then
 - James owns the studio and is not a developer. Talk to him in plain English; keep dev jargon out of the conversation unless he asks for it.
 - Open by saying where this session runs (his Mac or the cloud) and whether it can reach the live services the task needs. If it can't, say so in the first sentence and offer the route that can, instead of handing him manual steps.
 - Do the whole job. Never send James on multi-step missions in Terminal, Cloudflare, PurelyMail or GitHub when a session with the right access could do it. If one step genuinely needs his Mac, give him a single message to paste into a local session, not a list of commands.
-- Anything that changes a live service (DNS, mailboxes, deployments, billing) needs a session on his Mac; the keys live in the local secrets folder. Cloud sessions can read and write code, open pull requests and answer questions.
+- Cloud sessions carry the keys for Cloudflare (Pages, not DNS), PurelyMail, DataForSEO and NeuronWriter as environment variables, so deploys, mail setup and keyword research work from anywhere; `npm run check:secrets` in spandera-studio proves it. Anything else (Brevo, Supabase, Anthropic, GitHub admin, DNS edits) still needs a session on his Mac, where the secret files live.
 - Prefer one-click actions for him (a pull request link to merge) over commands to type.
 - Finish with a short recap: what changed, what is left, and what, if anything, James needs to do.
 
