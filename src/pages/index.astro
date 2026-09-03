@@ -4,6 +4,7 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Wordmark from '../components/brand/Wordmark.astro';
 import MargemMap from '../components/place/MargemMap.astro';
+import FAQ from '../components/place/FAQ.astro';
 import { concelhos } from '../utils/place-hierarchy';
 import heroCristoRei from '../assets/hero-cristo-rei.jpg';
 
@@ -29,16 +30,50 @@ const pillars: Array<{ href: string; name: string; blurb: string }> = [
   { href: '/viver-aqui/',       name: 'Viver aqui',       blurb: 'Mudar-se, alugar, trabalhar e crescer na margem.' },
 ];
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Margem Cool',
-  alternateName: 'Margem Cool — A Margem Sul, sem filtros',
-  url: 'https://margemcool.pt/',
-  inLanguage: ['pt-PT', 'en'],
-  description:
-    'Margem Cool é uma publicação da Margem Sul, escrita de onde vivemos, em português e inglês.',
-};
+const homeFaqs = [
+  {
+    question: 'O que é a Margem Sul?',
+    answer:
+      'A faixa da Área Metropolitana de Lisboa que fica do outro lado do Tejo, virada para a cidade — a porção norte da península de Setúbal. O nome substituiu, já perto do fim do século XX, a antiga designação de "Outra Banda".',
+  },
+  {
+    question: 'Onde fica a Margem Sul?',
+    answer:
+      'No estuário do Tejo, em frente a Lisboa, ligada à cidade pela Ponte 25 de Abril, pela Ponte Vasco da Gama e pelos ferries da Transtejo/Soflusa. Vai da foz do rio, em Almada, até ao estuário do Sado, em Setúbal.',
+  },
+  {
+    question: 'Quais são os concelhos da Margem Sul?',
+    answer:
+      'Não há uma fronteira oficial única. A versão mais restrita cinge-se aos seis concelhos ribeirinhos ao estuário — Almada, Seixal, Barreiro, Moita, Montijo e Alcochete —; a mais larga junta Sesimbra, Setúbal e Palmela, já dentro da península de Setúbal. A Margem Cool cobre os nove: partilham a mesma ponte, os mesmos comboios e a mesma vida do dia a dia, e somam cerca de 808 000 habitantes pelo censo de 2021.',
+  },
+  {
+    question: 'Qual é o melhor concelho da Margem Sul para viver?',
+    answer:
+      'Depende do que se procura — não há uma resposta única. Almada e Seixal ficam mais perto de Lisboa, com ferry ou comboio directo; Sesimbra e a Costa da Caparica trazem a praia à porta; Setúbal e Palmela dão mais espaço e preços mais baixos, a troco de uma viagem mais longa. O pilar Viver aqui compara concelho a concelho.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Margem Cool',
+    alternateName: 'Margem Cool — A Margem Sul, sem filtros',
+    url: 'https://margemcool.pt/',
+    inLanguage: ['pt-PT', 'en'],
+    description:
+      'Margem Cool é uma publicação da Margem Sul, escrita de onde vivemos, em português e inglês.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: homeFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  },
+];
 ---
 
 <BaseLayout
@@ -141,6 +176,9 @@ const jsonLd = {
       </ul>
     </div>
   </section>
+
+  {/* ─────────── FAQ — what/where/which is the Margem Sul ─────────── */}
+  <FAQ kicker="Perguntas frequentes" title="Sobre a Margem Sul" items={homeFaqs} />
 
   {/* ─────────── EN bridge ─────────── */}
   <section class="home-en-bridge">

@@ -4,6 +4,7 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Wordmark from '../../components/brand/Wordmark.astro';
 import MargemMap from '../../components/place/MargemMap.astro';
+import FAQ from '../../components/place/FAQ.astro';
 import { concelhos } from '../../utils/place-hierarchy';
 import heroCristoRei from '../../assets/hero-cristo-rei.jpg';
 
@@ -27,16 +28,50 @@ const pillars: Array<{ href: string; name: string; blurb: string }> = [
   { href: '/en/living-here/',     name: 'Living here',      blurb: 'Moving, renting, working and growing up in the Margem Sul.' },
 ];
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Margem Cool',
-  alternateName: 'Margem Cool — the Margem Sul, no filters',
-  url: 'https://margemcool.pt/en/',
-  inLanguage: ['en', 'pt-PT'],
-  description:
-    'Margem Cool is a publication of the Margem Sul, written from where we live, in Portuguese and English.',
-};
+const homeFaqs = [
+  {
+    question: 'What is the Margem Sul?',
+    answer:
+      'The stretch of the Lisbon metropolitan area on the far side of the Tagus, facing the city — the northern edge of the Setúbal peninsula. The name replaced the older "Outra Banda" ("the other bank") near the end of the twentieth century.',
+  },
+  {
+    question: 'Where is the Margem Sul?',
+    answer:
+      'On the Tagus estuary, opposite Lisbon, connected to the city by the Ponte 25 de Abril, the Ponte Vasco da Gama and the Transtejo/Soflusa ferries. It runs from the river mouth at Almada down to the Sado estuary at Setúbal.',
+  },
+  {
+    question: 'What are the concelhos of the Margem Sul?',
+    answer:
+      'There is no single official boundary. The narrower version covers the six concelhos directly on the estuary — Almada, Seixal, Barreiro, Moita, Montijo and Alcochete — while the wider one adds Sesimbra, Setúbal and Palmela, further into the Setúbal peninsula. Margem Cool covers all nine: they share the same bridge, the same trains and the same daily life, and add up to around 808,000 people by the 2021 census.',
+  },
+  {
+    question: 'Which concelho in the Margem Sul is best to live in?',
+    answer:
+      "It depends what you're after — there's no single answer. Almada and Seixal sit closest to Lisbon, with a direct ferry or train; Sesimbra and the Costa da Caparica put the beach on your doorstep; Setúbal and Palmela offer more space and lower prices for a longer commute. The Living here pillar compares them concelho by concelho.",
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Margem Cool',
+    alternateName: 'Margem Cool — the Margem Sul, no filters',
+    url: 'https://margemcool.pt/en/',
+    inLanguage: ['en', 'pt-PT'],
+    description:
+      'Margem Cool is a publication of the Margem Sul, written from where we live, in Portuguese and English.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: homeFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  },
+];
 ---
 
 <BaseLayout
@@ -140,6 +175,9 @@ const jsonLd = {
       </ul>
     </div>
   </section>
+
+  {/* ─────────── FAQ — what/where/which is the Margem Sul ─────────── */}
+  <FAQ kicker="Frequently asked" title="About the Margem Sul" items={homeFaqs} />
 
   {/* ─────────── PT bridge ─────────── */}
   <section class="home-en-bridge">
