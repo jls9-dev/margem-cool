@@ -7,7 +7,7 @@ format: guide
 author: "Margem Cool"
 translation_of: "pt/praias-da-costa-da-caparica"
 published: 2026-08-10
-last_updated: 2026-08-10
+last_updated: 2026-09-03
 place_slugs: ["almada", "almada/costa-da-caparica"]
 meta_title: "Costa da Caparica beaches — which one to pick"
 meta_description: "The Costa da Caparica beaches from the town to Fonte da Telha: which is which, how to get there without a car, and what the fossil cliff is."
@@ -39,7 +39,7 @@ facts:
     label: "The Transpraia has been stopped"
 faqs:
   - question: "How many beaches does Costa da Caparica have?"
-    answer: "It is one continuous ribbon of sand around 15 kilometres long, from the town down to Fonte da Telha, divided up by names and by beach concessions — Praia Nova, São João, Praia do Rei, Praia da Mata, Praia da Sereia, Praia da Riviera, Praia da Morena, Praia do Castelo, Praia das Bicas, Praia da Cornélia among others. They are not separate beaches: it is the same sand, named differently according to which concession is there."
+    answer: "It is one continuous ribbon of sand around 15 kilometres long, from the town down to Fonte da Telha, divided up by names and by beach concessions. North to south, as Almada council lists them: Cova do Vapor, São João, Praia do Norte, Santo António, CDS, Tarquínio/Paraíso, Dragão Vermelho, Praia Nova, Nova Praia, Saúde, Mata, Riviera, Rainha, Castelo, Cabana do Pescador, Rei, Morena, Sereia, Infante, Nova Vaga and Bela Vista, down to Fonte da Telha. They are not separate beaches: it is the same sand, named differently according to which concession is there."
   - question: "Which is the best beach at Costa da Caparica?"
     answer: "As a rule: the further north, the busier, the more restaurants and the easier to reach; the further south, the fewer people, the fewer facilities and the more nature. For family convenience, stay near the town. For space, head to the middle of the chain. For the end of the line, Fonte da Telha."
   - question: "Does the beach train still run?"
@@ -73,13 +73,29 @@ That changes the question. It isn't "shall we go to Caparica?", it's **where alo
 
 ## The rule of the chain
 
-The beaches have names — Praia Nova, São João, Praia do Rei, Praia da Mata, Praia da Sereia, Praia da Riviera, Praia da Morena, Praia do Castelo, Praia das Bicas, Praia da Cornélia — but they aren't separate beaches. It's the same continuous sand, and the name changes with whichever beach concession is standing there.
+The beaches have names, and an order. North to south, as Almada council lists them: Cova do Vapor, São João, Praia do Norte, Santo António, CDS, Tarquínio/Paraíso, Dragão Vermelho, Praia Nova, Nova Praia, Saúde, Mata, Riviera, Rainha, Castelo, Cabana do Pescador, Rei, Morena, Sereia, Infante, Nova Vaga and Bela Vista, down to Fonte da Telha. They aren't separate beaches. It's the same continuous sand, and the name changes with whichever beach concession is standing there.
 
 What actually changes as you go south:
 
 - **Near the town** — concessions one after another, restaurants, surf schools, and the easiest stretch to reach by public transport. Also the fullest.
 - **The middle of the chain** — car parks scattered along the road behind the cliff, each serving its own beach. Fewer people per metre of sand, facilities further apart.
 - **Fonte da Telha, at the end** — a small community of wooden houses against the cliff, fish restaurants, and the point where the cliff is highest. It's also where the paragliders are.
+
+## Lifeguards, and what nobody tells you about September
+
+The bathing season in Almada runs from **1 June to 30 September**. That's the stretch when the beaches are fully patrolled and every concession is open.
+
+What almost no guide mentions is what happens in the other eight months. Almada council runs a programme called **Praia Protegida** that keeps surveillance going all year, reinforced at weekends and public holidays outside the season. It isn't July, and not every beach carries the same cover, but it also isn't the empty unwatched sand these months usually get described as.
+
+That changes the maths from October to May: you can come out of season without being on your own.
+
+## Naturist beaches, and accessible ones
+
+Two specific things the general guides rarely separate out.
+
+**Naturism.** Praia da Bela Vista — Praia 19 — is the Costa's naturist beach, patrolled and with concessions, and the council also identifies it as an LGBT meeting point. Further south, near the edge of the municipality, **Praia da Adiça** is naturist too but **unpatrolled and with no concessions**. They are different propositions, and it's worth knowing which is which before you set out.
+
+**Accessibility.** **Praia da Rainha** and **Praia do Tarquínio/Paraíso** are designated accessible beaches, with an amphibious wheelchair available. If that matters to your choice, those are the two names to look for along the whole chain.
 
 ## The fossil cliff
 

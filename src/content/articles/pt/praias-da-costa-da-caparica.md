@@ -6,7 +6,7 @@ pillar: praia_natureza
 format: guide
 author: "Margem Cool"
 published: 2026-08-10
-last_updated: 2026-08-10
+last_updated: 2026-09-03
 place_slugs: ["almada", "almada/costa-da-caparica"]
 meta_title: "Praias da Costa da Caparica — qual escolher"
 meta_description: "As praias da Costa da Caparica, da cidade à Fonte da Telha: quais são, qual escolher, como chegar sem carro e o que é a arriba fóssil."
@@ -38,7 +38,7 @@ facts:
     label: "O Transpraia está parado"
 faqs:
   - question: "Quantas praias tem a Costa da Caparica?"
-    answer: "É um cordão contínuo de areia de cerca de 15 quilómetros, da cidade até à Fonte da Telha, dividido por nomes e por apoios de praia — Praia Nova, São João, Praia do Rei, Praia da Mata, Praia da Sereia, Praia da Riviera, Praia da Morena, Praia do Castelo, Praia das Bicas, Praia da Cornélia, entre outras. Não são praias separadas: é a mesma areia, com nome diferente conforme o apoio."
+    answer: "É um cordão contínuo de areia de cerca de 15 quilómetros, da cidade até à Fonte da Telha, dividido por nomes e por apoios de praia. De norte para sul, pela lista da Câmara de Almada: Cova do Vapor, São João, Praia do Norte, Santo António, CDS, Tarquínio/Paraíso, Dragão Vermelho, Praia Nova, Nova Praia, Saúde, Mata, Riviera, Rainha, Castelo, Cabana do Pescador, Rei, Morena, Sereia, Infante, Nova Vaga e Bela Vista, até à Fonte da Telha. Não são praias separadas: é a mesma areia, com nome diferente conforme o apoio."
   - question: "Qual é a melhor praia da Costa da Caparica?"
     answer: "Regra geral: quanto mais para norte, mais movimento, mais restaurantes e mais fácil de chegar; quanto mais para sul, menos gente, menos apoios e mais natureza. Para família e conveniência, fica pelas primeiras. Para espaço, vai para o meio do cordão. Para o fim da linha, Fonte da Telha."
   - question: "O comboio das praias ainda anda?"
@@ -72,13 +72,29 @@ Isso muda a pergunta. Não é "vou à Caparica?", é **onde no cordão paras**. 
 
 ## A regra do cordão
 
-As praias têm nomes — Praia Nova, São João, Praia do Rei, Praia da Mata, Praia da Sereia, Praia da Riviera, Praia da Morena, Praia do Castelo, Praia das Bicas, Praia da Cornélia — mas não são praias separadas. É a mesma areia contínua, e o nome muda conforme o apoio de praia que ali está.
+As praias têm nomes e uma ordem. De norte para sul, como a Câmara de Almada as lista: Cova do Vapor, São João, Praia do Norte, Santo António, CDS, Tarquínio/Paraíso, Dragão Vermelho, Praia Nova, Nova Praia, Saúde, Mata, Riviera, Rainha, Castelo, Cabana do Pescador, Rei, Morena, Sereia, Infante, Nova Vaga e Bela Vista, até à Fonte da Telha. Não são praias separadas. É a mesma areia contínua, e o nome muda conforme o apoio de praia que ali está.
 
 O que muda de verdade, à medida que desces:
 
 - **Junto à cidade** — apoios a fio, restaurantes, escolas de surf, e a praia mais fácil de alcançar de transportes. Também a mais cheia.
 - **A meio do cordão** — parques de estacionamento espalhados pela estrada por trás da arriba, cada um a servir a sua praia. Menos gente por metro de areia, apoios mais espaçados.
 - **Fonte da Telha, no fim** — pequena comunidade de casas de madeira encostada à arriba, restaurantes de peixe, e o ponto onde a arriba está mais alta. É também o sítio dos parapentes.
+
+## Vigilância, e o que ninguém te diz sobre setembro
+
+A época balnear em Almada vai de **1 de junho a 30 de setembro**. É o período em que as praias estão vigiadas a tempo inteiro e os apoios estão todos abertos.
+
+O que quase nenhum guia diz é o que acontece nos outros oito meses. A Câmara de Almada mantém um dispositivo chamado **Praia Protegida** que assegura vigilância durante todo o ano, com reforço aos fins de semana e feriados fora da época. Não é o mesmo que julho, e nem todas as praias têm o mesmo apoio, mas também não é o areal deserto e sem ninguém que costuma aparecer descrito.
+
+Isto muda a conta de outubro a maio: podes vir fora de época sem estares por tua conta.
+
+## Praias naturistas, e praias acessíveis
+
+Duas coisas concretas que os guias generalistas raramente separam.
+
+**Naturismo.** A Praia da Bela Vista — a Praia 19 — é a praia naturista da Costa, vigiada e com apoio, e a câmara identifica-a também como ponto de encontro LGBT. Mais a sul, já quase no fim do concelho, a **Praia da Adiça** é igualmente naturista mas **não é vigiada e não tem apoios**. São coisas diferentes e vale a pena saber qual é qual antes de escolher.
+
+**Acessibilidade.** A **Praia da Rainha** e a **Praia do Tarquínio/Paraíso** são praias acessíveis, com cadeira anfíbia disponível. Se isso pesa na tua escolha, são estes os dois nomes a procurar no cordão inteiro.
 
 ## A arriba fóssil
 
