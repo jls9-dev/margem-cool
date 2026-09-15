@@ -54,7 +54,7 @@ pt:
     - question: "Belverde é uma boa zona para viver?"
       answer: "Para quem quer espaço, sossego, jardim e proximidade aos pinhais e à costa, sim. Para quem prefere comércio local, restaurantes a poucos passos ou ambiente urbano, há melhores opções mais a norte do concelho (Amora centro, Corroios) ou em Almada."
     - question: "Há hotel em Belverde?"
-      answer: "Sim — o Evidência Belverde, um hotel de 4 estrelas junto ao pinhal, com spa (piscinas interior e exterior, tratamentos) e restaurante aberto também a quem não fica hospedado. É a única unidade hoteleira de Amora; para reservas, preços e horários de check-in, o site do próprio hotel é a fonte a consultar."
+      answer: "Sim — o Evidência Belverde, um hotel de 4 estrelas junto ao pinhal, com 71 quartos em oito tipologias (clássico, com vista para o jardim ou para a piscina, quarto familiar e quarto triplo), piscina interior e exterior, spa com tratamentos, e o restaurante the19 e o bar Shot, ambos abertos também a quem não fica hospedado. É a única unidade hoteleira de Amora; para reservas, preços e horários de check-in, o site do próprio hotel é a fonte a consultar."
   timeline:
     - year: "1760"
       label: "Conde da Cunha"
@@ -97,7 +97,7 @@ pt:
 
     ## Onde ficar
 
-    Para quem visita em vez de viver cá, há um hotel em Belverde: o Evidência Belverde, um 4 estrelas encostado ao pinhal, com spa (piscina interior e exterior, tratamentos) e um restaurante aberto também a quem não fica hospedado. É a única unidade hoteleira de Amora — quem procura outra oferta vai a Almada ou à Costa da Caparica. Para preços, disponibilidade e horários de check-in, a fonte é o site do próprio hotel; mudam com a época e não os fixamos aqui.
+    Para quem visita em vez de viver cá, há um hotel em Belverde: o Evidência Belverde, um 4 estrelas encostado ao pinhal, com 71 quartos em oito tipologias — clássico, com vista para o jardim ou para a piscina, quarto familiar e quarto triplo —, todos com varanda e ar condicionado individual. O restaurante the19 cruza a cozinha portuguesa com outras cozinhas, o bar Shot fica ao lado, e a piscina exterior, com a interior como alternativa nos meses mais frios, é o centro do hotel. Restaurante e bar recebem também quem não fica hospedado. É a única unidade hoteleira de Amora — quem procura outra oferta vai a Almada ou à Costa da Caparica. Para preços, disponibilidade e horários de check-in, a fonte é o site do próprio hotel; mudam com a época e não os fixamos aqui.
 
     ## O nome
 
@@ -160,7 +160,7 @@ en:
     - question: "Is Belverde a good place to live?"
       answer: "For people who want space, quiet, a garden, and proximity to pines and coast — yes. For people who prefer local shops, walkable restaurants or an urban feel, the north of the concelho (Amora centre, Corroios) or Almada are better fits."
     - question: "Is there a hotel in Belverde?"
-      answer: "Yes — Evidência Belverde, a four-star hotel at the edge of the pinhal, with a spa (indoor and outdoor pools, treatments) and a restaurant that also takes non-guests. It's the only hotel in Amora; for bookings, prices and check-in times, the hotel's own site is the one to check."
+      answer: "Yes — Evidência Belverde, a four-star hotel at the edge of the pinhal, with 71 rooms across eight categories (classic, garden view or pool view, plus family and triple rooms), an indoor and outdoor pool, a spa with treatments, and the on-site restaurant the19 and Shot bar, both open to non-guests too. It's the only hotel in Amora; for bookings, prices and check-in times, the hotel's own site is the one to check."
   timeline:
     - year: "1760"
       label: "Conde da Cunha"
@@ -203,7 +203,7 @@ en:
 
     ## Where to stay
 
-    For visitors rather than residents, there's one hotel in Belverde: Evidência Belverde, a four-star property at the edge of the pinhal, with a spa — indoor and outdoor pools, treatments — and a restaurant that takes non-guests too. It's the only hotel in Amora; anyone after other options goes to Almada or the Costa da Caparica. For prices, availability and check-in times, the hotel's own site is the source to check — they move with the season and we don't fix them here.
+    For visitors rather than residents, there's one hotel in Belverde: Evidência Belverde, a four-star property at the edge of the pinhal, with 71 rooms across eight categories — classic, garden view or pool view, plus family and triple rooms — each with a balcony and individually controlled air conditioning. The on-site restaurant the19 draws on Portuguese cooking alongside other cuisines, the Shot bar sits next to it, and the outdoor pool, with the indoor one as the colder-months alternative, is the hotel's centre. Both restaurant and bar take non-guests too. It's the only hotel in Amora; anyone after other options goes to Almada or the Costa da Caparica. For prices, availability and check-in times, the hotel's own site is the source to check — they move with the season and we don't fix them here.
 
     ## The name
 
@@ -236,7 +236,12 @@ en:
 
     But the pines do their job. On a clear day with the right wind you can smell the Atlantic from the porch.
 
-last_updated: 2026-08-27
+last_updated: 2026-09-15
+verify:
+  - claim: "Evidência Belverde: 71 rooms across eight categories (classic, garden view, pool view, family, triple); on-site restaurant the19 and Shot bar; indoor and outdoor pool"
+    source: "https://www.belverdelisbonhotel.com/hotel-rooms.html"
+    checked: 2026-09-15
+    note: "Hotel's own site did not state check-in/check-out times or a pet policy, so neither is stated on this page — third-party listings disagree with each other on pets. Re-check if the hotel adds this to its own site."
 nw_query_pt: "b9ae892dac793479"
 nw_query_en: "d545917001d9291b"
 draft: false
