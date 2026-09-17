@@ -2,13 +2,19 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MargemMap from '../../components/place/MargemMap.astro';
-import { concelhos } from '../../utils/place-hierarchy';
+import { concelhos, childrenOf } from '../../utils/place-hierarchy';
 import { validateAllReferences } from '../../utils/validate-refs';
 
 await validateAllReferences();
 
 const allPlaces = await getCollection('places');
 const concelhoList = concelhos(allPlaces);
+const freguesiasByConcelho = new Map(
+  concelhoList.map((c) => [
+    c.slug,
+    childrenOf(c.slug, allPlaces).sort((a, b) => a.data.name_pt.localeCompare(b.data.name_pt, 'pt')),
+  ])
+);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -20,6 +26,11 @@ const jsonLd = {
     '@type': 'AdministrativeArea',
     name: c.data.name_pt,
     url: `https://margemcool.pt/lugares/${c.slug}/`,
+    containsPlace: (freguesiasByConcelho.get(c.slug) ?? []).map((f) => ({
+      '@type': 'AdministrativeArea',
+      name: f.data.name_pt,
+      url: `https://margemcool.pt/lugares/${f.slug}/`,
+    })),
   })),
 };
 ---
@@ -27,7 +38,7 @@ const jsonLd = {
 <BaseLayout
   lang="pt"
   title="Lugares · Margem Cool"
-  description="Os nove concelhos da Margem Sul: Almada, Seixal, Sesimbra, Setúbal, Palmela, Barreiro, Moita, Montijo, Alcochete."
+  description="As freguesias da Margem Sul, concelho a concelho: Almada, Seixal, Sesimbra, Setúbal, Palmela, Barreiro, Moita, Montijo, Alcochete."
   alternateUrl="/en/places/"
   canonicalPath="/lugares/"
   jsonLd={jsonLd}
@@ -38,7 +49,7 @@ const jsonLd = {
         <p class="places-index__kicker smallcaps">A Margem Sul</p>
         <h1 class="places-index__title">Lugares</h1>
         <p class="places-index__dek">
-          Nove concelhos, trinta e nove freguesias. A espinha geográfica da publicação.
+          Nove concelhos, trinta e nove freguesias — todas listadas abaixo, concelho a concelho.
         </p>
       </header>
 
@@ -55,6 +66,20 @@ const jsonLd = {
               <h2 class="concelho-list__name">{c.data.name_pt}</h2>
               <p class="concelho-list__short">{c.data.pt.short_description}</p>
             </a>
+            {(freguesiasByConcelho.get(c.slug) ?? []).length > 0 && (
+              <details class="concelho-list__freguesias">
+                <summary>
+                  Freguesias ({(freguesiasByConcelho.get(c.slug) ?? []).length})
+                </summary>
+                <ul class="freguesia-list" role="list">
+                  {(freguesiasByConcelho.get(c.slug) ?? []).map((f) => (
+                    <li>
+                      <a href={`/lugares/${f.slug}/`}>{f.data.name_pt}</a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </li>
         ))}
       </ul>
@@ -133,5 +158,33 @@ const jsonLd = {
     color: var(--color-text-secondary);
     font-size: var(--type-small);
     font-family: var(--font-body);
+  }
+  .concelho-list__freguesias {
+    margin-top: var(--space-xs);
+  }
+  .concelho-list__freguesias summary {
+    cursor: pointer;
+    font-size: var(--type-small);
+    font-family: var(--font-body);
+    color: var(--color-accent);
+    letter-spacing: var(--tracking-smallcaps);
+  }
+  .freguesia-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-sm) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-sm);
+  }
+  .freguesia-list a {
+    font-size: var(--type-small);
+    font-family: var(--font-body);
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .freguesia-list a:hover {
+    color: var(--color-text);
   }
 </style>
