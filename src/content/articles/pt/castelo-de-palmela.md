@@ -6,7 +6,7 @@ pillar: lugares_bairros
 format: guide
 author: "Margem Cool"
 published: 2026-08-12
-last_updated: 2026-08-12
+last_updated: 2026-10-01
 place_slugs: ["palmela"]
 meta_title: "Castelo de Palmela — a Ordem de Santiago e o que visitar"
 meta_description: "Castelo de Palmela: sede da Ordem de Santiago durante quatro séculos, a pousada no convento, a Igreja de Santiago, a torre de menagem e como visitar."
@@ -83,7 +83,9 @@ Preferimos dizer isto do que publicar um horário que pareça oficial e não sej
 
 Setembro, durante as **[Festas das Vindimas](/lugares/palmela/)**, é quando a vila está mais viva — bênção das uvas, cortejo, e o castelo no meio disso.
 
-Fora dessa altura, ao fim da tarde: a vista para poente cobre a serra e o sol põe-se por trás dela.
+Em maio, é o castelo que abre a noite do **[Yard Festival](/guias/yard-festival/)**, antes de o programa se mudar para o recinto na Quinta do Anjo.
+
+Fora dessas alturas, ao fim da tarde: a vista para poente cobre a serra e o sol põe-se por trás dela.
 
 ## A parte honesta
 

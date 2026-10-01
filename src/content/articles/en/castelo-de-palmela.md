@@ -7,7 +7,7 @@ format: guide
 author: "Margem Cool"
 translation_of: "pt/castelo-de-palmela"
 published: 2026-08-12
-last_updated: 2026-08-12
+last_updated: 2026-10-01
 place_slugs: ["palmela"]
 meta_title: "Castelo de Palmela — the Order of Santiago and what to visit"
 meta_description: "Castelo de Palmela: seat of the Order of Santiago for four centuries, the pousada in the convent, the Igreja de Santiago, the keep and how to visit."
@@ -83,6 +83,8 @@ We would rather say that than publish a timetable that looks official and isn't.
 ## When to go
 
 September, during the **[Festas das Vindimas](/en/places/palmela/)**, is when the town is most alive — the blessing of the grapes, the procession, and the castle in the middle of it.
+
+In May, the castle hosts the opening night of **[Yard Festival](/en/guides/yard-festival/)**, before the programme moves on to the site at Quinta do Anjo.
 
 Otherwise, late in the day: the westward view takes in the hills and the sun sets behind them.
 
